@@ -1,0 +1,58 @@
+export const SAMPLE_PRODUCTS = [
+  {
+    id: 1,
+    name: "Basmati Rice (1kg)",
+    price: 4.99,
+    category: "Rice",
+    emoji: "🍚",
+  },
+  {
+    id: 2,
+    name: "Red Chili Powder (200g)",
+    price: 3.49,
+    category: "Spices",
+    emoji: "🌶️",
+  },
+  {
+    id: 3,
+    name: "Turmeric Powder (200g)",
+    price: 2.99,
+    category: "Spices",
+    emoji: "🌶️",
+  },
+  {
+    id: 4,
+    name: "Garam Masala (200g)",
+    price: 4.49,
+    category: "Spices",
+    emoji: "🌶️",
+  },
+  {
+    id: 5,
+    name: "Frozen Samosas (400g)",
+    price: 5.99,
+    category: "Frozen",
+    emoji: "🧊",
+  },
+  {
+    id: 6,
+    name: "Frozen Naan (500g)",
+    price: 4.99,
+    category: "Frozen",
+    emoji: "🧊",
+  },
+  {
+    id: 7,
+    name: "Herbal Chai (50 bags)",
+    price: 6.99,
+    category: "Beverages",
+    emoji: "☕",
+  },
+  {
+    id: 8,
+    name: "Gulab Jamun (400g)",
+    price: 5.49,
+    category: "Sweets",
+    emoji: "🍡",
+  },
+];
