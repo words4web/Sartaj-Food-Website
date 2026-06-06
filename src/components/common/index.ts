@@ -1,4 +1,3 @@
-export { Loader } from "./Loader";
 export { PriceDisplay } from "./PriceDisplay";
 export { EmptyState } from "./EmptyState";
 export { PageError } from "./PageError";

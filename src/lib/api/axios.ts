@@ -2,6 +2,7 @@ import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { store } from "../store";
 import { clearAuth, setAccessToken } from "../store/authSlice";
 import { API_ROUTES } from "@/constants/api";
+import { ROUTES } from "@/constants/routes";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -32,9 +33,14 @@ axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const state = store.getState();
     const accessToken = state.auth.accessToken;
+    const locale = state.locale?.locale;
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    if (locale) {
+      config.headers["Accept-Language"] = locale;
     }
 
     return config;
@@ -74,6 +80,9 @@ axiosInstance.interceptors.response.use(
         const isLogoutRequest = originalRequest?.url?.includes(API_ROUTES.AUTH.LOGOUT);
         if (!isLogoutRequest) {
           store.dispatch(clearAuth());
+          if (typeof window !== "undefined") {
+            window.location.href = ROUTES.LOGIN;
+          }
         }
         return Promise.reject(error);
       }
@@ -101,6 +110,9 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         store.dispatch(clearAuth());
+        if (typeof window !== "undefined") {
+          window.location.href = ROUTES.LOGIN;
+        }
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

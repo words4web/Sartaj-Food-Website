@@ -1,14 +1,10 @@
-import { Metadata } from "next";
+"use client";
+
 import { HeroSection } from "@/components/home/HeroSection";
 import { TrustSignals } from "@/components/home/TrustSignals";
 import { CategoriesGrid } from "@/components/home/CategoriesGrid";
 import { ProductSection } from "@/components/home/ProductSection";
-
-export const metadata: Metadata = {
-  title: "Home - Sartaj Foods",
-  description:
-    "Discover authentic South Asian products and premium flavors. Premium basmati rice, aromatic spices, and traditional sweets.",
-};
+import { PRODUCT_BADGES } from "@/constants/product.constants";
 
 export default function HomePage() {
   return (
@@ -16,8 +12,9 @@ export default function HomePage() {
       <HeroSection />
       <TrustSignals />
       <CategoriesGrid />
-      <ProductSection title="Popular Products" />
-      <ProductSection title="Featured Products" showTabs={true} />
+      <ProductSection title="Featured Products" badge={PRODUCT_BADGES.FEATURED} />
+      <ProductSection title="Hot Products" badge={PRODUCT_BADGES.HOT} />
+      <ProductSection title="New Arrivals" badge={PRODUCT_BADGES.NEW_ARRIVAL} />
     </main>
   );
 }
