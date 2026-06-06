@@ -4,25 +4,48 @@ export interface IUser {
   mobileNumber: string;
   fullName: string;
   superCategory: string;
-  avatar?: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface IAuthResponse {
+export interface AuthResponse {
   user: IUser;
   accessToken: string;
-  refreshToken: string;
 }
+
+export type IAuthResponse = AuthResponse;
 
 export interface IAuthState {
   user: IUser | null;
   accessToken: string | null;
-  refreshToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
 
+export interface SendOtpPayload {
+  email?: string;
+  mobileNumber?: string;
+  fullName?: string;
+}
+
+export interface VerifyOtpPayload {
+  email?: string;
+  mobileNumber?: string;
+  otp: string;
+}
+
+export interface ResendOtpPayload {
+  email?: string;
+  mobileNumber?: string;
+}
+
+export interface SuccessResponse {
+  success: boolean;
+  message?: string;
+  data?: any;
+}
+
+// Legacy payload formats if still needed by some modules
 export interface ISignupPayload {
   fullName: string;
   email: string;

@@ -5,7 +5,7 @@ import { RootState } from "@/lib/store";
 import { clearAuth, setAuthUser, setAuthLoading } from "@/lib/store/authSlice";
 import { axiosInstance } from "@/lib/api/axios";
 import { API_ROUTES } from "@/constants/api";
-import { IUser } from "@/types/auth.types";
+import { IUser } from "@/types/auth/auth.types";
 
 export function useAuth() {
   const dispatch = useDispatch();
@@ -31,7 +31,6 @@ export function useAuth() {
         setAuthUser({
           user: { ...user, ...updatedUser },
           accessToken: accessToken!,
-          refreshToken: "",
         }),
       );
     }

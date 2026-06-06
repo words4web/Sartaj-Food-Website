@@ -12,6 +12,7 @@ export const ROUTES = {
   CHECKOUT: "/checkout",
   ORDERS: "/orders",
   PRODUCTS: "/products",
+  PROFILE: "/profile",
 } as const;
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES];

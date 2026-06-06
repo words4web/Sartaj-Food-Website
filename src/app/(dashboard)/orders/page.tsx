@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MOCK_ORDERS } from "@/data/ordersData";
-import { getOrderStatusColor } from "@/lib/utils";
+import { getOrderStatusColor } from "@/utils/common/common.utils";
 
 export default function OrdersPage() {
   const t = useTranslations();
