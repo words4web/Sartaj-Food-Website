@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, Palette, Check } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { HEADER_CATEGORIES } from "@/data/navigation";
 import { useTranslations } from "next-intl";
-import { LanguageSelector, ThemeSelector } from "@/components/common";
+import { LanguageSelector } from "@/components/common";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import {
@@ -16,14 +16,32 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 import { useGetProfile } from "@/services/auth/auth.hooks";
+import { useSelector, useDispatch } from "react-redux";
+import { setTheme } from "@/lib/store/localeSlice";
+import { RootState } from "@/lib/store";
+import { themes, applyTheme, themeSwatchColors, type Theme } from "@/lib/themes";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations();
   const { isAuthenticated, user, logout } = useAuth();
   useGetProfile(isAuthenticated);
+
+  const dispatch = useDispatch();
+  const currentTheme = useSelector((state: RootState) => state.locale.theme);
+  const currentConfig = themes[currentTheme];
+  const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.totalItems || 0);
+
+  const handleThemeSelect = (theme: Theme) => {
+    dispatch(setTheme(theme));
+    applyTheme(theme);
+  };
 
   const categories = HEADER_CATEGORIES;
 
@@ -57,11 +75,6 @@ export function Header() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-4">
-              {/* Theme Selector */}
-              <div className="hidden sm:block">
-                <ThemeSelector variant="light" />
-              </div>
-
               {/* Language Selector */}
               <div className="hidden sm:block">
                 <LanguageSelector variant="light" />
@@ -70,13 +83,15 @@ export function Header() {
               {/* Cart */}
               <Link
                 href={ROUTES.CART}
-                className="relative flex items-center gap-1 text-foreground hover:text-foreground font-medium text-sm"
+                className="flex items-center gap-2 text-foreground hover:text-primary font-medium text-sm transition-colors duration-200"
               >
-                <ShoppingCart className="h-5 w-5" />
+                <div className="relative">
+                  <ShoppingCart className="h-5 w-5" />
+                  <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[9px] font-extrabold rounded-full h-4 w-4 flex items-center justify-center">
+                    {cartItemsCount}
+                  </span>
+                </div>
                 <span className="hidden sm:inline">{t("common.cart")}</span>
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  0
-                </span>
               </Link>
 
               {/* Login / Profile Dropdown */}
@@ -84,16 +99,16 @@ export function Header() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="flex items-center gap-2 text-foreground hover:text-primary font-medium text-sm focus:outline-none transition-colors duration-200 cursor-pointer">
-                      <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-sm tracking-wider hover:bg-primary/20 transition-all">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-sm tracking-wider hover:bg-primary/20 transition-all">
                         {user?.fullName ? (
                           user?.fullName?.charAt(0)?.toUpperCase()
                         ) : (
                           <User className="h-4 w-4" />
                         )}
                       </div>
-                      <span className="hidden lg:inline max-w-[120px] truncate">
+                      {/* <span className="hidden lg:inline max-w-[120px] truncate">
                         {user?.fullName || t("common.profile")}
-                      </span>
+                      </span> */}
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
@@ -127,6 +142,50 @@ export function Header() {
                         {t("orders.orders")}
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-border my-1" />
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger className="flex items-center gap-2 w-full px-2 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors cursor-pointer focus:bg-accent focus:text-accent-foreground">
+                        <Palette className="h-4 w-4 text-muted-foreground" />
+                        <span>{t("settings.theme")}</span>
+                        <span className="ml-auto flex items-center gap-1.5">
+                          <span
+                            className="h-2.5 w-2.5 rounded-full flex-shrink-0 ring-1 ring-black/10"
+                            style={{ background: themeSwatchColors[currentTheme][0] }}
+                          />
+                          <span className="text-xs text-muted-foreground font-normal">
+                            {currentConfig.label}
+                          </span>
+                        </span>
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent className="w-52 p-2 rounded-xl shadow-lg border border-border bg-card">
+                          {(Object.entries(themes) as [Theme, (typeof themes)[Theme]][]).map(
+                            ([key, config]) => (
+                              <DropdownMenuItem
+                                key={key}
+                                onClick={() => handleThemeSelect(key)}
+                                className={`flex items-center gap-3 w-full px-2 py-2 text-sm rounded-lg transition-colors cursor-pointer ${
+                                  currentTheme === key
+                                    ? "bg-primary/10 text-primary font-semibold focus:bg-primary/15 focus:text-primary"
+                                    : "text-foreground hover:bg-accent hover:text-accent-foreground"
+                                }`}
+                              >
+                                <span
+                                  className="h-4 w-4 rounded-full flex-shrink-0 ring-1 ring-black/10"
+                                  style={{
+                                    background: `linear-gradient(135deg, ${themeSwatchColors[key][0]}, ${themeSwatchColors[key][1]})`,
+                                  }}
+                                />
+                                <span className="flex-1">{config.label}</span>
+                                {currentTheme === key && (
+                                  <Check className="h-3.5 w-3.5 flex-shrink-0" />
+                                )}
+                              </DropdownMenuItem>
+                            ),
+                          )}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
                     <DropdownMenuSeparator className="bg-border my-1" />
                     <DropdownMenuItem
                       onClick={async () => {

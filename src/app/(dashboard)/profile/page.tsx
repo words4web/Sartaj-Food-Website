@@ -17,12 +17,20 @@ import { formatPostalCode, formatJapanPhone } from "@/utils/format/format.utils"
 import { ProfileCard } from "./components/ProfileCard";
 import { AddressCard } from "./components/AddressCard";
 import { AddressForm } from "./components/AddressForm";
+import { ConfirmModal } from "@/components/common/ConfirmModal";
+import { CommonLoader } from "@/components/ui/common-loader";
+import { CommonError } from "@/components/ui/common-error";
 
 export default function ProfilePage() {
   const t = useTranslations();
   const { user } = useAuth();
 
-  const { data: addresses = [], isLoading: loadingAddresses } = useGetAddresses();
+  const {
+    data: addresses = [],
+    isLoading: loadingAddresses,
+    isError: errorAddresses,
+    refetch: refetchAddresses,
+  } = useGetAddresses();
   const createAddressMutation = useCreateAddress();
   const updateAddressMutation = useUpdateAddress();
   const deleteAddressMutation = useDeleteAddress();
@@ -30,6 +38,7 @@ export default function ProfilePage() {
   const [editingAddress, setEditingAddress] = useState<IAddress | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [formError, setFormError] = useState("");
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<IAddress>({
     fullName: "",
@@ -114,9 +123,7 @@ export default function ProfilePage() {
   };
 
   const handleDeleteClick = (id: string) => {
-    if (confirm("Are you sure you want to delete this address?")) {
-      deleteAddressMutation.mutate(id);
-    }
+    setDeleteId(id);
   };
 
   return (
@@ -165,10 +172,9 @@ export default function ProfilePage() {
 
             {/* Address Cards Grid */}
             {loadingAddresses ? (
-              <div className="flex flex-col items-center justify-center p-12 bg-card rounded-2xl border border-border/50 text-muted-foreground text-sm">
-                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mb-3" />
-                <span>Loading address book...</span>
-              </div>
+              <CommonLoader fullScreen={false} message={t("common.loading")} />
+            ) : errorAddresses ? (
+              <CommonError onRetry={refetchAddresses} message="Could not load address book." />
             ) : (addresses || []).length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {(addresses || []).map((address) => (
@@ -204,6 +210,31 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+      <ConfirmModal
+        open={!!deleteId}
+        title={t("profile.deleteAddressTitle") || "Delete Address"}
+        description={
+          t("profile.deleteAddressConfirm") ||
+          "Are you sure you want to delete this address? This action cannot be undone."
+        }
+        confirmLabel={t("common.delete") || "Delete"}
+        cancelLabel={t("common.cancel") || "Cancel"}
+        destructive={true}
+        isLoading={deleteAddressMutation.isPending}
+        onConfirm={() => {
+          if (deleteId) {
+            deleteAddressMutation.mutate(deleteId, {
+              onSuccess: () => {
+                setDeleteId(null);
+              },
+              onError: () => {
+                setDeleteId(null);
+              },
+            });
+          }
+        }}
+        onCancel={() => setDeleteId(null)}
+      />
     </main>
   );
 }

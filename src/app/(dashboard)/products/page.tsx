@@ -4,19 +4,21 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { SAMPLE_PRODUCTS } from "@/data/productsData";
 import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/common/ProductCard";
+import { IProduct } from "@/types/product/product.types";
 
 export default function ProductsPage() {
   const t = useTranslations();
-  const [cart, setCart] = useState<number[]>([]);
+  const [cart, setCart] = useState<(string | number)[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", ...new Set(SAMPLE_PRODUCTS.map((p) => p.category))];
+  const categories = ["All", ...new Set(SAMPLE_PRODUCTS.map((p) => p?.category))];
   const filteredProducts =
     selectedCategory === "All"
       ? SAMPLE_PRODUCTS
-      : SAMPLE_PRODUCTS.filter((p) => p.category === selectedCategory);
+      : SAMPLE_PRODUCTS.filter((p) => p?.category === selectedCategory);
 
-  const toggleCart = (id: number) => {
+  const toggleCart = (id: string | number) => {
     setCart((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
 
@@ -63,26 +65,14 @@ export default function ProductsPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-card rounded-lg shadow hover:shadow-lg transition-shadow"
-            >
-              <div className="p-4 text-center bg-muted/50">
-                <div className="text-4xl mb-2">{product.emoji}</div>
-                <h3 className="font-bold text-foreground mb-2">{product.name}</h3>
-                <p className="text-lg font-bold text-primary mb-4">¥{product.price.toFixed(2)}</p>
-                <Button
-                  variant={cart.includes(product.id) ? "destructive" : "default"}
-                  size="sm"
-                  className="w-full"
-                  onClick={() => toggleCart(product.id)}
-                >
-                  {cart.includes(product.id) ? t("cart.removeItem") : t("products.addToCart")}
-                </Button>
-              </div>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredProducts?.map((product) => (
+            <ProductCard
+              key={product?.id}
+              product={product}
+              onAddToCart={toggleCart}
+              isAddedToCart={cart?.includes(product?.id)}
+            />
           ))}
         </div>
       </div>

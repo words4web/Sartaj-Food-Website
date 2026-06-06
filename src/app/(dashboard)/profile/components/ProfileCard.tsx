@@ -15,9 +15,6 @@ export function ProfileCard({ user }: ProfileCardProps) {
         </div>
         <div>
           <h2 className="text-xl font-bold text-foreground">{user?.fullName}</h2>
-          <p className="text-xs font-semibold text-muted-foreground uppercase mt-1 px-2.5 py-0.5 bg-muted rounded-full inline-block">
-            {user?.superCategory || "Retailer"}
-          </p>
         </div>
       </div>
 

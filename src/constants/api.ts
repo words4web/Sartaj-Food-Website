@@ -16,7 +16,7 @@ export const API_ROUTES = {
     GET_BY_ID: (id: string) => `/customer/products/${id}`,
     SEARCH: "/customer/products/search",
     GET_BY_CATEGORY: (id: string) => `/customer/products/category/${id}`,
-    GET_BY_BRAND: "/customer/products/filter",
+    FILTER: "/customer/products/filter",
   },
 
   // Categories
