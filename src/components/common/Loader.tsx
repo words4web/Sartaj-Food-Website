@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/common/common.utils";
 
 interface LoaderProps {
   size?: "sm" | "md" | "lg";

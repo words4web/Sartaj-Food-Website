@@ -33,7 +33,7 @@ export function AuthOtpForm({
       <div className="space-y-2">
         <label
           htmlFor="otp"
-          className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center"
+          className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground"
         >
           {t("enterVerificationCode")}
         </label>

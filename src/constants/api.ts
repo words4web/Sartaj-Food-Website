@@ -1,12 +1,13 @@
 export const API_ROUTES = {
   // Auth
   AUTH: {
-    SIGNUP: "/customer/auth/signup",
-    LOGIN: "/customer/auth/login",
-    VERIFY_OTP: "/customer/auth/verify-otp",
-    RESEND_OTP: "/customer/auth/resend-otp",
-    LOGOUT: "/customer/auth/logout",
-    REFRESH_TOKEN: "/customer/auth/refresh-token",
+    SIGNUP: "/retailer/auth/signup",
+    LOGIN: "/retailer/auth/login",
+    VERIFY_OTP: "/retailer/auth/verify-otp",
+    RESEND_OTP: "/retailer/auth/resend-otp",
+    LOGOUT: "/retailer/auth/logout",
+    REFRESH_TOKEN: "/retailer/auth/refresh-token",
+    GET_PROFILE: "/retailer/auth/profile",
   },
 
   // Products

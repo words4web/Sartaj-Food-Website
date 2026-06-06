@@ -14,36 +14,30 @@ import authReducer from "./authSlice";
 import localeReducer from "./localeSlice";
 import cartReducer from "./cartSlice";
 
-const persistConfig = {
-  key: "sartaj-root",
+const authPersistConfig = {
+  key: "auth",
   storage,
-  whitelist: ["auth", "locale", "cart"],
+  whitelist: ["user", "accessToken", "isAuthenticated"],
   version: 1,
 };
 
-const persistedAuthReducer = persistReducer(
-  {
-    ...persistConfig,
-    key: "auth",
-  },
-  authReducer,
-);
+const localePersistConfig = {
+  key: "locale",
+  storage,
+  whitelist: ["locale", "theme"],
+  version: 1,
+};
 
-const persistedLocaleReducer = persistReducer(
-  {
-    ...persistConfig,
-    key: "locale",
-  },
-  localeReducer,
-);
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  whitelist: ["cart", "lastUpdated"],
+  version: 1,
+};
 
-const persistedCartReducer = persistReducer(
-  {
-    ...persistConfig,
-    key: "cart",
-  },
-  cartReducer,
-);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedLocaleReducer = persistReducer(localePersistConfig, localeReducer);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
 
 export const store = configureStore({
   reducer: {
