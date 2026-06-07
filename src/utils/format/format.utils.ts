@@ -57,3 +57,36 @@ export function formatJapanPhone(val: string): string {
   }
   return cleaned ? `+81${cleaned}` : "";
 }
+
+export function getAvatarInitials(name: string): string {
+  return (
+    name
+      ?.split(" ")
+      ?.map((n) => n[0])
+      ?.join("")
+      ?.toUpperCase()
+      ?.slice(0, 2) || "U"
+  );
+}
+
+export function getAvatarColor(name: string): string {
+  const colors = [
+    "bg-red-100 text-red-700",
+    "bg-orange-100 text-orange-700",
+    "bg-amber-100 text-amber-700",
+    "bg-emerald-100 text-emerald-700",
+    "bg-teal-100 text-teal-700",
+    "bg-cyan-100 text-cyan-700",
+    "bg-sky-100 text-sky-700",
+    "bg-indigo-100 text-indigo-700",
+    "bg-violet-100 text-violet-700",
+    "bg-fuchsia-100 text-fuchsia-700",
+    "bg-pink-100 text-pink-700",
+    "bg-rose-100 text-rose-700",
+  ];
+  let sum = 0;
+  for (let i = 0; i < name?.length; i++) {
+    sum += name?.charCodeAt(i);
+  }
+  return colors[sum % colors?.length];
+}

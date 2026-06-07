@@ -158,7 +158,18 @@
     "includesTax": "Includes {rate}% tax: ¥{amount}",
     "ageWarning": "20+ Age Restriction: This item contains alcohol or is restricted to adults.",
     "loadError": "Could not load product details. Please try again.",
-    "ageRestrictionBadge": "Age 20+ Only"
+    "ageRestrictionBadge": "Age 20+ Only",
+    "writeReview": "Write a Review",
+    "reviewsTitle": "Customer Reviews",
+    "ratingRequired": "Please select a rating",
+    "reviewRequired": "Please enter your review text",
+    "reviewMinLength": "Review must be at least 3 characters",
+    "reviewMaxLength": "Review cannot exceed 1000 characters",
+    "reviewSuccess": "Review submitted successfully!",
+    "alreadyReviewed": "You have already reviewed this product.",
+    "star": "star",
+    "stars": "stars",
+    "averageRatingLabel": "Average Rating"
   },
   "cart": {
     "cart": "Cart",

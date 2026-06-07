@@ -90,6 +90,12 @@ export const API_ROUTES = {
   CMS: {
     GET_PAGE: (slug: string) => `/customer/cms/${slug}`,
   },
+
+  // Reviews
+  REVIEWS: {
+    GET: (productId: string) => `/customer/reviews/${productId}`,
+    ADD: (productId: string) => `/customer/reviews/${productId}`,
+  },
 } as const;
 
 export const PAGINATION = {

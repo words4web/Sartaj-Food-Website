@@ -52,6 +52,7 @@ export interface IProduct {
     amount?: number;
     rate?: number;
   };
+  hasReviewed?: boolean;
 }
 
 export interface ICategory {

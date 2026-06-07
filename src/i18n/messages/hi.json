@@ -158,7 +158,18 @@
     "includesTax": "{rate}% कर शामिल: ¥{amount}",
     "ageWarning": "20+ आयु प्रतिबंध: इस वस्तु में अल्कोहल है या यह वयस्कों के लिए प्रतिबंधित है।",
     "loadError": "उत्पाद विवरण लोड नहीं किया जा सका। कृपया पुनः प्रयास करें।",
-    "ageRestrictionBadge": "केवल 20+"
+    "ageRestrictionBadge": "केवल 20+",
+    "writeReview": "समीक्षा लिखें",
+    "reviewsTitle": "ग्राहक समीक्षाएं",
+    "ratingRequired": "कृपया रेटिंग चुनें",
+    "reviewRequired": "कृपया समीक्षा पाठ दर्ज करें",
+    "reviewMinLength": "समीक्षा कम से कम 3 वर्णों की होनी चाहिए",
+    "reviewMaxLength": "समीक्षा 1000 वर्णों से अधिक नहीं हो सकती",
+    "reviewSuccess": "समीक्षा सफलतापूर्वक सबमिट हो गई!",
+    "alreadyReviewed": "आप पहले ही इस उत्पाद की समीक्षा कर चुके हैं।",
+    "star": "स्टार",
+    "stars": "स्टार",
+    "averageRatingLabel": "औसत रेटिंग"
   },
   "cart": {
     "cart": "कार्ट",

@@ -14,6 +14,7 @@ import { RelatedProducts } from "@/components/product/RelatedProducts";
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { ProductInfo } from "@/components/product/ProductInfo";
 import { ProductCartActions } from "@/components/product/ProductCartActions";
+import { ProductReviews } from "@/components/product/ProductReviews";
 import {
   useAddToCart,
   useUpdateCartItem,
@@ -182,6 +183,9 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Product Reviews */}
+      <ProductReviews productId={id} hasReviewed={product?.hasReviewed} />
 
       {/* Related Products */}
       <RelatedProducts productId={id} />
