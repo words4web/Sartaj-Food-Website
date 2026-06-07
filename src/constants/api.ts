@@ -17,6 +17,7 @@ export const API_ROUTES = {
     SEARCH: "/customer/products/search",
     GET_BY_CATEGORY: (id: string) => `/customer/products/category/${id}`,
     FILTER: "/customer/products/filter",
+    GET_RELATED: (id: string) => `/customer/products/${id}/related`,
   },
 
   // Categories
@@ -28,9 +29,9 @@ export const API_ROUTES = {
   // Cart
   CART: {
     GET: "/customer/cart",
-    ADD_ITEM: "/customer/cart/items",
-    UPDATE_ITEM: (id: string) => `/customer/cart/items/${id}`,
-    REMOVE_ITEM: (id: string) => `/customer/cart/items/${id}`,
+    ADD_ITEM: "/customer/cart/add",
+    UPDATE_ITEM: "/customer/cart/update",
+    REMOVE_ITEM: (id: string) => `/customer/cart/remove/${id}`,
     CLEAR: "/customer/cart/clear",
   },
 

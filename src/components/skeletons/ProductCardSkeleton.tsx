@@ -19,12 +19,26 @@ export function ProductCardSkeleton() {
 interface ProductGridSkeletonProps {
   count?: number;
   columnsClass?: string;
+  scrollable?: boolean;
 }
 
 export function ProductGridSkeleton({
   count = 5,
   columnsClass = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-5",
+  scrollable = false,
 }: ProductGridSkeletonProps) {
+  if (scrollable) {
+    return (
+      <div className="flex gap-6 overflow-x-hidden pb-4">
+        {Array.from({ length: count }).map((_, index) => (
+          <div key={index} className="w-[240px] sm:w-[280px] shrink-0">
+            <ProductCardSkeleton />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className={`grid ${columnsClass} gap-6`}>
       {Array.from({ length: count }).map((_, index) => (

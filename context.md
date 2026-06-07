@@ -40,6 +40,7 @@
   - Refactored the Products catalog list at `src/app/(dashboard)/products/page.tsx` to reuse the common `ProductCard` component.
 
 - **Product Constants Integration**: Created `src/constants/product.constants.ts` containing the `PRODUCT_BADGES` constant. Refactored `ProductCard.tsx` and home page `page.tsx` to consume this constant instead of using inline static strings for badges.
+- **Short-Form Product Badges**: Created short-form translation keys (`featured`, `hot`, `new`) under the `home` namespace in all five locale files (`en.json`, `ja.json`, etc.) and updated the common `ProductCard` component to render them as badge labels (displaying "Featured", "Hot", or "New" instead of the full section headings).
 - **Ported ConfirmModal, CommonLoader, and CommonError**:
   - Ported and localized `ConfirmModal`, `CommonLoader`, and `CommonError` components from the Admin Panel to the Website.
   - Replaced browser-native `confirm(...)` prompts for address deletions on the Profile page with the new styled `ConfirmModal` component.
@@ -52,6 +53,15 @@
 - **Header Cart Button Overlap & Dynamic Count**:
   - Wrapped the `ShoppingCart` icon in a dedicated relative div, positioning the badge relative to the icon instead of the entire text container. This resolves the layout issue where the badge overlapped with the "Cart" text.
   - Linked the badge quantity dynamically to the Redux store (`state.cart.cart.totalItems`).
+- **Product Details Page & Amazon-like Zoom Gallery**:
+  - Implemented a premium, fully localized, and responsive Product Details page (`src/app/(dashboard)/products/[id]/page.tsx`).
+  - Added a multi-image thumbnails selector row with accessibility `focus-visible` focus ring highlight parameters.
+  - Implemented an Amazon-like cursor magnifier on desktop, rendering a floating zoom viewport container to the right and a semi-transparent tracker lens matching coordinates using hardware-accelerated CSS properties (`--zoom-x`, `--zoom-y`).
+  - Implemented mobile touch gestures (panning in-place with touch coordinates mapping and scroll prevention via `e.preventDefault()`).
+  - Applied runtime optional chaining (`?.`) across all mouse/touch event property handlers, DOM target modifications, and image list renderer loops.
+- **Theme-Aware Scrollbar UI**:
+  - Implemented dynamic scrollbar styling in `src/app/globals.css` using standard `scrollbar-color`/`scrollbar-width` and WebKit fallbacks.
+  - Bound the scrollbar thumb color dynamically to the selected theme's primary color using `color-mix(in oklch, var(--primary) 30%, transparent)` for a premium, themed scroll experience.
 
 ## Next Steps / Outstanding Bugs
 
@@ -59,3 +69,100 @@
 - Ensure that the mobile app is successfully testing the general customer login flow at `/customer/auth/login`.
 - Verify the build and type-checking of the frontend website and backend repositories once requested by the user.
 - Verify homepage product rendering when backend provides populated arrays for `hot` and `new_arrival` badges (currently empty).
+
+---
+
+## Folder Structure (`src/`)
+
+```
+src/
+├── app/
+│   ├── (auth)/                   # Auth-only routes (login, register, OTP)
+│   ├── (dashboard)/              # Main site routes
+│   │   ├── page.tsx              # Home page
+│   │   ├── layout.tsx            # Dashboard layout (Header, Footer)
+│   │   ├── cart/
+│   │   ├── checkout/
+│   │   ├── orders/
+│   │   ├── products/
+│   │   │   └── [id]/page.tsx     # Product detail page
+│   │   ├── profile/
+│   │   ├── privacy/
+│   │   └── terms/
+│   ├── globals.css               # Design tokens, custom scrollbar, global typography
+│   └── layout.tsx                # Root layout
+│
+├── components/
+│   ├── auth/                     # Auth-specific components
+│   ├── common/                   # Shared cross-domain components (ProductCard, etc.)
+│   ├── home/                     # Homepage-specific sections
+│   ├── layouts/                  # Header, Footer, navigation
+│   ├── product/                  # Product-domain components (RelatedProducts, etc.)
+│   ├── skeletons/                # All skeleton loading components
+│   ├── ui/                       # shadcn/ui primitives (Button, Input, Dialog, etc.)
+│   └── theme-provider.tsx
+│
+├── types/                        # ⚠️ ALL TypeScript interfaces & prop types live here
+│   ├── product/
+│   │   └── product.types.ts      # IProduct, ProductCardProps, RelatedProductsProps, etc.
+│   ├── auth/
+│   ├── address/
+│   ├── profile/
+│   ├── api.types.ts
+│   ├── cart.types.ts
+│   ├── common.types.ts
+│   ├── order.types.ts
+│   └── wallet.types.ts
+│
+├── services/                     # API layer + React Query hooks, grouped by domain
+│   ├── product/
+│   │   ├── product.service.ts    # Axios API calls
+│   │   └── product.hooks.ts      # useQuery / useMutation wrappers
+│   ├── cart/
+│   ├── auth/
+│   └── address/
+│
+├── hooks/                        # Custom non-service React hooks
+│   ├── use-mobile.ts
+│   ├── use-toast.ts
+│   ├── useAuth.ts
+│   └── useAuthFlow.ts
+│
+├── constants/                    # App-wide static config
+│   ├── api.ts                    # API base URL and endpoint paths
+│   ├── routes.ts                 # ROUTES object (ROUTES.HOME, ROUTES.CART, etc.)
+│   ├── product.constants.ts      # PRODUCT_BADGES, STOCK_STATUSES
+│   ├── prefectures.ts
+│   └── validation.ts
+│
+├── utils/                        # Pure utility/helper functions, grouped by domain
+│   ├── auth/
+│   ├── common/
+│   ├── format/
+│   ├── math/
+│   ├── product/                  # e.g. getLocalizedValue()
+│   └── validation/
+│
+├── schemas/                      # Zod validation schemas for forms
+├── lib/                          # Redux store, axios instance, core config
+├── providers/                    # React context providers (Redux, QueryClient, etc.)
+└── i18n/                         # next-intl routing config and locale setup
+```
+
+---
+
+## Coding Conventions
+
+| Concern                 | Rule                                                                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Prop interfaces**     | Always define in `src/types/<domain>/<domain>.types.ts`. **Never inline inside component files.** Import with `import type { ... }`. |
+| **UI strings / labels** | Always use `useTranslations()` — never hardcode user-facing text                                                                     |
+| **Navigation**          | Use `ROUTES.*` from `src/constants/routes.ts`                                                                                        |
+| **New page routes**     | Add under `src/app/(dashboard)/` following App Router conventions                                                                    |
+| **New components**      | Place in `src/components/<domain>/` (create the folder if needed)                                                                    |
+| **Skeleton loaders**    | Add to `src/components/skeletons/`                                                                                                   |
+| **Global styles**       | Design tokens and scrollbar in `globals.css`; component-level layout via Tailwind classes                                            |
+| **Icons**               | Use `lucide-react`                                                                                                                   |
+| **Notifications**       | Use `sonner` (`toast.success / toast.error`)                                                                                         |
+| **API query keys**      | Follow `[domain, id?, extraParam?]` pattern in React Query hooks                                                                     |
+| **Builds/type checks**  | Only run for major architectural changes — not after every small edit                                                                |

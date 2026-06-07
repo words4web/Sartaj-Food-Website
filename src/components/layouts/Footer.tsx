@@ -68,7 +68,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href={ROUTES.PRODUCTS}
+                  href={ROUTES.PRODUCTS()}
                   className="text-sm text-white/60 hover:text-white transition-colors duration-200"
                 >
                   {t("products.products")}

@@ -50,7 +50,7 @@ export default function CartPage() {
                 <div className="p-12 text-center">
                   <p className="text-muted-foreground mb-4">{t("cart.emptyCart")}</p>
                   <Button variant="link" asChild>
-                    <Link href={ROUTES.PRODUCTS}>{t("cart.continueShipping")}</Link>
+                    <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping")}</Link>
                   </Button>
                 </div>
               )}
@@ -88,7 +88,7 @@ export default function CartPage() {
               </Button>
 
               <Button variant="link" className="w-full mt-2" asChild>
-                <Link href={ROUTES.PRODUCTS}>{t("cart.continueShipping")}</Link>
+                <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping")}</Link>
               </Button>
             </div>
           </div>

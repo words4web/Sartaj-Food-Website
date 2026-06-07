@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { IProduct } from "@/types/product/product.types";
 import { Button } from "@/components/ui/button";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
+import { ROUTES } from "@/constants/routes";
 
 interface ProductCardProps {
   product?: IProduct;
@@ -43,19 +45,19 @@ export function ProductCard({
     if (badgeLower === PRODUCT_BADGES.FEATURED) {
       return (
         <span className="bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-          {t("home.featuredProducts")}
+          {t("home.featured")}
         </span>
       );
     } else if (badgeLower === PRODUCT_BADGES.HOT) {
       return (
         <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-          {t("home.hotProducts")}
+          {t("home.hot")}
         </span>
       );
     } else if (badgeLower === PRODUCT_BADGES.NEW_ARRIVAL || badgeLower === "new") {
       return (
         <span className="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-          {t("home.newArrivals")}
+          {t("home.new")}
         </span>
       );
     }
@@ -78,18 +80,25 @@ export function ProductCard({
     <div className="bg-card rounded-lg shadow border border-border hover:shadow-lg hover:border-primary/40 transition-all overflow-hidden flex flex-col h-full group relative">
       {/* Image & Badges */}
       <div className="relative aspect-square bg-muted/50 flex items-center justify-center p-4">
-        {imageSrc ? (
-          <img
-            src={imageSrc}
-            alt={typeof name === "string" ? name : "Product image"}
-            className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-          />
-        ) : (
-          <div className="text-6xl select-none">{emoji || "📦"}</div>
-        )}
+        <Link
+          href={ROUTES.PRODUCTS(id)}
+          className="absolute inset-0 flex items-center justify-center p-4 cursor-pointer"
+        >
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              alt={typeof name === "string" ? name : "Product image"}
+              className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+            />
+          ) : (
+            <div className="text-6xl select-none">{emoji || "📦"}</div>
+          )}
+        </Link>
 
         {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10">{renderBadge()}</div>
+        <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10 pointer-events-none">
+          {renderBadge()}
+        </div>
 
         {/* Wishlist Button */}
         <Button
@@ -106,17 +115,17 @@ export function ProductCard({
 
       {/* Content */}
       <div className="p-4 flex flex-col flex-grow justify-between">
-        <div>
+        <Link href={ROUTES.PRODUCTS(id)} className="cursor-pointer group-hover:text-primary mb-2">
           <p className="text-xs text-muted-foreground mb-1">By {brand}</p>
-          <h3 className="font-semibold text-foreground text-sm mb-2 line-clamp-2 h-10">
+          <h3 className="font-semibold text-foreground text-sm line-clamp-2 h-10 transition-colors">
             {typeof name === "string" ? name : ""}
           </h3>
-        </div>
+        </Link>
 
         <div>
           {/* Price */}
           <div className="flex items-baseline gap-2 mb-3">
-            <span className="text-lg font-bold text-foreground">¥{price.toLocaleString()}</span>
+            <span className="text-lg font-bold text-foreground">¥{price?.toLocaleString()}</span>
             {isDiscounted && originalPrice && originalPrice > price && (
               <>
                 <span className="text-xs text-muted-foreground line-through">

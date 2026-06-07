@@ -263,7 +263,7 @@ export default function CheckoutPage() {
                     <Link href={ROUTES.ORDERS}>View Order</Link>
                   </Button>
                   <Button variant="secondary" className="flex-1" size="lg" asChild>
-                    <Link href={ROUTES.PRODUCTS}>Continue Shopping</Link>
+                    <Link href={ROUTES.PRODUCTS()}>Continue Shopping</Link>
                   </Button>
                 </div>
               </div>

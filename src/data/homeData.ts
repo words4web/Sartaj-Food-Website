@@ -67,37 +67,37 @@ export const CATEGORIES_GRID = [
     nameKey: "categories.grains",
     count: "45 items",
     icon: Wheat,
-    href: `${ROUTES.PRODUCTS}?category=rice`,
+    href: `${ROUTES.PRODUCTS()}?category=rice`,
   },
   {
     nameKey: "categories.spices",
     count: "120 items",
     icon: Flame,
-    href: `${ROUTES.PRODUCTS}?category=spices`,
+    href: `${ROUTES.PRODUCTS()}?category=spices`,
   },
   {
     nameKey: "categories.frozen",
     count: "41 items",
     icon: Snowflake,
-    href: `${ROUTES.PRODUCTS}?category=frozen`,
+    href: `${ROUTES.PRODUCTS()}?category=frozen`,
   },
   {
     nameKey: "categories.wellness",
     count: "30 items",
     icon: Leaf,
-    href: `${ROUTES.PRODUCTS}?category=wellness`,
+    href: `${ROUTES.PRODUCTS()}?category=wellness`,
   },
   {
     nameKey: "categories.sweets",
     count: "25 items",
     icon: Candy,
-    href: `${ROUTES.PRODUCTS}?category=sweets`,
+    href: `${ROUTES.PRODUCTS()}?category=sweets`,
   },
   {
     nameKey: "categories.beverages",
     count: "18 items",
     icon: Droplets,
-    href: `${ROUTES.PRODUCTS}?category=beverages`,
+    href: `${ROUTES.PRODUCTS()}?category=beverages`,
   },
 ];
 

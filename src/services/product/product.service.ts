@@ -12,4 +12,15 @@ export const productService = {
   }): Promise<AxiosResponse<FilterProductsResponse>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.FILTER, { params });
   },
+
+  getProductById: async (id: string): Promise<AxiosResponse<any>> => {
+    return axiosInstance.get(API_ROUTES.PRODUCTS.GET_BY_ID(id));
+  },
+
+  getRelatedProducts: async (
+    id: string,
+    params?: { limit?: number },
+  ): Promise<AxiosResponse<FilterProductsResponse>> => {
+    return axiosInstance.get(API_ROUTES.PRODUCTS.GET_RELATED(id), { params });
+  },
 };

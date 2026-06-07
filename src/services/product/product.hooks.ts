@@ -15,3 +15,25 @@ export const useGetFilteredProducts = (params?: {
     },
   });
 };
+
+export const useGetProductById = (id: string) => {
+  return useQuery({
+    queryKey: ["products", "detail", id],
+    queryFn: async () => {
+      const response = await productService.getProductById(id);
+      return response.data?.data || null;
+    },
+    enabled: !!id,
+  });
+};
+
+export const useGetRelatedProducts = (id: string, limit: number = 30) => {
+  return useQuery({
+    queryKey: ["products", "related", id, limit],
+    queryFn: async () => {
+      const response = await productService.getRelatedProducts(id, { limit });
+      return response.data?.data || [];
+    },
+    enabled: !!id,
+  });
+};
