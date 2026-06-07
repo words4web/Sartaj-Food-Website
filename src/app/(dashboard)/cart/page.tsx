@@ -1,55 +1,103 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ShoppingBag, ShoppingCart } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { useTranslations } from "next-intl";
-import { MOCK_CART_ITEMS } from "@/data/cartData";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useGetCart } from "@/services/cart/cart.hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store";
+import { CartActions } from "@/components/cart/CartActions";
+import { CartSkeleton } from "@/components/skeletons/CartSkeleton";
 
 export default function CartPage() {
   const router = useRouter();
   const t = useTranslations();
-  const cartItems = MOCK_CART_ITEMS;
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.total, 0);
-  const shipping = 10;
-  const tax = subtotal * 0.1;
-  const total = subtotal + shipping + tax;
+  const { isLoading } = useGetCart(true);
+
+  const cart = useSelector((state: RootState) => state.cart?.cart);
+  const cartItems = cart?.items || [];
+
+  const subtotal = cart?.subtotal || 0;
+
+  if (isLoading) {
+    return <CartSkeleton />;
+  }
 
   return (
     <main className="min-h-screen bg-muted/50">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-foreground mb-8">{t("cart.cart")}</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-8 flex items-center gap-3">
+          <ShoppingBag className="h-8 w-8 text-primary" />
+          {t("cart.cart")}
+        </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-card rounded-lg shadow overflow-hidden">
-              {cartItems.length > 0 ? (
-                <div className="divide-y">
-                  {cartItems.map((item) => (
-                    <div key={item.id} className="p-6 flex justify-between items-center">
-                      <div>
-                        <h3 className="font-bold text-foreground">{item.name}</h3>
-                        <p className="text-muted-foreground">
-                          {t("cart.quantity")}: {item.qty}
-                        </p>
+            <div className="bg-card rounded-xl shadow border border-border overflow-hidden">
+              {cartItems?.length > 0 ? (
+                <div className="divide-y divide-border">
+                  {cartItems?.map((item) => {
+                    const product = item?.product;
+                    const name =
+                      typeof product?.name === "object" ? product?.name?.en : product?.name;
+                    const price = product?.unitPrice ?? product?.price ?? 0;
+                    const imageSrc = product?.images?.[0] || product?.image;
+
+                    return (
+                      <div key={item?.productId} className="p-5 flex items-center gap-4">
+                        {/* Product image */}
+                        <div className="h-20 w-20 rounded-lg bg-muted/50 flex items-center justify-center shrink-0 overflow-hidden border border-border">
+                          {imageSrc ? (
+                            <img
+                              src={imageSrc}
+                              alt={typeof name === "string" ? name : "Product"}
+                              className="h-full w-full object-contain p-1"
+                            />
+                          ) : (
+                            <span className="text-3xl">{product?.emoji || "📦"}</span>
+                          )}
+                        </div>
+
+                        {/* Name + price */}
+                        <div className="flex-1 min-w-0">
+                          <Link
+                            href={ROUTES.PRODUCTS(item.productId)}
+                            className="font-semibold text-foreground text-sm line-clamp-2 hover:text-primary transition-colors"
+                          >
+                            {typeof name === "string" ? name : "Product"}
+                          </Link>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            ¥{price?.toLocaleString()} / unit
+                          </p>
+                        </div>
+
+                        {/* Quantity stepper (CartActions card mode) */}
+                        {product && (
+                          <div className="w-28 shrink-0">
+                            <CartActions product={product} mode="card" />
+                          </div>
+                        )}
+
+                        {/* Line total */}
+                        <div className="text-right shrink-0 w-20">
+                          <p className="font-bold text-foreground text-sm">
+                            ¥{(price * item?.quantity)?.toLocaleString()}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-lg font-bold text-foreground">
-                          ¥{item.total.toFixed(2)}
-                        </p>
-                        <Button variant="danger" size="sm" className="mt-2">
-                          {t("cart.removeItem")}
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
-                <div className="p-12 text-center">
-                  <p className="text-muted-foreground mb-4">{t("cart.emptyCart")}</p>
-                  <Button variant="link" asChild>
+                <div className="p-16 text-center flex flex-col items-center gap-4">
+                  <ShoppingCart className="h-12 w-12 text-muted-foreground/40" />
+                  <p className="text-muted-foreground text-base">{t("cart.emptyCart")}</p>
+                  <Button variant="default" asChild className="rounded-xl">
                     <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping")}</Link>
                   </Button>
                 </div>
@@ -57,33 +105,26 @@ export default function CartPage() {
             </div>
           </div>
 
+          {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-card rounded-lg shadow p-6 sticky top-4">
+            <div className="bg-card rounded-xl shadow border border-border p-6 sticky top-4">
               <h2 className="text-xl font-bold text-foreground mb-6">
                 {t("checkout.orderSummary")}
               </h2>
 
-              <div className="space-y-4 mb-6 border-b pb-6">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">{t("cart.subtotal")}</span>
-                  <span className="font-medium text-foreground">¥{subtotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">{t("cart.shipping")}</span>
-                  <span className="font-medium text-foreground">¥{shipping.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">{t("cart.tax")}</span>
-                  <span className="font-medium text-foreground">¥{tax.toFixed(2)}</span>
-                </div>
-              </div>
-
               <div className="flex justify-between mb-6">
-                <span className="text-lg font-bold text-foreground">{t("cart.total")}</span>
-                <span className="text-lg font-bold text-primary">¥{total.toFixed(2)}</span>
+                <span className="text-lg font-bold text-foreground">{t("cart.subtotal")}</span>
+                <span className="text-lg font-bold text-primary">
+                  ¥{subtotal?.toLocaleString()}
+                </span>
               </div>
 
-              <Button className="w-full" size="lg" onClick={() => router.push(ROUTES.CHECKOUT)}>
+              <Button
+                className="w-full rounded-xl font-bold"
+                size="lg"
+                disabled={cartItems?.length === 0}
+                onClick={() => router.push(ROUTES.CHECKOUT)}
+              >
                 {t("cart.proceedToCheckout")}
               </Button>
 

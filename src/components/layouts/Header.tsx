@@ -36,7 +36,7 @@ export function Header() {
   const dispatch = useDispatch();
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
   const currentConfig = themes[currentTheme];
-  const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.totalItems || 0);
+  const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.items?.length || 0);
 
   const handleThemeSelect = (theme: Theme) => {
     dispatch(setTheme(theme));

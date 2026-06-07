@@ -26,7 +26,8 @@
     "noResults": "結果が見つかりません",
     "viewAll": "すべて表示",
     "all": "すべて",
-    "somethingWentWrong": "何か問題が発生しました。もう一度お試しください。"
+    "somethingWentWrong": "何か問題が発生しました。もう一度お試しください。",
+    "add": "追加"
   },
   "auth": {
     "login": "ログイン",
@@ -186,7 +187,8 @@
     "updateCart": "カートを更新",
     "clearCart": "カートをクリア",
     "removeItem": "商品を削除",
-    "quantity": "数量"
+    "quantity": "数量",
+    "inCart": "カートに入っています"
   },
   "wishlist": {
     "wishlist": "ウィッシュリスト",

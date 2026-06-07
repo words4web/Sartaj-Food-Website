@@ -5,11 +5,9 @@ import { useTranslations } from "next-intl";
 import { SAMPLE_PRODUCTS } from "@/data/productsData";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/common/ProductCard";
-import { IProduct } from "@/types/product/product.types";
 
 export default function ProductsPage() {
   const t = useTranslations();
-  const [cart, setCart] = useState<(string | number)[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const categories = ["All", ...new Set(SAMPLE_PRODUCTS.map((p) => p?.category))];
@@ -17,10 +15,6 @@ export default function ProductsPage() {
     selectedCategory === "All"
       ? SAMPLE_PRODUCTS
       : SAMPLE_PRODUCTS.filter((p) => p?.category === selectedCategory);
-
-  const toggleCart = (id: string | number) => {
-    setCart((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
-  };
 
   const getCategoryLabel = (cat: string) => {
     switch (cat.toLowerCase()) {
@@ -44,12 +38,7 @@ export default function ProductsPage() {
   return (
     <main className="min-h-screen bg-muted/50">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-foreground">{t("products.products")}</h1>
-          <div className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium">
-            {t("common.cart")} ({cart.length})
-          </div>
-        </div>
+        <h1 className="text-3xl font-bold text-foreground mb-8">{t("products.products")}</h1>
 
         {/* Category filter tabs */}
         <div className="mb-8 flex gap-2 flex-wrap">
@@ -67,12 +56,7 @@ export default function ProductsPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts?.map((product) => (
-            <ProductCard
-              key={product?.id}
-              product={product}
-              onAddToCart={toggleCart}
-              isAddedToCart={cart?.includes(product?.id)}
-            />
+            <ProductCard key={product?.id} product={product} />
           ))}
         </div>
       </div>

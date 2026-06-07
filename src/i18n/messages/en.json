@@ -26,7 +26,8 @@
     "noResults": "No results found",
     "viewAll": "View All",
     "all": "All",
-    "somethingWentWrong": "Something went wrong. Please try again."
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "add": "Add"
   },
   "auth": {
     "login": "Login",
@@ -186,7 +187,8 @@
     "updateCart": "Update Cart",
     "clearCart": "Clear Cart",
     "removeItem": "Remove Item",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "inCart": "in cart"
   },
   "wishlist": {
     "wishlist": "Wishlist",
