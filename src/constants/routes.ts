@@ -12,6 +12,7 @@ export const ROUTES = {
   CHECKOUT: "/checkout",
   ORDERS: "/orders",
   PRODUCTS: (id?: string | number) => (id ? `/products/${id}` : "/products"),
+  PRODUCTS_BY_CATEGORY: (categoryId: string) => `/products?category=${categoryId}`,
   PROFILE: "/profile",
 };
 
