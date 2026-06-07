@@ -158,7 +158,18 @@
     "includesTax": "{rate}%税込み: ¥{amount}",
     "ageWarning": "20歳未満購入禁止: この商品にはアルコールが含まれているか、成人向けに制限されています。",
     "loadError": "商品情報の読み込みに失敗しました。時間をおいてもう一度お試しください。",
-    "ageRestrictionBadge": "20歳以上限定"
+    "ageRestrictionBadge": "20歳以上限定",
+    "writeReview": "レビューを書く",
+    "reviewsTitle": "カスタマーレビュー",
+    "ratingRequired": "評価を選択してください",
+    "reviewRequired": "レビュー内容を入力してください",
+    "reviewMinLength": "レビューは3文字以上で入力してください",
+    "reviewMaxLength": "レビューは1000文字以内で入力してください",
+    "reviewSuccess": "レビューを投稿しました！",
+    "alreadyReviewed": "この商品に対するレビューは既に投稿されています。",
+    "star": "星",
+    "stars": "星",
+    "averageRatingLabel": "平均評価"
   },
   "cart": {
     "cart": "カート",

@@ -153,16 +153,16 @@ src/
 
 ## Coding Conventions
 
-| Concern                 | Rule                                                                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| **Prop interfaces**     | Always define in `src/types/<domain>/<domain>.types.ts`. **Never inline inside component files.** Import with `import type { ... }`. |
-| **UI strings / labels** | Always use `useTranslations()` — never hardcode user-facing text                                                                     |
-| **Navigation**          | Use `ROUTES.*` from `src/constants/routes.ts`                                                                                        |
-| **New page routes**     | Add under `src/app/(dashboard)/` following App Router conventions                                                                    |
-| **New components**      | Place in `src/components/<domain>/` (create the folder if needed)                                                                    |
-| **Skeleton loaders**    | Add to `src/components/skeletons/`                                                                                                   |
-| **Global styles**       | Design tokens and scrollbar in `globals.css`; component-level layout via Tailwind classes                                            |
-| **Icons**               | Use `lucide-react`                                                                                                                   |
-| **Notifications**       | Use `sonner` (`toast.success / toast.error`)                                                                                         |
-| **API query keys**      | Follow `[domain, id?, extraParam?]` pattern in React Query hooks                                                                     |
-| **Builds/type checks**  | Only run for major architectural changes — not after every small edit                                                                |
+| Concern                 | Rule                                                                                                                                                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Prop interfaces**     | Always define in `src/types/<domain>/<domain>.types.ts`. **Never inline inside component files.** Import with `import type { ... }`.                                                                                     |
+| **UI strings / labels** | Always use `useTranslations()` — never hardcode user-facing text                                                                                                                                                         |
+| **Navigation**          | Use `ROUTES.*` from `src/constants/routes.ts`                                                                                                                                                                            |
+| **New page routes**     | Add under `src/app/(dashboard)/` following App Router conventions                                                                                                                                                        |
+| **New components**      | Place in `src/components/<domain>/` (create the folder if needed)                                                                                                                                                        |
+| **Skeleton loaders**    | Add to `src/components/skeletons/`. **MANDATORY**: Use skeletons or common loaders (`CommonLoader`) and error states (`CommonError`) for all async states instead of custom spinners or raw errors.                      |
+| **Global styles**       | Design tokens and scrollbar in `globals.css`; component-level layout via Tailwind classes                                                                                                                                |
+| **Icons**               | Use `lucide-react`                                                                                                                                                                                                       |
+| **Notifications**       | Use `sonner` (`toast.success / toast.error`)                                                                                                                                                                             |
+| **API query keys**      | Follow `[domain, id?, extraParam?]` pattern in React Query hooks                                                                                                                                                         |
+| **Builds/type checks**  | **CRITICAL**: Do NOT run type checks (e.g. `pnpm type-check`) or builds (e.g. `pnpm build`) for minor or incremental changes. Only execute them for major architectural shifts or when explicitly requested by the user. |
