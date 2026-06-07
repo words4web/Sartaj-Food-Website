@@ -42,7 +42,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold text-foreground">{displayTitle}</h2>
           <Link
-            href={ROUTES.PRODUCTS}
+            href={ROUTES.PRODUCTS()}
             className="text-primary hover:text-primary font-medium text-sm"
           >
             {t("common.viewAll")}

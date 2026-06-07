@@ -44,6 +44,14 @@ export interface IProduct {
   };
   createdAt?: string | Date;
   updatedAt?: string | Date;
+  netWeightKg?: number;
+  caseQuantity?: number;
+  sellingUnit?: string;
+  productType?: string;
+  tax?: {
+    amount?: number;
+    rate?: number;
+  };
 }
 
 export interface ICategory {
@@ -92,4 +100,42 @@ export interface FilterProductsResponse {
     page: number;
     limit: number;
   };
+}
+
+export interface RelatedProductsProps {
+  productId: string;
+}
+
+export interface ProductImageGalleryProps {
+  product: IProduct;
+  name: string;
+  activeImage: string;
+  onSetActiveImage: (img: string) => void;
+}
+
+export interface ProductInfoProps {
+  product: IProduct;
+  name: string;
+  description: string;
+  manufacturerName: string | undefined;
+  price: number;
+  originalPrice: number;
+  isDiscounted: boolean;
+  discountPercent: number;
+  isOutOfStock: boolean;
+}
+
+export interface ProductCartActionsProps {
+  product: IProduct;
+  productId: string;
+  isOutOfStock: boolean;
+  localQuantity: number;
+  quantityInCart: number;
+  isAddPending: boolean;
+  isUpdatePending: boolean;
+  isRemovePending: boolean;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  onAddToCart: () => void;
+  onRemoveFromCart: () => void;
 }

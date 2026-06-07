@@ -54,7 +54,7 @@ export default function OrdersPage() {
           <div className="bg-card rounded-lg shadow p-12 text-center">
             <p className="text-muted-foreground mb-4">{t("orders.noOrders")}</p>
             <Button variant="link" asChild>
-              <Link href={ROUTES.PRODUCTS}>{t("cart.continueShipping")}</Link>
+              <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping")}</Link>
             </Button>
           </div>
         )}

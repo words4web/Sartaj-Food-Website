@@ -16,7 +16,7 @@ export function CategoriesGrid() {
         <div className="flex items-center justify-between mb-12">
           <h2 className="text-3xl font-bold text-foreground">{t("home.shopByCategories")}</h2>
           <Link
-            href={ROUTES.PRODUCTS}
+            href={ROUTES.PRODUCTS()}
             className="text-primary hover:text-primary font-medium text-sm"
           >
             {t("home.allCategories")} →

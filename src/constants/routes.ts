@@ -11,8 +11,8 @@ export const ROUTES = {
   CART: "/cart",
   CHECKOUT: "/checkout",
   ORDERS: "/orders",
-  PRODUCTS: "/products",
+  PRODUCTS: (id?: string | number) => (id ? `/products/${id}` : "/products"),
   PROFILE: "/profile",
-} as const;
+};
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES];

@@ -52,13 +52,12 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <Link href={ROUTES.HOME} className="flex items-center gap-2 min-w-fit">
+            <Link href={ROUTES.HOME} className="flex items-center min-w-fit">
               <img
                 src="/sartaj_logo.svg"
                 alt="Sartaj Foods Logo"
-                className="h-8 w-auto object-contain"
+                className="h-12 w-auto object-contain"
               />
-              <span className="text-lg font-bold text-foreground">Sartaj Foods</span>
             </Link>
 
             {/* Search Bar - Desktop */}
