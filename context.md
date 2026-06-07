@@ -71,6 +71,13 @@
 - **Simplified Cart Page Summary**:
   - Streamlined the checkout Summary card on the Cart page ([`page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/cart/page.tsx>)) to display only the Subtotal field returned directly from the backend, removing shipping, tax, and grand total lines.
   - Reused `<CartActions mode="card" />` for cart items to execute debounced updates and background store refreshes seamlessly.
+- **Dynamic Categories Carousel Grid**:
+  - Created [`CategoryCard.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/category/CategoryCard.tsx) and service layers to fetch categories tree dynamically via React Query (`useGetCategories()`) from the backend `/customer/categories` endpoint.
+  - Refactored [`CategoriesGrid.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/home/CategoriesGrid.tsx) as a horizontal carousel. Hides scrollbars via `.no-scrollbar` and offers smooth navigation using Left and Right arrow buttons.
+  - Added [`CategorySkeleton.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/skeletons/CategorySkeleton.tsx) and integrated it with `CommonError` for error/loading boundary protection.
+- **Client-Side Auth Guard & Loading Screen**:
+  - Configured client-side redirection in [`layout.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/layout.tsx>) redirecting unauthenticated users to `/login`.
+  - Created a dedicated fullscreen loading component [`AuthLoadingOverlay.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/common/AuthLoadingOverlay.tsx) showing a pulsing logo, themed bounce dots, and a blurred backdrop, rendering while authentication resolves.
 
 ## Next Steps / Outstanding Bugs
 

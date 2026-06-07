@@ -56,13 +56,20 @@ export interface IProduct {
 }
 
 export interface ICategory {
-  id: string;
-  name: string;
+  id?: string;
+  _id?: string;
+  name: string | { en?: string; ja?: string; ne?: string; hi?: string; bn?: string };
   description?: string;
   icon?: string;
-  productCount: number;
+  image?: string;
+  productCount?: number;
   parentId?: string;
   children?: ICategory[];
+  subCategories?: ICategory[];
+}
+
+export interface CategoryCardProps {
+  category: ICategory;
 }
 
 export interface IProductFilter {
