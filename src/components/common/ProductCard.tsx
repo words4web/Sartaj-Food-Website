@@ -2,26 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Heart, ShoppingCart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { IProduct } from "@/types/product/product.types";
 import { Button } from "@/components/ui/button";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { ROUTES } from "@/constants/routes";
+import { CartActions } from "@/components/cart/CartActions";
 
 interface ProductCardProps {
   product?: IProduct;
   badgeOverride?: string;
-  onAddToCart?: (id: string | number) => void;
-  isAddedToCart?: boolean;
 }
 
-export function ProductCard({
-  product,
-  badgeOverride,
-  onAddToCart,
-  isAddedToCart = false,
-}: ProductCardProps) {
+export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const t = useTranslations();
 
@@ -67,13 +61,6 @@ export function ProductCard({
         {activeBadge}
       </span>
     );
-  };
-
-  const handleCartClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (id && onAddToCart) {
-      onAddToCart(id);
-    }
   };
 
   return (
@@ -122,34 +109,32 @@ export function ProductCard({
           </h3>
         </Link>
 
-        <div>
+        <div className="flex items-center justify-between gap-2 mt-auto pt-3 border-t border-border/60">
           {/* Price */}
-          <div className="flex items-baseline gap-2 mb-3">
-            <span className="text-lg font-bold text-foreground">¥{price?.toLocaleString()}</span>
-            {isDiscounted && originalPrice && originalPrice > price && (
-              <>
-                <span className="text-xs text-muted-foreground line-through">
-                  ¥{originalPrice.toLocaleString()}
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-baseline gap-1 flex-wrap">
+              <span className="text-base font-black text-foreground leading-none">
+                ¥{price?.toLocaleString()}
+              </span>
+              {isDiscounted && originalPrice && originalPrice > price && (
+                <span className="text-[10px] text-muted-foreground line-through leading-none">
+                  ¥{originalPrice?.toLocaleString()}
                 </span>
-                {discountPercent && (
-                  <span className="text-xs text-green-600 font-semibold">
-                    ({discountPercent}% off)
-                  </span>
-                )}
-              </>
+              )}
+            </div>
+            {isDiscounted && discountPercent && (
+              <span className="text-[10px] text-green-600 font-bold mt-0.5 leading-none">
+                {discountPercent}% OFF
+              </span>
             )}
           </div>
 
-          {/* Add to Cart Button */}
-          <Button
-            className="w-full cursor-pointer rounded-xl"
-            size="sm"
-            variant={isAddedToCart ? "destructive" : "default"}
-            onClick={handleCartClick}
-          >
-            <ShoppingCart className="h-4 w-4" />
-            <span>{isAddedToCart ? t("cart.removeItem") : t("products.addToCart")}</span>
-          </Button>
+          {/* Cart Actions */}
+          {product && (
+            <div className="w-28 shrink-0">
+              <CartActions product={product} mode="card" />
+            </div>
+          )}
         </div>
       </div>
     </div>

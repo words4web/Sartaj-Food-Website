@@ -26,7 +26,8 @@
     "noResults": "कोई परिणाम नहीं",
     "viewAll": "सभी देखें",
     "all": "सभी",
-    "somethingWentWrong": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।"
+    "somethingWentWrong": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
+    "add": "जोड़ें"
   },
   "auth": {
     "login": "लॉगिन",
@@ -186,7 +187,8 @@
     "updateCart": "कार्ट को अपडेट करें",
     "clearCart": "कार्ट साफ़ करें",
     "removeItem": "आइटम हटाएं",
-    "quantity": "मात्रा"
+    "quantity": "मात्रा",
+    "inCart": "कार्ट में"
   },
   "wishlist": {
     "wishlist": "विशलिस्ट",

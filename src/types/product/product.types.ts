@@ -82,8 +82,12 @@ export interface IProductFilter {
 
 export interface ProductCardProps {
   product?: IProduct;
-  onAddToCart?: (id: string | number) => void;
-  isAddedToCart?: boolean;
+  badgeOverride?: string;
+}
+
+export interface CartActionsProps {
+  product: IProduct;
+  mode?: "card" | "detail";
 }
 
 export interface ProductSectionProps {
@@ -124,19 +128,4 @@ export interface ProductInfoProps {
   isDiscounted: boolean;
   discountPercent: number;
   isOutOfStock: boolean;
-}
-
-export interface ProductCartActionsProps {
-  product: IProduct;
-  productId: string;
-  isOutOfStock: boolean;
-  localQuantity: number;
-  quantityInCart: number;
-  isAddPending: boolean;
-  isUpdatePending: boolean;
-  isRemovePending: boolean;
-  onIncrement: () => void;
-  onDecrement: () => void;
-  onAddToCart: () => void;
-  onRemoveFromCart: () => void;
 }

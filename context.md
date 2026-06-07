@@ -62,6 +62,15 @@
 - **Theme-Aware Scrollbar UI**:
   - Implemented dynamic scrollbar styling in `src/app/globals.css` using standard `scrollbar-color`/`scrollbar-width` and WebKit fallbacks.
   - Bound the scrollbar thumb color dynamically to the selected theme's primary color using `color-mix(in oklch, var(--primary) 30%, transparent)` for a premium, themed scroll experience.
+- **Optimistic Cart Actions & Stepper Integration**:
+  - Implemented the unified `CartActions` component in [`CartActions.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/cart/CartActions.tsx). Features card and detail mode layouts updating Redux store state optimistically (`addOrUpdateItem`, `updateItemQuantity`, `removeItem` in `cartSlice.ts`) and synchronising in the background using an 800ms debounce.
+  - Runs automatic background cart updates (`syncCartFromServer`) on both success and error paths of mutations to pull authoritative server totals.
+  - Removed the standalone "Remove" button from Detail Mode, converting the `- qty +` stepper into the single interface control.
+- **Product Specs Component Separation**:
+  - Extracted the static specifications grid metadata layout into a dedicated [`ProductSpecs.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/product/ProductSpecs.tsx) component and deleted the obsolete legacy composite `ProductCartActions.tsx` file.
+- **Simplified Cart Page Summary**:
+  - Streamlined the checkout Summary card on the Cart page ([`page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/cart/page.tsx>)) to display only the Subtotal field returned directly from the backend, removing shipping, tax, and grand total lines.
+  - Reused `<CartActions mode="card" />` for cart items to execute debounced updates and background store refreshes seamlessly.
 
 ## Next Steps / Outstanding Bugs
 

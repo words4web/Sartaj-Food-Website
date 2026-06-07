@@ -1,8 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { cartService } from "./cart.service";
 import { useDispatch } from "react-redux";
 import { setCart, setCartLoading, clearCart as clearCartRedux } from "@/lib/store/cartSlice";
-import { ICart, ICartItem } from "@/types/cart.types";
+import { ICartItem } from "@/types/cart.types";
 
 export const useGetCart = (enabled = true) => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const useGetCart = (enabled = true) => {
         const subtotal = data?.grandTotal || 0;
         const totalPrice = subtotal;
 
-        const cartData: ICart = {
+        const cartData = {
           items,
           totalItems,
           totalPrice,
@@ -48,44 +48,18 @@ export const useGetCart = (enabled = true) => {
   });
 };
 
-export const useAddToCart = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: cartService.addToCart,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-};
+export const useAddToCart = () => useMutation({ mutationFn: cartService.addToCart });
 
-export const useUpdateCartItem = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: cartService.updateCartItem,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-};
+export const useUpdateCartItem = () => useMutation({ mutationFn: cartService.updateCartItem });
 
-export const useRemoveCartItem = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: cartService.removeCartItem,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
-};
+export const useRemoveCartItem = () => useMutation({ mutationFn: cartService.removeCartItem });
 
 export const useClearCart = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   return useMutation({
     mutationFn: cartService.clearCart,
     onSuccess: () => {
       dispatch(clearCartRedux());
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
   });
 };
