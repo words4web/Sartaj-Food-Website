@@ -70,6 +70,7 @@ export interface ICategory {
 
 export interface CategoryCardProps {
   category: ICategory;
+  size?: "sm" | "md";
 }
 
 export interface IProductFilter {

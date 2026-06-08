@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Search, ShoppingCart, User, Menu, X, Palette, Check } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { HEADER_CATEGORIES } from "@/data/navigation";
@@ -30,6 +31,8 @@ import { themes, applyTheme, themeSwatchColors, type Theme } from "@/lib/themes"
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { isAuthenticated, user, logout } = useAuth();
   useGetProfile(isAuthenticated);
 
@@ -37,6 +40,25 @@ export function Header() {
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
   const currentConfig = themes[currentTheme];
   const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.items?.length || 0);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    setSearchValue(searchParams.get("search") || "");
+  }, [searchParams]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = searchValue?.trim();
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set("page", "1");
+    if (query) {
+      params.set("search", query);
+    } else {
+      params.delete("search");
+    }
+    router.push(ROUTES.PRODUCTS_WITH_QUERY(params?.toString()));
+  };
 
   const handleThemeSelect = (theme: Theme) => {
     dispatch(setTheme(theme));
@@ -48,8 +70,14 @@ export function Header() {
   return (
     <>
       {/* Top Header */}
-      <header className="bg-card border-b border-border sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-3">
+      <header className="sticky top-0 z-40 w-full bg-background/50 backdrop-blur-xl backdrop-saturate-[200%] supports-[backdrop-filter]:bg-background/30 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+        {/* Static theme color touch glows behind glassmorphism */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+          <div className="absolute top-1/2 left-[15%] -translate-y-1/2 w-[350px] h-[60px] rounded-full bg-primary/15 blur-[40px]" />
+          <div className="absolute top-1/2 right-[20%] -translate-y-1/2 w-[280px] h-[50px] rounded-full bg-accent/12 blur-[35px]" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <Link href={ROUTES.HOME} className="flex items-center min-w-fit">
@@ -61,16 +89,20 @@ export function Header() {
             </Link>
 
             {/* Search Bar - Desktop */}
-            <div className="hidden md:flex flex-1 max-w-md">
+            <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-1 max-w-md">
               <div className="w-full relative">
                 <input
                   type="text"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                   placeholder={`${t("common.search")}...`}
                   className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
-                <Search className="absolute right-3 top-2.5 h-5 w-5 text-muted-foreground pointer-events-none" />
+                <button type="submit" className="absolute right-3 top-2.5 cursor-pointer">
+                  <Search className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+                </button>
               </div>
-            </div>
+            </form>
 
             {/* Right Actions */}
             <div className="flex items-center gap-4">
@@ -112,7 +144,7 @@ export function Header() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="end"
-                    className="w-56 p-2 rounded-xl shadow-lg border border-border bg-card"
+                    className="w-56 p-2 rounded-xl shadow-lg border border-border/50 bg-card/85 backdrop-blur-lg backdrop-saturate-[180%] supports-[backdrop-filter]:bg-card/70"
                   >
                     {/* <DropdownMenuLabel className="font-semibold text-foreground px-2 py-1.5 text-xs uppercase tracking-wider text-muted-foreground">
                       {t("common.profile")}
@@ -157,7 +189,7 @@ export function Header() {
                         </span>
                       </DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
-                        <DropdownMenuSubContent className="w-52 p-2 rounded-xl shadow-lg border border-border bg-card">
+                        <DropdownMenuSubContent className="w-52 p-2 rounded-xl shadow-lg border border-border/50 bg-card/85 backdrop-blur-lg backdrop-saturate-[180%] supports-[backdrop-filter]:bg-card/70">
                           {(Object.entries(themes) as [Theme, (typeof themes)[Theme]][]).map(
                             ([key, config]) => (
                               <DropdownMenuItem
@@ -218,21 +250,25 @@ export function Header() {
           </div>
 
           {/* Mobile Search */}
-          <div className="md:hidden mt-3">
+          <form onSubmit={handleSearchSubmit} className="md:hidden mt-3">
             <div className="relative">
               <input
                 type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 placeholder={`${t("common.search")}...`}
                 className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <Search className="absolute right-3 top-2.5 h-5 w-5 text-muted-foreground pointer-events-none" />
+              <button type="submit" className="absolute right-3 top-2.5 cursor-pointer">
+                <Search className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </header>
 
       {/* Navigation Menu */}
-      <nav className="bg-card border-b border-border">
+      {/* <nav className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4">
           <div
             className={`flex flex-col md:flex-row md:items-center gap-6 md:gap-8 py-3 ${mobileMenuOpen ? "block" : "hidden md:flex"}`}
@@ -248,7 +284,7 @@ export function Header() {
             ))}
           </div>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 }

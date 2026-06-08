@@ -37,3 +37,26 @@ export const useGetRelatedProducts = (id: string, limit: number = 30) => {
     enabled: !!id,
   });
 };
+
+export const useGetProductsByCategory = (
+  categoryId?: string,
+  params?: { search?: string; page?: number; limit?: number },
+) => {
+  return useQuery({
+    queryKey: ["products", "category", categoryId, params],
+    queryFn: async () => {
+      if (!categoryId || categoryId === "all") {
+        const response = await productService.getAllProducts(params);
+        return {
+          products: response.data?.data || [],
+          meta: response.data?.meta || { total: 0, page: 1, limit: 12 },
+        };
+      }
+      const response = await productService.getProductsByCategory(categoryId, params);
+      return {
+        products: response.data?.data || [],
+        meta: response.data?.meta || { total: 0, page: 1, limit: 12 },
+      };
+    },
+  });
+};

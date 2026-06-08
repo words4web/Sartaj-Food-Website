@@ -23,4 +23,19 @@ export const productService = {
   ): Promise<AxiosResponse<FilterProductsResponse>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.GET_RELATED(id), { params });
   },
+
+  getProductsByCategory: async (
+    categoryId: string,
+    params?: { search?: string; page?: number; limit?: number },
+  ): Promise<AxiosResponse<any>> => {
+    return axiosInstance.get(API_ROUTES.PRODUCTS.GET_BY_CATEGORY(categoryId), { params });
+  },
+
+  getAllProducts: async (params?: {
+    search?: string;
+    page?: number;
+    limit?: number;
+  }): Promise<AxiosResponse<any>> => {
+    return axiosInstance.get(API_ROUTES.PRODUCTS.GET_ALL, { params });
+  },
 };

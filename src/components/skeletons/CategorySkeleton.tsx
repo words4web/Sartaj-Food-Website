@@ -1,11 +1,16 @@
 import { Skeleton } from "./Skeleton";
 
-export function CategoryCardSkeleton() {
+export function CategoryCardSkeleton({ size = "md" }: { size?: "sm" | "md" }) {
+  const isSmall = size === "sm";
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-full border border-border bg-card shrink-0 w-[150px] h-[150px] p-4">
-      <Skeleton className="h-16 w-16 rounded-full" />
-      <Skeleton className="h-3.5 w-16 rounded" />
-      <Skeleton className="h-3 w-10 rounded" />
+    <div
+      className={`flex flex-col items-center justify-center gap-1 rounded-full border border-border bg-card shrink-0 ${
+        isSmall ? "w-[120px] h-[120px] p-2.5" : "w-[150px] h-[150px] p-4"
+      }`}
+    >
+      <Skeleton className={`rounded-full ${isSmall ? "h-13 w-13" : "h-16 w-16"}`} />
+      <Skeleton className={`rounded ${isSmall ? "h-3 w-12" : "h-3.5 w-16"}`} />
+      <Skeleton className={`rounded ${isSmall ? "h-2.5 w-8" : "h-3 w-10"}`} />
     </div>
   );
 }
