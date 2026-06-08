@@ -130,6 +130,7 @@
     "wellnessSubtitle": "Boost your health and immunity with authentic organic teas, herbal supplements, and Ayurvedic ingredients."
   },
   "products": {
+    "allProducts": "All Products",
     "products": "Products",
     "productDetail": "Product Details",
     "price": "Price",
@@ -307,5 +308,11 @@
     "wellness": "Wellness",
     "sweets": "Sweets",
     "beverages": "Beverages"
+  },
+  "notFound": {
+    "title": "Oops! Page Not Found",
+    "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "backHome": "Back to Home",
+    "shopProducts": "Explore Products"
   }
 }

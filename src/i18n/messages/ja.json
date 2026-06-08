@@ -130,6 +130,7 @@
     "wellnessSubtitle": "本物のオーガニックティー、ハーブサプリメント、アーユルヴェーダの成分で健康と免疫力を高めましょう。"
   },
   "products": {
+    "allProducts": "すべての商品",
     "products": "商品",
     "productDetail": "商品詳細",
     "price": "価格",
@@ -307,5 +308,11 @@
     "wellness": "ウェルネス",
     "sweets": "お菓子",
     "beverages": "飲料"
+  },
+  "notFound": {
+    "title": "おっと！ページが見つかりません",
+    "description": "お探しのページは削除されたか、名前が変更されたか、または一時的に利用できない可能性があります。",
+    "backHome": "ホームに戻る",
+    "shopProducts": "商品を見る"
   }
 }

@@ -28,7 +28,7 @@ export function CategoriesGrid() {
   };
 
   return (
-    <section className="py-16 bg-muted/40">
+    <section className="pt-16 pb-8 bg-muted/40">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between mb-12">
           <h2 className="text-3xl font-bold text-foreground">{t("home.shopByCategories")}</h2>

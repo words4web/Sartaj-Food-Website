@@ -78,6 +78,27 @@
 - **Client-Side Auth Guard & Loading Screen**:
   - Configured client-side redirection in [`layout.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/layout.tsx>) redirecting unauthenticated users to `/login`.
   - Created a dedicated fullscreen loading component [`AuthLoadingOverlay.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/common/AuthLoadingOverlay.tsx) showing a pulsing logo, themed bounce dots, and a blurred backdrop, rendering while authentication resolves.
+- **Revamped Products Catalog Page & Routing Helpers**:
+  - Rewrote the Products Catalog page ([`page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/products/page.tsx>)) to display dynamic category selector cards on the left (horizontal scroll on mobile, vertical column on desktop) and the products grid on the right.
+  - Linked active catalog rendering to URL query parameters via Next.js `useSearchParams()`.
+  - Created the `useGetProductsByCategory` React Query hook querying backend endpoints.
+  - Updated [`routes.ts`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/constants/routes.ts) to define separate navigation functions for `ROUTES.PRODUCTS` (by ID or list) and `ROUTES.PRODUCTS_BY_CATEGORY(categoryId)`.
+  - Enabled active visual state highlighting in `CategoryCard.tsx` based on active query params.
+- **Glassmorphic Header & Dropdowns**:
+  - Re-designed the global `Header` with high-fidelity glassmorphism using `bg-background/50 backdrop-blur-xl backdrop-saturate-[200%] supports-[backdrop-filter]:bg-background/30` and a subtle `shadow-[0_4px_30px_rgba(0,0,0,0.03)]`.
+  - Added two static, highly blurred theme-color backdrop glow shapes (`primary/15%` on the left and `accent/12%` on the right) inside the header layer to provide a rich touch of color.
+  - Applied the exact same glassmorphic parameters to the profile dropdown menu container (`DropdownMenuContent`) and the nested theme selector sub-menu panel (`DropdownMenuSubContent`).
+  - Added large, top-aligned global ambient glow pools (`primary/22%` and `accent/18%`) in `RootLayout` (`src/app/layout.tsx`) behind the page elements to naturally showcase the glassmorphism.
+- **Products Page Layout & Scaling Optimizations**:
+  - Constrained the category list sidebar using `lg:sticky lg:top-24 lg:max-h-[calc(100vh-220px)] lg:overflow-y-auto no-scrollbar` to prevent container stretching.
+  - Scaled down circular category card components to `120px` (when `size="sm"`) and updated the inner image container size to `h-13 w-13` to free up space. Adjusted paddings, gaps, and set `line-clamp-2` and `leading-tight` on category name headers to resolve label clipping issues.
+  - Rendered active subcategory selector chips dynamically at the top of the products catalog list in `products/page.tsx`.
+- **Client Link Transitions & Extracted Pagination**:
+  - Extracted pagination control loops from the products catalog page into a reusable `PaginationControls` component under `src/components/common/PaginationControls.tsx`.
+  - Switched pagination transitions to Next.js `<Link>` elements inside `src/components/ui/pagination.tsx` to achieve single-page client transitions and prevent full document reloads.
+- **Localized 404 Page**:
+  - Created a custom, responsive `not-found.tsx` page under `src/app/` wrapped inside the site's default layout with global `<Header />` and `<Footer />` components.
+  - Integrated with `next-intl` localization hooks, adding dedicated translation keys to `en.json`, `ja.json`, `hi.json`, `ne.json`, and `bn.json` files.
 
 ## Next Steps / Outstanding Bugs
 

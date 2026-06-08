@@ -13,6 +13,8 @@ export const ROUTES = {
   ORDERS: "/orders",
   PRODUCTS: (id?: string | number) => (id ? `/products/${id}` : "/products"),
   PRODUCTS_BY_CATEGORY: (categoryId: string) => `/products?category=${categoryId}`,
+  PRODUCTS_WITH_QUERY: (queryString: string) =>
+    queryString ? `/products?${queryString}` : "/products",
   PROFILE: "/profile",
 };
 
