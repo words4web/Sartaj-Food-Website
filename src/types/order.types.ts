@@ -74,3 +74,25 @@ export interface ICreateOrderPayload {
   walletAmount: number;
   idempotencyKey: string;
 }
+
+export interface IPriceBreakdownItem {
+  type: string;
+  name: string | { [key: string]: string };
+  amount: number;
+  message?: string;
+  isNegative?: boolean;
+}
+
+export interface ICheckoutSummary {
+  priceBreakdown: IPriceBreakdownItem[];
+  totalAmount: number;
+  taxTotal: number;
+  couponDiscount: number;
+  walletDebit: number;
+  shippingFee: number;
+  subTotal: number;
+  penaltyAmount: number;
+  otherCharges: number;
+  maxWalletApplicable: number;
+  walletBalance: number;
+}

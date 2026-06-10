@@ -10,6 +10,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  allowedDevOrigins: ["192.168.1.5", "192.168.1.5:3000"],
 };
 
 export default withNextIntl(nextConfig);
