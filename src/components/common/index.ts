@@ -9,3 +9,4 @@ export { LanguageSelector } from "./LanguageSelector";
 export { ThemeSelector } from "./ThemeSelector";
 export { ThemeProvider } from "./ThemeProvider";
 export { Typography } from "./Typography";
+export { ThemedImage } from "./ThemedImage";

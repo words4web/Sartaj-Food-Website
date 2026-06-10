@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { ROUTES } from "@/constants/routes";
 import { CartActions } from "@/components/cart/CartActions";
+import { ThemedImage } from "@/components/common";
 
 interface ProductCardProps {
   product?: IProduct;
@@ -71,15 +72,13 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
           href={ROUTES.PRODUCTS(id)}
           className="absolute inset-0 flex items-center justify-center p-4 cursor-pointer"
         >
-          {imageSrc ? (
-            <img
-              src={imageSrc}
-              alt={typeof name === "string" ? name : "Product image"}
-              className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-            />
-          ) : (
-            <div className="text-6xl select-none">{emoji || "📦"}</div>
-          )}
+          <ThemedImage
+            src={imageSrc}
+            alt={typeof name === "string" ? name : "Product image"}
+            emoji={emoji}
+            className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+            fallbackType="product"
+          />
         </Link>
 
         {/* Badges */}

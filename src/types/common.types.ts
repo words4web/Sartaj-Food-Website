@@ -23,3 +23,13 @@ export interface ParticleCanvasProps {
   type: ParticleType;
   className?: string;
 }
+
+export interface ThemedImageProps {
+  src?: string;
+  alt?: string;
+  emoji?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  fallbackType?: "product" | "category" | "avatar";
+  aspectRatio?: "square" | "video" | "auto";
+}

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { CartActions } from "@/components/cart/CartActions";
 import { CartSkeleton } from "@/components/skeletons/CartSkeleton";
+import { ThemedImage } from "@/components/common";
 
 export default function CartPage() {
   const router = useRouter();
@@ -50,17 +51,14 @@ export default function CartPage() {
 
                     return (
                       <div key={item?.productId} className="p-5 flex items-center gap-4">
-                        {/* Product image */}
                         <div className="h-20 w-20 rounded-lg bg-muted/50 flex items-center justify-center shrink-0 overflow-hidden border border-border">
-                          {imageSrc ? (
-                            <img
-                              src={imageSrc}
-                              alt={typeof name === "string" ? name : "Product"}
-                              className="h-full w-full object-contain p-1"
-                            />
-                          ) : (
-                            <span className="text-3xl">{product?.emoji || "📦"}</span>
-                          )}
+                          <ThemedImage
+                            src={imageSrc}
+                            alt={typeof name === "string" ? name : "Product"}
+                            emoji={product?.emoji}
+                            className="h-full w-full object-contain p-1"
+                            fallbackType="product"
+                          />
                         </div>
 
                         {/* Name + price */}

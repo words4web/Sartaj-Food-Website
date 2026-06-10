@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import { Package } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
+import { ThemedImage } from "@/components/common";
 import { CategoryCardProps } from "@/types/product/product.types";
 import { getLocalizedValue } from "@/utils/product/product.utils";
 
@@ -46,17 +46,12 @@ export function CategoryCard({ category, size = "md" }: CategoryCardProps) {
           isSmall ? "h-13 w-13" : "h-16 w-16"
         }`}
       >
-        {category?.image ? (
-          <img src={category.image} alt={name} className="h-full w-full object-contain p-1" />
-        ) : (
-          <Package
-            className={
-              isSmall
-                ? "h-6 w-6 text-foreground group-hover:text-primary"
-                : "h-8 w-8 text-foreground group-hover:text-primary"
-            }
-          />
-        )}
+        <ThemedImage
+          src={category?.image}
+          alt={name}
+          className="h-full w-full object-contain p-1"
+          fallbackType="category"
+        />
       </div>
       <h3
         className={`font-semibold text-foreground line-clamp-2 px-1 leading-tight ${

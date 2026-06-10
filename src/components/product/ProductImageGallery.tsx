@@ -5,6 +5,7 @@ import { Sparkles, ShieldAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import type { ProductImageGalleryProps } from "@/types/product/product.types";
+import { ThemedImage } from "@/components/common";
 
 const LENS_SIZE = 40;
 
@@ -149,19 +150,17 @@ export function ProductImageGallery({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {mainImage ? (
-          <img
-            ref={imgRef}
-            src={mainImage}
-            alt={name}
-            className="w-full h-full object-contain pointer-events-none transition-transform duration-200 ease-out"
-            style={{
-              transformOrigin: `var(--zoom-x, 50%) var(--zoom-y, 50%)`,
-            }}
-          />
-        ) : (
-          <div className="text-8xl select-none">{emoji || "📦"}</div>
-        )}
+        <ThemedImage
+          ref={imgRef}
+          src={mainImage}
+          alt={name}
+          emoji={emoji}
+          className="w-full h-full object-contain pointer-events-none transition-transform duration-200 ease-out"
+          style={{
+            transformOrigin: `var(--zoom-x, 50%) var(--zoom-y, 50%)`,
+          }}
+          fallbackType="product"
+        />
 
         {isDesktop && (
           <div
@@ -213,9 +212,10 @@ export function ProductImageGallery({
           className="absolute left-[calc(100%+1.5rem)] top-0 w-full aspect-square border border-border bg-card shadow-2xl rounded-2xl overflow-hidden z-50 hidden md:block pointer-events-none"
           style={{ opacity: 0, transition: "opacity 0.2s ease-in-out" }}
         >
-          <img
+          <ThemedImage
             src={mainImage}
             alt={name}
+            emoji={emoji}
             className="absolute max-w-none pointer-events-none"
             style={{
               width: `${100 / (LENS_SIZE / 100)}%`,
@@ -223,6 +223,7 @@ export function ProductImageGallery({
               left: `calc(clamp(0%, var(--zoom-x, 50%) - 20%, 60%) * -2.5)`,
               top: `calc(clamp(0%, var(--zoom-y, 50%) - 20%, 60%) * -2.5)`,
             }}
+            fallbackType="product"
           />
         </div>
       )}
@@ -240,10 +241,12 @@ export function ProductImageGallery({
                   : "border-transparent hover:border-border"
               }`}
             >
-              <img
+              <ThemedImage
                 src={img}
                 className="max-w-full max-h-full object-contain pointer-events-none"
                 alt={`${name} thumbnail ${index + 1}`}
+                emoji={emoji}
+                fallbackType="product"
               />
             </button>
           ))}
