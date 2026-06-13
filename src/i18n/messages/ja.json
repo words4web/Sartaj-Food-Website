@@ -336,6 +336,20 @@
     "sweets": "お菓子",
     "beverages": "飲料"
   },
+  "notifications": {
+    "notifications": "通知",
+    "noNotifications": "まだ通知はありません。",
+    "markAllRead": "すべて既読にする",
+    "enableNotifications": "通知を有効にする",
+    "disableNotifications": "通知を無効にする",
+    "notificationsBlocked": "通知がブロックされています。ブラウザのサイト設定から通知を許可してください。",
+    "notificationsBlockedTitle": "通知がブロックされています",
+    "permissionDenied": "ブラウザ設定でブロックされています",
+    "loadError": "通知を読み込めませんでした。もう一度お試しください。",
+    "markReadError": "通知を既読にできませんでした。",
+    "fallbackTitle": "サルタジ・フーズ",
+    "fallbackBody": "新しい通知があります。"
+  },
   "notFound": {
     "title": "おっと！ページが見つかりません",
     "description": "お探しのページは削除されたか、名前が変更されたか、または一時的に利用できない可能性があります。",

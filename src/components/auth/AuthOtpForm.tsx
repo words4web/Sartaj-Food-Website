@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Lock, ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
 
 interface AuthOtpFormProps {
   otp: string;
@@ -24,6 +25,22 @@ export function AuthOtpForm({
   onBack,
 }: AuthOtpFormProps) {
   const t = useTranslations("auth");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const focusInput = () => {
+      requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
+    };
+
+    focusInput();
+
+    window.addEventListener("focus", focusInput);
+    return () => {
+      window.removeEventListener("focus", focusInput);
+    };
+  }, []);
 
   return (
     <form
@@ -42,10 +59,12 @@ export function AuthOtpForm({
             <Lock className="h-5 w-5" />
           </div>
           <input
+            ref={inputRef}
             type="text"
             id="otp"
             name="otp"
             required
+            autoFocus
             value={otp}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "").slice(0, 6);

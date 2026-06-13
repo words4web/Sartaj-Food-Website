@@ -16,6 +16,7 @@ export const ROUTES = {
   PRODUCTS_WITH_QUERY: (queryString: string) =>
     queryString ? `/products?${queryString}` : "/products",
   PROFILE: "/profile",
+  NOTIFICATIONS: "/notifications",
 };
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES];

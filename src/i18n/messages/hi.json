@@ -336,6 +336,20 @@
     "sweets": "मिठाइयाँ",
     "beverages": "पेय पदार्थ"
   },
+  "notifications": {
+    "notifications": "सूचनाएं",
+    "noNotifications": "अभी तक कोई सूचना नहीं है।",
+    "markAllRead": "सभी पढ़ी हुई के रूप में चिह्नित करें",
+    "enableNotifications": "सूचनाएं सक्षम करें",
+    "disableNotifications": "सूचनाएं बंद करें",
+    "notificationsBlocked": "सूचनाएं ब्लॉक हैं। कृपया ब्राउज़र की साइट सेटिंग में जाकर इन्हें चालू करें।",
+    "notificationsBlockedTitle": "सूचनाएं ब्लॉक हैं",
+    "permissionDenied": "ब्राउज़र सेटिंग में ब्लॉक है",
+    "loadError": "सूचनाएं लोड नहीं हो सकीं। कृपया पुनः प्रयास करें।",
+    "markReadError": "सूचना को पढ़ा हुआ चिह्नित करने में विफल।",
+    "fallbackTitle": "सरताज फूड्स",
+    "fallbackBody": "आपके पास एक नई सूचना है।"
+  },
   "notFound": {
     "title": "उफ़! पेज नहीं मिला",
     "description": "आप जो पेज ढूंढ रहे हैं वह शायद हटा दिया गया है, उसका नाम बदल दिया गया है, या अस्थायी रूप से अनुपलब्ध है।",
