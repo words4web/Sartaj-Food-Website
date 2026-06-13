@@ -1,13 +1,7 @@
-# v0 sandbox internal files
-__v0_runtime_loader.js
-__v0_devtools.tsx
-__v0_jsx-dev-runtime.ts
-.snowflake/
-.v0-trash/
-.vercel/
-
 # Dependencies
 node_modules/
+jspm_packages/
+web_modules/
 
 # Next.js build and outputs
 .next/
@@ -15,25 +9,63 @@ out/
 build/
 dist/
 
-# Environment variables
-.env
-.env.*
-!.env.example
+# Turborepo / Turbopack
+.turbo/
 
-# Logs
+# Debug and Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
-# IDE settings
-.vscode/
-.idea/
+# Environment variables
+.env
+.env.*
+!.env.example
 
 # OS files
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs and Editors
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.settings/
+
+# Testing and Coverage
+coverage/
+.nyc_output/
+cypress/screenshots/
+cypress/videos/
+
+# Tooling and caches
+.eslintcache
+.stylelintcache
+.npm/
+.pnpm-store/
+.yarn/
+.cache/
+.parcel-cache/
 
 # TypeScript
 *.tsbuildinfo
+
+# Temporary/Backup files
+*.tmp
+*.bak
+*~
+.fuse_hidden*
