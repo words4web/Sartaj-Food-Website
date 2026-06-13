@@ -32,6 +32,12 @@ export interface VerifyOtpPayload {
   email?: string;
   mobileNumber?: string;
   otp: string;
+  deviceInfo?: {
+    fcmToken?: string | null;
+    platform?: string | null;
+    OSVersion?: string | null;
+    language?: string | null;
+  } | null;
 }
 
 export interface ResendOtpPayload {

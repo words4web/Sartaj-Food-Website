@@ -2,7 +2,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { authService } from "./auth.service";
 import { useDispatch } from "react-redux";
 import { setAuthUser, updateAuthUser } from "@/lib/store/authSlice";
+import { setFcmToken } from "@/lib/store/notificationSlice";
 import { ROUTES } from "@/constants/routes";
+import { STORAGE_KEYS } from "@/constants/storage";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import {
@@ -52,7 +54,18 @@ export const useVerifyOtp = () => {
   const dispatch = useDispatch();
 
   return useMutation({
-    mutationFn: (data: { isLogin: boolean; emailOrPhone: string; email: string; otp: string }) => {
+    mutationFn: (data: {
+      isLogin: boolean;
+      emailOrPhone: string;
+      email: string;
+      otp: string;
+      deviceInfo?: {
+        fcmToken?: string | null;
+        platform?: string | null;
+        OSVersion?: string | null;
+        language?: string | null;
+      } | null;
+    }) => {
       const identifierPayload = getAuthIdentifierPayload(
         data?.isLogin,
         data?.emailOrPhone,
@@ -61,12 +74,25 @@ export const useVerifyOtp = () => {
       const payload = {
         ...identifierPayload,
         otp: data.otp,
+        deviceInfo: data.deviceInfo,
       };
       return authService.verifyOtp(payload);
     },
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => {
       toast.success(t("loginSuccess"));
       const { user, accessToken } = response?.data?.data;
+
+      const fcmTokenVal = variables?.deviceInfo?.fcmToken;
+      const langVal = variables?.deviceInfo?.language;
+      if (fcmTokenVal) {
+        if (typeof window !== "undefined") {
+          localStorage.setItem(STORAGE_KEYS.FCM_TOKEN, fcmTokenVal);
+          if (langVal) localStorage.setItem(STORAGE_KEYS.FCM_LANG, langVal);
+          localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS_ENABLED, "true");
+        }
+        dispatch(setFcmToken(fcmTokenVal));
+      }
+
       dispatch(setAuthUser({ user, accessToken }));
 
       setTimeout(() => {

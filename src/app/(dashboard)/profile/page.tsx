@@ -20,6 +20,8 @@ import { AddressForm } from "./components/AddressForm";
 import { ConfirmModal } from "@/components/common/ConfirmModal";
 import { CommonLoader } from "@/components/ui/common-loader";
 import { CommonError } from "@/components/ui/common-error";
+import { NotificationToggle } from "@/components/notifications/NotificationToggle";
+import { BlockedPermissionBanner } from "@/components/notifications/BlockedPermissionBanner";
 
 export default function ProfilePage() {
   const t = useTranslations();
@@ -129,12 +131,16 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-foreground mb-8">{t("profile.profile")}</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-6">{t("profile.profile")}</h1>
+
+        {/* Blocked notifications banner */}
+        <BlockedPermissionBanner className="mb-6" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT COLUMN: Profile info */}
+          {/* LEFT COLUMN: Profile info + Notification settings */}
           <div className="lg:col-span-1 space-y-6">
             <ProfileCard user={user} />
+            <NotificationToggle />
           </div>
 
           {/* RIGHT COLUMN: Address Manager */}

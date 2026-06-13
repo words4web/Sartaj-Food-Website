@@ -336,6 +336,20 @@
     "sweets": "মিষ্টি",
     "beverages": "পানীয়"
   },
+  "notifications": {
+    "notifications": "বিজ্ঞপ্তি",
+    "noNotifications": "এখনো কোনো বিজ্ঞপ্তি নেই।",
+    "markAllRead": "সব পঠিত হিসেবে চিহ্নিত করুন",
+    "enableNotifications": "বিজ্ঞপ্তি সক্ষম করুন",
+    "disableNotifications": "বিজ্ঞপ্তি বন্ধ করুন",
+    "notificationsBlocked": "বিজ্ঞপ্তি ব্লক করা আছে। ব্রাউজারের সাইট সেটিংসে গিয়ে বিজ্ঞপ্তি চালু করুন।",
+    "notificationsBlockedTitle": "বিজ্ঞপ্তি ব্লক করা",
+    "permissionDenied": "ব্রাউজার সেটিংসে ব্লক",
+    "loadError": "বিজ্ঞপ্তি লোড করা যায়নি। আবার চেষ্টা করুন।",
+    "markReadError": "বিজ্ঞপ্তি পঠিত চিহ্নিত করতে ব্যর্থ হয়েছে।",
+    "fallbackTitle": "সরতাজ ফুডস",
+    "fallbackBody": "আপনার একটি নতুন বিজ্ঞপ্তি আছে।"
+  },
   "notFound": {
     "title": "ওহ! পেজটি পাওয়া যায়নি",
     "description": "আপনি যে পেজটি খুঁজছেন তা সম্ভবত মুছে ফেলা হয়েছে, নাম পরিবর্তন করা হয়েছে বা সাময়িকভাবে অনুপলব্ধ।",

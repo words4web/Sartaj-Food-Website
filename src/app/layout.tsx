@@ -6,6 +6,7 @@ import { ReduxProvider } from "@/providers/ReduxProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { I18nProvider } from "@/providers/I18nProvider";
 import { LoadingOverlay } from "@/components/common";
+import { NotificationListener } from "@/providers/NotificationListener";
 import "./globals.css";
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
   title: "Sartaj Foods - Authentic South Asian Flavors in Japan",
   description:
     "Premium basmati rice, aromatic spices, and traditional sweets imported directly for authentic culinary experience in Japan",
-  generator: "v0.app",
   icons: {
     icon: [
       {
@@ -53,6 +53,7 @@ export default function RootLayout({
             <I18nProvider>
               {children}
               <LoadingOverlay />
+              <NotificationListener />
             </I18nProvider>
             <Toaster position="top-right" />
             {process.env.NODE_ENV === "production" && <Analytics />}

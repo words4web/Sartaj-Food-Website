@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { loginSchema, signupSchema, otpSchema } from "@/schemas/auth/auth.schema";
 import { useLogin, useSignup, useVerifyOtp, useResendOtp } from "@/services/auth/auth.hooks";
 import { getLocalizedErrorKey } from "@/utils/auth/auth.utils";
+import { useLocale } from "next-intl";
 
 export function useAuthFlow() {
   const loginMutation = useLogin();
   const signupMutation = useSignup();
   const verifyOtpMutation = useVerifyOtp();
   const resendOtpMutation = useResendOtp();
+  const locale = useLocale();
 
   const [isLogin, setIsLogin] = useState(true);
   const [step, setStep] = useState<"email" | "otp">("email");
@@ -163,12 +165,44 @@ export function useAuthFlow() {
       return;
     }
 
+    let deviceInfo = null;
+    try {
+      if (
+        typeof window !== "undefined" &&
+        "Notification" in window &&
+        Notification.permission === "granted"
+      ) {
+        const { getFirebaseMessaging } = await import("@/lib/firebase");
+        const { getToken } = await import("firebase/messaging");
+        const messaging = await getFirebaseMessaging();
+        if (messaging) {
+          const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+          await navigator.serviceWorker.ready;
+          const token = await getToken(messaging, {
+            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+            serviceWorkerRegistration: registration,
+          });
+          if (token) {
+            deviceInfo = {
+              fcmToken: token,
+              platform: "web",
+              language: locale,
+              OSVersion: navigator.userAgent,
+            };
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Failed to retrieve FCM token during login:", err);
+    }
+
     verifyOtpMutation.mutate(
       {
         isLogin,
         emailOrPhone: formData.emailOrPhone,
         email: formData.email,
         otp: formData.otp,
+        deviceInfo,
       },
       {
         onError: (err: any) => {
@@ -182,6 +216,7 @@ export function useAuthFlow() {
   const handleResendOTP = async () => {
     if (resendTimer > 0) return;
     setError("");
+    setFormData((prev) => ({ ...prev, otp: "" }));
 
     resendOtpMutation.mutate(
       {
@@ -223,6 +258,7 @@ export function useAuthFlow() {
 
   const setStepEmail = () => {
     setStep("email");
+    setFormData((prev) => ({ ...prev, otp: "" }));
   };
 
   return {

@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
 import localeReducer from "./localeSlice";
 import cartReducer from "./cartSlice";
+import notificationReducer from "./notificationSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -44,6 +45,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     locale: persistedLocaleReducer,
     cart: persistedCartReducer,
+    notification: notificationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

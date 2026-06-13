@@ -82,8 +82,13 @@ export const API_ROUTES = {
   // Notifications
   NOTIFICATIONS: {
     GET_ALL: "/customer/notification",
+    GET_UNREAD_COUNT: "/customer/notification/unread-count",
     MARK_READ: (id: string) => `/customer/notification/${id}/read`,
-    MARK_ALL_READ: "/customer/notification/mark-all-read",
+    MARK_ALL_READ: "/customer/notification/read-all",
+    DEVICES: {
+      SYNC: "/customer/notification/devices/sync",
+      REMOVE: "/customer/notification/devices/remove",
+    },
   },
 
   // CMS

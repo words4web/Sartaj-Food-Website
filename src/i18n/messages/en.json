@@ -336,6 +336,20 @@
     "sweets": "Sweets",
     "beverages": "Beverages"
   },
+  "notifications": {
+    "notifications": "Notifications",
+    "noNotifications": "You have no notifications yet.",
+    "markAllRead": "Mark all as read",
+    "enableNotifications": "Enable Notifications",
+    "disableNotifications": "Disable Notifications",
+    "notificationsBlocked": "Notifications are blocked. Please enable them in your browser settings under Site Permissions.",
+    "notificationsBlockedTitle": "Notifications Blocked",
+    "permissionDenied": "Blocked in browser settings",
+    "loadError": "Could not load notifications. Please try again.",
+    "markReadError": "Failed to mark notification as read.",
+    "fallbackTitle": "Sartaj Foods",
+    "fallbackBody": "You have a new notification."
+  },
   "notFound": {
     "title": "Oops! Page Not Found",
     "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",

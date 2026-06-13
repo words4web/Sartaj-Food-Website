@@ -23,10 +23,13 @@ import {
   DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 import { useGetProfile } from "@/services/auth/auth.hooks";
+import { useGetCart } from "@/services/cart/cart.hooks";
 import { useSelector, useDispatch } from "react-redux";
 import { setTheme } from "@/lib/store/localeSlice";
 import { RootState } from "@/lib/store";
 import { themes, applyTheme, themeSwatchColors, type Theme } from "@/lib/themes";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { useFcmLifecycle } from "@/hooks/useFcmLifecycle";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,11 +38,15 @@ export function Header() {
   const searchParams = useSearchParams();
   const { isAuthenticated, user, logout } = useAuth();
   useGetProfile(isAuthenticated);
+  useGetCart(isAuthenticated);
 
   const dispatch = useDispatch();
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
   const currentConfig = themes[currentTheme];
   const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.items?.length || 0);
+
+  // Start FCM token sync lifecycle
+  useFcmLifecycle();
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -110,6 +117,9 @@ export function Header() {
               <div className="hidden sm:block">
                 <LanguageSelector variant="light" />
               </div>
+
+              {/* Notifications Bell */}
+              {isAuthenticated && <NotificationBell />}
 
               {/* Cart */}
               <Link

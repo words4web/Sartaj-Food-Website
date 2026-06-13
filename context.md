@@ -1,5 +1,9 @@
 # Project Context: Sartaj Foods Website & Backend
 
+## Developer Constraints
+
+- **Build / Verification Warning**: Do NOT run Next.js production builds (`pnpm build`) or TypeScript type checks (`pnpm run type-check`) automatically after updating components or code. Wait for the user to explicitly instruct if either operation is required.
+
 ## Active Tech Stack
 
 - **Frontend (`Sartaj-website`)**: Next.js 16 (Turbopack), React, Redux Toolkit, Axios, TailwindCSS / Vanilla CSS, next-intl for localization.
