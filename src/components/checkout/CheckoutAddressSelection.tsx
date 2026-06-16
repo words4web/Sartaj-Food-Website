@@ -140,7 +140,10 @@ export function CheckoutAddressSelection({
       {/* Popover / Dialog Popup Selector */}
       {addresses?.length > 0 && (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent className="max-w-2xl max-h-[85vh] flex flex-col p-6 overflow-hidden rounded-2xl">
+          <DialogContent
+            aria-describedby={undefined}
+            className="max-w-2xl max-h-[85vh] flex flex-col p-6 overflow-hidden rounded-2xl"
+          >
             <DialogHeader className="pb-4 border-b border-border/40 shrink-0">
               <DialogTitle className="text-lg font-bold text-foreground">
                 {t("chooseShippingAddress") || "Choose a shipping address"}
