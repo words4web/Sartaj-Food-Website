@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { ShoppingBag } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/ui/button";
@@ -15,24 +16,59 @@ import { CheckoutSkeleton } from "@/components/skeletons/CheckoutSkeleton";
 import { useGetAddresses } from "@/services/address/address.hooks";
 import { useGetCart } from "@/services/cart/cart.hooks";
 import { useGetCheckoutSummary, useCreateOrder } from "@/services/order/order.hooks";
+import { useGetPublicCoupons } from "@/services/coupon/coupon.hooks";
 
 import { CheckoutCartItems } from "@/components/checkout/CheckoutCartItems";
 import { CheckoutAddressSelection } from "@/components/checkout/CheckoutAddressSelection";
 import { CheckoutPaymentMethod } from "@/components/checkout/CheckoutPaymentMethod";
 import { CheckoutPriceBreakdown } from "@/components/checkout/CheckoutPriceBreakdown";
 import { CheckoutWalletSelection } from "@/components/checkout/CheckoutWalletSelection";
+import { CheckoutCouponSelection } from "@/components/checkout/CheckoutCouponSelection";
+import { CheckoutStatusOverlay } from "@/components/checkout/CheckoutStatusOverlay";
+import { CheckoutOverlayState, CheckoutStatus } from "@/types/checkout/checkout.types";
+import { generateIdempotencyKey } from "@/utils/common/common.utils";
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations("checkout");
   const tCommon = useTranslations("common");
+  const queryClient = useQueryClient();
 
   const [selectedAddressId, setSelectedAddressId] = useState<string>("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<string>("");
   const [applyWallet, setApplyWallet] = useState<boolean>(false);
+  const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
+  const [overlayState, setOverlayState] = useState<CheckoutOverlayState>(CheckoutStatus.IDLE);
+  const [createdOrderId, setCreatedOrderId] = useState<string>("");
+  const [dbOrderId, setDbOrderId] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  // Fetch initial Cart and user Addresses
+  useEffect(() => {
+    const status = searchParams?.get("status");
+    const orderId = searchParams?.get("orderId");
+    const id = searchParams?.get("id");
+    const reason = searchParams?.get("reason");
+
+    if (status === "success" && orderId) {
+      setCreatedOrderId(orderId);
+      if (id) {
+        setDbOrderId(id);
+      }
+      setOverlayState(CheckoutStatus.SUCCESS);
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      toast.success(t("orderPlaced") || "Order placed successfully!");
+    } else if (status === "cancelled") {
+      setErrorMessage(reason || t("orderFailed") || "Failed to place order.");
+      setOverlayState(CheckoutStatus.FAILED);
+      toast.error(reason || t("orderFailed") || "Failed to place order.");
+    }
+  }, [searchParams, queryClient, t]);
+
   const {
     data: cart,
     isLoading: cartLoading,
@@ -45,6 +81,7 @@ export default function CheckoutPage() {
     isError: addressesError,
     refetch: refetchAddresses,
   } = useGetAddresses();
+  const { data: publicCoupons = [], isLoading: couponsLoading } = useGetPublicCoupons();
 
   const createOrderMutation = useCreateOrder();
 
@@ -86,6 +123,9 @@ export default function CheckoutPage() {
       return;
     }
 
+    setOverlayState(CheckoutStatus.PENDING);
+    setErrorMessage("");
+
     createOrderMutation.mutate(
       {
         data: {
@@ -93,31 +133,49 @@ export default function CheckoutPage() {
           paymentMethod: selectedPaymentMethod,
           couponCode: appliedCoupon || undefined,
           applyWallet,
+          platform: "web",
         },
+        idempotencyKey,
       },
       {
         onSuccess: (data: any) => {
+          queryClient.invalidateQueries({ queryKey: ["cart"] });
+          queryClient.invalidateQueries({ queryKey: ["profile"] });
+          queryClient.invalidateQueries({ queryKey: ["products"] });
+          queryClient.invalidateQueries({ queryKey: ["notifications"] });
+
           if (data?.approvalUrl) {
-            window.location.href = data.approvalUrl;
+            window.location.replace(data?.approvalUrl);
           } else {
-            // Redirect to orders on COD success
-            router.push(ROUTES.ORDERS);
+            setCreatedOrderId(data?.orderId || data?._id || "N/A");
+            setDbOrderId(data?._id || "");
+            setOverlayState(CheckoutStatus.SUCCESS);
             toast.success(t("orderPlaced") || "Order placed successfully!");
           }
         },
         onError: (err: any) => {
-          toast.error(err?.response?.data?.message || t("orderFailed") || "Failed to place order.");
+          const status = err?.response?.status;
+          const errorCode = err?.response?.data?.meta?.code;
+
+          const isInFlight = status === 409 && errorCode === "IDEMPOTENCY_KEY_IN_FLIGHT";
+
+          if (!isInFlight) {
+            setIdempotencyKey(generateIdempotencyKey());
+          }
+
+          const msg = err?.response?.data?.message || t("orderFailed") || "Failed to place order.";
+          setErrorMessage(msg);
+          setOverlayState(CheckoutStatus.FAILED);
+          toast.error(msg);
         },
       },
     );
   };
 
-  // 1. Loading State
   if (cartLoading || addressesLoading) {
     return <CheckoutSkeleton />;
   }
 
-  // 3. Error States
   if (cartError || addressesError) {
     const handleRetry = () => {
       refetchCart();
@@ -136,9 +194,10 @@ export default function CheckoutPage() {
     );
   }
 
-  // 4. Empty Cart Screen (If no successOrderId and items is empty)
   const cartItems = cart?.items || [];
-  if (cartItems?.length === 0) {
+  const hasStatusParam = !!searchParams?.get("status");
+
+  if (cartItems?.length === 0 && !hasStatusParam && overlayState === CheckoutStatus.IDLE) {
     return (
       <main className="min-h-[70vh] flex flex-col items-center justify-center bg-muted/30 px-6 text-center">
         <span className="text-5xl mb-4">📦</span>
@@ -187,13 +246,18 @@ export default function CheckoutPage() {
               walletBalance={summary?.walletBalance || 0}
               maxWalletApplicable={summary?.maxWalletApplicable || 0}
             />
+            <CheckoutCouponSelection
+              appliedCoupon={appliedCoupon}
+              onApplyCoupon={handleApplyCoupon}
+              onRemoveCoupon={handleRemoveCoupon}
+              publicCoupons={publicCoupons}
+              isAddressSelected={!!selectedAddressId}
+            />
             <CheckoutPriceBreakdown
               summary={summary}
               summaryLoading={summaryLoading}
               summaryFetching={summaryFetching}
               appliedCoupon={appliedCoupon}
-              onApplyCoupon={handleApplyCoupon}
-              onRemoveCoupon={handleRemoveCoupon}
               isPlacingOrder={createOrderMutation.isPending}
               onPlaceOrder={handlePlaceOrder}
               isAddressSelected={!!selectedAddressId}
@@ -202,6 +266,13 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
+
+      <CheckoutStatusOverlay
+        state={overlayState}
+        orderId={createdOrderId}
+        dbOrderId={dbOrderId}
+        errorMessage={errorMessage}
+      />
     </main>
   );
 }

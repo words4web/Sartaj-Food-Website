@@ -5,6 +5,7 @@ import { ShoppingCart, Plus, Minus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/lib/store";
 import { setCart, addOrUpdateItem, updateItemQuantity, removeItem } from "@/lib/store/cartSlice";
@@ -14,7 +15,7 @@ import { ICartItem } from "@/types/cart.types";
 import { debounce } from "@/utils/debounce/debounce.utils";
 import { STOCK_STATUSES } from "@/constants/product.constants";
 
-async function syncCartFromServer(dispatch: ReturnType<typeof useDispatch>) {
+async function syncCartFromServer(dispatch: ReturnType<typeof useDispatch>, queryClient?: any) {
   try {
     const response = await cartService.getCart();
     const data = response?.data?.data;
@@ -26,23 +27,29 @@ async function syncCartFromServer(dispatch: ReturnType<typeof useDispatch>) {
       product: item?.product,
     }));
 
-    dispatch(
-      setCart({
-        items,
-        totalItems: items?.reduce((s, i) => s + i?.quantity, 0),
-        totalPrice: data?.grandTotal || 0,
-        subtotal: data?.grandTotal || 0,
-        tax: 0,
-        shipping: 0,
-        discount: 0,
-      }),
-    );
+    const cartData = {
+      items,
+      totalItems: items?.reduce((s, i) => s + i?.quantity, 0),
+      totalPrice: data?.grandTotal || 0,
+      subtotal: data?.grandTotal || 0,
+      tax: 0,
+      shipping: 0,
+      discount: 0,
+    };
+
+    dispatch(setCart(cartData));
+
+    if (queryClient) {
+      queryClient.setQueryData(["cart"], cartData);
+      queryClient.invalidateQueries({ queryKey: ["order", "checkout-summary"] });
+    }
   } catch {}
 }
 
 export function CartActions({ product, mode = "card" }: CartActionsProps) {
   const t = useTranslations();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   // ── Derive product ID and cart state
   const productId = String(product?._id || product?.id || "");
@@ -63,10 +70,10 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
     debounce(async (qty: number) => {
       try {
         await cartService.updateCartItem({ productId, quantity: qty });
-        syncCartFromServer(dispatch);
+        syncCartFromServer(dispatch, queryClient);
       } catch (err: any) {
         toast.error(err?.response?.data?.message || t("common.error") || "Failed to update cart");
-        syncCartFromServer(dispatch);
+        syncCartFromServer(dispatch, queryClient);
       }
     }, 800),
   );
@@ -75,10 +82,10 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
     debounce(async (qty: number) => {
       try {
         await cartService.addToCart({ productId, quantity: qty });
-        syncCartFromServer(dispatch);
+        syncCartFromServer(dispatch, queryClient);
       } catch (err: any) {
         toast.error(err?.response?.data?.message || t("common.error") || "Failed to add to cart");
-        syncCartFromServer(dispatch);
+        syncCartFromServer(dispatch, queryClient);
       }
     }, 800),
   );
@@ -87,10 +94,10 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
     debounce(async () => {
       try {
         await cartService.removeCartItem(productId);
-        syncCartFromServer(dispatch);
+        syncCartFromServer(dispatch, queryClient);
       } catch (err: any) {
         toast.error(err?.response?.data?.message || t("common.error") || "Failed to remove item");
-        syncCartFromServer(dispatch);
+        syncCartFromServer(dispatch, queryClient);
       }
     }, 800),
   );

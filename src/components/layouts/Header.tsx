@@ -177,7 +177,7 @@ export function Header() {
                     <DropdownMenuSeparator className="bg-border my-1" />
                     <DropdownMenuItem asChild>
                       <Link
-                        href={ROUTES.ORDERS}
+                        href={ROUTES.ORDERS()}
                         className="flex items-center gap-2 w-full px-2 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors cursor-pointer"
                       >
                         {t("orders.orders")}

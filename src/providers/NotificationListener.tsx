@@ -40,14 +40,13 @@ export function NotificationListener() {
         const body = notification?.body ?? data?.body ?? t("fallbackBody");
         const orderId = data?.orderId;
 
-        // Show a toast notification with optional deep-link action
         toast(title, {
           description: body,
           duration: 6000,
           action: orderId
             ? {
                 label: "View Order",
-                onClick: () => router.push(ROUTES.ORDERS),
+                onClick: () => router.push(ROUTES.ORDERS(orderId)),
               }
             : undefined,
         });
@@ -58,6 +57,23 @@ export function NotificationListener() {
         // Refresh the notification list in the panel
         queryClient.invalidateQueries({
           queryKey: NOTIFICATION_QUERY_KEYS.all,
+        });
+
+        // Invalidate orders list queries to refresh order history
+        queryClient.invalidateQueries({
+          queryKey: ["orders"],
+        });
+
+        // Invalidate specific order details if orderId is present in notification payload
+        if (orderId) {
+          queryClient.invalidateQueries({
+            queryKey: ["order", "detail", orderId],
+          });
+        }
+
+        // Invalidate cart queries to sync cart item count/state
+        queryClient.invalidateQueries({
+          queryKey: ["cart"],
         });
       });
     };

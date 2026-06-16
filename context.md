@@ -110,12 +110,39 @@
   - Added a dedicated layout skeleton (`CheckoutSkeleton.tsx`) for a seamless loading experience.
   - Defined types in `src/types/checkout/checkout.types.ts` and `src/types/order.types.ts` (`IPriceBreakdownItem`, `ICheckoutSummary`).
   - Added comprehensive English, Japanese, Hindi, Bengali, and Nepali translations under the `checkout` namespace in all respective JSON translation messages files, including new `"showMore"`, `"showLess"`, `"changeAddress"`, `"selected"`, and `"chooseShippingAddress"` localization keys.
-- **Robust Image Fallback & Theme-Aware Placeholders (`ThemedImage.tsx`)**:
+- **Robust Image Fallback \u0026 Theme-Aware Placeholders (`ThemedImage.tsx`)**:
   - Replaced all raw catalog and product images across the website with a newly created, reusable `<ThemedImage />` component (`src/components/common/ThemedImage.tsx`) wrapped in `React.forwardRef`.
   - Integrates load failure detection (on `onError`) and swaps broken/missing remote image sources with dynamic, theme-aware CSS gradients.
   - Dynamically computes gradients using active theme variables (`bg-gradient-to-br from-primary/15 via-accent/5 to-background`) with centered, drop-shadowed emojis for products (e.g. `emoji || "📦"`), a circular styled package background for categories, and a styled vector icon for avatars.
   - Deployed this across product catalog cards (`ProductCard.tsx`), product image zoom galleries (`ProductImageGallery.tsx`), shopping cart page item rows (`cart/page.tsx`), checkout page items (`CheckoutCartItems.tsx`), and category sliders (`CategoryCard.tsx`).
   - Added type specifications (`ThemedImageProps`) inside `src/types/common.types.ts` supporting generic image variables, style overrides, and standard forward refs.
+
+- **Tabbed Order History Page (`/orders`)**:
+  - Implemented a three-tab order listing page (`active`, `completed`, `cancelled`) using a new `OrderTab` enum defined in `src/types/order.types.ts`.
+  - Created the `useGetOrders` hook in `order.hooks.ts` calling `GET /customer/orders?orderTab=...&page=...&limit=20`.
+  - Extracted `<OrderTabs />` and `<OrderCard />` as separate, reusable components in `src/components/orders/`.
+  - Added `OrderListSkeleton.tsx` in `src/components/skeletons/` for shimmer loading state.
+  - Added `ICustomerOrder`, `ICustomerOrderListItem`, `ICustomerOrdersResponse` types to `order.types.ts`.
+  - Integrated `CommonError` with `refetch` handler for error boundaries.
+  - Added pagination controls (page/totalPages) driven by backend `meta` response.
+  - Added missing i18n keys (`walletLabel`, `paid`, `unpaid`, `cancelReason`, `active`, `completed`, `cancelled`, etc.) across all 5 locale files (`en.json`, `ja.json`, `hi.json`, `bn.json`, `ne.json`).
+
+- **Order Details Page (`/orders/[id]`)**:
+  - Created `src/app/(dashboard)/orders/[id]/page.tsx` with `useGetOrderById` hook.
+  - Decomposed the page into modular sub-components: `OrderDetailHeader`, `OrderDetailInfo`, `OrderDetailItems`, `OrderDetailSummary` — all under `src/components/orders/`.
+  - Created `OrderDetailSkeleton.tsx` in `src/components/skeletons/`.
+  - Added all component prop interfaces (`OrderDetailHeaderProps`, `OrderDetailInfoProps`, `OrderDetailItemsProps`, `OrderDetailSummaryProps`) into `src/types/order.types.ts`.
+
+- **Order Cancellation Flow**:
+  - Fixed typo in `API_ROUTES.ORDERS.CANCEL` in `src/constants/api.ts` (trailing quote+comma removed).
+  - Added `cancelOrder` PATCH method to `orderService` in `order.service.ts`.
+  - Created `useCancelOrder` mutation hook in `order.hooks.ts` that on success invalidates `["orders"]` and `["order", "detail", id]` React Query keys.
+  - Created `<OrderCancelAlert />` component in `src/components/orders/OrderCancelAlert.tsx` that renders a warning banner only when `status === "placed"` and the order is within 1 hour of placement. Props defined in `order.types.ts` as `OrderCancelAlertProps`.
+  - Added a cancellation dialog modal in `orders/[id]/page.tsx` (Radix UI `Dialog`) with a freeform textarea, character counter (`length / 500`), min 10 / max 500 character validation (matching backend `cancelCustomerOrderSchema`), `isPending` loading state, and sonner toast feedback.
+  - Added 11 new i18n keys under `"orders"` namespace (`cancelOrderPrompt`, `cancelOrderPromptDesc`, `cancelReasonPlaceholder`, `cancelReasonHelp`, `cancelReasonMinLength`, `cancelReasonMaxLength`, `cancelOrderConfirm`, `cancelling`, `cancelSuccess`, `cancelFailed`, `characters`) across all 5 locale files.
+
+- **Real-time FCM Notification Query Invalidations**:
+  - Modified `NotificationListener.tsx` to invalidate `["orders"]`, `["order", "detail", orderId]`, and `["cart"]` React Query keys on foreground FCM push notification receipt.
 
 ## Next Steps / Outstanding Bugs
 
@@ -233,4 +260,4 @@ The website queries the backend endpoint `/api/v1/customer/orders/checkout-summa
 - **Dynamic Config Policies**: Dynamically reads weight-based frozen shipping criteria and prefecture-based special area surcharges.
 - **Minimum Order Values (MOV)**: Penalizes transactions falling below the customer's Super Category group order minimum.
 - **Wallet Deductions**: Validates wallet balance and locks the maximum debited amount to `WALLET_MAX_ORDER_PAY_PERCENT` of the final order amount.
-- **Coupon Allocations**: Calculates subtotal discounts and allocates the saved amount across items using the largest remainder algorithm.
+- **Coupon Allocations**: Calculates subtotal discounts (validating coupon minimum purchase requirements and caps against the tax-inclusive post-tax subtotal) and allocates the saved amount across items using the largest remainder algorithm.

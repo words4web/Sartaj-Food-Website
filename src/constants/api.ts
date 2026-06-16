@@ -48,7 +48,7 @@ export const API_ROUTES = {
     GET_BY_ID: (id: string) => `/customer/orders/${id}`,
     CREATE: "/customer/orders",
     CHECKOUT_SUMMARY: "/customer/orders/checkout-summary",
-    CANCEL: (id: string) => `/customer/orders/${id}/cancel',`,
+    CANCEL: (id: string) => `/customer/orders/${id}/cancel`,
   },
 
   // Addresses

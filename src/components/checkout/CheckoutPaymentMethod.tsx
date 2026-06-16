@@ -86,7 +86,10 @@ export function CheckoutPaymentMethod({
 
       {/* Popover / Dialog Popup Selector */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-md flex flex-col p-6 overflow-hidden rounded-2xl">
+        <DialogContent
+          aria-describedby={undefined}
+          className="max-w-md flex flex-col p-6 overflow-hidden rounded-2xl"
+        >
           <DialogHeader className="pb-4 border-b border-border/40 shrink-0">
             <DialogTitle className="text-base font-bold text-foreground">
               {t("selectPaymentMethod") || "Select Payment Method"}
