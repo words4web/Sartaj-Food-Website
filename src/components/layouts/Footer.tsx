@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer className="bg-gray-950 border-t border-white/10 text-white/60 mt-16 font-sans">
       <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-8 mb-12">
           {/* Brand Column */}
           <div className="space-y-4">
             <Link href={ROUTES.HOME} className="flex items-center gap-2 w-fit">
@@ -21,12 +21,11 @@ export function Footer() {
                 alt="Sartaj Foods Logo"
                 className="h-8 w-auto object-contain"
               />
-              <span className="text-xl font-bold text-white tracking-wide">Sartaj Foods</span>
+              <span className="text-xl font-bold text-white tracking-wide">
+                {t("common.appName")}
+              </span>
             </Link>
-            <p className="text-sm text-white/60 leading-relaxed">
-              Authentic South Asian flavors imported directly to Japan. Experience premium Basmati
-              rice, aromatic spices, and traditional sweets.
-            </p>
+            <p className="text-sm text-white/60 leading-relaxed">{t("footer.description")}</p>
             <div className="flex gap-3 pt-2">
               <a
                 href="#"
@@ -130,7 +129,7 @@ export function Footer() {
           {/* Legal Column */}
           <div>
             <h4 className="text-xs font-semibold text-white tracking-wider uppercase mb-4">
-              Legal
+              {t("footer.legal")}
             </h4>
             <ul className="space-y-2.5">
               <li>
@@ -164,7 +163,7 @@ export function Footer() {
         {/* Bottom copyright & language select bar */}
         <div className="border-t border-white/10 pt-8 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} Sartaj Foods. All rights reserved.
+            {t("footer.copyright", { year: new Date()?.getFullYear() })}
           </p>
           <LanguageSelector variant="dark" />
         </div>

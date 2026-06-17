@@ -51,7 +51,7 @@ export function ProductReviews({ productId, hasReviewed = false }: ProductReview
 
   return (
     <section className="mt-12 max-w-7xl mx-auto px-4">
-      <div className="bg-card rounded-2xl border border-border shadow-sm p-6 lg:p-8">
+      <div className="bg-card rounded-2xl border border-border shadow-sm p-4 sm:p-6 lg:p-8">
         <h2 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-2">
           <MessageSquare className="h-6 w-6 text-primary" />
           <span>{t("products.reviewsTitle") || "Customer Reviews"}</span>

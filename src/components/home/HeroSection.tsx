@@ -12,12 +12,32 @@ export function HeroSection() {
 
   const slides = HERO_SLIDES;
 
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+
   const nextSlide = () => {
     setActiveSlide((prev) => (prev + 1) % slides?.length);
   };
 
   const prevSlide = () => {
     setActiveSlide((prev) => (prev - 1 + slides?.length) % slides?.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0]?.clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const touchEnd = e.changedTouches[0]?.clientX;
+    const diff = touchStart - touchEnd;
+    const threshold = 50;
+
+    if (diff > threshold) {
+      nextSlide();
+    } else if (diff < -threshold) {
+      prevSlide();
+    }
+    setTouchStart(null);
   };
 
   useEffect(() => {
@@ -30,7 +50,11 @@ export function HeroSection() {
   const slide = slides[activeSlide];
 
   return (
-    <section className="relative h-96 md:h-[500px] overflow-hidden bg-gray-900">
+    <section
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="relative h-[340px] sm:h-96 md:h-[500px] overflow-hidden bg-gray-900"
+    >
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -45,27 +69,27 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative h-full flex items-center">
-        <div className="max-w-7xl mx-auto px-4 w-full">
+        <div className="max-w-7xl mx-auto px-6 sm:px-4 w-full">
           <div className="max-w-xl">
             {/* Badge */}
-            <div className="inline-block bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium mb-4">
+            <div className="inline-block bg-primary text-primary-foreground px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
               {t(slide?.badgeKey)}
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2 sm:mb-4 leading-tight">
               {t(slide?.titleKey)}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-white/80 mb-8 leading-relaxed max-w-md">
+            <p className="text-sm sm:text-base md:text-lg text-white/80 mb-4 sm:mb-8 leading-relaxed max-w-md">
               {t(slide?.subtitleKey)}
             </p>
 
             {/* CTA Button */}
-            <Button size="lg" className="mt-2">
+            <Button size="sm" className="sm:h-11 sm:px-8 sm:text-sm rounded-lg sm:rounded-xl">
               {t("home.shopEssentials")}
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </div>
         </div>
@@ -76,26 +100,26 @@ export function HeroSection() {
         variant="ghost"
         size="icon"
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-card/20 hover:bg-card/40 text-white z-10 rounded-full"
+        className="absolute left-4 bottom-4 md:bottom-auto md:top-1/2 md:-translate-y-1/2 bg-card/20 hover:bg-card/40 text-white z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6" />
       </Button>
       <Button
         variant="ghost"
         size="icon"
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-card/20 hover:bg-card/40 text-white z-10 rounded-full"
+        className="absolute right-4 bottom-4 md:bottom-auto md:top-1/2 md:-translate-y-1/2 bg-card/20 hover:bg-card/40 text-white z-10 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6" />
       </Button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-5 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setActiveSlide(idx)}
-            className={`h-2 rounded-full transition-all ${
+            className={`h-2 rounded-full transition-all cursor-pointer ${
               idx === activeSlide ? "w-8 bg-card" : "w-2 bg-card/50"
             }`}
           />

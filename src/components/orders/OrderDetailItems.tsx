@@ -11,9 +11,9 @@ export function OrderDetailItems({ items = [] }: OrderDetailItemsProps) {
   const t = useTranslations();
 
   return (
-    <div className="bg-card border border-border/80 rounded-3xl shadow-sm overflow-hidden mb-8">
-      <div className="p-6 border-b border-border/60">
-        <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+    <div className="bg-card border border-border/80 rounded-3xl shadow-sm overflow-hidden mb-6 sm:mb-8">
+      <div className="p-4 sm:p-6 border-b border-border/60">
+        <h2 className="text-base sm:text-lg font-bold text-foreground flex items-center gap-2">
           <Package className="h-5 w-5 text-primary" />
           {t("orders.itemsOrdered") || "Items Ordered"}
         </h2>
@@ -32,9 +32,9 @@ export function OrderDetailItems({ items = [] }: OrderDetailItemsProps) {
           return (
             <div
               key={product?._id || idx}
-              className="p-6 flex gap-4 items-center justify-between flex-wrap md:flex-nowrap"
+              className="p-4 sm:p-6 flex gap-4 items-center justify-between flex-wrap sm:flex-nowrap"
             >
-              <div className="flex gap-4 items-center min-w-0">
+              <div className="flex gap-3 sm:gap-4 items-center min-w-0">
                 <div className="h-16 w-16 bg-muted/50 border border-border/60 rounded-2xl flex items-center justify-center p-2 shrink-0">
                   <ThemedImage
                     src={product?.images?.[0]}

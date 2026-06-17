@@ -45,9 +45,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <body className="font-sans antialiased relative min-h-screen">
-        {/* Large premium global header-backdrop glow pools */}
-        <div className="absolute top-0 left-[10%] w-[600px] h-[450px] rounded-full bg-primary/22 blur-[130px] pointer-events-none -z-50" />
-        <div className="absolute top-0 right-[15%] w-[500px] h-[400px] rounded-full bg-accent/18 blur-[110px] pointer-events-none -z-50" />
+        {/* Large premium global header-backdrop glow pools wrapper to prevent horizontal scroll */}
+        <div className="absolute inset-x-0 top-0 h-[800px] overflow-hidden pointer-events-none -z-50">
+          <div className="absolute top-0 left-[10%] w-[600px] h-[450px] rounded-full bg-primary/22 blur-[130px]" />
+          <div className="absolute top-0 right-[15%] w-[500px] h-[400px] rounded-full bg-accent/18 blur-[110px]" />
+        </div>
         <ReduxProvider>
           <QueryProvider>
             <I18nProvider>

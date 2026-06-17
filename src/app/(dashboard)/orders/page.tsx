@@ -40,12 +40,12 @@ export default function OrdersPage() {
 
   return (
     <main className="min-h-screen bg-muted/30 pb-16">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2.5">
-              <ClipboardList className="h-8 w-8 text-primary" />
+            <h1 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight flex items-center gap-2.5">
+              <ClipboardList className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
               {t("orders.orderHistory") || "Order History"}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">

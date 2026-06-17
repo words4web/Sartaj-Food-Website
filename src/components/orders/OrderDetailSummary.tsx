@@ -13,14 +13,14 @@ export function OrderDetailSummary({
   const t = useTranslations();
 
   return (
-    <div className="bg-card border border-border/80 p-8 rounded-3xl shadow-sm">
-      <h3 className="text-base font-black text-foreground mb-6 flex items-center gap-2">
+    <div className="bg-card border border-border/80 p-5 sm:p-8 rounded-3xl shadow-sm mb-6 sm:mb-8">
+      <h3 className="text-base font-black text-foreground mb-4 sm:mb-6 flex items-center gap-2">
         <FileText className="h-5 w-5 text-primary" />
         {t("checkout.orderSummary") || "Order Summary"}
       </h3>
 
       <div className="space-y-4 text-sm">
-        <div className="flex justify-between text-muted-foreground">
+        <div className="flex justify-between text-foreground/90">
           <span>{t("cart.subtotal") || "Subtotal"}</span>
           <span className="font-semibold text-foreground">¥{subtotal?.toLocaleString()}</span>
         </div>
@@ -46,13 +46,13 @@ export function OrderDetailSummary({
             <div
               key={item?._id || item?.name}
               className={`flex justify-between items-start ${
-                isDeduction ? "text-emerald-600 font-medium" : "text-muted-foreground"
+                isDeduction ? "text-emerald-600 font-medium" : "text-foreground/90"
               }`}
             >
               <div className="flex flex-col">
                 <span>{item?.name}</span>
                 {item?.message && (
-                  <span className="text-[10px] text-muted-foreground/70 font-normal leading-tight mt-0.5">
+                  <span className="text-[10px] text-muted-foreground font-normal leading-tight mt-0.5">
                     {item?.message}
                   </span>
                 )}

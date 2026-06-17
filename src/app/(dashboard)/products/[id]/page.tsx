@@ -75,7 +75,7 @@ export default function ProductDetailPage() {
 
       {/* Main product display */}
       <div className="max-w-7xl mx-auto px-4">
-        <div className="bg-card rounded-2xl border border-border shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 p-6 lg:p-8 relative">
+        <div className="bg-card rounded-2xl border border-border shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 p-4 sm:p-6 lg:p-8 relative">
           {/* Left: Image Gallery */}
           <ProductImageGallery
             product={product}

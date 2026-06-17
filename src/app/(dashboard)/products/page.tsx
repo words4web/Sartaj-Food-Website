@@ -33,7 +33,6 @@ function ProductsContent() {
     error: categoriesError,
   } = useGetCategories();
 
-  // If subcategory is selected, we query products for that subcategory. Otherwise, query for the main category.
   const queryCategoryId = activeSubCategoryId || activeCategoryId;
 
   const {
@@ -46,11 +45,10 @@ function ProductsContent() {
   const products: IProduct[] = data?.products;
   const meta = data?.meta;
 
-  // Virtual "All Categories" node
   const allCategory: ICategory = {
     id: "all",
     name: t("products.allProducts") || "All Products",
-    image: "", // Falls back to Package icon placeholder
+    image: "",
     productCount: 0,
   };
 
@@ -82,11 +80,13 @@ function ProductsContent() {
   };
 
   return (
-    <main className="min-h-screen bg-muted/40 py-8">
+    <main className="min-h-screen bg-muted/40 py-6 sm:py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-foreground mb-8">{t("products.products")}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
+          {t("products.products")}
+        </h1>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 items-start">
           {/* Left / Top Categories Sidebar */}
           <div className="w-full lg:w-[170px] shrink-0 lg:sticky lg:top-24">
             <h2 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4 hidden lg:block">
@@ -94,7 +94,7 @@ function ProductsContent() {
             </h2>
 
             {/* Flex horizontal scroll on mobile, vertical stack scrollable on desktop */}
-            <div className="flex flex-row lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc(100vh-220px)] pb-4 lg:pb-2 no-scrollbar w-full">
+            <div className="flex flex-row lg:flex-col gap-3 sm:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc(100vh-220px)] pb-3 sm:pb-2 no-scrollbar w-full">
               {isCategoriesLoading ? (
                 Array.from({ length: 6 }).map((_, idx) => (
                   <CategoryCardSkeleton key={idx} size="sm" />
@@ -103,7 +103,7 @@ function ProductsContent() {
                 <div className="text-xs text-destructive p-2">Error loading categories</div>
               ) : (
                 categoriesList?.map((category) => (
-                  <CategoryCard key={category.id || category._id} category={category} size="sm" />
+                  <CategoryCard key={category?.id || category?._id} category={category} size="sm" />
                 ))
               )}
             </div>

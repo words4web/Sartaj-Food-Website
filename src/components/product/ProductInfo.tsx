@@ -63,7 +63,7 @@ export function ProductInfo({
 
       {/* Price / Discount block */}
       <div className="border-t border-b border-border py-4 mb-6">
-        <div className="flex items-baseline gap-3">
+        <div className="flex items-baseline gap-3 flex-wrap">
           <span className="text-3xl font-black text-foreground">¥{price?.toLocaleString()}</span>
           {isDiscounted && (
             <>

@@ -38,12 +38,12 @@ export default function NotificationsPage() {
   const totalPages = meta?.totalPages ?? 1;
 
   return (
-    <main className="min-h-screen bg-muted/30 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <main className="min-h-screen bg-muted/30 py-4 sm:py-8">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4">
         <Card className="border border-border/50 shadow-md bg-card/60 backdrop-blur-md">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between space-y-0 pb-4">
             <div>
-              <CardTitle className="text-2xl font-bold text-foreground flex items-center gap-2.5">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-foreground flex items-center gap-2.5">
                 <Bell className="h-6 w-6 text-primary" />
                 {t("notifications")}
               </CardTitle>
@@ -58,7 +58,7 @@ export default function NotificationsPage() {
               size="sm"
               disabled={unreadCount === 0 || isMarkingAll}
               onClick={() => markAll()}
-              className="h-9 px-4 text-xs font-semibold gap-1.5 rounded-xl cursor-pointer"
+              className="h-9 px-4 text-xs font-semibold gap-1.5 rounded-xl cursor-pointer w-full sm:w-auto flex items-center justify-center"
             >
               <CheckCheck className="h-4 w-4" />
               {t("markAllRead")}

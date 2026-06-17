@@ -166,19 +166,19 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
     if (isInCart) {
       return (
         <div
-          className="flex items-center justify-between w-full bg-primary text-primary-foreground rounded-xl h-8 px-1 shadow-sm transition-all duration-200"
+          className="flex items-center justify-center gap-1 sm:justify-between sm:gap-0 w-full bg-primary text-primary-foreground rounded-xl h-7 sm:h-8 px-0.5 sm:px-1 shadow-sm transition-all duration-200"
           onClick={(e) => e.stopPropagation()}
         >
           <Button
             variant="ghost"
             size="icon-sm"
             onClick={handleDecrement}
-            className="h-6 w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all"
+            className="h-5 w-5 sm:h-6 sm:w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all flex items-center justify-center shrink-0"
           >
-            <Minus className="h-3 w-3 stroke-[2.5]" />
+            <Minus className="h-2.5 w-2.5 sm:h-3 sm:w-3 stroke-[2.5]" />
           </Button>
 
-          <span className="text-xs font-extrabold tabular-nums min-w-[16px] text-center select-none">
+          <span className="text-[10px] sm:text-xs font-extrabold tabular-nums min-w-[12px] sm:min-w-[16px] text-center select-none">
             {quantityInCart}
           </span>
 
@@ -187,9 +187,9 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
             size="icon-sm"
             onClick={handleIncrement}
             disabled={quantityInCart >= maxStock}
-            className="h-6 w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none"
+            className="h-5 w-5 sm:h-6 sm:w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center shrink-0"
           >
-            <Plus className="h-3 w-3 stroke-[2.5]" />
+            <Plus className="h-2.5 w-2.5 sm:h-3 sm:w-3 stroke-[2.5]" />
           </Button>
         </div>
       );
@@ -212,7 +212,7 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
   if (isInCart) {
     return (
       /* Stepper */
-      <div className="flex items-center justify-between border border-border rounded-xl bg-muted/40 h-11 px-1 w-fit">
+      <div className="flex items-center justify-between border border-border rounded-xl bg-muted/40 h-11 px-1 w-full sm:w-fit">
         <Button
           variant="ghost"
           size="icon"
@@ -240,7 +240,7 @@ export function CartActions({ product, mode = "card" }: CartActionsProps) {
   return (
     <Button
       onClick={() => handleAdd()}
-      className="w-fit px-8 h-11 rounded-xl cursor-pointer font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+      className="w-full sm:w-fit px-8 h-11 rounded-xl cursor-pointer font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
     >
       <ShoppingCart className="h-4 w-4" />
       <span>{t("products.addToCart") || "Add to Cart"}</span>
