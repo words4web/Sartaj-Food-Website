@@ -30,23 +30,25 @@ export function CategoriesGrid() {
   return (
     <section className="pt-16 pb-8 bg-muted/40">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-bold text-foreground">{t("home.shopByCategories")}</h2>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+            {t("home.shopByCategories")}
+          </h2>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
             <Link
               href={ROUTES.PRODUCTS()}
-              className="text-primary hover:text-primary font-semibold text-sm mr-2"
+              className="text-primary hover:text-primary font-semibold text-sm"
             >
               {t("home.allCategories")} →
             </Link>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => scroll("left")}
-                disabled={isLoading || categories.length === 0}
+                disabled={isLoading || categories?.length === 0}
                 className="h-9 w-9 rounded-full cursor-pointer hover:bg-muted active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -55,7 +57,7 @@ export function CategoriesGrid() {
                 variant="outline"
                 size="icon"
                 onClick={() => scroll("right")}
-                disabled={isLoading || categories.length === 0}
+                disabled={isLoading || categories?.length === 0}
                 className="h-9 w-9 rounded-full cursor-pointer hover:bg-muted active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none"
               >
                 <ChevronRight className="h-4 w-4" />

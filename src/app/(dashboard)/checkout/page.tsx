@@ -214,13 +214,13 @@ export default function CheckoutPage() {
 
   return (
     <main className="min-h-screen bg-muted/30 pb-16">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-black text-foreground mb-8 flex items-center gap-2 tracking-tight">
+      <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
+        <h1 className="text-2xl sm:text-3xl font-black text-foreground mb-6 sm:mb-8 flex items-center gap-2 tracking-tight">
           <ShoppingBag className="h-7 w-7 text-primary" />
           {t("checkout") || "Checkout"}
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
           {/* Main Checkout Inputs Block */}
           <div className="lg:col-span-2 space-y-10">
             {/* A. Cart data confirmation */}

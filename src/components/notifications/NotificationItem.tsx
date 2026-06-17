@@ -3,8 +3,10 @@
 import { Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/utils/common/common.utils";
-import { INotification, NotificationItemProps } from "@/types/notification/notification.types";
+import { NotificationItemProps } from "@/types/notification/notification.types";
 import { typeConfigs } from "./notification.config";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 export function NotificationItem({
   notification,
@@ -12,6 +14,7 @@ export function NotificationItem({
   onMarkRead,
   isLoading,
 }: NotificationItemProps) {
+  const router = useRouter();
   const type = notification?.type || "DEFAULT";
   const config = typeConfigs[type] || typeConfigs.DEFAULT;
   const Icon = config.icon;
@@ -22,6 +25,13 @@ export function NotificationItem({
   const handleClick = () => {
     if (!notification?.isRead && !isLoading) {
       onMarkRead(notification?._id);
+    }
+
+    const metadata = notification?.metadata || {};
+    if (metadata?.orderId) {
+      router.push(ROUTES.ORDERS(metadata?.orderId));
+    } else if (type?.startsWith("ORDER")) {
+      router.push(ROUTES.ORDERS());
     }
   };
 

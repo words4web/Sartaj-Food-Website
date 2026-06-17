@@ -16,7 +16,7 @@ export function OrderDetailHeader({
   const t = useTranslations();
 
   return (
-    <div className="space-y-6 mb-8">
+    <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
       <Link
         href={ROUTES.ORDERS()}
         className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -27,7 +27,7 @@ export function OrderDetailHeader({
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight flex items-center gap-2">
             <Package className="h-8 w-8 text-primary" />
             {t("orders.orderDetail") || "Order Details"}
           </h1>

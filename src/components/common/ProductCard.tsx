@@ -4,17 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { IProduct } from "@/types/product/product.types";
+import { ProductCardProps } from "@/types/product/product.types";
 import { Button } from "@/components/ui/button";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { ROUTES } from "@/constants/routes";
 import { CartActions } from "@/components/cart/CartActions";
 import { ThemedImage } from "@/components/common";
-
-interface ProductCardProps {
-  product?: IProduct;
-  badgeOverride?: string;
-}
 
 export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -65,12 +60,12 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   };
 
   return (
-    <div className="bg-card rounded-lg shadow border border-border hover:shadow-lg hover:border-primary/40 transition-all overflow-hidden flex flex-col h-full group relative">
+    <div className="bg-card rounded-lg shadow border border-border hover:shadow-lg hover:border-primary/40 transition-all overflow-hidden flex flex-row sm:flex-col h-full group relative w-full">
       {/* Image & Badges */}
-      <div className="relative aspect-square bg-muted/50 flex items-center justify-center p-4">
+      <div className="relative w-36 sm:w-full sm:h-auto sm:aspect-square bg-muted/50 flex items-center justify-center p-2 sm:p-4 shrink-0">
         <Link
           href={ROUTES.PRODUCTS(id)}
-          className="absolute inset-0 flex items-center justify-center p-4 cursor-pointer"
+          className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 cursor-pointer"
         >
           <ThemedImage
             src={imageSrc}
@@ -81,8 +76,8 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
           />
         </Link>
 
-        {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10 pointer-events-none">
+        {/* Badges - Desktop only */}
+        <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-10 pointer-events-none hidden sm:flex">
           {renderBadge()}
         </div>
 
@@ -100,9 +95,14 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
       </div>
 
       {/* Content */}
-      <div className="p-4 flex flex-col flex-grow justify-between">
-        <Link href={ROUTES.PRODUCTS(id)} className="cursor-pointer group-hover:text-primary mb-2">
-          <p className="text-xs text-muted-foreground mb-1">By {brand}</p>
+      <div className="p-3 sm:p-4 flex flex-col flex-grow justify-between min-w-0">
+        <Link
+          href={ROUTES.PRODUCTS(id)}
+          className="cursor-pointer group-hover:text-primary mb-2 block"
+        >
+          {/* Badge - Mobile only */}
+          {activeBadge && <div className="sm:hidden mb-1.5">{renderBadge()}</div>}
+          <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">By {brand}</p>
           <h3 className="font-semibold text-foreground text-sm line-clamp-2 h-10 transition-colors">
             {typeof name === "string" ? name : ""}
           </h3>
@@ -130,7 +130,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
 
           {/* Cart Actions */}
           {product && (
-            <div className="w-28 shrink-0">
+            <div className="w-20 sm:w-28 shrink-0">
               <CartActions product={product} mode="card" />
             </div>
           )}

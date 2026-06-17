@@ -14,7 +14,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuSub,
@@ -32,7 +31,6 @@ import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { useFcmLifecycle } from "@/hooks/useFcmLifecycle";
 
 export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -45,7 +43,6 @@ export function Header() {
   const currentConfig = themes[currentTheme];
   const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.items?.length || 0);
 
-  // Start FCM token sync lifecycle
   useFcmLifecycle();
 
   const [searchValue, setSearchValue] = useState("");
@@ -77,13 +74,7 @@ export function Header() {
   return (
     <>
       {/* Top Header */}
-      <header className="sticky top-0 z-40 w-full bg-background/50 backdrop-blur-xl backdrop-saturate-[200%] supports-[backdrop-filter]:bg-background/30 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
-        {/* Static theme color touch glows behind glassmorphism */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-          <div className="absolute top-1/2 left-[15%] -translate-y-1/2 w-[350px] h-[60px] rounded-full bg-primary/15 blur-[40px]" />
-          <div className="absolute top-1/2 right-[20%] -translate-y-1/2 w-[280px] h-[50px] rounded-full bg-accent/12 blur-[35px]" />
-        </div>
-
+      <header className="sticky top-0 z-40 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
@@ -248,14 +239,6 @@ export function Header() {
                   <span className="hidden sm:inline">{t("common.login")}</span>
                 </Link>
               )}
-
-              {/* Mobile Menu Toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden text-foreground p-1"
-              >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
             </div>
           </div>
 
@@ -276,25 +259,6 @@ export function Header() {
           </form>
         </div>
       </header>
-
-      {/* Navigation Menu */}
-      {/* <nav className="bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div
-            className={`flex flex-col md:flex-row md:items-center gap-6 md:gap-8 py-3 ${mobileMenuOpen ? "block" : "hidden md:flex"}`}
-          >
-            {categories.map((cat) => (
-              <Link
-                key={cat.name}
-                href={cat.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav> */}
     </>
   );
 }

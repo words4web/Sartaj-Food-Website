@@ -16,8 +16,8 @@ export function OrderDetailInfo({
   const t = useTranslations();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div className="md:col-span-2 bg-card border border-border/80 p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+      <div className="md:col-span-2 bg-card border border-border/80 p-5 sm:p-6 rounded-3xl shadow-sm flex flex-col justify-between">
         <div className="space-y-4">
           <div className="flex items-center gap-3 text-sm">
             <Calendar className="h-5 w-5 text-muted-foreground" />
@@ -91,7 +91,7 @@ export function OrderDetailInfo({
         </div>
       </div>
 
-      <div className="bg-card border border-border/80 p-6 rounded-3xl shadow-sm">
+      <div className="bg-card border border-border/80 p-5 sm:p-6 rounded-3xl shadow-sm">
         <h3 className="text-sm font-bold text-foreground mb-4 flex items-center gap-2">
           <MapPin className="h-4 w-4 text-primary" />
           {t("orders.deliveryAddress") || "Delivery Address"}

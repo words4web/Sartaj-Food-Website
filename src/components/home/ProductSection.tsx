@@ -39,19 +39,19 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
     <section className="py-12 bg-muted/50">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-foreground">{displayTitle}</h2>
+        <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{displayTitle}</h2>
           <Link
             href={ROUTES.PRODUCTS()}
-            className="text-primary hover:text-primary font-medium text-sm"
+            className="text-primary hover:text-primary font-semibold text-sm shrink-0"
           >
-            {t("common.viewAll")}
+            {t("common.viewAll")} →
           </Link>
         </div>
 
         {/* Tabs */}
         {showTabs && (
-          <div className="flex gap-6 mb-8 border-b border-border">
+          <div className="flex gap-6 mb-8 border-b border-border overflow-x-auto pb-1 no-scrollbar">
             {["All", "Featured", "Popular"]?.map((tab) => {
               const tabLabel =
                 tab === "All"
@@ -65,7 +65,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
                   variant={activeTab === tab?.toLowerCase() ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setActiveTab(tab?.toLowerCase())}
-                  className={`rounded-none border-b-2 ${
+                  className={`rounded-none border-b-2 shrink-0 ${
                     activeTab === tab?.toLowerCase() ? "border-primary" : "border-transparent"
                   }`}
                 >
@@ -87,7 +87,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
             <p className="text-muted-foreground text-sm font-medium">{t("common.noResults")}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {productsToRender?.map((product) => (
               <ProductCard
                 key={product?._id || product?.id}
