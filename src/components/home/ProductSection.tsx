@@ -78,7 +78,10 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
 
         {/* Products Grid / Loading State */}
         {isLoading ? (
-          <ProductGridSkeleton count={5} />
+          <ProductGridSkeleton
+            count={4}
+            columnsClass="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
+          />
         ) : isError ? (
           <CommonError onRetry={refetch} message="Could not load products." />
         ) : productsToRender?.length === 0 ? (
@@ -87,13 +90,15 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
             <p className="text-muted-foreground text-sm font-medium">{t("common.noResults")}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {productsToRender?.map((product) => (
-              <ProductCard
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+            {productsToRender?.map((product, idx) => (
+              <div
                 key={product?._id || product?.id}
-                product={product}
-                badgeOverride={badge}
-              />
+                className="animate-fade-in-up-card"
+                style={{ animationDelay: `${idx * 75}ms` }}
+              >
+                <ProductCard product={product} badgeOverride={badge} />
+              </div>
             ))}
           </div>
         )}

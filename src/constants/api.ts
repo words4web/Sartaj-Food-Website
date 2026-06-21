@@ -38,8 +38,8 @@ export const API_ROUTES = {
   // Wishlist
   WISHLIST: {
     GET: "/customer/wishlist",
-    ADD: "/customer/wishlist",
-    REMOVE: (id: string) => `/customer/wishlist/${id}`,
+    ADD: "/customer/wishlist/add",
+    REMOVE: (id: string) => `/customer/wishlist/remove/${id}`,
   },
 
   // Orders
@@ -94,6 +94,16 @@ export const API_ROUTES = {
   // CMS
   CMS: {
     GET_PAGE: (slug: string) => `/customer/cms/${slug}`,
+  },
+
+  // Banners
+  BANNERS: {
+    GET_ACTIVE: "/customer/banners",
+  },
+
+  // Manufacturers
+  MANUFACTURERS: {
+    GET_ALL: "/customer/manufacturers",
   },
 
   // Reviews

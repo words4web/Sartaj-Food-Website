@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, forwardRef } from "react";
-import { Package, User } from "lucide-react";
+import { Package, User, Store } from "lucide-react";
 import type { ThemedImageProps } from "@/types/common.types";
 
 export const ThemedImage = forwardRef<HTMLImageElement, ThemedImageProps>(
@@ -22,6 +22,14 @@ export const ThemedImage = forwardRef<HTMLImageElement, ThemedImageProps>(
         return (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/15 text-foreground rounded-full">
             <User className="h-1/2 w-1/2 text-primary/80" />
+          </div>
+        );
+      }
+
+      if (fallbackType === "manufacturer") {
+        return (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/15 via-accent/5 to-primary/5 text-foreground rounded-full transition-colors duration-300">
+            <Store className="h-1/2 w-1/2 text-primary/70 animate-pulse" />
           </div>
         );
       }

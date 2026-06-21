@@ -5,6 +5,8 @@ export const ROUTES = {
   LOGIN: "/login",
   TERMS: "/terms",
   PRIVACY: "/privacy",
+  ABOUT: "/about-us",
+  CONTACT: "/contact-us",
 
   // Authenticated / Dashboard routes
   HOME: "/",
@@ -17,6 +19,7 @@ export const ROUTES = {
     queryString ? `/products?${queryString}` : "/products",
   PROFILE: "/profile",
   NOTIFICATIONS: "/notifications",
+  WISHLIST: "/wishlist",
 };
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES];
