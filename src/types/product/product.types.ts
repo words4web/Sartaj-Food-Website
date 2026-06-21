@@ -53,6 +53,7 @@ export interface IProduct {
     rate?: number;
   };
   hasReviewed?: boolean;
+  isWishListed?: boolean;
 }
 
 export interface ICategory {
@@ -70,7 +71,7 @@ export interface ICategory {
 
 export interface CategoryCardProps {
   category: ICategory;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
 }
 
 export interface IProductFilter {
@@ -96,6 +97,11 @@ export interface ProductCardProps {
 export interface CartActionsProps {
   product: IProduct;
   mode?: "card" | "detail";
+}
+
+export interface WishlistButtonProps {
+  productId: string;
+  className?: string;
 }
 
 export interface ProductSectionProps {

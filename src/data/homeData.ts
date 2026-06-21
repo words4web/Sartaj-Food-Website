@@ -5,10 +5,10 @@ import {
   Leaf,
   Candy,
   Droplets,
-  CheckCircle,
   Truck,
-  Phone,
-  Award,
+  Tags,
+  LayoutGrid,
+  BadgeCheck,
 } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 
@@ -41,24 +41,32 @@ export const HERO_SLIDES = [
 
 export const TRUST_SIGNALS = [
   {
-    icon: CheckCircle,
-    titleKey: "home.authentic",
-    subtitleKey: "home.genuineImports",
+    icon: Tags,
+    titleKey: "home.bestPrices",
+    descKey: "home.bestPricesDesc",
+    isPrimary: true,
+    animationClass: "animate-hover-wobble",
   },
   {
-    icon: Award,
-    titleKey: "home.directImporter",
-    subtitleKey: "home.bestPricesInJapan",
+    icon: LayoutGrid,
+    titleKey: "home.wideAssortment",
+    descKey: "home.wideAssortmentDesc",
+    isPrimary: false,
+    animationClass: "animate-hover-spin",
   },
   {
     icon: Truck,
-    titleKey: "home.fastDelivery",
-    subtitleKey: "home.acrossJapan",
+    titleKey: "home.freeDelivery",
+    descKey: "home.freeDeliveryDesc",
+    isPrimary: false,
+    animationClass: "animate-hover-truck",
   },
   {
-    icon: Phone,
-    titleKey: "home.supportCenter",
-    subtitle: "072-753-1975",
+    icon: BadgeCheck,
+    titleKey: "home.bestQuality",
+    descKey: "home.bestQualityDesc",
+    isPrimary: false,
+    animationClass: "animate-hover-wobble",
   },
 ];
 
