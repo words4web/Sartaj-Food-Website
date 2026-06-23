@@ -265,7 +265,14 @@
     "paypayDesc": "日本のモバイル決済",
     "walletLabel": "ウォレット",
     "showMore": "もっと見る ({count})",
-    "showLess": "閉じる"
+    "showLess": "閉じる",
+    "deliverySchedule": "配達スケジュール",
+    "selectDeliveryDate": "配達日を選択",
+    "selectDeliverySlot": "時間帯を選択",
+    "selectDateFirst": "配達日を選択すると時間帯が表示されます。",
+    "slotUnavailable": "受付終了",
+    "selectDeliveryDateRequired": "配達日を選択してください",
+    "selectDeliverySlotRequired": "配達時間帯を選択してください"
   },
   "orders": {
     "orders": "注文",

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
@@ -25,10 +27,27 @@ export function CheckoutStatusOverlay({
   const tOrders = useTranslations("orders");
   const tCart = useTranslations("cart");
 
-  if (state === CheckoutStatus.IDLE) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-4 bg-background/80 backdrop-blur-xl animate-in fade-in duration-500">
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (state !== CheckoutStatus.IDLE) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [state]);
+
+  if (state === CheckoutStatus.IDLE || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center p-4 bg-background/40 backdrop-blur-sm animate-in fade-in duration-500">
       <div className="max-w-md w-full bg-card/75 border border-border/80 p-8 rounded-3xl shadow-2xl flex flex-col items-center text-center backdrop-blur-2xl animate-in zoom-in-95 duration-500">
         {/* Lottie Animation */}
         <div className="w-48 h-48 md:w-56 md:h-56 mb-4 flex items-center justify-center">
@@ -89,6 +108,7 @@ export function CheckoutStatusOverlay({
           </Button>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

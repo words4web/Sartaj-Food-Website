@@ -39,7 +39,7 @@ export default function OrdersPage() {
   };
 
   return (
-    <main className="min-h-screen bg-muted/30 pb-16">
+    <main className="relative z-10 min-h-screen bg-muted/30 pb-16">
       <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 sm:mb-8">
