@@ -21,6 +21,7 @@ import { useGetPublicCoupons } from "@/services/coupon/coupon.hooks";
 import { CheckoutCartItems } from "@/components/checkout/CheckoutCartItems";
 import { CheckoutAddressSelection } from "@/components/checkout/CheckoutAddressSelection";
 import { CheckoutDeliverySelection } from "@/components/checkout/CheckoutDeliverySelection";
+import { CheckoutNotes } from "@/components/checkout/CheckoutNotes";
 import { CheckoutPaymentMethod } from "@/components/checkout/CheckoutPaymentMethod";
 import { CheckoutPriceBreakdown } from "@/components/checkout/CheckoutPriceBreakdown";
 import { CheckoutWalletSelection } from "@/components/checkout/CheckoutWalletSelection";
@@ -40,6 +41,7 @@ export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("");
   const [selectedDeliveryDate, setSelectedDeliveryDate] = useState<string>("");
   const [selectedDeliverySlot, setSelectedDeliverySlot] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<string>("");
   const [applyWallet, setApplyWallet] = useState<boolean>(false);
   const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
@@ -149,6 +151,7 @@ export default function CheckoutPage() {
           platform: "web",
           deliveryDate: selectedDeliveryDate,
           deliverySlot: selectedDeliverySlot,
+          notes: notes || undefined,
         },
         idempotencyKey,
       },
@@ -255,6 +258,9 @@ export default function CheckoutPage() {
               onSelectDate={setSelectedDeliveryDate}
               onSelectSlot={setSelectedDeliverySlot}
             />
+
+            {/* D. Order Notes */}
+            <CheckoutNotes notes={notes} onChange={setNotes} />
           </div>
 
           {/* Sticky Billing Sidebar Details */}

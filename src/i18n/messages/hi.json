@@ -272,7 +272,9 @@
     "selectDateFirst": "डिलीवरी तारीख चुनें ताकि उपलब्ध समय स्लॉट देख सकें।",
     "slotUnavailable": "उपलब्ध नहीं",
     "selectDeliveryDateRequired": "कृपया डिलीवरी तारीख चुनें",
-    "selectDeliverySlotRequired": "कृपया डिलीवरी समय स्लॉट चुनें"
+    "selectDeliverySlotRequired": "कृपया डिलीवरी समय स्लॉट चुनें",
+    "orderNotes": "ऑर्डर नोट्स (वैकल्पिक)",
+    "notesPlaceholder": "अपनी डिलीवरी के लिए विशेष निर्देश, या कोई अन्य नोट्स जोड़ें..."
   },
   "orders": {
     "orders": "ऑर्डर",

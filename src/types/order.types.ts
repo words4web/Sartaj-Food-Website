@@ -72,6 +72,7 @@ export interface ICreateOrderBody {
   platform?: string;
   deliveryDate: string;
   deliverySlot: string;
+  notes?: string;
 }
 
 export interface ICreateOrderMutationArgs {
