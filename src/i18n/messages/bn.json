@@ -272,7 +272,9 @@
     "selectDateFirst": "ডেলিভারি তারিখ নির্বাচন করুন যাতে পাওয়া যোগ্য সময় স্লট দেখতে পারেন।",
     "slotUnavailable": "অনুপলব্ধ",
     "selectDeliveryDateRequired": "অনুগ্রহ করে ডেলিভারি তারিখ নির্বাচন করুন",
-    "selectDeliverySlotRequired": "অনুগ্রহ করে ডেলিভারি সময় স্লট নির্বাচন করুন"
+    "selectDeliverySlotRequired": "অনুগ্রহ করে ডেলিভারি সময় স্লট নির্বাচন করুন",
+    "orderNotes": "অর্ডার নোট (ঐচ্ছিক)",
+    "notesPlaceholder": "আপনার ডেলিভারির জন্য বিশেষ নির্দেশাবলী, বা অন্য কোনো নোট যোগ করুন..."
   },
   "orders": {
     "orders": "অর্ডার",
