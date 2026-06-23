@@ -272,7 +272,9 @@
     "selectDateFirst": "Please select a delivery date to see available time slots.",
     "slotUnavailable": "Unavailable",
     "selectDeliveryDateRequired": "Please select a delivery date",
-    "selectDeliverySlotRequired": "Please select a delivery time slot"
+    "selectDeliverySlotRequired": "Please select a delivery time slot",
+    "orderNotes": "Order Notes (Optional)",
+    "notesPlaceholder": "Add special instructions for your delivery, or any other notes..."
   },
   "orders": {
     "orders": "Orders",

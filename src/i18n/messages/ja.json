@@ -272,7 +272,9 @@
     "selectDateFirst": "配達日を選択すると時間帯が表示されます。",
     "slotUnavailable": "受付終了",
     "selectDeliveryDateRequired": "配達日を選択してください",
-    "selectDeliverySlotRequired": "配達時間帯を選択してください"
+    "selectDeliverySlotRequired": "配達時間帯を選択してください",
+    "orderNotes": "注文メモ (任意)",
+    "notesPlaceholder": "配達に関する特別な指示や、その他のメモを追加してください..."
   },
   "orders": {
     "orders": "注文",
