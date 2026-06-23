@@ -265,7 +265,14 @@
     "paypayDesc": "Japanese mobile pay",
     "walletLabel": "Wallet",
     "showMore": "Show More ({count})",
-    "showLess": "Show Less"
+    "showLess": "Show Less",
+    "deliverySchedule": "Delivery Schedule",
+    "selectDeliveryDate": "Select Delivery Date",
+    "selectDeliverySlot": "Select Time Slot",
+    "selectDateFirst": "Please select a delivery date to see available time slots.",
+    "slotUnavailable": "Unavailable",
+    "selectDeliveryDateRequired": "Please select a delivery date",
+    "selectDeliverySlotRequired": "Please select a delivery time slot"
   },
   "orders": {
     "orders": "Orders",

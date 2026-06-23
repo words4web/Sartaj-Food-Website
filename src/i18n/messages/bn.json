@@ -265,7 +265,14 @@
     "paypayDesc": "জাপানি মোবাইল পেমেন্ট",
     "walletLabel": "ওয়ালেট",
     "showMore": "আরো দেখান ({count})",
-    "showLess": "কম দেখান"
+    "showLess": "কম দেখান",
+    "deliverySchedule": "ডেলিভারি শিডিউল",
+    "selectDeliveryDate": "ডেলিভারি তারিখ নির্বাচন করুন",
+    "selectDeliverySlot": "সময় স্লট নির্বাচন করুন",
+    "selectDateFirst": "ডেলিভারি তারিখ নির্বাচন করুন যাতে পাওয়া যোগ্য সময় স্লট দেখতে পারেন।",
+    "slotUnavailable": "অনুপলব্ধ",
+    "selectDeliveryDateRequired": "অনুগ্রহ করে ডেলিভারি তারিখ নির্বাচন করুন",
+    "selectDeliverySlotRequired": "অনুগ্রহ করে ডেলিভারি সময় স্লট নির্বাচন করুন"
   },
   "orders": {
     "orders": "অর্ডার",

@@ -70,6 +70,8 @@ export interface ICreateOrderBody {
   couponCode?: string;
   applyWallet?: boolean;
   platform?: string;
+  deliveryDate: string;
+  deliverySlot: string;
 }
 
 export interface ICreateOrderMutationArgs {

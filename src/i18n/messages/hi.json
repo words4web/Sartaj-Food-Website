@@ -265,7 +265,14 @@
     "paypayDesc": "जापानी मोबाइल भुगतान",
     "walletLabel": "वॉलेट",
     "showMore": "और दिखाएं ({count})",
-    "showLess": "कम दिखाएं"
+    "showLess": "कम दिखाएं",
+    "deliverySchedule": "डिलीवरी शेड्यूल",
+    "selectDeliveryDate": "डिलीवरी तारीख चुनें",
+    "selectDeliverySlot": "समय स्लॉट चुनें",
+    "selectDateFirst": "डिलीवरी तारीख चुनें ताकि उपलब्ध समय स्लॉट देख सकें।",
+    "slotUnavailable": "उपलब्ध नहीं",
+    "selectDeliveryDateRequired": "कृपया डिलीवरी तारीख चुनें",
+    "selectDeliverySlotRequired": "कृपया डिलीवरी समय स्लॉट चुनें"
   },
   "orders": {
     "orders": "ऑर्डर",

@@ -54,3 +54,10 @@ export interface CheckoutStatusOverlayProps {
   dbOrderId?: string;
   errorMessage?: string;
 }
+
+export interface CheckoutDeliverySelectionProps {
+  selectedDate: string;
+  selectedSlot: string;
+  onSelectDate: (date: string) => void;
+  onSelectSlot: (slot: string) => void;
+}
