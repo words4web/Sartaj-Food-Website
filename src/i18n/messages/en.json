@@ -141,7 +141,8 @@
     "sweetsSubtitle": "Celebrate with premium quality Gulab Jamun, Rasgulla, and handmade traditional treats for every occasion.",
     "herbalWellness": "Organic & Wellness",
     "wellnessTitle": "Natural Ayurvedic Herbs & Teas",
-    "wellnessSubtitle": "Boost your health and immunity with authentic organic teas, herbal supplements, and Ayurvedic ingredients."
+    "wellnessSubtitle": "Boost your health and immunity with authentic organic teas, herbal supplements, and Ayurvedic ingredients.",
+    "promoBannerTitle": "Bringing <highlight>Authentic Indian Flavours</highlight> to Every Home."
   },
   "products": {
     "allProducts": "All Products",
@@ -396,6 +397,15 @@
   "footer": {
     "description": "Authentic South Asian flavors imported directly to Japan. Experience premium Basmati rice, aromatic spices, and traditional sweets.",
     "legal": "Legal",
-    "copyright": "© {year} Sartaj Foods. All rights reserved."
+    "copyright": "© {year} Sartaj Foods. All rights reserved.",
+    "designedBy": "Designed by <link>Words4Web</link>",
+    "addressLabel": "Address",
+    "addressValue": "Osaka-Fu, Ikeda-Shi, Koda 2-10-23",
+    "callUsLabel": "Call Us",
+    "callUsValue": "072-751-1975",
+    "emailLabel": "Email",
+    "emailValue": "info@sartajfoods.jp",
+    "hoursLabel": "Hours",
+    "hoursValue": "Monday to Saturday from 09:00AM-18:00PM (except national holiday)"
   }
 }

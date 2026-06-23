@@ -30,12 +30,12 @@ function ensureKeyframes() {
   const s = document.createElement("style");
   s.id = STYLE_ID;
   s.textContent = `
-    /* Fall: top → bottom — 8000px ensures particles reach footer on any screen height */
+    /* Fall: top → bottom — 110vh ensures particles reach bottom of viewport elegantly */
     @keyframes cf-fall {
       from { transform: translateY(-2em) rotate(0deg); opacity: 0; }
       6%   { opacity: 1; }
       92%  { opacity: 0.85; }
-      to   { transform: translateY(8000px) rotate(var(--cf-spin,180deg)); opacity: 0; }
+      to   { transform: translateY(110vh) rotate(var(--cf-spin,180deg)); opacity: 0; }
     }
     /* Asymmetric wind sway with prevailing bias (Sakura - drifts right mostly) */
     @keyframes cf-wind-gentle {
@@ -106,9 +106,9 @@ function buildFallingParticles(type: string, count: number): FallingFlake[] {
     // Determine weight factor (larger scale = heavier, falls faster, sways less)
     const normalizedScale = (scale - 1.6) / 1.2; // 0 (lightest) to 1 (heaviest)
 
-    // MUCH Slower Durations: lighter falls slower (18-28s), heavier falls faster (12-18s)
-    const baseDuration = type === "snowflake" ? 12 : 14;
-    const durationVal = baseDuration + (1 - normalizedScale) * 10 + Math.random() * 4;
+    // Balanced Durations: a sweet spot between very slow and slow
+    const baseDuration = type === "snowflake" ? 17 : 19;
+    const durationVal = baseDuration + (1 - normalizedScale) * 11 + Math.random() * 6;
 
     // Wind sway: wider range for drifting curves (up to 140px sway)
     let windAmpVal = 0;
@@ -120,7 +120,7 @@ function buildFallingParticles(type: string, count: number): FallingFlake[] {
       windAmpVal = i % 2 === 0 ? maxWind : -maxWind; // alternate sakura sways too
     }
 
-    const windDurationVal = 6 + (1 - normalizedScale) * 6 + Math.random() * 3; // 6-15s cycle
+    const windDurationVal = 14 + (1 - normalizedScale) * 12 + Math.random() * 8; // 14-34s cycle
 
     const spinDir = i % 2 === 0 ? 1 : -1;
     const spinVal = spinDir * (360 + Math.random() * 720);
@@ -239,10 +239,10 @@ export const ParticleCanvas = memo(function ParticleCanvas({
         clearInterval(interval);
       };
     } else {
-      const baseCount = type === "snowflake" ? 60 : 40;
+      const baseCount = type === "snowflake" ? 35 : 25;
       const count = Math.min(
         Math.round(baseCount * density * countMultiplier),
-        type === "snowflake" ? 90 : 60,
+        type === "snowflake" ? 55 : 40,
       );
       setFallingFlakes(buildFallingParticles(type, count));
       setTwinkleFlakes([]);

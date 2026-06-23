@@ -18,15 +18,17 @@ import {
   DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
 import { useSelector, useDispatch } from "react-redux";
-import { setTheme, setLocale } from "@/lib/store/localeSlice";
+import { setTheme } from "@/lib/store/localeSlice";
 import { RootState } from "@/lib/store";
 import { themes, applyTheme, themeSwatchColors, type Theme } from "@/lib/themes";
 import { LANGUAGES } from "@/data/languages";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { useChangeLanguage } from "@/hooks/useChangeLanguage";
 
 export function HeaderActions() {
   const t = useTranslations();
   const dispatch = useDispatch();
+  const changeLanguage = useChangeLanguage();
   const { isAuthenticated, user, logout } = useAuth();
 
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
@@ -147,7 +149,7 @@ export function HeaderActions() {
                 {LANGUAGES?.map((lang) => (
                   <DropdownMenuItem
                     key={lang?.code}
-                    onClick={() => dispatch(setLocale(lang?.code as any))}
+                    onClick={() => changeLanguage(lang?.code as any)}
                     className={`flex items-center gap-2 w-full px-2 py-2 text-sm rounded-lg transition-colors cursor-pointer ${
                       locale === lang?.code
                         ? "bg-primary/10 text-primary font-semibold focus:bg-primary/15 focus:text-primary"

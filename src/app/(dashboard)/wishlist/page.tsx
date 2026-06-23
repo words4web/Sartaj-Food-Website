@@ -18,7 +18,7 @@ export default function WishlistPage() {
   const products: IProduct[] = wishlist?.products || [];
 
   return (
-    <main className="min-h-screen bg-muted/30 py-6 sm:py-10">
+    <main className="relative z-10 min-h-screen bg-muted/30 py-6 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-6">

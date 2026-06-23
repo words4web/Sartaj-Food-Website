@@ -61,7 +61,7 @@ export default function ProductDetailPage() {
     (product?.stockQuantity !== undefined && product?.stockQuantity <= 0);
 
   return (
-    <main className="min-h-screen bg-muted/30 pb-16">
+    <main className="relative z-10 min-h-screen bg-muted/30 pb-16">
       {/* Back button */}
       <div className="max-w-7xl mx-auto px-4 pt-6">
         <button

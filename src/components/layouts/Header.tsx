@@ -12,6 +12,7 @@ import { useGetCart } from "@/services/cart/cart.hooks";
 import { useGetWishlist } from "@/services/wishlist/wishlist.hooks";
 import { useFcmLifecycle } from "@/hooks/useFcmLifecycle";
 import { HeaderActions } from "./HeaderActions";
+import { CategoryMarqueeStrip } from "./CategoryMarqueeStrip";
 
 export function Header() {
   const t = useTranslations();
@@ -94,6 +95,7 @@ export function Header() {
             </div>
           </form>
         </div>
+        <CategoryMarqueeStrip />
       </header>
     </>
   );

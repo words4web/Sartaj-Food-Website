@@ -37,7 +37,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
 
   return (
     <section className="py-12 bg-muted/50">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{displayTitle}</h2>

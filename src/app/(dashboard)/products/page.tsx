@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState, useEffect, useRef, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
@@ -33,6 +33,57 @@ function ProductsContent() {
     error: categoriesError,
   } = useGetCategories();
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollState, setScrollState] = useState({
+    canScrollLeft: false,
+    canScrollRight: false,
+    canScrollTop: false,
+    canScrollBottom: false,
+  });
+
+  const checkScroll = () => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    const { scrollLeft, scrollWidth, clientWidth, scrollTop, scrollHeight, clientHeight } = el;
+
+    const canScrollLeft = scrollLeft > 3;
+    const canScrollRight = scrollLeft + clientWidth < scrollWidth - 3;
+    const canScrollTop = scrollTop > 3;
+    const canScrollBottom = scrollTop + clientHeight < scrollHeight - 3;
+
+    setScrollState((prev) => {
+      if (
+        prev.canScrollLeft === canScrollLeft &&
+        prev.canScrollRight === canScrollRight &&
+        prev.canScrollTop === canScrollTop &&
+        prev.canScrollBottom === canScrollBottom
+      ) {
+        return prev;
+      }
+      return { canScrollLeft, canScrollRight, canScrollTop, canScrollBottom };
+    });
+  };
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    checkScroll();
+
+    const ro = new ResizeObserver(checkScroll);
+    ro.observe(el);
+
+    el.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+
+    return () => {
+      ro.disconnect();
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [categories]);
+
   const queryCategoryId = activeSubCategoryId || activeCategoryId;
 
   const {
@@ -45,20 +96,26 @@ function ProductsContent() {
   const products: IProduct[] = data?.products;
   const meta = data?.meta;
 
-  const allCategory: ICategory = {
-    id: "all",
-    name: t("products.allProducts") || "All Products",
-    image: "",
-    productCount: 0,
-  };
-
-  const categoriesList = [allCategory, ...categories];
+  const categoriesList = useMemo(() => {
+    const allCategory: ICategory = {
+      id: "all",
+      name: t("products.allProducts") || "All Products",
+      image: "",
+      productCount: 0,
+    };
+    return [allCategory, ...categories];
+  }, [categories, t]);
 
   // Find active parent category in the categories tree (excluding the virtual "All Products" category)
-  const currentCategory = categories?.find(
-    (c: ICategory) => c?.id === activeCategoryId || c?._id === activeCategoryId,
-  );
-  const subCategories = currentCategory?.subCategories || [];
+  const currentCategory = useMemo(() => {
+    return categories?.find(
+      (c: ICategory) => c?.id === activeCategoryId || c?._id === activeCategoryId,
+    );
+  }, [categories, activeCategoryId]);
+
+  const subCategories = useMemo(() => {
+    return currentCategory?.subCategories || [];
+  }, [currentCategory]);
 
   const totalPages = Math.ceil((meta?.total || 0) / (meta?.limit || limit));
 
@@ -80,7 +137,7 @@ function ProductsContent() {
   };
 
   return (
-    <main className="min-h-screen bg-muted/40 py-6 sm:py-8">
+    <main className="relative z-10 min-h-screen bg-muted/40 py-6 sm:py-8">
       <div className="max-w-7xl mx-auto px-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
           {t("products.products")}
@@ -93,19 +150,54 @@ function ProductsContent() {
               {t("home.shopByCategories") || "Categories"}
             </h2>
 
-            {/* Flex horizontal scroll on mobile, vertical stack scrollable on desktop */}
-            <div className="flex flex-row lg:flex-col gap-3 sm:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc(100vh-220px)] pb-3 sm:pb-2 no-scrollbar w-full">
-              {isCategoriesLoading ? (
-                Array.from({ length: 6 }).map((_, idx) => (
-                  <CategoryCardSkeleton key={idx} size="sm" />
-                ))
-              ) : categoriesError ? (
-                <div className="text-xs text-destructive p-2">Error loading categories</div>
-              ) : (
-                categoriesList?.map((category) => (
-                  <CategoryCard key={category?.id || category?._id} category={category} size="sm" />
-                ))
-              )}
+            {/* Scrollable Container Wrapper with dynamic gradient overflow indicators */}
+            <div className="relative w-full group/scrollable">
+              {/* Left Shadow (mobile/tablet only) */}
+              <div
+                className={`absolute left-0 top-0 bottom-3 w-8 bg-gradient-to-r from-background/90 to-transparent pointer-events-none z-10 transition-opacity duration-300 lg:hidden ${
+                  scrollState.canScrollLeft ? "opacity-100" : "opacity-0"
+                }`}
+              />
+              {/* Right Shadow (mobile/tablet only) */}
+              <div
+                className={`absolute right-0 top-0 bottom-3 w-8 bg-gradient-to-l from-background/90 to-transparent pointer-events-none z-10 transition-opacity duration-300 lg:hidden ${
+                  scrollState.canScrollRight ? "opacity-100" : "opacity-0"
+                }`}
+              />
+              {/* Top Shadow (desktop only) */}
+              <div
+                className={`absolute left-0 right-0 top-0 h-8 bg-gradient-to-b from-background/90 to-transparent pointer-events-none z-10 transition-opacity duration-300 hidden lg:block ${
+                  scrollState.canScrollTop ? "opacity-100" : "opacity-0"
+                }`}
+              />
+              {/* Bottom Shadow (desktop only) */}
+              <div
+                className={`absolute left-0 right-0 bottom-0 h-8 bg-gradient-to-t from-background/90 to-transparent pointer-events-none z-10 transition-opacity duration-300 hidden lg:block ${
+                  scrollState.canScrollBottom ? "opacity-100" : "opacity-0"
+                }`}
+              />
+
+              {/* Flex horizontal scroll on mobile, vertical stack scrollable on desktop */}
+              <div
+                ref={scrollContainerRef}
+                className="flex flex-row lg:flex-col gap-3 sm:gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[calc(100vh-220px)] pb-3 sm:pb-2 custom-thin-scrollbar w-full"
+              >
+                {isCategoriesLoading ? (
+                  Array.from({ length: 6 }).map((_, idx) => (
+                    <CategoryCardSkeleton key={idx} size="sm" />
+                  ))
+                ) : categoriesError ? (
+                  <div className="text-xs text-destructive p-2">Error loading categories</div>
+                ) : (
+                  categoriesList?.map((category) => (
+                    <CategoryCard
+                      key={category?.id || category?._id}
+                      category={category}
+                      size="sm"
+                    />
+                  ))
+                )}
+              </div>
             </div>
           </div>
 

@@ -290,6 +290,26 @@
   scrollbar-width: none;
 }
 
+/* Custom thin scrollbar utility */
+.custom-thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.custom-thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+.custom-thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+.custom-thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
 /* ── Trust Signals Premium Animations ── */
 
 /* Identity values for smooth stacking context transforms */
@@ -432,6 +452,15 @@
   --trust-card-border: rgba(36, 59, 135, 0.08);
   --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
   --trust-card-hover-border: rgba(36, 59, 135, 0.2);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(36, 59, 135, 0.15);
+  --promo-btn-bg: var(--primary);
+  --promo-btn-hover-bg: oklch(from var(--primary) l c h / 0.95);
+  --promo-btn-text: var(--primary-foreground);
+  --promo-btn-hover-shadow: rgba(36, 59, 135, 0.3);
+  --promo-highlight-text: oklch(0.85 0.12 65);
+  --promo-accent-orb: oklch(from var(--primary) l c h / 0.1);
 }
 
 [data-theme="sakura"] {
@@ -441,6 +470,15 @@
   --trust-card-border: rgba(212, 80, 122, 0.08);
   --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
   --trust-card-hover-border: rgba(212, 80, 122, 0.22);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(249, 168, 212, 0.15);
+  --promo-btn-bg: oklch(0.6 0.2 350);
+  --promo-btn-hover-bg: oklch(0.55 0.2 350);
+  --promo-btn-text: #ffffff;
+  --promo-btn-hover-shadow: rgba(249, 168, 212, 0.35);
+  --promo-highlight-text: oklch(0.85 0.1 350);
+  --promo-accent-orb: rgba(249, 168, 212, 0.12);
 }
 
 [data-theme="snowfall"] {
@@ -450,6 +488,15 @@
   --trust-card-border: rgba(74, 123, 167, 0.08);
   --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
   --trust-card-hover-border: rgba(74, 123, 167, 0.22);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(147, 197, 253, 0.15);
+  --promo-btn-bg: oklch(0.6 0.15 240);
+  --promo-btn-hover-bg: oklch(0.55 0.15 240);
+  --promo-btn-text: #ffffff;
+  --promo-btn-hover-shadow: rgba(147, 197, 253, 0.35);
+  --promo-highlight-text: oklch(0.85 0.08 240);
+  --promo-accent-orb: rgba(147, 197, 253, 0.12);
 }
 
 [data-theme="diwali"] {
@@ -459,6 +506,15 @@
   --trust-card-border: rgba(212, 119, 26, 0.08);
   --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
   --trust-card-hover-border: rgba(212, 119, 26, 0.22);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(245, 158, 11, 0.18);
+  --promo-btn-bg: oklch(0.65 0.2 60);
+  --promo-btn-hover-bg: oklch(0.6 0.2 60);
+  --promo-btn-text: #ffffff;
+  --promo-btn-hover-shadow: rgba(245, 158, 11, 0.35);
+  --promo-highlight-text: oklch(0.85 0.12 60);
+  --promo-accent-orb: rgba(245, 158, 11, 0.15);
 }
 
 /* Background gradient styles (Light theme-aware) */

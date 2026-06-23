@@ -5,8 +5,10 @@ import { RootState } from "@/lib/store";
 import { TrustSignals } from "@/components/home/TrustSignals";
 import { ManufacturersGrid } from "@/components/home/ManufacturersGrid";
 import { CategoriesGrid } from "@/components/home/CategoriesGrid";
+import { PromoBanner } from "@/components/home/PromoBanner";
 import { ProductSection } from "@/components/home/ProductSection";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
+import { Testimonials } from "@/components/home/Testimonials";
 
 export function ThemedProductZone() {
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
@@ -38,10 +40,12 @@ export function ThemedProductZone() {
       <div className="relative">
         <TrustSignals />
         <CategoriesGrid />
+        <PromoBanner />
         <ProductSection title="Featured Products" badge={PRODUCT_BADGES.FEATURED} />
         <ProductSection title="Hot Products" badge={PRODUCT_BADGES.HOT} />
         <ProductSection title="New Arrivals" badge={PRODUCT_BADGES.NEW_ARRIVAL} />
         <ManufacturersGrid />
+        <Testimonials />
       </div>
     </div>
   );

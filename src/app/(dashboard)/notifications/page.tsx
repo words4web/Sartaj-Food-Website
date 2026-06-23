@@ -38,7 +38,7 @@ export default function NotificationsPage() {
   const totalPages = meta?.totalPages ?? 1;
 
   return (
-    <main className="min-h-screen bg-muted/30 py-4 sm:py-8">
+    <main className="relative z-10 min-h-screen bg-muted/30 py-4 sm:py-8">
       <div className="max-w-4xl mx-auto px-2 sm:px-4">
         <Card className="border border-border/50 shadow-md bg-card/60 backdrop-blur-md">
           <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between space-y-0 pb-4">
