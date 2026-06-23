@@ -20,6 +20,7 @@ import { useGetPublicCoupons } from "@/services/coupon/coupon.hooks";
 
 import { CheckoutCartItems } from "@/components/checkout/CheckoutCartItems";
 import { CheckoutAddressSelection } from "@/components/checkout/CheckoutAddressSelection";
+import { CheckoutDeliverySelection } from "@/components/checkout/CheckoutDeliverySelection";
 import { CheckoutPaymentMethod } from "@/components/checkout/CheckoutPaymentMethod";
 import { CheckoutPriceBreakdown } from "@/components/checkout/CheckoutPriceBreakdown";
 import { CheckoutWalletSelection } from "@/components/checkout/CheckoutWalletSelection";
@@ -37,6 +38,8 @@ export default function CheckoutPage() {
 
   const [selectedAddressId, setSelectedAddressId] = useState<string>("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("");
+  const [selectedDeliveryDate, setSelectedDeliveryDate] = useState<string>("");
+  const [selectedDeliverySlot, setSelectedDeliverySlot] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<string>("");
   const [applyWallet, setApplyWallet] = useState<boolean>(false);
   const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
@@ -118,6 +121,16 @@ export default function CheckoutPage() {
       return;
     }
 
+    if (!selectedDeliveryDate) {
+      toast.error(t("selectDeliveryDateRequired") || "Please select a delivery date");
+      return;
+    }
+
+    if (!selectedDeliverySlot) {
+      toast.error(t("selectDeliverySlotRequired") || "Please select a delivery time slot");
+      return;
+    }
+
     if (summaryLoading) {
       toast.error(t("calculatingCharges") || "Calculating charges, please wait...");
       return;
@@ -134,6 +147,8 @@ export default function CheckoutPage() {
           couponCode: appliedCoupon || undefined,
           applyWallet,
           platform: "web",
+          deliveryDate: selectedDeliveryDate,
+          deliverySlot: selectedDeliverySlot,
         },
         idempotencyKey,
       },
@@ -231,6 +246,14 @@ export default function CheckoutPage() {
               addresses={addresses}
               selectedAddressId={selectedAddressId}
               onSelectAddress={setSelectedAddressId}
+            />
+
+            {/* C. Delivery Date & Slot Selector */}
+            <CheckoutDeliverySelection
+              selectedDate={selectedDeliveryDate}
+              selectedSlot={selectedDeliverySlot}
+              onSelectDate={setSelectedDeliveryDate}
+              onSelectSlot={setSelectedDeliverySlot}
             />
           </div>
 

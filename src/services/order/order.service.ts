@@ -18,6 +18,8 @@ export const orderService = {
       couponCode?: string;
       applyWallet?: boolean;
       platform?: string;
+      deliveryDate: string;
+      deliverySlot: string;
     },
     headers?: { "Idempotency-Key": string },
   ): Promise<AxiosResponse<any>> => {
