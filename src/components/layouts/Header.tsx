@@ -1,122 +1,102 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Search } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
-import { HEADER_CATEGORIES } from "@/data/navigation";
 import { useTranslations } from "next-intl";
-import { LanguageSelector, ThemeSelector } from "@/components/common";
+import { useAuth } from "@/hooks/useAuth";
+import { useGetProfile } from "@/services/auth/auth.hooks";
+import { useGetCart } from "@/services/cart/cart.hooks";
+import { useGetWishlist } from "@/services/wishlist/wishlist.hooks";
+import { useFcmLifecycle } from "@/hooks/useFcmLifecycle";
+import { HeaderActions } from "./HeaderActions";
+import { CategoryMarqueeStrip } from "./CategoryMarqueeStrip";
 
 export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = useTranslations();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { isAuthenticated } = useAuth();
+  useGetProfile(isAuthenticated);
+  useGetCart(isAuthenticated);
+  useGetWishlist(isAuthenticated);
 
-  const categories = HEADER_CATEGORIES;
+  useFcmLifecycle();
+
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    setSearchValue(searchParams.get("search") || "");
+  }, [searchParams]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = searchValue?.trim();
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set("page", "1");
+    if (query) {
+      params.set("search", query);
+    } else {
+      params.delete("search");
+    }
+    router.push(ROUTES.PRODUCTS_WITH_QUERY(params?.toString()));
+  };
 
   return (
     <>
       {/* Top Header */}
-      <header className="bg-card border-b border-border sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-3">
+      <header className="sticky top-0 z-40 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <Link href={ROUTES.HOME} className="flex items-center gap-2 min-w-fit">
+            <Link href={ROUTES.HOME} className="flex items-center min-w-fit">
               <img
                 src="/sartaj_logo.svg"
                 alt="Sartaj Foods Logo"
-                className="h-8 w-auto object-contain"
+                className="h-12 w-auto object-contain"
               />
-              <span className="text-lg font-bold text-foreground">Sartaj Foods</span>
             </Link>
 
             {/* Search Bar - Desktop */}
-            <div className="hidden md:flex flex-1 max-w-md">
+            <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-1 max-w-md">
               <div className="w-full relative">
                 <input
                   type="text"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                   placeholder={`${t("common.search")}...`}
                   className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
-                <Search className="absolute right-3 top-2.5 h-5 w-5 text-muted-foreground pointer-events-none" />
+                <button type="submit" className="absolute right-3 top-2.5 cursor-pointer">
+                  <Search className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+                </button>
               </div>
-            </div>
+            </form>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-4">
-              {/* Theme Selector */}
-              <div className="hidden sm:block">
-                <ThemeSelector variant="light" />
-              </div>
-
-              {/* Language Selector */}
-              <div className="hidden sm:block">
-                <LanguageSelector variant="light" />
-              </div>
-
-              {/* Cart */}
-              <Link
-                href={ROUTES.CART}
-                className="relative flex items-center gap-1 text-foreground hover:text-foreground font-medium text-sm"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                <span className="hidden sm:inline">{t("common.cart")}</span>
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  0
-                </span>
-              </Link>
-
-              {/* Login */}
-              <Link
-                href={ROUTES.LOGIN}
-                className="flex items-center gap-2 text-foreground hover:text-foreground font-medium text-sm"
-              >
-                <User className="h-5 w-5" />
-                <span className="hidden sm:inline">{t("common.login")}</span>
-              </Link>
-
-              {/* Mobile Menu Toggle */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden text-foreground p-1"
-              >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
+            <HeaderActions />
           </div>
 
           {/* Mobile Search */}
-          <div className="md:hidden mt-3">
+          <form onSubmit={handleSearchSubmit} className="md:hidden mt-3">
             <div className="relative">
               <input
                 type="text"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
                 placeholder={`${t("common.search")}...`}
                 className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <Search className="absolute right-3 top-2.5 h-5 w-5 text-muted-foreground pointer-events-none" />
+              <button type="submit" className="absolute right-3 top-2.5 cursor-pointer">
+                <Search className="h-5 w-5 text-muted-foreground hover:text-primary transition-colors" />
+              </button>
             </div>
-          </div>
+          </form>
         </div>
+        <CategoryMarqueeStrip />
       </header>
-
-      {/* Navigation Menu */}
-      <nav className="bg-card border-b border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div
-            className={`flex flex-col md:flex-row md:items-center gap-6 md:gap-8 py-3 ${mobileMenuOpen ? "block" : "hidden md:flex"}`}
-          >
-            {categories.map((cat) => (
-              <Link
-                key={cat.name}
-                href={cat.href}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
     </>
   );
 }

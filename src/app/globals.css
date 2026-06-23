@@ -19,7 +19,7 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -55,7 +55,7 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
@@ -130,7 +130,7 @@
       color 0.3s ease;
   }
 
-  /* ── Headings ────────────────────────────────── */
+  /* ── Headings  */
   h1,
   h2,
   h3,
@@ -166,14 +166,14 @@
     letter-spacing: 0;
   }
 
-  /* ── Body text ───────────────────────────────── */
+  /* ── Body text  */
   p {
     color: var(--foreground);
     line-height: 1.7;
     transition: color 0.3s ease;
   }
 
-  /* ── Inline elements ─────────────────────────── */
+  /* ── Inline elements  */
   strong,
   b {
     font-weight: 700;
@@ -203,7 +203,7 @@
       color 0.3s ease;
   }
 
-  /* ── Links ───────────────────────────────────── */
+  /* ── Links  */
   a:not([class]) {
     color: var(--primary);
     text-decoration: underline;
@@ -216,7 +216,7 @@
     opacity: 0.75;
   }
 
-  /* ── Animate colour-bearing elements ─────────── */
+  /* ── Animate colour-bearing elements  */
   button,
   a,
   input,
@@ -236,4 +236,387 @@
       color 0.3s ease,
       border-color 0.3s ease;
   }
+}
+
+/* Custom Scrollbar */
+:root {
+  --scrollbar-thumb: color-mix(in oklch, var(--primary) 65%, transparent);
+  --scrollbar-track: var(--muted);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+  }
+}
+
+/* Chrome / Safari / Edge / Opera */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 8px;
+  border: 2px solid var(--scrollbar-track);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  border: 2px solid var(--scrollbar-track);
+  background-clip: padding-box;
+}
+
+/* Hide arrow buttons completely */
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom thin scrollbar utility */
+.custom-thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.custom-thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+.custom-thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+.custom-thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ── Trust Signals Premium Animations ── */
+
+/* Identity values for smooth stacking context transforms */
+.trust-card {
+  translate: 0px;
+  rotate: 0deg;
+  scale: 1;
+  transition:
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 1s ease-out,
+    translate 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.5s ease;
+}
+
+.trust-card:hover {
+  translate: 0 -8px;
+  scale: 1.02;
+}
+
+/* Icon hover animations triggered by parent card hover */
+.group:hover .animate-hover-wobble {
+  animation: wobble 0.8s ease-in-out;
+}
+
+.group:hover .animate-hover-spin {
+  animation: spin-once 0.8s ease-in-out;
+}
+
+.group:hover .animate-hover-truck {
+  animation: truck-drive 0.8s ease-in-out;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 100s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spin-reverse-slow 120s linear infinite;
+}
+
+/* Keyframes */
+@keyframes wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(-10deg);
+  }
+  30% {
+    transform: rotate(8deg);
+  }
+  45% {
+    transform: rotate(-6deg);
+  }
+  60% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes spin-once {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes truck-drive {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(6px, 0);
+  }
+  50% {
+    transform: translate(4px, -1.5px);
+  }
+  75% {
+    transform: translate(8px, 0);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.4;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse-slow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ── Theme-Aware Variables for Trust Signals ── */
+:root {
+  --trust-glow-1: rgba(36, 59, 135, 0.15);
+  --trust-glow-2: rgba(0, 110, 28, 0.1);
+  --trust-card-bg: rgba(255, 255, 255, 0.75);
+  --trust-card-border: rgba(36, 59, 135, 0.08);
+  --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
+  --trust-card-hover-border: rgba(36, 59, 135, 0.2);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(36, 59, 135, 0.15);
+  --promo-btn-bg: var(--primary);
+  --promo-btn-hover-bg: oklch(from var(--primary) l c h / 0.95);
+  --promo-btn-text: var(--primary-foreground);
+  --promo-btn-hover-shadow: rgba(36, 59, 135, 0.3);
+  --promo-highlight-text: oklch(0.85 0.12 65);
+  --promo-accent-orb: oklch(from var(--primary) l c h / 0.1);
+}
+
+[data-theme="sakura"] {
+  --trust-glow-1: rgba(212, 80, 122, 0.15);
+  --trust-glow-2: rgba(249, 168, 201, 0.12);
+  --trust-card-bg: rgba(255, 255, 255, 0.75);
+  --trust-card-border: rgba(212, 80, 122, 0.08);
+  --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
+  --trust-card-hover-border: rgba(212, 80, 122, 0.22);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(249, 168, 212, 0.15);
+  --promo-btn-bg: oklch(0.6 0.2 350);
+  --promo-btn-hover-bg: oklch(0.55 0.2 350);
+  --promo-btn-text: #ffffff;
+  --promo-btn-hover-shadow: rgba(249, 168, 212, 0.35);
+  --promo-highlight-text: oklch(0.85 0.1 350);
+  --promo-accent-orb: rgba(249, 168, 212, 0.12);
+}
+
+[data-theme="snowfall"] {
+  --trust-glow-1: rgba(74, 123, 167, 0.15);
+  --trust-glow-2: rgba(147, 197, 253, 0.12);
+  --trust-card-bg: rgba(255, 255, 255, 0.75);
+  --trust-card-border: rgba(74, 123, 167, 0.08);
+  --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
+  --trust-card-hover-border: rgba(74, 123, 167, 0.22);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(147, 197, 253, 0.15);
+  --promo-btn-bg: oklch(0.6 0.15 240);
+  --promo-btn-hover-bg: oklch(0.55 0.15 240);
+  --promo-btn-text: #ffffff;
+  --promo-btn-hover-shadow: rgba(147, 197, 253, 0.35);
+  --promo-highlight-text: oklch(0.85 0.08 240);
+  --promo-accent-orb: rgba(147, 197, 253, 0.12);
+}
+
+[data-theme="diwali"] {
+  --trust-glow-1: rgba(212, 119, 26, 0.15);
+  --trust-glow-2: rgba(245, 158, 11, 0.12);
+  --trust-card-bg: rgba(255, 255, 255, 0.75);
+  --trust-card-border: rgba(212, 119, 26, 0.08);
+  --trust-card-hover-bg: rgba(255, 255, 255, 0.95);
+  --trust-card-hover-border: rgba(212, 119, 26, 0.22);
+
+  /* Promo Banner Theme Variables */
+  --promo-glow: 0 20px 50px rgba(245, 158, 11, 0.18);
+  --promo-btn-bg: oklch(0.65 0.2 60);
+  --promo-btn-hover-bg: oklch(0.6 0.2 60);
+  --promo-btn-text: #ffffff;
+  --promo-btn-hover-shadow: rgba(245, 158, 11, 0.35);
+  --promo-highlight-text: oklch(0.85 0.12 60);
+  --promo-accent-orb: rgba(245, 158, 11, 0.15);
+}
+
+/* Background gradient styles (Light theme-aware) */
+.trust-signals-section {
+  background: linear-gradient(
+    135deg,
+    oklch(from var(--primary) l c h / 0.05) 0%,
+    oklch(from var(--background) l c h) 50%,
+    oklch(from var(--accent) l c h / 0.07) 100%
+  );
+  border-top: 1px border-solid oklch(from var(--border) l c h / 0.4);
+  border-bottom: 1px border-solid oklch(from var(--border) l c h / 0.4);
+  transition: background 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="sakura"] .trust-signals-section {
+  background: linear-gradient(
+    135deg,
+    oklch(from var(--primary) l c h / 0.06) 0%,
+    oklch(from var(--background) l c h) 50%,
+    oklch(from var(--accent) l c h / 0.08) 100%
+  );
+}
+
+[data-theme="snowfall"] .trust-signals-section {
+  background: linear-gradient(
+    135deg,
+    oklch(from var(--primary) l c h / 0.06) 0%,
+    oklch(from var(--background) l c h) 50%,
+    oklch(from var(--accent) l c h / 0.08) 100%
+  );
+}
+
+[data-theme="diwali"] .trust-signals-section {
+  background: linear-gradient(
+    135deg,
+    oklch(from var(--primary) l c h / 0.07) 0%,
+    oklch(from var(--background) l c h) 50%,
+    oklch(from var(--accent) l c h / 0.09) 100%
+  );
+}
+
+/* ── Hero Banner Revamp Animations ── */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+@keyframes orb-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -40px) scale(1.08);
+  }
+  66% {
+    transform: translate(-30px, 20px) scale(0.92);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.animate-orb-drift {
+  animation: orb-drift 25s ease-in-out infinite;
+}
+
+/* Custom animation delay classes */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+.animation-delay-700 {
+  animation-delay: 700ms;
+}
+
+@keyframes fade-in-up-card {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in-up-card {
+  opacity: 0;
+  animation: fade-in-up-card 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

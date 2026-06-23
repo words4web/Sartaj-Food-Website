@@ -1,4 +1,3 @@
-export { Loader } from "./Loader";
 export { PriceDisplay } from "./PriceDisplay";
 export { EmptyState } from "./EmptyState";
 export { PageError } from "./PageError";
@@ -10,3 +9,5 @@ export { LanguageSelector } from "./LanguageSelector";
 export { ThemeSelector } from "./ThemeSelector";
 export { ThemeProvider } from "./ThemeProvider";
 export { Typography } from "./Typography";
+export { ThemedImage } from "./ThemedImage";
+export { WishlistButton } from "./WishlistButton";

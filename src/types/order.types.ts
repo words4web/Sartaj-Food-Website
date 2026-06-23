@@ -1,4 +1,4 @@
-import { IProduct } from "./product.types";
+import { IProduct } from "./product/product.types";
 
 export interface IOrderItem {
   productId: string;
@@ -64,13 +64,159 @@ export interface ICoupon {
   isActive: boolean;
 }
 
-export interface ICreateOrderPayload {
-  items: IOrderItem[];
-  shippingAddressId: string;
-  billingAddressId?: string;
+export interface ICreateOrderBody {
+  addressId: string;
   paymentMethod: string;
   couponCode?: string;
-  useWallet: boolean;
-  walletAmount: number;
+  applyWallet?: boolean;
+  platform?: string;
+}
+
+export interface ICreateOrderMutationArgs {
+  data: ICreateOrderBody;
   idempotencyKey: string;
+}
+
+export interface IPriceBreakdownItem {
+  type: string;
+  name: string | { [key: string]: string };
+  amount: number;
+  message?: string;
+  isNegative?: boolean;
+}
+
+export interface ICheckoutSummary {
+  priceBreakdown: IPriceBreakdownItem[];
+  totalAmount: number;
+  taxTotal: number;
+  couponDiscount: number;
+  walletDebit: number;
+  shippingFee: number;
+  subTotal: number;
+  penaltyAmount: number;
+  otherCharges: number;
+  maxWalletApplicable: number;
+  walletBalance: number;
+}
+
+export interface OrderDetailPageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export interface OrderDetailHeaderProps {
+  orderId?: string;
+  id: string;
+  status?: string;
+  invoiceURL?: string | null;
+}
+
+export interface OrderDetailInfoProps {
+  createdAt?: string;
+  paymentMethod?: string;
+  paymentStatus?: string;
+  shippingAddress?: {
+    fullName: string;
+    phone: string;
+    postalCode: string;
+    prefecture: string;
+    city: string;
+    streetAddress: string;
+    building?: string;
+  };
+  trackOrder?: string | null;
+  notes?: string | null;
+  cancelReason?: string | null;
+}
+
+export interface OrderDetailItemsProps {
+  items?: Array<{
+    product: {
+      _id: string;
+      name: string | { [key: string]: string };
+      images?: string[];
+      quantity?: number;
+      price?: number;
+      lineSubtotal?: number;
+    };
+  }>;
+}
+
+export interface PriceBreakdownItem {
+  _id?: string;
+  type: string;
+  name: string;
+  amount: number;
+  message?: string;
+  isNegative?: boolean;
+}
+
+export interface OrderDetailSummaryProps {
+  subtotal?: number;
+  priceBreakdown?: PriceBreakdownItem[];
+  totalAmount?: number;
+  couponCode?: string | null;
+}
+
+export interface ICustomerOrderListItemProduct {
+  _id: string;
+  name: string | { en?: string; ja?: string; [key: string]: any };
+  images?: string[];
+}
+
+export interface ICustomerOrderListItem {
+  product: ICustomerOrderListItemProduct;
+}
+
+export interface ICustomerOrder {
+  _id: string;
+  orderId: string;
+  customer: string;
+  items: ICustomerOrderListItem[];
+  totalAmount: number;
+  status: string;
+  paymentStatus: string;
+  paymentMethod: string;
+  trackOrder: string | null;
+  invoiceURL: string | null;
+  notes: string | null;
+  cancelledBy: string | null;
+  cancelReason: string | null;
+  paypalOrderId: string | null;
+  paypalCaptureId: string | null;
+  expiresAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICustomerOrdersResponse {
+  orders: ICustomerOrder[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export enum OrderTab {
+  ACTIVE = "active",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+}
+
+export interface OrderTabsProps {
+  activeTab: OrderTab;
+  onTabChange: (tab: OrderTab) => void;
+}
+
+export interface OrderCardProps {
+  order: ICustomerOrder;
+}
+
+export interface OrderCancelAlertProps {
+  status?: string;
+  isWithin1Hour: boolean;
+  onCancelClick: () => void;
 }

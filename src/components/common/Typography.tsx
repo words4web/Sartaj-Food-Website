@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/common/common.utils";
 import { ElementType, HTMLAttributes } from "react";
 
 type TypographyVariant =

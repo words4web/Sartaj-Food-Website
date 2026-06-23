@@ -1,12 +1,13 @@
 export const API_ROUTES = {
   // Auth
   AUTH: {
-    SIGNUP: "/customer/auth/signup",
-    LOGIN: "/customer/auth/login",
-    VERIFY_OTP: "/customer/auth/verify-otp",
-    RESEND_OTP: "/customer/auth/resend-otp",
-    LOGOUT: "/customer/auth/logout",
-    REFRESH_TOKEN: "/customer/auth/refresh-token",
+    SIGNUP: "/retailer/auth/signup",
+    LOGIN: "/retailer/auth/login",
+    VERIFY_OTP: "/retailer/auth/verify-otp",
+    RESEND_OTP: "/retailer/auth/resend-otp",
+    LOGOUT: "/retailer/auth/logout",
+    REFRESH_TOKEN: "/retailer/auth/refresh-token",
+    GET_PROFILE: "/retailer/auth/profile",
   },
 
   // Products
@@ -15,7 +16,8 @@ export const API_ROUTES = {
     GET_BY_ID: (id: string) => `/customer/products/${id}`,
     SEARCH: "/customer/products/search",
     GET_BY_CATEGORY: (id: string) => `/customer/products/category/${id}`,
-    GET_BY_BRAND: "/customer/products/filter",
+    FILTER: "/customer/products/filter",
+    GET_RELATED: (id: string) => `/customer/products/${id}/related`,
   },
 
   // Categories
@@ -27,17 +29,17 @@ export const API_ROUTES = {
   // Cart
   CART: {
     GET: "/customer/cart",
-    ADD_ITEM: "/customer/cart/items",
-    UPDATE_ITEM: (id: string) => `/customer/cart/items/${id}`,
-    REMOVE_ITEM: (id: string) => `/customer/cart/items/${id}`,
+    ADD_ITEM: "/customer/cart/add",
+    UPDATE_ITEM: "/customer/cart/update",
+    REMOVE_ITEM: (id: string) => `/customer/cart/remove/${id}`,
     CLEAR: "/customer/cart/clear",
   },
 
   // Wishlist
   WISHLIST: {
     GET: "/customer/wishlist",
-    ADD: "/customer/wishlist",
-    REMOVE: (id: string) => `/customer/wishlist/${id}`,
+    ADD: "/customer/wishlist/add",
+    REMOVE: (id: string) => `/customer/wishlist/remove/${id}`,
   },
 
   // Orders
@@ -46,7 +48,7 @@ export const API_ROUTES = {
     GET_BY_ID: (id: string) => `/customer/orders/${id}`,
     CREATE: "/customer/orders",
     CHECKOUT_SUMMARY: "/customer/orders/checkout-summary",
-    CANCEL: (id: string) => `/customer/orders/${id}/cancel',`,
+    CANCEL: (id: string) => `/customer/orders/${id}/cancel`,
   },
 
   // Addresses
@@ -80,13 +82,34 @@ export const API_ROUTES = {
   // Notifications
   NOTIFICATIONS: {
     GET_ALL: "/customer/notification",
+    GET_UNREAD_COUNT: "/customer/notification/unread-count",
     MARK_READ: (id: string) => `/customer/notification/${id}/read`,
-    MARK_ALL_READ: "/customer/notification/mark-all-read",
+    MARK_ALL_READ: "/customer/notification/read-all",
+    DEVICES: {
+      SYNC: "/customer/notification/devices/sync",
+      REMOVE: "/customer/notification/devices/remove",
+    },
   },
 
   // CMS
   CMS: {
     GET_PAGE: (slug: string) => `/customer/cms/${slug}`,
+  },
+
+  // Banners
+  BANNERS: {
+    GET_ACTIVE: "/customer/banners",
+  },
+
+  // Manufacturers
+  MANUFACTURERS: {
+    GET_ALL: "/customer/manufacturers",
+  },
+
+  // Reviews
+  REVIEWS: {
+    GET: (productId: string) => `/customer/reviews/${productId}`,
+    ADD: (productId: string) => `/customer/reviews/${productId}`,
   },
 } as const;
 

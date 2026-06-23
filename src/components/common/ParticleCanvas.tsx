@@ -1,114 +1,369 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Particle, ParticleCanvasProps } from "@/types/common.types";
+import { useEffect, useRef, useState, memo } from "react";
+import { ParticleCanvasProps } from "@/types/common.types";
+import dynamic from "next/dynamic";
 
-// Theme colour palettes for ambient orbs
-const PALETTE: Record<string, string[]> = {
-  sakura: ["#f9a8d4", "#f472b6", "#fda4af", "#fbcfe8"],
-  snowflake: ["#bae6fd", "#93c5fd", "#c7d2fe", "#e0f2fe"],
-  "diwali-light": ["#fde68a", "#fb923c", "#f87171", "#fbbf24"],
+const DotLottieReact = dynamic(
+  () => import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
+  { ssr: false },
+);
+
+// ── Theme character sets
+const CHARACTERS: Record<string, string[]> = {
+  sakura: ["🌸"],
+  snowflake: ["❄"],
+  "diwali-light": ["✨"],
 };
 
-export function ParticleCanvas({ type, className = "" }: ParticleCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const animationRef = useRef<number | null>(null);
+const GLOW: Record<string, string> = {
+  sakura: "drop-shadow(0 0 1px rgba(249,168,212,0.08))",
+  snowflake: "drop-shadow(0 0 1px rgba(255,255,255,0.08))",
+  "diwali-light": "drop-shadow(0 0 1px rgba(253,230,138,0.08))",
+};
 
+// ── Inject keyframes once
+const STYLE_ID = "cf-keyframes";
+
+function ensureKeyframes() {
+  if (typeof document === "undefined" || document.getElementById(STYLE_ID)) return;
+  const s = document.createElement("style");
+  s.id = STYLE_ID;
+  s.textContent = `
+    /* Fall: top → bottom — 110vh ensures particles reach bottom of viewport elegantly */
+    @keyframes cf-fall {
+      from { transform: translateY(-2em) rotate(0deg); opacity: 0; }
+      6%   { opacity: 1; }
+      92%  { opacity: 0.85; }
+      to   { transform: translateY(110vh) rotate(var(--cf-spin,180deg)); opacity: 0; }
+    }
+    /* Asymmetric wind sway with prevailing bias (Sakura - drifts right mostly) */
+    @keyframes cf-wind-gentle {
+      0%, 100% { transform: translateX(0px); }
+      25%      { transform: translateX(var(--cf-wind-amp, 60px)); }
+      50%      { transform: translateX(calc(var(--cf-wind-amp, 60px) * -0.4)); }
+      75%      { transform: translateX(calc(var(--cf-wind-amp, 60px) * 0.8)); }
+    }
+    /* Asymmetric wind sway with prevailing bias (Snowflake - stronger gusts) */
+    @keyframes cf-wind-strong {
+      0%, 100% { transform: translateX(0px); }
+      30%      { transform: translateX(var(--cf-wind-amp, 120px)); }
+      60%      { transform: translateX(calc(var(--cf-wind-amp, 120px) * -0.6)); }
+      80%      { transform: translateX(calc(var(--cf-wind-amp, 120px) * 0.5)); }
+    }
+    /* Diwali sparkle (opacity + scale pulse with glow, stationary) */
+    @keyframes cf-twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); filter: drop-shadow(0 0 0px rgba(253,230,138,0)); }
+      50%      { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(253,230,138,0.7)); }
+    }
+  `;
+  document.head.appendChild(s);
+}
+
+// ── Flake data interfaces
+interface BaseFlake {
+  id: number;
+  char: string;
+  left: string;
+  size: string;
+  delay: string;
+  opacity: number;
+}
+
+interface FallingFlake extends BaseFlake {
+  duration: string;
+  windDuration: string;
+  windAmp: string;
+  spin: string;
+}
+
+interface TwinkleFlake extends BaseFlake {
+  top: string;
+  duration: string;
+}
+
+// Stratified positions to prevent clumping
+function buildLeftPositions(count: number): string[] {
+  const binWidth = 100 / count;
+  return Array.from({ length: count }, (_, i) => {
+    const binStart = i * binWidth;
+    const jitter = Math.random() * binWidth;
+    return `${(binStart + jitter).toFixed(1)}%`;
+  }).sort(() => Math.random() - 0.5);
+}
+
+function buildFallingParticles(type: string, count: number): FallingFlake[] {
+  const chars = CHARACTERS[type] ?? CHARACTERS["snowflake"];
+  const lefts = buildLeftPositions(count);
+
+  return Array.from({ length: count }, (_, i) => {
+    // Generate scale/size first so we can tie wind speeds/amplitudes to weight
+    const scale =
+      type === "snowflake"
+        ? Math.random() * 0.8 + 1.6 // 1.6em - 2.4em
+        : Math.random() * 1.2 + 1.6; // 1.6em - 2.8em
+
+    // Determine weight factor (larger scale = heavier, falls faster, sways less)
+    const normalizedScale = (scale - 1.6) / 1.2; // 0 (lightest) to 1 (heaviest)
+
+    // Balanced Durations: a sweet spot between very slow and slow
+    const baseDuration = type === "snowflake" ? 17 : 19;
+    const durationVal = baseDuration + (1 - normalizedScale) * 11 + Math.random() * 6;
+
+    // Wind sway: wider range for drifting curves (up to 140px sway)
+    let windAmpVal = 0;
+    if (type === "snowflake") {
+      const maxWind = 60 + (1 - normalizedScale) * 80;
+      windAmpVal = i % 2 === 0 ? maxWind : -maxWind;
+    } else {
+      const maxWind = 40 + (1 - normalizedScale) * 60;
+      windAmpVal = i % 2 === 0 ? maxWind : -maxWind; // alternate sakura sways too
+    }
+
+    const windDurationVal = 14 + (1 - normalizedScale) * 12 + Math.random() * 8; // 14-34s cycle
+
+    const spinDir = i % 2 === 0 ? 1 : -1;
+    const spinVal = spinDir * (360 + Math.random() * 720);
+
+    return {
+      id: i,
+      char: chars[i % chars.length],
+      left: lefts[i],
+      size: `${scale.toFixed(2)}em`,
+      duration: `${durationVal.toFixed(1)}s`,
+      delay: `${(-(Math.random() * 25)).toFixed(1)}s`, // broader delay range
+      windDuration: `${windDurationVal.toFixed(1)}s`,
+      windAmp: `${windAmpVal.toFixed(0)}px`,
+      spin: `${spinVal.toFixed(0)}deg`,
+      opacity: 0.7 + Math.random() * 0.3,
+    };
+  });
+}
+
+function buildTwinkles(count: number): TwinkleFlake[] {
+  const chars = CHARACTERS["diwali-light"];
+  const lefts = buildLeftPositions(count);
+
+  return Array.from({ length: count }, (_, i) => {
+    const scale = Math.random() * 0.8 + 0.8; // 0.8em - 1.6em
+
+    return {
+      id: i,
+      char: chars[i % chars.length],
+      left: lefts[i],
+      top: `${(Math.random() * 90 + 5).toFixed(1)}%`, // keep slightly away from absolute edges
+      size: `${scale.toFixed(2)}em`,
+      duration: `${(6 + Math.random() * 6).toFixed(1)}s`, // 6-12s glow pulse
+      delay: `${(-(Math.random() * 20)).toFixed(1)}s`, // wider desync delay up to 20s
+      opacity: 0.75 + Math.random() * 0.25,
+    };
+  });
+}
+
+export const ParticleCanvas = memo(function ParticleCanvas({
+  type,
+  className = "",
+  density = 1,
+}: ParticleCanvasProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [fallingFlakes, setFallingFlakes] = useState<FallingFlake[]>([]);
+  const [twinkleFlakes, setTwinkleFlakes] = useState<TwinkleFlake[]>([]);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  // Diwali Firework states
+  const [firework, setFirework] = useState<{
+    left: string;
+    top: string;
+    size: string;
+    key: number;
+  } | null>(null);
+
+  // 1. Hook for responsive density scales and accessibility preferences
   useEffect(() => {
-    if (type === "none") return;
+    if (typeof window === "undefined") return;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    // Respect reduced motion settings at system level
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mediaQuery.matches);
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    const handleMotionChange = (e: MediaQueryListEvent) => {
+      setReducedMotion(e.matches);
     };
-    resize();
-    window.addEventListener("resize", resize);
+    mediaQuery.addEventListener("change", handleMotionChange);
+    return () => mediaQuery.removeEventListener("change", handleMotionChange);
+  }, []);
 
-    const colors = PALETTE[type] ?? PALETTE["snowflake"];
+  // 2. Generate particles adaptively based on screens/density settings
+  useEffect(() => {
+    if (type === "none" || reducedMotion) {
+      setFallingFlakes([]);
+      setTwinkleFlakes([]);
+      setFirework(null);
+      return;
+    }
 
-    // Create a small number of ambient orbs spread across the screen
-    const COUNT = 18;
-    particlesRef.current = Array.from({ length: COUNT }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      // Very slow drift
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.2,
-      life: Math.random() * 300, // stagger start phases
-      maxLife: Math.random() * 300 + 400,
-      size: Math.random() * 60 + 30, // large soft glow radius
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }));
+    ensureKeyframes();
 
-    const animate = () => {
-      // Full clear each frame — no smearing
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Scale particle count dynamically for smaller screens (e.g. mobile)
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const countMultiplier = isMobile ? 0.45 : 1.0;
 
-      for (const p of particlesRef.current) {
-        p.life++;
-        if (p.life > p.maxLife) {
-          // Reset to a random position at end of life
-          p.life = 0;
-          p.x = Math.random() * canvas.width;
-          p.y = Math.random() * canvas.height;
-          p.color = colors[Math.floor(Math.random() * colors.length)];
-        }
+    if (type === "diwali-light") {
+      const baseCount = 15;
+      const count = Math.min(Math.round(baseCount * density * countMultiplier), 25);
+      setTwinkleFlakes(buildTwinkles(count));
+      setFallingFlakes([]);
 
-        // Gentle sine-wave drift
-        p.x += p.vx + Math.sin(p.life * 0.008) * 0.15;
-        p.y += p.vy + Math.cos(p.life * 0.006) * 0.1;
+      // Start the interval to show a random firework every 6-10 seconds
+      const triggerFirework = () => {
+        const left = `${(10 + Math.random() * 80).toFixed(1)}%`;
+        const top = `${(15 + Math.random() * 50).toFixed(1)}%`; // Keep in middle-top areas
+        const size = `${(100 + Math.random() * 80).toFixed(0)}px`;
+        setFirework({ left, top, size, key: Date.now() });
 
-        // Wrap around edges
-        if (p.x < -p.size) p.x = canvas.width + p.size;
-        if (p.x > canvas.width + p.size) p.x = -p.size;
-        if (p.y < -p.size) p.y = canvas.height + p.size;
-        if (p.y > canvas.height + p.size) p.y = -p.size;
+        // Auto remove firework after 4 seconds (duration of its loop)
+        setTimeout(() => {
+          setFirework(null);
+        }, 4000);
+      };
 
-        // Breathing opacity — peaks at mid-life, fades in/out
-        const progress = p.life / p.maxLife;
-        const breath = Math.sin(progress * Math.PI); // 0 → 1 → 0
-        const opacity = breath * 0.12; // max 12% opacity — very subtle
+      // Initial firework trigger
+      const initialTimer = setTimeout(triggerFirework, 1500);
 
-        // Soft radial glow
-        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-        grad.addColorStop(0, hexAlpha(p.color!, opacity));
-        grad.addColorStop(1, hexAlpha(p.color!, 0));
+      const interval = setInterval(() => {
+        triggerFirework();
+      }, 8000); // Trigger every 8 seconds
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
-      }
+      return () => {
+        clearTimeout(initialTimer);
+        clearInterval(interval);
+      };
+    } else {
+      const baseCount = type === "snowflake" ? 35 : 25;
+      const count = Math.min(
+        Math.round(baseCount * density * countMultiplier),
+        type === "snowflake" ? 55 : 40,
+      );
+      setFallingFlakes(buildFallingParticles(type, count));
+      setTwinkleFlakes([]);
+      setFirework(null);
+    }
+  }, [type, density, reducedMotion]);
 
-      animationRef.current = requestAnimationFrame(animate);
+  // 3. Pause via IntersectionObserver + Page Visibility API
+  useEffect(() => {
+    const el = containerRef.current;
+    const particleCount = fallingFlakes.length + twinkleFlakes.length;
+    if (!el || particleCount === 0) return;
+
+    const setPlaying = (playing: boolean) => {
+      const state = playing && !document.hidden ? "running" : "paused";
+      el.querySelectorAll<HTMLElement>(".cf-item").forEach((n) => {
+        n.style.animationPlayState = state;
+        const inner = n.querySelector<HTMLElement>(".cf-item-inner");
+        if (inner) inner.style.animationPlayState = state;
+      });
     };
 
-    animate();
+    const io = new IntersectionObserver(([entry]) => setPlaying(entry.isIntersecting), {
+      threshold: 0,
+    });
+    io.observe(el);
+
+    const onVis = () => setPlaying(!document.hidden);
+    document.addEventListener("visibilitychange", onVis);
 
     return () => {
-      window.removeEventListener("resize", resize);
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-      particlesRef.current = [];
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
     };
-  }, [type]);
+  }, [fallingFlakes, twinkleFlakes]);
 
-  if (type === "none") return null;
+  if (type === "none" || reducedMotion) return null;
+
+  const isDiwali = type === "diwali-light";
+  const animName = "cf-fall";
+  const windAnimName = type === "snowflake" ? "cf-wind-strong" : "cf-wind-gentle";
+  const glow = GLOW[type] ?? "";
 
   return (
-    <canvas ref={canvasRef} className={`fixed inset-0 pointer-events-none z-10 ${className}`} />
-  );
-}
+    <div
+      ref={containerRef}
+      aria-hidden="true"
+      className={`pointer-events-none ${className || "fixed inset-0 z-10"}`}
+    >
+      {/* DIWALI: Cheaper single-span stationary twinkling field */}
+      {isDiwali &&
+        twinkleFlakes.map((f) => (
+          <span
+            key={f.id}
+            className="cf-item absolute select-none leading-none block"
+            style={{
+              left: f.left,
+              top: f.top,
+              fontSize: f.size,
+              opacity: f.opacity,
+              filter: glow,
+              animation: `cf-twinkle ${f.duration} ${f.delay} infinite ease-in-out`,
+            }}
+          >
+            {f.char}
+          </span>
+        ))}
 
-/** Convert hex colour + 0–1 opacity to rgba string */
-function hexAlpha(hex: string, alpha: number): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r},${g},${b},${alpha})`;
-}
+      {/* DIWALI: Rare, random position background fireworks */}
+      {isDiwali && firework && (
+        <span
+          key={firework.key}
+          className="absolute select-none leading-none block overflow-visible"
+          style={{
+            left: firework.left,
+            top: firework.top,
+            width: firework.size,
+            height: firework.size,
+            transform: "translate(-50%, -50%)",
+            animation: "cf-twinkle 4s ease-in-out forwards",
+          }}
+        >
+          <DotLottieReact
+            src="/animations/Fireworks.json"
+            autoplay
+            style={{ width: "100%", height: "100%" }}
+          />
+        </span>
+      )}
+
+      {/* SAKURA / SNOWFLAKE: Decoupled nested wind/fall structure */}
+      {!isDiwali &&
+        fallingFlakes.map((f) => (
+          <span
+            key={f.id}
+            className="cf-item cf-flake-outer absolute select-none leading-none"
+            style={{
+              left: f.left,
+              top: "-2em",
+              fontSize: f.size,
+              animation: `${windAnimName} ${f.windDuration} ${f.delay} infinite ease-in-out`,
+              ["--cf-wind-amp" as string]: f.windAmp,
+            }}
+          >
+            <span
+              className="cf-item-inner cf-flake-inner block"
+              style={{
+                opacity: f.opacity,
+                filter: glow,
+                color: type === "snowflake" ? "#93c5fd" : undefined,
+                fontWeight: type === "snowflake" ? "900" : undefined,
+                animation: `${animName} ${f.duration} ${f.delay} infinite linear`,
+                ["--cf-spin" as string]: f.spin,
+              }}
+            >
+              {f.char}
+            </span>
+          </span>
+        ))}
+    </div>
+  );
+});
+
+ParticleCanvas.displayName = "ParticleCanvas";

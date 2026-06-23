@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { formatYen } from "@/lib/utils";
+import { formatYen } from "@/utils/format/format.utils";
 
 interface PriceDisplayProps {
   price: number;

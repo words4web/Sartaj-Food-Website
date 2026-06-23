@@ -13,43 +13,49 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
 import localeReducer from "./localeSlice";
 import cartReducer from "./cartSlice";
+import notificationReducer from "./notificationSlice";
+import wishlistReducer from "./wishlistSlice";
 
-const persistConfig = {
-  key: "sartaj-root",
+const authPersistConfig = {
+  key: "auth",
   storage,
-  whitelist: ["auth", "locale", "cart"],
+  whitelist: ["user", "accessToken", "isAuthenticated"],
   version: 1,
 };
 
-const persistedAuthReducer = persistReducer(
-  {
-    ...persistConfig,
-    key: "auth",
-  },
-  authReducer,
-);
+const localePersistConfig = {
+  key: "locale",
+  storage,
+  whitelist: ["locale", "theme"],
+  version: 1,
+};
 
-const persistedLocaleReducer = persistReducer(
-  {
-    ...persistConfig,
-    key: "locale",
-  },
-  localeReducer,
-);
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  whitelist: ["cart", "lastUpdated"],
+  version: 1,
+};
 
-const persistedCartReducer = persistReducer(
-  {
-    ...persistConfig,
-    key: "cart",
-  },
-  cartReducer,
-);
+const wishlistPersistConfig = {
+  key: "wishlist",
+  storage,
+  whitelist: ["items"],
+  version: 1,
+};
+
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedLocaleReducer = persistReducer(localePersistConfig, localeReducer);
+const persistedCartReducer = persistReducer(cartPersistConfig, cartReducer);
+const persistedWishlistReducer = persistReducer(wishlistPersistConfig, wishlistReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     locale: persistedLocaleReducer,
     cart: persistedCartReducer,
+    notification: notificationReducer,
+    wishlist: persistedWishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

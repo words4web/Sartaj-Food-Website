@@ -1,4 +1,4 @@
-import { IProduct } from "./product.types";
+import { IProduct } from "./product/product.types";
 
 export interface ICartItem {
   productId: string;

@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAuthState, IUser } from "@/types/auth.types";
+import { IAuthState, IUser } from "@/types/auth/auth.types";
 
 const initialState: IAuthState = {
   user: null,
   accessToken: null,
-  refreshToken: null,
   isAuthenticated: false,
   isLoading: false,
 };
@@ -16,13 +15,9 @@ const authSlice = createSlice({
     setAuthLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
-    setAuthUser(
-      state,
-      action: PayloadAction<{ user: IUser; accessToken: string; refreshToken: string }>,
-    ) {
+    setAuthUser(state, action: PayloadAction<{ user: IUser; accessToken: string }>) {
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
       state.isAuthenticated = true;
       state.isLoading = false;
     },
@@ -32,20 +27,15 @@ const authSlice = createSlice({
     clearAuth(state) {
       state.user = null;
       state.accessToken = null;
-      state.refreshToken = null;
       state.isAuthenticated = false;
       state.isLoading = false;
     },
     setAccessToken(state, action: PayloadAction<string>) {
       state.accessToken = action.payload;
     },
-    restoreAuth(
-      state,
-      action: PayloadAction<{ user: IUser; accessToken: string; refreshToken: string }>,
-    ) {
+    restoreAuth(state, action: PayloadAction<{ user: IUser; accessToken: string }>) {
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
       state.isAuthenticated = true;
     },
   },

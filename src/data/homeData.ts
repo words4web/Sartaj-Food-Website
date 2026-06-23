@@ -5,10 +5,10 @@ import {
   Leaf,
   Candy,
   Droplets,
-  CheckCircle,
   Truck,
-  Phone,
-  Award,
+  Tags,
+  LayoutGrid,
+  BadgeCheck,
 } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 
@@ -41,24 +41,32 @@ export const HERO_SLIDES = [
 
 export const TRUST_SIGNALS = [
   {
-    icon: CheckCircle,
-    titleKey: "home.authentic",
-    subtitleKey: "home.genuineImports",
+    icon: Tags,
+    titleKey: "home.bestPrices",
+    descKey: "home.bestPricesDesc",
+    isPrimary: true,
+    animationClass: "animate-hover-wobble",
   },
   {
-    icon: Award,
-    titleKey: "home.directImporter",
-    subtitleKey: "home.bestPricesInJapan",
+    icon: LayoutGrid,
+    titleKey: "home.wideAssortment",
+    descKey: "home.wideAssortmentDesc",
+    isPrimary: false,
+    animationClass: "animate-hover-spin",
   },
   {
     icon: Truck,
-    titleKey: "home.fastDelivery",
-    subtitleKey: "home.acrossJapan",
+    titleKey: "home.freeDelivery",
+    descKey: "home.freeDeliveryDesc",
+    isPrimary: false,
+    animationClass: "animate-hover-truck",
   },
   {
-    icon: Phone,
-    titleKey: "home.supportCenter",
-    subtitle: "072-753-1975",
+    icon: BadgeCheck,
+    titleKey: "home.bestQuality",
+    descKey: "home.bestQualityDesc",
+    isPrimary: false,
+    animationClass: "animate-hover-wobble",
   },
 ];
 
@@ -67,37 +75,37 @@ export const CATEGORIES_GRID = [
     nameKey: "categories.grains",
     count: "45 items",
     icon: Wheat,
-    href: `${ROUTES.PRODUCTS}?category=rice`,
+    href: `${ROUTES.PRODUCTS()}?category=rice`,
   },
   {
     nameKey: "categories.spices",
     count: "120 items",
     icon: Flame,
-    href: `${ROUTES.PRODUCTS}?category=spices`,
+    href: `${ROUTES.PRODUCTS()}?category=spices`,
   },
   {
     nameKey: "categories.frozen",
     count: "41 items",
     icon: Snowflake,
-    href: `${ROUTES.PRODUCTS}?category=frozen`,
+    href: `${ROUTES.PRODUCTS()}?category=frozen`,
   },
   {
     nameKey: "categories.wellness",
     count: "30 items",
     icon: Leaf,
-    href: `${ROUTES.PRODUCTS}?category=wellness`,
+    href: `${ROUTES.PRODUCTS()}?category=wellness`,
   },
   {
     nameKey: "categories.sweets",
     count: "25 items",
     icon: Candy,
-    href: `${ROUTES.PRODUCTS}?category=sweets`,
+    href: `${ROUTES.PRODUCTS()}?category=sweets`,
   },
   {
     nameKey: "categories.beverages",
     count: "18 items",
     icon: Droplets,
-    href: `${ROUTES.PRODUCTS}?category=beverages`,
+    href: `${ROUTES.PRODUCTS()}?category=beverages`,
   },
 ];
 

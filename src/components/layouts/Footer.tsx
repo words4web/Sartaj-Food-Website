@@ -3,73 +3,127 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
-import { Facebook, Twitter, Instagram, Phone } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Phone } from "lucide-react";
 import { LanguageSelector } from "@/components/common";
 
 export function Footer() {
   const t = useTranslations();
 
   return (
-    <footer className="bg-gray-950 border-t border-white/10 text-white/60 mt-16 font-sans">
-      <div className="max-w-7xl mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 mb-12">
+    <footer className="relative z-10 bg-gradient-to-b from-primary/4 via-background to-accent/8 border-t border-border/40 text-muted-foreground mt-12 md:mt-16 font-sans w-full">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-10 md:pt-14 lg:pt-16 pb-6 md:pb-8 lg:pb-10 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 lg:gap-12 mb-10">
           {/* Brand Column */}
-          <div className="space-y-4">
-            <Link href={ROUTES.HOME} className="flex items-center gap-2 w-fit">
+          <div className="space-y-6">
+            <Link href={ROUTES.HOME} className="flex items-center gap-2.5 w-fit">
               <img
                 src="/sartaj_logo.svg"
                 alt="Sartaj Foods Logo"
-                className="h-8 w-auto object-contain"
+                className="h-10 w-auto object-contain"
               />
-              <span className="text-xl font-bold text-white tracking-wide">Sartaj Foods</span>
+              <span className="text-2xl font-black text-foreground tracking-wide">
+                {t("common.appName")}
+              </span>
             </Link>
-            <p className="text-sm text-white/60 leading-relaxed">
-              Authentic South Asian flavors imported directly to Japan. Experience premium Basmati
-              rice, aromatic spices, and traditional sweets.
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-sm">
+              {t("footer.description")}
             </p>
-            <div className="flex gap-3 pt-2">
+            <div className="space-y-2 pt-2 text-xs sm:text-sm text-muted-foreground/80 max-w-sm">
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.addressLabel")}:{" "}
+                </strong>
+                {t("footer.addressValue")}
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.callUsLabel")}:{" "}
+                </strong>
+                <a
+                  href={`tel:${t("footer.callUsValue")}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.callUsValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.emailLabel")}:{" "}
+                </strong>
+                <a
+                  href={`mailto:${t("footer.emailValue")}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.emailValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.hoursLabel")}:{" "}
+                </strong>
+                {t("footer.hoursValue")}
+              </div>
+            </div>
+            <div className="flex gap-3.5 pt-2">
               <a
-                href="#"
+                href="https://www.facebook.com/sartaj.foods"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:border-primary hover:bg-primary hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-white/60"
+                className="w-10 h-10 rounded-full bg-card border border-border/60 hover:border-primary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-muted-foreground"
               >
-                <Facebook className="h-4 w-4" />
+                <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="#"
-                aria-label="Twitter"
-                className="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:border-sky-400 hover:bg-sky-500 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-white/60"
+                href="https://x.com/FoodsSartaj"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (formerly Twitter)"
+                className="w-10 h-10 rounded-full bg-card border border-border/60 hover:border-primary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-muted-foreground"
               >
-                <Twitter className="h-4 w-4" />
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/sartaj_foods_official/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:border-pink-500 hover:bg-pink-600 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-white/60"
+                className="w-10 h-10 rounded-full bg-card border border-border/60 hover:border-primary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-muted-foreground"
               >
-                <Instagram className="h-4 w-4" />
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/sartaj-foods-japan/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-10 h-10 rounded-full bg-card border border-border/60 hover:border-primary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm text-muted-foreground"
+              >
+                <Linkedin className="h-5 w-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Linmakks Column */}
+          {/* Quick Links Column */}
           <div>
-            <h4 className="text-xs font-semibold text-white tracking-wider uppercase mb-4">
+            <h4 className="text-xs sm:text-sm font-bold text-foreground tracking-wider uppercase mb-6">
               {t("common.appName")}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3.5 sm:space-y-4">
               <li>
                 <Link
                   href={ROUTES.HOME}
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("common.home")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={ROUTES.PRODUCTS}
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  href={ROUTES.PRODUCTS()}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("products.products")}
                 </Link>
@@ -77,15 +131,15 @@ export function Footer() {
               <li>
                 <Link
                   href={ROUTES.CART}
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cart.cart")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={ROUTES.ORDERS}
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  href={ROUTES.ORDERS()}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("orders.orders")}
                 </Link>
@@ -95,14 +149,14 @@ export function Footer() {
 
           {/* Customer Service Column */}
           <div>
-            <h4 className="text-xs font-semibold text-white tracking-wider uppercase mb-4">
+            <h4 className="text-xs sm:text-sm font-bold text-foreground tracking-wider uppercase mb-6">
               {t("home.supportCenter")}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3.5 sm:space-y-4">
               <li>
                 <Link
-                  href="/contact-us"
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  href={ROUTES.CONTACT}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cms.contactUs")}
                 </Link>
@@ -110,49 +164,40 @@ export function Footer() {
               <li>
                 <Link
                   href="/faq"
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cms.faq")}
                 </Link>
-              </li>
-              <li className="flex items-center gap-2 text-sm pt-1">
-                <Phone className="h-4 w-4 text-primary" />
-                <a
-                  href="tel:+81727511975"
-                  className="font-semibold text-white/80 hover:text-white transition-colors"
-                >
-                  072-751-1975
-                </a>
               </li>
             </ul>
           </div>
 
           {/* Legal Column */}
           <div>
-            <h4 className="text-xs font-semibold text-white tracking-wider uppercase mb-4">
-              Legal
+            <h4 className="text-xs sm:text-sm font-bold text-foreground tracking-wider uppercase mb-6">
+              {t("footer.legal")}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3.5 sm:space-y-4">
               <li>
                 <Link
-                  href="/privacy-policy"
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  href={ROUTES.PRIVACY}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cms.privacyPolicy")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/terms-and-conditions"
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  href={ROUTES.TERMS}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cms.termsAndConditions")}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/about-us"
-                  className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                  href={ROUTES.ABOUT}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cms.aboutUs")}
                 </Link>
@@ -162,11 +207,28 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright & language select bar */}
-        <div className="border-t border-white/10 pt-8 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} Sartaj Foods. All rights reserved.
-          </p>
-          <LanguageSelector variant="dark" />
+        <div className="border-t border-border/40 pt-6 mt-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+            <p className="text-sm text-muted-foreground/60">
+              {t("footer.copyright", { year: new Date()?.getFullYear() })}
+            </p>
+            <span className="hidden sm:inline text-muted-foreground/30">|</span>
+            <p className="text-sm text-muted-foreground/60">
+              {t.rich("footer.designedBy", {
+                link: (chunks) => (
+                  <a
+                    href="https://words4web.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-foreground hover:text-primary transition-colors hover:underline"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
+            </p>
+          </div>
+          <LanguageSelector variant="light" align="top" />
         </div>
       </div>
     </footer>

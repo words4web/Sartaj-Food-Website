@@ -1,18 +1,19 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setLocale } from "@/lib/store/localeSlice";
+import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { LANGUAGES } from "@/data/languages";
 import { Globe, ChevronDown } from "lucide-react";
+import { useChangeLanguage } from "@/hooks/useChangeLanguage";
 
 interface LanguageSelectorProps {
   variant?: "light" | "dark";
+  align?: "top" | "bottom";
 }
 
-export function LanguageSelector({ variant = "light" }: LanguageSelectorProps) {
-  const dispatch = useDispatch();
+export function LanguageSelector({ variant = "light", align }: LanguageSelectorProps) {
+  const changeLanguage = useChangeLanguage();
   const locale = useSelector((state: RootState) => state.locale.locale);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,10 +35,16 @@ export function LanguageSelector({ variant = "light" }: LanguageSelectorProps) {
       ? "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-foreground hover:text-primary hover:bg-muted/50 transition-all duration-200 cursor-pointer"
       : "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 border border-white/20 transition-all duration-200 cursor-pointer";
 
+  const dropdownAlign = align || (variant === "light" ? "bottom" : "top");
+
   const dropdownClasses =
-    variant === "light"
-      ? "absolute right-0 top-full mt-2 w-40 rounded-lg bg-card border border-border shadow-lg py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
-      : "absolute right-0 bottom-full mb-2 w-40 rounded-lg bg-zinc-950 border border-white/10 shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-bottom-2 duration-200";
+    dropdownAlign === "bottom"
+      ? variant === "light"
+        ? "absolute right-0 top-full mt-2 w-40 rounded-lg bg-card border border-border shadow-lg py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+        : "absolute right-0 top-full mt-2 w-40 rounded-lg bg-zinc-950 border border-white/10 shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+      : variant === "light"
+        ? "absolute right-0 bottom-full mb-2 w-40 rounded-lg bg-card border border-border shadow-lg py-1.5 z-50 animate-in fade-in slide-in-from-bottom-2 duration-200"
+        : "absolute right-0 bottom-full mb-2 w-40 rounded-lg bg-zinc-950 border border-white/10 shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-bottom-2 duration-200";
 
   const itemClasses = (active: boolean) => {
     if (variant === "light") {
@@ -77,7 +84,7 @@ export function LanguageSelector({ variant = "light" }: LanguageSelectorProps) {
             <button
               key={lang.code}
               onClick={() => {
-                dispatch(setLocale(lang?.code as any));
+                changeLanguage(lang?.code as any);
                 setIsOpen(false);
               }}
               className={itemClasses(locale === lang?.code)}
