@@ -129,7 +129,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <main className="min-h-screen bg-muted/30">
+    <main className="relative z-10 min-h-screen bg-muted/30">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-foreground mb-6">{t("profile.profile")}</h1>
 

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setLocale } from "@/lib/store/localeSlice";
+import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { LANGUAGES } from "@/data/languages";
 import { Globe, ChevronDown } from "lucide-react";
+import { useChangeLanguage } from "@/hooks/useChangeLanguage";
 
 interface LanguageSelectorProps {
   variant?: "light" | "dark";
@@ -13,7 +13,7 @@ interface LanguageSelectorProps {
 }
 
 export function LanguageSelector({ variant = "light", align }: LanguageSelectorProps) {
-  const dispatch = useDispatch();
+  const changeLanguage = useChangeLanguage();
   const locale = useSelector((state: RootState) => state.locale.locale);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -84,7 +84,7 @@ export function LanguageSelector({ variant = "light", align }: LanguageSelectorP
             <button
               key={lang.code}
               onClick={() => {
-                dispatch(setLocale(lang?.code as any));
+                changeLanguage(lang?.code as any);
                 setIsOpen(false);
               }}
               className={itemClasses(locale === lang?.code)}

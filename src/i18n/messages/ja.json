@@ -141,7 +141,8 @@
     "sweetsSubtitle": "あらゆる機会に合わせて、プレミアム品質のグラブ・ジャムン、ラスグッラ、手作りの伝統菓子でお祝いしましょう。",
     "herbalWellness": "オーガニック＆ウェルネス",
     "wellnessTitle": "天然のアーユルヴェーダハーブ＆ティー",
-    "wellnessSubtitle": "本物のオーガニックティー、ハーブサプリメント、アーユルヴェーダの成分で健康と免疫力を高めましょう。"
+    "wellnessSubtitle": "本物のオーガニックティー, ハーブサプリメント, アーユルヴェーダの成分で健康と免疫力を高めましょう。",
+    "promoBannerTitle": "本場インドの<highlight>味</highlight>を、すべてのご家庭へ。"
   },
   "products": {
     "allProducts": "すべての商品",
@@ -396,6 +397,15 @@
   "footer": {
     "description": "南アジアの本物の味わいを日本へ直送。高級バスマティライス、香り豊かなスパイス、伝統的なスイーツをご体験ください。",
     "legal": "法的規約",
-    "copyright": "© {year} サルタージフーズ. All rights reserved."
+    "copyright": "© {year} サルタージフーズ. All rights reserved.",
+    "designedBy": "<link>Words4Web</link> がデザイン",
+    "addressLabel": "住所",
+    "addressValue": "大阪府池田市神田2-10-23",
+    "callUsLabel": "電話番号",
+    "callUsValue": "072-751-1975",
+    "emailLabel": "メール",
+    "emailValue": "info@sartajfoods.jp",
+    "hoursLabel": "営業時間",
+    "hoursValue": "月曜日〜土曜日 09:00〜18:00（祝日を除く）"
   }
 }

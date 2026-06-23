@@ -10,9 +10,9 @@ export function Footer() {
   const t = useTranslations();
 
   return (
-    <footer className="bg-gradient-to-b from-primary/4 via-background to-accent/8 border-t border-border/40 text-muted-foreground mt-24 font-sans w-full">
-      <div className="w-full mx-auto px-6 sm:px-12 md:px-20 lg:px-32 pt-16 md:pt-24 lg:pt-28 pb-8 md:pb-12 lg:pb-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16 lg:gap-16 mb-16">
+    <footer className="relative z-10 bg-gradient-to-b from-primary/4 via-background to-accent/8 border-t border-border/40 text-muted-foreground mt-12 md:mt-16 font-sans w-full">
+      <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-10 md:pt-14 lg:pt-16 pb-6 md:pb-8 lg:pb-10 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 lg:gap-12 mb-10">
           {/* Brand Column */}
           <div className="space-y-6">
             <Link href={ROUTES.HOME} className="flex items-center gap-2.5 w-fit">
@@ -28,6 +28,42 @@ export function Footer() {
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-sm">
               {t("footer.description")}
             </p>
+            <div className="space-y-2 pt-2 text-xs sm:text-sm text-muted-foreground/80 max-w-sm">
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.addressLabel")}:{" "}
+                </strong>
+                {t("footer.addressValue")}
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.callUsLabel")}:{" "}
+                </strong>
+                <a
+                  href={`tel:${t("footer.callUsValue")}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.callUsValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.emailLabel")}:{" "}
+                </strong>
+                <a
+                  href={`mailto:${t("footer.emailValue")}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.emailValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.hoursLabel")}:{" "}
+                </strong>
+                {t("footer.hoursValue")}
+              </div>
+            </div>
             <div className="flex gap-3.5 pt-2">
               <a
                 href="https://www.facebook.com/sartaj.foods"
@@ -133,15 +169,6 @@ export function Footer() {
                   {t("cms.faq")}
                 </Link>
               </li>
-              <li className="flex items-center gap-2 text-sm sm:text-base pt-1">
-                <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                <a
-                  href="tel:+81727511975"
-                  className="font-bold text-foreground hover:text-primary transition-colors"
-                >
-                  072-751-1975
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -180,10 +207,27 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright & language select bar */}
-        <div className="border-t border-border/40 pt-10 mt-16 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <p className="text-sm text-muted-foreground/60">
-            {t("footer.copyright", { year: new Date()?.getFullYear() })}
-          </p>
+        <div className="border-t border-border/40 pt-6 mt-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+            <p className="text-sm text-muted-foreground/60">
+              {t("footer.copyright", { year: new Date()?.getFullYear() })}
+            </p>
+            <span className="hidden sm:inline text-muted-foreground/30">|</span>
+            <p className="text-sm text-muted-foreground/60">
+              {t.rich("footer.designedBy", {
+                link: (chunks) => (
+                  <a
+                    href="https://words4web.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-foreground hover:text-primary transition-colors hover:underline"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
+            </p>
+          </div>
           <LanguageSelector variant="light" align="top" />
         </div>
       </div>

@@ -199,7 +199,7 @@ export default function CheckoutPage() {
 
   if (cartItems?.length === 0 && !hasStatusParam && overlayState === CheckoutStatus.IDLE) {
     return (
-      <main className="min-h-[70vh] flex flex-col items-center justify-center bg-muted/30 px-6 text-center">
+      <main className="relative z-10 min-h-[70vh] flex flex-col items-center justify-center bg-muted/30 px-6 text-center">
         <span className="text-5xl mb-4">📦</span>
         <h2 className="text-2xl font-bold text-foreground mb-2">Your Cart is Empty</h2>
         <p className="text-muted-foreground max-w-sm mb-6">
@@ -213,7 +213,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="min-h-screen bg-muted/30 pb-16">
+    <main className="relative z-10 min-h-screen bg-muted/30 pb-16">
       <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
         <h1 className="text-2xl sm:text-3xl font-black text-foreground mb-6 sm:mb-8 flex items-center gap-2 tracking-tight">
           <ShoppingBag className="h-7 w-7 text-primary" />

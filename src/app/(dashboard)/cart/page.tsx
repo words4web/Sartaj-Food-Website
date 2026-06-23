@@ -29,7 +29,7 @@ export default function CartPage() {
   }
 
   return (
-    <main className="min-h-screen bg-muted/50">
+    <main className="relative z-10 min-h-screen bg-muted/50">
       <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8 flex items-center gap-2.5 sm:gap-3">
           <ShoppingBag className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
