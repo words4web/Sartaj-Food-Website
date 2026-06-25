@@ -29,9 +29,9 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-card text-foreground pb-16">
       {/* Header Banner */}
-      <div className="bg-muted/40 border-b border-border/80 py-16 text-center relative overflow-hidden">
+      <div className="bg-muted/40 border-b border-border/80 py-10 md:py-16 text-center relative overflow-hidden">
         <div className="absolute top-[-50%] left-[-20%] w-[600px] h-[600px] rounded-full bg-primary/5 blur-3xl pointer-events-none" />
-        <div className="relative z-10 max-w-3xl mx-auto px-6">
+        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6">
           <Typography
             variant="overline"
             className="text-primary font-bold text-sm tracking-wider uppercase mb-3 block"
@@ -40,11 +40,14 @@ export default function PrivacyPolicyPage() {
           </Typography>
           <Typography
             variant="h1"
-            className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4"
+            className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4"
           >
             {pageData?.title}
           </Typography>
-          <Typography variant="muted" className="text-muted-foreground text-base max-w-xl mx-auto">
+          <Typography
+            variant="muted"
+            className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto"
+          >
             Your privacy is important to us. Learn how Sartaj Foods collects, protects, and handles
             your information.
           </Typography>
@@ -52,9 +55,9 @@ export default function PrivacyPolicyPage() {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-4xl mx-auto px-6 py-12">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-6 md:py-12">
         <div className="space-y-8">
-          <div className="bg-muted/30 border border-border/60 rounded-2xl p-6 md:p-8">
+          <div className="bg-muted/30 border border-border/60 rounded-2xl p-4 sm:p-6 md:p-8">
             <Typography variant="small" className="text-muted-foreground text-xs block mb-4">
               Last Updated: {new Date(pageData?.updatedAt)?.toLocaleDateString()}
             </Typography>
