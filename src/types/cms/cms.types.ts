@@ -6,3 +6,8 @@ export interface ICmsResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
