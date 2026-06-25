@@ -163,7 +163,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/faq"
+                  href={ROUTES.FAQ}
                   className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
                 >
                   {t("cms.faq")}
