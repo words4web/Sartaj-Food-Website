@@ -7,33 +7,46 @@ import { IManufacturer } from "@/types/manufacturer/manufacturer.types";
 import { useState, useEffect, useRef, memo } from "react";
 import { useTranslations } from "next-intl";
 import { ThemedImage } from "@/components/common";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 const ManufacturerCard = memo(function ManufacturerCard({
   item,
   idx,
   isVisible,
+  isDesktop,
 }: {
   item: IManufacturer;
   idx: number;
   isVisible: boolean;
+  isDesktop: boolean;
 }) {
   const name = item?.name || "Brand";
   const image = item?.image || "";
-  const transformValue = isVisible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)";
+  const transformValue = !isDesktop
+    ? "none"
+    : isVisible
+      ? "translateY(0) scale(1)"
+      : "translateY(30px) scale(0.95)";
 
   return (
     <div
       style={{
         transform: transformValue,
-        opacity: isVisible ? 1 : 0,
-        transitionDelay: isVisible ? `${(idx % 5) * 60}ms` : "0ms",
-        transitionProperty: "transform, opacity",
-        transitionDuration: "800ms",
-        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+        opacity: !isDesktop ? 1 : isVisible ? 1 : 0,
+        transitionDelay: isDesktop && isVisible ? `${(idx % 5) * 60}ms` : "0ms",
+        transitionProperty: isDesktop ? "transform, opacity" : "none",
+        transitionDuration: isDesktop ? "800ms" : "0ms",
+        transitionTimingFunction: isDesktop ? "cubic-bezier(0.16, 1, 0.3, 1)" : "none",
       }}
-      className="flex flex-col items-center justify-center p-3 sm:p-4 bg-card hover:bg-primary/[0.02] border border-border/80 hover:border-primary/30 rounded-2xl w-full h-full hover:shadow-[0_8px_24px_-8px_color-mix(in_oklch,var(--primary)_10%,transparent)] transition-all duration-300 cursor-pointer transform group/mfg-card"
+      className={
+        isDesktop
+          ? "flex flex-col items-center justify-center p-3 sm:p-4 bg-card hover:bg-primary/[0.02] border border-border/80 hover:border-primary/30 rounded-2xl w-full h-full hover:shadow-[0_8px_24px_-8px_color-mix(in_oklch,var(--primary)_10%,transparent)] transition-all duration-300 cursor-pointer transform group/mfg-card"
+          : "flex flex-col items-center justify-center p-3 sm:p-4 bg-card border border-border/80 rounded-2xl w-full h-full cursor-pointer"
+      }
     >
-      <div className="h-12 w-12 sm:h-16 sm:w-16 mb-2 sm:mb-3 overflow-hidden rounded-full bg-muted/30 border border-border/40 p-1 flex items-center justify-center transition-transform duration-300 group-hover/mfg-card:scale-110 group-hover/mfg-card:rotate-3">
+      <div
+        className={`h-12 w-12 sm:h-16 sm:w-16 mb-2 sm:mb-3 overflow-hidden rounded-full bg-muted/30 border border-border/40 p-1 flex items-center justify-center ${isDesktop ? "transition-transform duration-300 lg:group-hover/mfg-card:scale-110 lg:group-hover/mfg-card:rotate-3" : ""}`}
+      >
         <ThemedImage
           src={image}
           alt={name}
@@ -57,14 +70,14 @@ export function ManufacturersGrid() {
   const scrollLeftStartRef = useRef(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const isDesktop = useIsDesktop();
 
-  // Triple the items array to ensure seamless infinite looping on all screen sizes
   const displayItems =
-    manufacturers.length > 0 ? [...manufacturers, ...manufacturers, ...manufacturers] : [];
+    isDesktop && manufacturers?.length > 0 ? [...manufacturers, ...manufacturers] : manufacturers;
 
   useEffect(() => {
     const container = scrollContainerRef.current;
-    if (!container || manufacturers?.length === 0) return;
+    if (!container || manufacturers?.length === 0 || !isDesktop) return;
 
     let animationFrameId: number;
     const speed = 0.7; // adjust auto-scroll speed here
@@ -78,17 +91,18 @@ export function ManufacturersGrid() {
 
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isHovered, manufacturers.length]);
+  }, [isHovered, manufacturers.length, isDesktop]);
 
   const handleScroll = () => {
+    if (!isDesktop) return;
     const container = scrollContainerRef.current;
     if (!container || manufacturers?.length === 0) return;
 
     const scrollWidth = container.scrollWidth;
-    const singleSetWidth = scrollWidth / 3;
+    const singleSetWidth = scrollWidth / 2; // Divided by 2 to match desktop duplication
 
     // Warp around seamlessly
-    if (container.scrollLeft >= singleSetWidth * 2) {
+    if (container.scrollLeft >= singleSetWidth) {
       container.scrollLeft -= singleSetWidth;
     } else if (container.scrollLeft <= 0) {
       container.scrollLeft += singleSetWidth;
@@ -128,7 +142,7 @@ export function ManufacturersGrid() {
   // We set entry animation visibility to true once content loads
   const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => {
-    if (!isLoading && manufacturers.length > 0) {
+    if (!isLoading && manufacturers?.length > 0) {
       setHasLoaded(true);
     }
   }, [isLoading, manufacturers.length]);
@@ -166,13 +180,18 @@ export function ManufacturersGrid() {
               scrollBehavior: "auto",
             }}
           >
-            {displayItems.map((item: IManufacturer, idx: number) => {
+            {displayItems?.map((item: IManufacturer, idx: number) => {
               return (
                 <div
                   key={`${item.id}-${idx}`}
-                  className="flex-shrink-0 w-36 sm:w-44 h-28 sm:h-32 transition-transform duration-300 hover:scale-[1.03]"
+                  className="flex-shrink-0 w-36 sm:w-44 h-28 sm:h-32 transition-transform duration-300 lg:hover:scale-[1.03]"
                 >
-                  <ManufacturerCard item={item} idx={idx} isVisible={hasLoaded} />
+                  <ManufacturerCard
+                    item={item}
+                    idx={idx}
+                    isVisible={hasLoaded}
+                    isDesktop={isDesktop}
+                  />
                 </div>
               );
             })}

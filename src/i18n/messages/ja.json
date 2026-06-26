@@ -29,7 +29,9 @@
     "viewAll": "すべて表示",
     "all": "すべて",
     "somethingWentWrong": "何か問題が発生しました。もう一度お試しください。",
-    "add": "追加"
+    "add": "追加",
+    "recentSearches": "最近の検索",
+    "clearAll": "すべて削除"
   },
   "auth": {
     "login": "ログイン",

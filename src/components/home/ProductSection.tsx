@@ -10,10 +10,13 @@ import { Button } from "@/components/ui/button";
 import { useGetFilteredProducts } from "@/services/product/product.hooks";
 import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
 import { CommonError } from "@/components/ui/common-error";
+import { useCachedSkeletonCount } from "@/hooks/useCachedSkeletonCount";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function ProductSection({ title, badge, showTabs = false }: ProductSectionProps) {
   const [activeTab, setActiveTab] = useState("all");
   const t = useTranslations();
+  const isDesktop = useIsDesktop();
 
   const {
     data: apiProducts,
@@ -23,6 +26,12 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
   } = useGetFilteredProducts(badge ? { badge } : undefined);
 
   const productsToRender = apiProducts || [];
+
+  const skeletonCount = useCachedSkeletonCount(
+    `sartaj_products_count_${badge || "all"}`,
+    productsToRender?.length,
+    4,
+  );
 
   const displayTitle =
     title === "Popular Products"
@@ -79,7 +88,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
         {/* Products Grid / Loading State */}
         {isLoading ? (
           <ProductGridSkeleton
-            count={4}
+            count={skeletonCount}
             columnsClass="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
           />
         ) : isError ? (
@@ -94,8 +103,8 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
             {productsToRender?.map((product, idx) => (
               <div
                 key={product?._id || product?.id}
-                className="animate-fade-in-up-card"
-                style={{ animationDelay: `${idx * 75}ms` }}
+                className={isDesktop ? "animate-fade-in-up-card" : ""}
+                style={{ animationDelay: isDesktop ? `${idx * 75}ms` : undefined }}
               >
                 <ProductCard product={product} badgeOverride={badge} />
               </div>

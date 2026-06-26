@@ -8,12 +8,14 @@ import { ROUTES } from "@/constants/routes";
 import { useGetCategories } from "@/services/category/category.hooks";
 import { getLocalizedValue } from "@/utils/product/product.utils";
 import { Skeleton } from "@/components/skeletons/Skeleton";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function CategoryMarqueeStrip() {
   const locale = useLocale();
   const t = useTranslations();
   const searchParams = useSearchParams();
   const { data: categories = [], isLoading } = useGetCategories();
+  const isDesktop = useIsDesktop();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isInteracting, setIsInteracting] = useState(false);
@@ -34,6 +36,7 @@ export function CategoryMarqueeStrip() {
 
   // Hybrid auto-scroll loop animation frame
   useEffect(() => {
+    if (!isDesktop) return;
     const container = containerRef.current;
     if (!container || isLoading || categories?.length === 0 || isInteracting) return;
 
@@ -56,7 +59,7 @@ export function CategoryMarqueeStrip() {
     animationFrameId = requestAnimationFrame(scroll);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isLoading, categories.length, isInteracting]);
+  }, [isLoading, categories.length, isInteracting, isDesktop]);
 
   if (isLoading) {
     return (
@@ -72,7 +75,7 @@ export function CategoryMarqueeStrip() {
 
   if (categories?.length === 0) return null;
 
-  const marqueeItems = [...categories, ...categories];
+  const marqueeItems = isDesktop ? [...categories, ...categories] : categories;
 
   return (
     <div className="w-full bg-card border-b border-border py-2 overflow-hidden select-none relative z-30">

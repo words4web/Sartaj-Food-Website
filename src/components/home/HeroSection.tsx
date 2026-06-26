@@ -46,7 +46,7 @@ export function HeroSection() {
   };
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (slides?.length <= 1) return;
     const timer = setInterval(() => {
       nextSlide();
     }, 6000);
@@ -54,29 +54,29 @@ export function HeroSection() {
   }, [activeSlide, slides.length]);
 
   // Show skeleton if loading, or if banners list is empty/missing
-  if (isLoading || slides.length === 0) {
+  if (isLoading || slides?.length === 0) {
     return <BannerSkeleton />;
   }
   return (
     <section
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative mt-4 sm:mt-6 md:mt-8 h-[260px] sm:h-[380px] md:h-[480px] lg:h-[560px] xl:h-[600px] overflow-hidden bg-gradient-to-br from-primary/8 to-accent/12 transition-all duration-700 ease-in-out border-b border-border/20"
+      className="relative mt-4 sm:mt-6 md:mt-8 h-[260px] sm:h-[380px] md:h-[480px] lg:h-[560px] xl:h-[600px] overflow-hidden bg-gradient-to-br from-primary/8 to-accent/12 lg:transition-all lg:duration-700 lg:ease-in-out border-b border-border/20"
     >
       {/* ── Full-width background slide image layer ── */}
-      {slides.map((slide, idx) => {
+      {slides?.map((slide, idx) => {
         const isActive = idx === activeSlide;
         return (
           <div
-            key={`bg-${slide.id || idx}`}
-            className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none transition-all duration-1000 ease-in-out ${
-              isActive ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
+            key={`bg-${slide?.id || idx}`}
+            className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none lg:transition-all lg:duration-1000 lg:ease-in-out ${
+              isActive ? "opacity-100 lg:scale-100 z-10" : "opacity-0 lg:scale-105 z-0"
             }`}
           >
             <ThemedImage
-              src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-contain mix-blend-multiply opacity-85 dark:opacity-90 transition-all duration-1000"
+              src={slide?.image}
+              alt={slide?.title}
+              className="w-full h-full object-contain mix-blend-multiply opacity-85 dark:opacity-90 lg:transition-all lg:duration-1000"
               emoji="🌾"
               fallbackType="product"
             />
@@ -84,9 +84,9 @@ export function HeroSection() {
         );
       })}
 
-      {/* ── Ambient Background Glow Orbs (Theme-Aware) ── */}
-      <div className="absolute top-[-10%] left-[-5%] w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] rounded-full bg-primary/15 blur-[80px] sm:blur-[130px] pointer-events-none animate-orb-drift mix-blend-multiply dark:mix-blend-screen z-10" />
-      <div className="absolute bottom-[-10%] right-[-5%] w-[300px] sm:w-[450px] h-[250px] sm:h-[450px] rounded-full bg-accent/12 blur-[70px] sm:blur-[100px] pointer-events-none animate-orb-drift animation-delay-500 mix-blend-multiply dark:mix-blend-screen z-10" />
+      {/* ── Ambient Background Glow Orbs (Theme-Aware) - Hidden on Mobile/Tablet for Performance ── */}
+      <div className="hidden lg:block absolute top-[-10%] left-[-5%] w-[550px] h-[550px] rounded-full bg-primary/15 blur-[130px] pointer-events-none lg:animate-orb-drift mix-blend-multiply dark:mix-blend-screen z-10" />
+      <div className="hidden lg:block absolute bottom-[-10%] right-[-5%] w-[450px] h-[450px] rounded-full bg-accent/12 blur-[100px] pointer-events-none lg:animate-orb-drift lg:animation-delay-500 mix-blend-multiply dark:mix-blend-screen z-10" />
 
       {/* Foreground Content Container (Centered & Constrained) */}
       <div className="absolute inset-0 max-w-7xl mx-auto px-6 sm:px-4 z-20 pointer-events-none">
@@ -96,16 +96,16 @@ export function HeroSection() {
           return (
             <div
               key={`fg-${slide?.id || idx}`}
-              className={`absolute left-3 min-[375px]:left-4 sm:left-6 md:left-8 bottom-3 min-[375px]:bottom-4 sm:bottom-6 md:bottom-8 w-[calc(100%-1.5rem)] min-[375px]:w-[calc(100%-2rem)] sm:w-auto max-w-lg md:max-w-xl text-left bg-background/60 dark:bg-black/45 backdrop-blur-sm p-2 min-[375px]:p-2.5 min-[480px]:p-3 sm:p-4 md:p-5 rounded-xl min-[375px]:rounded-2xl sm:rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl z-20 pointer-events-auto transition-all duration-1000 ease-in-out ${
+              className={`absolute left-3 min-[375px]:left-4 sm:left-6 md:left-8 bottom-3 min-[375px]:bottom-4 sm:bottom-6 md:bottom-8 w-[calc(100%-1.5rem)] min-[375px]:w-[calc(100%-2rem)] sm:w-auto max-w-lg md:max-w-xl text-left bg-background/60 dark:bg-black/45 backdrop-blur-sm p-2 min-[375px]:p-2.5 min-[480px]:p-3 sm:p-4 md:p-5 rounded-xl min-[375px]:rounded-2xl sm:rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl z-20 pointer-events-auto lg:transition-all lg:duration-1000 lg:ease-in-out ${
                 isActive
-                  ? "opacity-100 scale-100 translate-y-0"
-                  : "opacity-0 scale-95 translate-y-4"
+                  ? "opacity-100 lg:scale-100 lg:translate-y-0"
+                  : "opacity-0 lg:scale-95 lg:translate-y-4"
               }`}
             >
               {/* Title */}
               <h1
-                className={`text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-foreground drop-shadow-sm leading-tight uppercase transition-all duration-700 delay-300 transform ${
-                  isActive ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                className={`text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-foreground drop-shadow-sm leading-tight uppercase lg:transition-all lg:duration-700 lg:delay-300 lg:transform ${
+                  isActive ? "opacity-100 lg:translate-y-0" : "opacity-0 lg:translate-y-4"
                 }`}
               >
                 {slide?.title}
@@ -113,8 +113,8 @@ export function HeroSection() {
 
               {/* CTA Button */}
               <div
-                className={`mt-2.5 min-[375px]:mt-3 sm:mt-4 md:mt-5 w-fit transition-all duration-700 delay-500 transform ${
-                  isActive ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                className={`mt-2.5 min-[375px]:mt-3 sm:mt-4 md:mt-5 w-fit lg:transition-all lg:duration-700 lg:delay-500 lg:transform ${
+                  isActive ? "opacity-100 lg:translate-y-0" : "opacity-0 lg:translate-y-4"
                 }`}
               >
                 {slide?.link ? (
@@ -124,19 +124,19 @@ export function HeroSection() {
                   >
                     <Button
                       size="default"
-                      className="h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-3 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
+                      className="h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-3 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
                     >
                       {t("home.shopEssentials")}
-                      <ChevronRight className="h-3 w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
+                      <ChevronRight className="h-3 w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
                     </Button>
                   </Link>
                 ) : (
                   <Button
                     size="default"
-                    className="h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-3 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
+                    className="h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-3 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
                   >
                     {t("home.shopEssentials")}
-                    <ChevronRight className="h-3 w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
+                    <ChevronRight className="h-3 w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
                   </Button>
                 )}
               </div>
@@ -152,7 +152,7 @@ export function HeroSection() {
             variant="ghost"
             size="icon"
             onClick={prevSlide}
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all hover:scale-105"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all lg:hover:scale-105"
           >
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
@@ -160,7 +160,7 @@ export function HeroSection() {
             variant="ghost"
             size="icon"
             onClick={nextSlide}
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all hover:scale-105"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all lg:hover:scale-105"
           >
             <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>

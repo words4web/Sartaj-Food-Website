@@ -7,6 +7,7 @@ import { useLocale } from "next-intl";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { testimonialsData, testimonialsHeader } from "@/data/testimonials";
 import { TestimonialSliderSkeleton } from "@/components/skeletons/TestimonialSkeleton";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function Testimonials() {
   const locale = useLocale();
@@ -17,6 +18,7 @@ export function Testimonials() {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const isDesktop = useIsDesktop();
 
   // Get active translation objects based on current locale
   const header = testimonialsHeader?.[locale] || testimonialsHeader?.en;
@@ -32,6 +34,7 @@ export function Testimonials() {
 
   // Intersection Observer for scroll animations of the section
   useEffect(() => {
+    if (!isDesktop) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -47,7 +50,7 @@ export function Testimonials() {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [isDesktop]);
 
   const nextSlide = () => {
     if (list.length === 0) return;
@@ -130,8 +133,10 @@ export function Testimonials() {
   return (
     <section
       ref={sectionRef}
-      className={`py-20 bg-muted/5 relative z-10 overflow-hidden border-b border-border/10 transition-all duration-1000 transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      className={`py-20 bg-muted/5 relative z-10 overflow-hidden border-b border-border/10 ${
+        isDesktop
+          ? `transition-all duration-1000 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`
+          : "opacity-100 translate-y-0"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
@@ -165,27 +170,39 @@ export function Testimonials() {
                 return (
                   <div
                     key={item?.id}
-                    className={`absolute inset-0 w-full h-full transition-all duration-700 ease-in-out ${
-                      isActive
-                        ? "opacity-100 translate-x-0 scale-100 pointer-events-auto z-10"
-                        : `opacity-0 pointer-events-none z-0 ${
-                            isPast ? "-translate-x-12 scale-95" : "translate-x-12 scale-95"
+                    className={`absolute inset-0 w-full h-full ${
+                      isDesktop
+                        ? `transition-all duration-700 ease-in-out ${
+                            isActive
+                              ? "opacity-100 translate-x-0 scale-100 pointer-events-auto z-10"
+                              : `opacity-0 pointer-events-none z-0 ${
+                                  isPast ? "-translate-x-12 scale-95" : "translate-x-12 scale-95"
+                                }`
+                          }`
+                        : `transition-opacity duration-300 ${
+                            isActive
+                              ? "opacity-100 pointer-events-auto z-10"
+                              : "opacity-0 pointer-events-none z-0"
                           }`
                     }`}
                   >
                     <div
-                      className={`w-full h-full bg-card border ${style.border} rounded-3xl p-6 sm:p-10 md:p-12 flex flex-col justify-between shadow-lg ${style.glow} hover:-translate-y-1 transition-all duration-300 relative group`}
+                      className={`w-full h-full bg-card border ${style.border} rounded-3xl p-6 sm:p-10 md:p-12 flex flex-col justify-between shadow-lg ${
+                        isDesktop
+                          ? style.glow + " hover:-translate-y-1 transition-all duration-300"
+                          : ""
+                      } relative group`}
                     >
                       {/* Decorative quote mark */}
                       <Quote
-                        className={`absolute top-6 right-6 sm:top-8 sm:right-8 h-24 w-24 ${style.text} opacity-[0.03] dark:opacity-[0.05] pointer-events-none group-hover:scale-110 transition-transform duration-500`}
+                        className={`absolute top-6 right-6 sm:top-8 sm:right-8 h-24 w-24 ${style.text} opacity-[0.03] dark:opacity-[0.05] pointer-events-none ${isDesktop ? "lg:group-hover:scale-110 lg:transition-transform lg:duration-500" : ""}`}
                       />
 
                       <div>
                         {/* Customer Profile Header */}
                         <div className="flex items-center gap-4 mb-5 sm:mb-6">
                           <div
-                            className={`w-14 h-14 rounded-2xl ${style.bg} ${style.text} font-bold text-lg flex items-center justify-center tracking-wider shadow-sm group-hover:scale-105 transition-transform duration-300`}
+                            className={`w-14 h-14 rounded-2xl ${style.bg} ${style.text} font-bold text-lg flex items-center justify-center tracking-wider shadow-sm ${isDesktop ? "lg:group-hover:scale-105 lg:transition-transform lg:duration-300" : ""}`}
                           >
                             {item?.initials}
                           </div>
@@ -211,8 +228,8 @@ export function Testimonials() {
                           {Array.from({ length: item?.rating }).map((_, i) => (
                             <Star
                               key={i}
-                              className="h-4.5 w-4.5 fill-amber-400 text-amber-400 group-hover:scale-110 transition-transform"
-                              style={{ transitionDelay: `${i * 30}ms` }}
+                              className={`h-4.5 w-4.5 fill-amber-400 text-amber-400 ${isDesktop ? "lg:group-hover:scale-110 lg:transition-transform" : ""}`}
+                              style={{ transitionDelay: isDesktop ? `${i * 30}ms` : "0ms" }}
                             />
                           ))}
                         </div>
@@ -228,14 +245,14 @@ export function Testimonials() {
               <>
                 <button
                   onClick={prevSlide}
-                  className={`absolute left-0 sm:-left-2 md:-left-8 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border ${style.border} ${style.text} hidden md:flex items-center justify-center shadow-md opacity-0 group-hover/slider:opacity-100 md:opacity-100 transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer`}
+                  className={`absolute left-0 sm:-left-2 md:-left-8 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border ${style.border} ${style.text} hidden md:flex items-center justify-center shadow-md opacity-0 group-hover/slider:opacity-100 md:opacity-100 transition-all z-20 lg:hover:scale-110 lg:active:scale-95 cursor-pointer`}
                   aria-label="Previous testimonial"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className={`absolute right-0 sm:-right-2 md:-right-8 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border ${style.border} ${style.text} hidden md:flex items-center justify-center shadow-md opacity-0 group-hover/slider:opacity-100 md:opacity-100 transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer`}
+                  className={`absolute right-0 sm:-right-2 md:-right-8 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border ${style.border} ${style.text} hidden md:flex items-center justify-center shadow-md opacity-0 group-hover/slider:opacity-100 md:opacity-100 transition-all z-20 lg:hover:scale-110 lg:active:scale-95 cursor-pointer`}
                   aria-label="Next testimonial"
                 >
                   <ChevronRight className="h-5 w-5" />

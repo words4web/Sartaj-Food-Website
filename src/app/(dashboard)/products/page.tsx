@@ -31,6 +31,7 @@ function ProductsContent() {
     data: categories = [],
     isLoading: isCategoriesLoading,
     error: categoriesError,
+    refetch: refetchCategories,
   } = useGetCategories();
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -187,7 +188,11 @@ function ProductsContent() {
                     <CategoryCardSkeleton key={idx} size="sm" />
                   ))
                 ) : categoriesError ? (
-                  <div className="text-xs text-destructive p-2">Error loading categories</div>
+                  <CommonError
+                    compact
+                    message="Could not load categories"
+                    onRetry={refetchCategories}
+                  />
                 ) : (
                   categoriesList?.map((category) => (
                     <CategoryCard
