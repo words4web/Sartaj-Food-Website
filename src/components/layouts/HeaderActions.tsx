@@ -145,7 +145,7 @@ export function HeaderActions() {
               </span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-40 p-2 rounded-xl shadow-lg border border-border bg-card">
+              <DropdownMenuSubContent className="dropdown-sub-shifted w-40 p-2 rounded-xl shadow-lg border border-border bg-card">
                 {LANGUAGES?.map((lang) => (
                   <DropdownMenuItem
                     key={lang?.code}
@@ -181,7 +181,7 @@ export function HeaderActions() {
               </span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-52 p-2 rounded-xl shadow-lg border border-border bg-card">
+              <DropdownMenuSubContent className="dropdown-sub-shifted w-52 p-2 rounded-xl shadow-lg border border-border bg-card">
                 {(Object.entries(themes) as [Theme, (typeof themes)[Theme]][]).map(
                   ([key, config]) => (
                     <DropdownMenuItem

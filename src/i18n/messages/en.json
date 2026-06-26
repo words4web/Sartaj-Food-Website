@@ -29,7 +29,9 @@
     "viewAll": "View All",
     "all": "All",
     "somethingWentWrong": "Something went wrong. Please try again.",
-    "add": "Add"
+    "add": "Add",
+    "recentSearches": "Recent Searches",
+    "clearAll": "Clear All"
   },
   "auth": {
     "login": "Login",

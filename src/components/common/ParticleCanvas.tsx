@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, memo } from "react";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 import { ParticleCanvasProps } from "@/types/common.types";
 import dynamic from "next/dynamic";
 
@@ -178,7 +179,11 @@ export const ParticleCanvas = memo(function ParticleCanvas({
     key: number;
   } | null>(null);
 
-  // 1. Hook for responsive density scales and accessibility preferences
+  // Shared viewport hook (replaces custom isMobile state + resize listener)
+  const isDesktop = useIsDesktop();
+  const isMobile = !isDesktop;
+
+  // 1. Hook for reduced motion accessibility preference
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -205,8 +210,8 @@ export const ParticleCanvas = memo(function ParticleCanvas({
     ensureKeyframes();
 
     // Scale particle count dynamically for smaller screens (e.g. mobile)
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const countMultiplier = isMobile ? 0.45 : 1.0;
+    // 0.3 on mobile — fewer particles means less compositor thread load and less scroll jank
+    const countMultiplier = isMobile ? 0.3 : 1.0;
 
     if (type === "diwali-light") {
       const baseCount = 15;
@@ -311,8 +316,8 @@ export const ParticleCanvas = memo(function ParticleCanvas({
           </span>
         ))}
 
-      {/* DIWALI: Rare, random position background fireworks */}
-      {isDiwali && firework && (
+      {/* DIWALI: Rare, random position background fireworks — desktop only (Lottie is too heavy for mobile) */}
+      {isDiwali && firework && !isMobile && (
         <span
           key={firework.key}
           className="absolute select-none leading-none block overflow-visible"

@@ -30,6 +30,8 @@ export function NotificationItem({
     const metadata = notification?.metadata || {};
     if (metadata?.orderId) {
       router.push(ROUTES.ORDERS(metadata?.orderId));
+    } else if (metadata?.productId) {
+      router.push(ROUTES.PRODUCTS(metadata?.productId));
     } else if (type?.startsWith("ORDER")) {
       router.push(ROUTES.ORDERS());
     }

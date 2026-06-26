@@ -29,7 +29,9 @@
     "viewAll": "सभी देखें",
     "all": "सभी",
     "somethingWentWrong": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
-    "add": "जोड़ें"
+    "add": "जोड़ें",
+    "recentSearches": "हाल की खोजें",
+    "clearAll": "सभी साफ़ करें"
   },
   "auth": {
     "login": "लॉगिन",

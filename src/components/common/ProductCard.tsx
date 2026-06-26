@@ -67,7 +67,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
       <div className="absolute top-2 right-2 z-20">
         <WishlistButton
           productId={String(id)}
-          className="transition-all duration-300 hover:scale-110 active:scale-95 shadow-sm rounded-full bg-white/80 dark:bg-black/60 backdrop-blur-sm"
+          className="lg:transition-all lg:duration-300 lg:hover:scale-110 lg:active:scale-95 shadow-sm rounded-full bg-white/80 dark:bg-black/60 backdrop-blur-sm"
         />
       </div>
     );
@@ -104,70 +104,65 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   );
 
   return (
-    <div className="group relative w-full bg-transparent [perspective:1000px]">
-      {/* Flipping Card Frame */}
-      <div className="relative w-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] rounded-xl border border-border/80 shadow-sm hover:shadow-[0_16px_36px_-8px_color-mix(in_oklch,var(--primary)_15%,transparent)] hover:border-primary/35 hover:scale-[1.01]">
-        {/* FRONT FACE (Main Product Details - Defines card height in normal flow) */}
-        <div className="[backface-visibility:hidden] flex flex-col w-full h-full bg-card rounded-xl overflow-hidden pointer-events-auto group-hover:pointer-events-none">
-          {/* Image Container */}
-          <div className="relative w-full aspect-square sm:h-auto sm:aspect-square bg-muted/40 group-hover:bg-primary/5 flex items-center justify-center p-2 sm:p-4 shrink-0 transition-colors duration-300">
+    <div className="group relative w-full bg-card rounded-xl border border-border/80 shadow-sm lg:hover:shadow-[0_16px_36px_-8px_color-mix(in_oklch,var(--primary)_15%,transparent)] lg:hover:border-primary/35 lg:hover:scale-[1.01] lg:transition-all lg:duration-300 flex flex-col justify-between overflow-hidden h-full min-h-[380px] sm:min-h-[420px]">
+      {/* Static Overlays - Badges & Wishlist */}
+      {renderBadgesOverlay()}
+      {renderWishlistOverlay()}
+
+      {/* Flipping Middle Content Container */}
+      <div className="relative w-full flex-grow [perspective:1000px]">
+        <div className="relative w-full h-full lg:transition-transform lg:duration-500 lg:[transform-style:preserve-3d] lg:group-hover:[transform:rotateY(180deg)]">
+          {/* FRONT FACE (Main Product Details) */}
+          <div className="lg:[backface-visibility:hidden] flex flex-col w-full h-full bg-card pointer-events-auto lg:group-hover:pointer-events-none">
+            {/* Image Container */}
+            <div className="relative w-full aspect-square bg-muted/40 lg:group-hover:bg-primary/5 flex items-center justify-center p-2 sm:p-4 shrink-0 lg:transition-colors lg:duration-300">
+              <Link
+                href={ROUTES.PRODUCTS(id)}
+                className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 cursor-pointer"
+              >
+                <ThemedImage
+                  src={imageSrc}
+                  alt={typeof name === "string" ? name : "Product image"}
+                  emoji={emoji}
+                  className="max-h-full max-w-full object-contain lg:group-hover:scale-[1.07] lg:group-hover:rotate-1 lg:transition-all lg:duration-500 lg:ease-out"
+                  fallbackType="product"
+                />
+              </Link>
+            </div>
+
+            {/* Name & Brand Content */}
+            <div className="p-3 sm:p-4 flex flex-col justify-start min-w-0 bg-card flex-grow">
+              <Link href={ROUTES.PRODUCTS(id)} className="cursor-pointer mb-1 block">
+                <p className="text-[10px] sm:text-xs text-muted-foreground mb-0.5">By {brand}</p>
+                <h3 className="font-semibold text-foreground text-sm line-clamp-2 h-10 lg:transition-colors lg:group-hover:text-primary">
+                  {typeof name === "string" ? name : ""}
+                </h3>
+              </Link>
+            </div>
+          </div>
+
+          {/* BACK FACE (Description Details) - Hidden on Mobile */}
+          <div className="hidden lg:flex absolute inset-0 lg:[backface-visibility:hidden] lg:[transform:rotateY(180deg)] flex-col h-full bg-card pointer-events-none lg:group-hover:pointer-events-auto">
+            {/* Scrollable Description Container with extra top padding */}
             <Link
               href={ROUTES.PRODUCTS(id)}
-              className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 cursor-pointer"
+              className="p-4 pt-10 sm:pt-12 flex flex-col justify-start overflow-y-auto no-scrollbar flex-grow bg-muted/5 cursor-pointer block h-full"
             >
-              <ThemedImage
-                src={imageSrc}
-                alt={typeof name === "string" ? name : "Product image"}
-                emoji={emoji}
-                className="max-h-full max-w-full object-contain group-hover:scale-[1.07] group-hover:rotate-1 transition-all duration-500 ease-out"
-                fallbackType="product"
-              />
+              <p className="text-[10px] sm:text-xs font-bold text-primary/80 mb-2 select-none uppercase tracking-wider">
+                {t("products.description")}
+              </p>
+              <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed font-medium pt-1">
+                {typeof product?.description === "string" && product?.description?.trim()
+                  ? product?.description
+                  : "Description not available"}
+              </p>
             </Link>
           </div>
-
-          {/* Name & Brand Content */}
-          <div className="p-3 sm:p-4 flex flex-col justify-start min-w-0 bg-card flex-grow">
-            <Link href={ROUTES.PRODUCTS(id)} className="cursor-pointer mb-1 block">
-              <p className="text-[10px] sm:text-xs text-muted-foreground mb-0.5">By {brand}</p>
-              <h3 className="font-semibold text-foreground text-sm line-clamp-2 h-10 transition-colors group-hover:text-primary">
-                {typeof name === "string" ? name : ""}
-              </h3>
-            </Link>
-          </div>
-
-          {/* Price & Actions Bottom */}
-          {renderBottomBar()}
-
-          {/* Overlays */}
-          {renderBadgesOverlay()}
-          {renderWishlistOverlay()}
-        </div>
-
-        {/* BACK FACE (Description Details) */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col h-full bg-card rounded-xl overflow-hidden pointer-events-none group-hover:pointer-events-auto">
-          {/* Scrollable Description Container with extra top padding */}
-          <Link
-            href={ROUTES.PRODUCTS(id)}
-            className="p-4 pt-10 sm:pt-12 flex flex-col justify-start overflow-y-auto no-scrollbar flex-grow bg-muted/5 cursor-pointer block"
-          >
-            <p className="text-[10px] sm:text-xs font-bold text-primary/80 mb-2 select-none uppercase tracking-wider">
-              {t("products.description")}
-            </p>
-            <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed font-medium pt-1">
-              {typeof product?.description === "string" && product?.description?.trim()
-                ? product?.description
-                : "Description not available"}
-            </p>
-          </Link>
-
-          {/* Price & Actions Bottom */}
-          {renderBottomBar()}
-
-          {/* Overlays (so they are visible and functional when flipped) */}
-          {renderBadgesOverlay()}
-          {renderWishlistOverlay()}
         </div>
       </div>
+
+      {/* Static Bottom Bar (Price & Cart Actions - Rendered exactly once) */}
+      {renderBottomBar()}
     </div>
   );
 }

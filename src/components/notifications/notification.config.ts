@@ -70,6 +70,15 @@ export const typeConfigs: Record<
     borderClass: "border-l-primary",
     indicatorClass: "bg-primary shadow-[0_0_8px_var(--primary)]",
   },
+  BACK_IN_STOCK: {
+    icon: ShoppingBag,
+    iconClass:
+      "text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/50 ring-4 ring-emerald-500/10",
+    bgClass:
+      "bg-emerald-50/10 dark:bg-emerald-950/5 hover:bg-emerald-50/20 dark:hover:bg-emerald-950/10",
+    borderClass: "border-l-emerald-500 dark:border-l-emerald-400",
+    indicatorClass: "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]",
+  },
   DEFAULT: {
     icon: Bell,
     iconClass: "text-primary bg-primary/10 ring-4 ring-primary/5",

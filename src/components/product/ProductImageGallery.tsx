@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { Sparkles, ShieldAlert } from "lucide-react";
+import { createPortal } from "react-dom";
+import { Sparkles, ShieldAlert, X, ZoomIn, ZoomOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import type { ProductImageGalleryProps } from "@/types/product/product.types";
@@ -29,6 +30,25 @@ export function ProductImageGallery({
 
   // isDesktop IS state because it controls JSX rendering of popup/lens elements
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxScale, setLightboxScale] = useState(1);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent background scroll when lightbox is open on mobile
+  useEffect(() => {
+    if (isLightboxOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isLightboxOpen]);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
@@ -49,17 +69,10 @@ export function ProductImageGallery({
   }, []);
 
   // Toggle zoom visuals via direct DOM writes — zero React re-renders
-  const applyZoom = useCallback(
-    (active: boolean) => {
-      if (popupRef.current) popupRef.current.style.opacity = active ? "1" : "0";
-      if (lensRef.current) lensRef.current.style.opacity = active ? "1" : "0";
-      // Mobile: apply scale directly to img element
-      if (imgRef.current && !isDesktop) {
-        imgRef.current.style.transform = active ? "scale(2.2)" : "scale(1)";
-      }
-    },
-    [isDesktop],
-  );
+  const applyZoom = useCallback((active: boolean) => {
+    if (popupRef.current) popupRef.current.style.opacity = active ? "1" : "0";
+    if (lensRef.current) lensRef.current.style.opacity = active ? "1" : "0";
+  }, []);
 
   // Write CSS custom properties for the magnified image position
   const updateCoords = useCallback((clientX: number, clientY: number) => {
@@ -142,13 +155,14 @@ export function ProductImageGallery({
       {/* Main Image Container */}
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center bg-muted/30 rounded-xl p-4 aspect-square overflow-hidden border border-border/50 cursor-zoom-in"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        className={`relative flex items-center justify-center bg-muted/30 rounded-xl p-4 aspect-square overflow-hidden border border-border/50 ${isDesktop ? "cursor-zoom-in" : "cursor-pointer"}`}
+        onMouseMove={isDesktop ? handleMouseMove : undefined}
+        onMouseEnter={isDesktop ? handleMouseEnter : undefined}
+        onMouseLeave={isDesktop ? handleMouseLeave : undefined}
+        onTouchStart={isDesktop ? handleTouchStart : undefined}
+        onTouchMove={isDesktop ? handleTouchMove : undefined}
+        onTouchEnd={isDesktop ? handleTouchEnd : undefined}
+        onClick={!isDesktop ? () => setIsLightboxOpen(true) : undefined}
       >
         <ThemedImage
           ref={imgRef}
@@ -252,6 +266,91 @@ export function ProductImageGallery({
           ))}
         </div>
       )}
+
+      {/* Lightbox Modal for Mobile Zoom - Rendered at body root level via Portal */}
+      {mounted &&
+        typeof document !== "undefined" &&
+        !isDesktop &&
+        isLightboxOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-md flex flex-col justify-between select-none">
+            {/* Header Controls */}
+            <div className="flex items-center justify-between p-4 z-10 bg-gradient-to-b from-black/85 via-black/50 to-transparent">
+              <span className="text-white text-sm font-semibold truncate max-w-[65%]">{name}</span>
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={() => setLightboxScale((prev) => (prev === 1 ? 2 : 1))}
+                  className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center backdrop-blur-sm active:bg-white/20 transition-all cursor-pointer"
+                  aria-label="Toggle zoom"
+                >
+                  {lightboxScale === 1 ? (
+                    <ZoomIn className="h-5 w-5" />
+                  ) : (
+                    <ZoomOut className="h-5 w-5" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    setIsLightboxOpen(false);
+                    setLightboxScale(1);
+                  }}
+                  className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center backdrop-blur-sm active:bg-white/20 transition-all cursor-pointer"
+                  aria-label="Close gallery"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Interactive Image Box */}
+            <div className="flex-1 w-full flex items-center justify-center p-4 overflow-auto">
+              <div
+                className="relative transition-transform duration-300 ease-out origin-center cursor-pointer"
+                style={{
+                  transform: `scale(${lightboxScale})`,
+                }}
+                onClick={() => setLightboxScale((prev) => (prev === 1 ? 2 : 1))}
+              >
+                <ThemedImage
+                  src={mainImage}
+                  alt={name}
+                  emoji={emoji}
+                  className="max-w-full max-h-[70vh] object-contain rounded-lg"
+                  fallbackType="product"
+                />
+              </div>
+            </div>
+
+            {/* Footer Thumbnails navigation inside lightbox */}
+            {product?.images && product?.images?.length > 1 && (
+              <div className="p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10">
+                <div className="flex gap-2.5 overflow-x-auto pb-1 no-scrollbar justify-center">
+                  {product?.images?.map((img: string, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        onSetActiveImage(img);
+                        setLightboxScale(1); // Reset zoom on image change
+                      }}
+                      className={`w-14 h-14 rounded-lg overflow-hidden border-2 bg-neutral-900/60 p-1 flex items-center justify-center shrink-0 cursor-pointer transition-all ${
+                        mainImage === img ? "border-primary shadow-sm" : "border-transparent"
+                      }`}
+                    >
+                      <ThemedImage
+                        src={img}
+                        className="max-w-full max-h-full object-contain pointer-events-none"
+                        alt={`${name} thumbnail ${index + 1}`}
+                        emoji={emoji}
+                        fallbackType="product"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

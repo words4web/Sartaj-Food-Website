@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { useEffect, useRef, useState, memo } from "react";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
   const rect = e.currentTarget.getBoundingClientRect();
@@ -37,46 +38,56 @@ const TrustCard = memo(function TrustCard({
   idx,
   isVisible,
   t,
+  isDesktop,
 }: {
   signal: any;
   idx: number;
   isVisible: boolean;
   t: any;
+  isDesktop: boolean;
 }) {
   const Icon = signal?.icon;
   const isEven = idx % 2 === 0;
-  const transformValue = isVisible ? "translateX(0)" : `translateX(${isEven ? "-100vw" : "100vw"})`;
+  const transformValue = !isDesktop
+    ? "none"
+    : isVisible
+      ? "translateX(0)"
+      : `translateX(${isEven ? "-100vw" : "100vw"})`;
 
   return (
     <div
-      onMouseMove={handleMouseMove}
+      onMouseMove={isDesktop ? handleMouseMove : undefined}
       style={{
         transform: transformValue,
-        opacity: isVisible ? 1 : 0,
-        transitionDelay: isVisible ? `${idx * 100}ms` : "0ms",
+        opacity: !isDesktop ? 1 : isVisible ? 1 : 0,
+        transitionDelay: isDesktop && isVisible ? `${idx * 100}ms` : "0ms",
       }}
-      className="trust-card bg-[var(--trust-card-bg)] border border-[var(--trust-card-border)] backdrop-blur-xl rounded-2xl p-6 sm:p-8 hover:bg-[var(--trust-card-hover-bg)] hover:border-[var(--trust-card-hover-border)] flex flex-col gap-6 text-left w-full h-full group relative overflow-hidden transition-all duration-1000 ease-out transform"
+      className="trust-card bg-[var(--trust-card-bg)] border border-[var(--trust-card-border)] backdrop-blur-xl rounded-2xl p-6 sm:p-8 lg:hover:bg-[var(--trust-card-hover-bg)] lg:hover:border-[var(--trust-card-hover-border)] flex flex-col gap-6 text-left w-full h-full group relative overflow-hidden transition-all lg:duration-1000 ease-out transform"
     >
-      {/* Spotlight glow tracking pointer */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          background: `radial-gradient(250px circle at var(--x, 50%) var(--y, 50%), var(--trust-glow-1) 0%, transparent 100%)`,
-        }}
-      />
+      {/* Spotlight glow tracking pointer - Only on Desktop */}
+      {isDesktop && (
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: `radial-gradient(250px circle at var(--x, 50%) var(--y, 50%), var(--trust-glow-1) 0%, transparent 100%)`,
+          }}
+        />
+      )}
 
       {/* Corner light shine */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
       {/* Icon Container */}
       <div
         className={`h-12 w-12 rounded-xl flex items-center justify-center transition-all duration-300 relative z-10 ${
           signal?.isPrimary
             ? "bg-primary text-primary-foreground shadow-md"
-            : "bg-muted text-foreground border border-border group-hover:bg-primary group-hover:text-primary-foreground"
+            : "bg-muted text-foreground border border-border lg:group-hover:bg-primary lg:group-hover:text-primary-foreground"
         }`}
       >
-        <Icon className={`h-6 w-6 transition-all duration-300 ${signal?.animationClass}`} />
+        <Icon
+          className={`h-6 w-6 transition-all duration-300 ${isDesktop ? signal?.animationClass : ""}`}
+        />
       </div>
 
       {/* Text Details */}
@@ -84,7 +95,7 @@ const TrustCard = memo(function TrustCard({
         <h3 className="text-lg font-bold text-foreground transition-colors duration-300">
           {t(signal?.titleKey)}
         </h3>
-        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-300">
+        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed lg:group-hover:text-foreground transition-colors duration-300">
           {t(signal?.descKey)}
         </p>
       </div>
@@ -97,6 +108,7 @@ export function TrustSignals() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visibleElements, setVisibleElements] = useState<Record<string, boolean>>({});
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const isDesktop = useIsDesktop();
 
   const getObserver = () => {
     if (!observerRef.current) {
@@ -135,23 +147,25 @@ export function TrustSignals() {
   return (
     <section
       ref={sectionRef}
-      onMouseMove={handleSectionMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={isDesktop ? handleSectionMouseMove : undefined}
+      onMouseEnter={isDesktop ? handleMouseEnter : undefined}
+      onMouseLeave={isDesktop ? handleMouseLeave : undefined}
       className="relative overflow-x-hidden trust-signals-section text-foreground py-16 sm:py-24 group/section mt-8 sm:mt-12 md:mt-16"
     >
-      {/* Large Ambient Theme-Integrated Spotlight Glow */}
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-0"
-        style={{
-          opacity: "var(--mouse-opacity, 0)",
-          background: `radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), var(--trust-glow-1) 0%, var(--trust-glow-2) 40%, transparent 70%)`,
-        }}
-      />
+      {/* Large Ambient Theme-Integrated Spotlight Glow - Only on Desktop */}
+      {isDesktop && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-500 z-0"
+          style={{
+            opacity: "var(--mouse-opacity, 0)",
+            background: `radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), var(--trust-glow-1) 0%, var(--trust-glow-2) 40%, transparent 70%)`,
+          }}
+        />
+      )}
 
-      {/* Animated SVG Concentric Orbits and Glowing Dots */}
+      {/* Animated SVG Concentric Orbits and Glowing Dots - Hidden on Mobile/Tablet for Performance */}
       <svg
-        className="absolute inset-0 w-full h-full opacity-15 pointer-events-none z-0"
+        className="hidden lg:block absolute inset-0 w-full h-full opacity-15 pointer-events-none z-0"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -241,17 +255,21 @@ export function TrustSignals() {
           {/* Left Column: Headline and CTA (Slides in from Left) */}
           <div ref={elementRefCallback} data-index="left" className="w-full">
             <div
-              className="flex flex-col text-left space-y-6 transition-all duration-1000 ease-out transform"
+              className="flex flex-col text-left space-y-6 lg:transition-all lg:duration-1000 lg:ease-out lg:transform"
               style={{
-                transform: visibleElements["left"] ? "translateX(0)" : "translateX(-100vw)",
-                opacity: visibleElements["left"] ? 1 : 0,
+                transform: !isDesktop
+                  ? "none"
+                  : visibleElements["left"]
+                    ? "translateX(0)"
+                    : "translateX(-100vw)",
+                opacity: !isDesktop ? 1 : visibleElements["left"] ? 1 : 0,
               }}
             >
               {/* Checked Shield Badge Icon with Outer Pulsing Rings */}
               <div className="relative flex items-center justify-center h-12 w-12 rounded-2xl bg-primary/10 border border-primary/20 text-primary shadow-inner">
-                <div className="absolute inset-[-6px] rounded-2xl border border-primary/15 animate-pulse-ring" />
+                <div className="hidden lg:block absolute inset-[-6px] rounded-2xl border border-primary/15 lg:animate-pulse-ring" />
                 <div
-                  className="absolute inset-[-12px] rounded-3xl border border-primary/5 animate-pulse-ring"
+                  className="hidden lg:block absolute inset-[-12px] rounded-3xl border border-primary/5 lg:animate-pulse-ring"
                   style={{ animationDelay: "1s" }}
                 />
                 <BadgeCheck className="h-6 w-6 relative z-10" />
@@ -269,11 +287,11 @@ export function TrustSignals() {
               <div className="pt-2">
                 <Button
                   asChild
-                  className="bg-primary hover:bg-primary/95 text-primary-foreground font-bold px-8 py-6 rounded-full text-sm transition-all duration-300 hover:scale-105 shadow-lg active:scale-95 cursor-pointer relative overflow-hidden group/btn"
+                  className="bg-primary hover:bg-primary/95 text-primary-foreground font-bold px-8 py-6 rounded-full text-sm lg:transition-all lg:duration-300 lg:hover:scale-105 shadow-lg active:scale-95 cursor-pointer relative overflow-hidden group/btn"
                 >
                   <Link href={ROUTES.ABOUT}>
                     {/* Sheen effect on button hover */}
-                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.2s_infinite]" />
+                    <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full lg:group-hover/btn:animate-[shimmer_1.2s_infinite]" />
                     <span className="relative z-10">{t("home.readOurStory")}</span>
                   </Link>
                 </Button>
@@ -293,7 +311,13 @@ export function TrustSignals() {
                   data-index={`card-${idx}`}
                   className="w-full h-full"
                 >
-                  <TrustCard signal={signal} idx={idx} isVisible={isVisible} t={t} />
+                  <TrustCard
+                    signal={signal}
+                    idx={idx}
+                    isVisible={isVisible}
+                    t={t}
+                    isDesktop={isDesktop}
+                  />
                 </div>
               );
             })}
