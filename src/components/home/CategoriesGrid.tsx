@@ -8,12 +8,22 @@ import { CategoryGridSkeleton } from "@/components/skeletons/CategorySkeleton";
 import { CommonError } from "@/components/ui/common-error";
 import { useGetCategories } from "@/services/category/category.hooks";
 import { useState, useEffect, useRef } from "react";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { useCachedSkeletonCount } from "@/hooks/useCachedSkeletonCount";
+import { STORAGE_KEYS } from "@/constants/storage.constants";
 
 export function CategoriesGrid() {
   const t = useTranslations();
   const { data: categories = [], isLoading, error, refetch } = useGetCategories();
   const [visibleElements, setVisibleElements] = useState<Record<string, boolean>>({});
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const isDesktop = useIsDesktop();
+
+  const skeletonCount = useCachedSkeletonCount(
+    STORAGE_KEYS.CATEGORIES_COUNT,
+    categories?.length || 0,
+    27,
+  );
 
   const getObserver = () => {
     if (!observerRef.current) {
@@ -68,7 +78,7 @@ export function CategoriesGrid() {
         </div>
 
         {isLoading ? (
-          <CategoryGridSkeleton />
+          <CategoryGridSkeleton count={skeletonCount} />
         ) : error ? (
           <CommonError onRetry={refetch} message="Could not load categories" />
         ) : categories?.length === 0 ? (
@@ -79,9 +89,11 @@ export function CategoriesGrid() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8 md:gap-12 lg:gap-16 justify-items-center">
             {categories?.map((category: any, idx: number) => {
               const isVisible = visibleElements[`cat-${idx}`];
-              const transformValue = isVisible
-                ? "translateY(0) scale(1)"
-                : "translateY(30px) scale(0.95)";
+              const transformValue = !isDesktop
+                ? "none"
+                : isVisible
+                  ? "translateY(0) scale(1)"
+                  : "translateY(30px) scale(0.95)";
 
               return (
                 <div
@@ -93,13 +105,15 @@ export function CategoriesGrid() {
                   <div
                     style={{
                       transform: transformValue,
-                      opacity: isVisible ? 1 : 0,
-                      transitionDelay: isVisible ? `${(idx % 5) * 60}ms` : "0ms",
-                      transitionProperty: "transform, opacity",
-                      transitionDuration: "800ms",
-                      transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                      opacity: !isDesktop ? 1 : isVisible ? 1 : 0,
+                      transitionDelay: isDesktop && isVisible ? `${(idx % 5) * 60}ms` : "0ms",
+                      transitionProperty: isDesktop ? "transform, opacity" : "none",
+                      transitionDuration: isDesktop ? "800ms" : "0ms",
+                      transitionTimingFunction: isDesktop
+                        ? "cubic-bezier(0.16, 1, 0.3, 1)"
+                        : "none",
                     }}
-                    className="w-full h-full transform"
+                    className={isDesktop ? "w-full h-full transform" : "w-full h-full"}
                   >
                     <CategoryCard category={category} size="lg" />
                   </div>

@@ -9,6 +9,7 @@ import { IReview, ProductReviewsProps } from "@/types/review/review.types";
 import { CommonError } from "@/components/ui/common-error";
 import { ProductReviewsSkeleton } from "@/components/skeletons/ProductReviewsSkeleton";
 import { ProductReviewForm } from "./ProductReviewForm";
+import { Skeleton } from "@/components/skeletons/Skeleton";
 
 export function ProductReviews({ productId, hasReviewed = false }: ProductReviewsProps) {
   const t = useTranslations();
@@ -59,47 +60,68 @@ export function ProductReviews({ productId, hasReviewed = false }: ProductReview
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Column 1: Ratings breakdown & Summary */}
-          <div className="flex flex-col gap-6">
-            <div className="bg-muted/30 rounded-xl p-6 border border-border flex flex-col items-center justify-center text-center">
-              <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider mb-2">
-                {t("products.averageRatingLabel") || "Average Rating"}
-              </span>
-              <span className="text-5xl font-extrabold text-foreground mb-2">
-                {averageRating?.toFixed(1)}
-              </span>
-              <div className="mb-2">{renderStars(Math.round(averageRating))}</div>
-              <span className="text-sm text-muted-foreground">
-                {locale === "en"
-                  ? `${totalReviews} ${totalReviews === 1 ? "review" : "reviews"}`
-                  : `${totalReviews} ${t("products.reviews")}`}
-              </span>
-            </div>
+          {isReviewsLoading ? (
+            <div className="flex flex-col gap-6 animate-pulse">
+              <div className="bg-muted/30 rounded-xl p-6 border border-border flex flex-col items-center justify-center text-center">
+                <Skeleton className="h-4 w-28 bg-muted-foreground/10 mb-2" />
+                <Skeleton className="h-12 w-16 bg-muted-foreground/10 mb-2" />
+                <Skeleton className="h-5 w-24 bg-muted-foreground/10 mb-2" />
+                <Skeleton className="h-4 w-20 bg-muted-foreground/10" />
+              </div>
 
-            {/* Distribution bars */}
-            <div className="flex flex-col gap-3">
-              {[5, 4, 3, 2, 1].map((rating) => {
-                const count = ratingDistribution[rating] ?? 0;
-                const percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
-
-                return (
-                  <div key={rating} className="flex items-center gap-3 text-sm">
-                    <span className="w-12 font-medium text-muted-foreground shrink-0 text-right">
-                      {rating} {t("products.star") || "star"}
-                    </span>
-                    <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden relative border border-border/20">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-500 transition-all duration-500 ease-out"
-                        style={{ width: `${percentage}%` }}
-                      />
-                    </div>
-                    <span className="w-8 text-right font-medium text-muted-foreground shrink-0">
-                      {count}
-                    </span>
+              <div className="flex flex-col gap-3">
+                {[5, 4, 3, 2, 1].map((rating) => (
+                  <div key={rating} className="flex items-center gap-3">
+                    <Skeleton className="h-4 w-12 bg-muted-foreground/10" />
+                    <Skeleton className="h-3.5 flex-1 bg-muted-foreground/10 rounded-full" />
+                    <Skeleton className="h-4 w-8 bg-muted-foreground/10" />
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-col gap-6">
+              <div className="bg-muted/30 rounded-xl p-6 border border-border flex flex-col items-center justify-center text-center">
+                <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider mb-2">
+                  {t("products.averageRatingLabel") || "Average Rating"}
+                </span>
+                <span className="text-5xl font-extrabold text-foreground mb-2">
+                  {averageRating?.toFixed(1)}
+                </span>
+                <div className="mb-2">{renderStars(Math.round(averageRating))}</div>
+                <span className="text-sm text-muted-foreground">
+                  {locale === "en"
+                    ? `${totalReviews} ${totalReviews === 1 ? "review" : "reviews"}`
+                    : `${totalReviews} ${t("products.reviews")}`}
+                </span>
+              </div>
+
+              {/* Distribution bars */}
+              <div className="flex flex-col gap-3">
+                {[5, 4, 3, 2, 1].map((rating) => {
+                  const count = ratingDistribution[rating] ?? 0;
+                  const percentage = totalReviews > 0 ? (count / totalReviews) * 100 : 0;
+
+                  return (
+                    <div key={rating} className="flex items-center gap-3 text-sm">
+                      <span className="w-12 font-medium text-muted-foreground shrink-0 text-right">
+                        {rating} {t("products.star") || "star"}
+                      </span>
+                      <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden relative border border-border/20">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-500 transition-all duration-500 ease-out"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
+                      <span className="w-8 text-right font-medium text-muted-foreground shrink-0">
+                        {count}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Columns 2-3: Review list, pagination & submit review */}
           <div className="lg:col-span-2 flex flex-col gap-8">

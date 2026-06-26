@@ -620,3 +620,9 @@
   opacity: 0;
   animation: fade-in-up-card 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+@media (max-width: 768px) {
+  [data-radix-popper-content-wrapper]:has(.dropdown-sub-shifted) {
+    left: 80px !important;
+  }
+}
