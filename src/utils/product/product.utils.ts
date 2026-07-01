@@ -21,14 +21,15 @@ export const getCategorySizeClasses = (size?: "sm" | "md" | "lg"): CategorySizeC
   if (isSmall) {
     sizeClasses = "w-[120px] h-[120px] p-2";
   } else if (isLarge) {
-    sizeClasses = "w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] p-3 sm:p-4";
+    sizeClasses =
+      "w-[140px] h-[140px] min-[380px]:w-[160px] min-[380px]:h-[160px] sm:w-[200px] sm:h-[200px] p-2.5 sm:p-4";
   }
 
   let innerSizeClasses = "h-22 w-22";
   if (isSmall) {
     innerSizeClasses = "h-13 w-13";
   } else if (isLarge) {
-    innerSizeClasses = "h-28 w-28 sm:h-30 sm:w-30";
+    innerSizeClasses = "h-20 w-20 min-[380px]:h-24 min-[380px]:w-24 sm:h-30 sm:w-30";
   }
 
   let textClasses = "text-xs font-bold";

@@ -52,9 +52,9 @@ function nowJSTParts(): {
 export function getValidDeliveryDates(): string[] {
   const dates: string[] = [];
   const { year, month, day } = nowJSTParts();
+  const todayStr = `${year}-${String(month)?.padStart(2, "0")}-${String(day)?.padStart(2, "0")}`;
 
-  // Build a UTC-midnight cursor starting from today's JST date.
-  // We iterate day-by-day and check the weekday in JST via Intl.
+  // Get the 3 dates that the backend's validation accepts (starting from today)
   let cursor = new Date(Date.UTC(year, month - 1, day)); // midnight UTC = same calendar date
 
   while (dates.length < 3) {
@@ -73,7 +73,8 @@ export function getValidDeliveryDates(): string[] {
     cursor = new Date(cursor.getTime() + 24 * 60 * 60 * 1000);
   }
 
-  return dates;
+  // Filter out today's date so the customer cannot select it, leaving only tomorrow and the day after (1 or 2 valid dates)
+  return dates?.filter((d) => d !== todayStr);
 }
 
 /** Parse a YYYY-MM-DD string for display — returns a plain UTC-midnight Date so getUTC* reads the correct calendar date. */
@@ -96,7 +97,7 @@ const SLOT_CUTOFFS: Record<string, number> = {
   "4": 18 * 60 + 1, // 18:01
 };
 
-const SLOT_LABELS: Record<string, string> = {
+export const SLOT_LABELS: Record<string, string> = {
   "1": "9:00 AM – 12:00 PM",
   "2": "12:01 PM – 3:00 PM",
   "3": "3:01 PM – 6:00 PM",
@@ -119,4 +120,29 @@ export function getDeliverySlots(dateStr: string): DeliverySlot[] {
     label: SLOT_LABELS[slot],
     available: isToday ? currentMinutes < SLOT_CUTOFFS[slot] : true,
   }));
+}
+
+/**
+ * Formats a YYYY-MM-DD JST date string safely for display.
+ */
+export function formatDeliveryDate(deliveryDate?: string | null): string {
+  if (!deliveryDate) return "";
+  try {
+    const d = parseDateJST(deliveryDate);
+    return d.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return deliveryDate;
+  }
+}
+
+/**
+ * Returns the friendly slot label for a given slot ID, or the ID itself if not matched.
+ */
+export function getSlotLabel(deliverySlot?: string | null): string {
+  if (!deliverySlot) return "";
+  return SLOT_LABELS[deliverySlot] || deliverySlot;
 }

@@ -78,7 +78,7 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
 
   return (
     <main className="relative z-10 min-h-screen bg-muted/30 pb-16">
-      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
+      <div className="max-w-4xl mx-auto px-2 py-6 sm:py-8">
         <OrderDetailHeader
           orderId={order?.orderId}
           id={id}
@@ -94,6 +94,8 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
           trackOrder={order?.trackOrder}
           notes={order?.notes}
           cancelReason={order?.cancelReason}
+          deliveryDate={order?.deliveryDate}
+          deliverySlot={order?.deliverySlot}
         />
 
         <OrderDetailSummary

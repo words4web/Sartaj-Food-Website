@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 export function CheckoutPaymentMethod({
   selectedPaymentMethod,
   onSelectPaymentMethod,
+  hasError = false,
 }: CheckoutPaymentMethodProps) {
   const t = useTranslations("checkout");
   const tCommon = useTranslations("common");
@@ -25,7 +26,13 @@ export function CheckoutPaymentMethod({
 
   return (
     <>
-      <div className="bg-card rounded-2xl border border-border/60 shadow-sm p-4 space-y-2.5 transition-all duration-300">
+      <div
+        className={`bg-card rounded-2xl border p-4 space-y-2.5 transition-all duration-300 ${
+          hasError
+            ? "border-rose-500 ring-2 ring-rose-500/20 shadow-md shadow-rose-100/50"
+            : "border-border/60 shadow-sm"
+        }`}
+      >
         <div className="flex items-center justify-between pb-3 border-b border-border/40">
           <div className="flex items-center gap-2">
             <CreditCard className="h-4.5 w-4.5 text-primary shrink-0" />

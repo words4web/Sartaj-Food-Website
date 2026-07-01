@@ -6,11 +6,13 @@ export interface CheckoutAddressSelectionProps {
   addresses: IAddress[];
   selectedAddressId: string;
   onSelectAddress: (id: string) => void;
+  hasError?: boolean;
 }
 
 export interface CheckoutPaymentMethodProps {
   selectedPaymentMethod: string;
   onSelectPaymentMethod: (method: string) => void;
+  hasError?: boolean;
 }
 
 export interface CheckoutWalletSelectionProps {
@@ -60,4 +62,5 @@ export interface CheckoutDeliverySelectionProps {
   selectedSlot: string;
   onSelectDate: (date: string) => void;
   onSelectSlot: (slot: string) => void;
+  hasError?: boolean;
 }

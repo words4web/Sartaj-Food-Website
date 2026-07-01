@@ -28,7 +28,7 @@ export function Footer() {
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-sm">
               {t("footer.description")}
             </p>
-            <div className="space-y-2 pt-2 text-xs sm:text-sm text-muted-foreground/80 max-w-sm">
+            <div className="space-y-2 pt-2 text-sm sm:text-base text-muted-foreground/80 max-w-sm">
               <div>
                 <strong className="text-foreground/90 font-semibold">
                   {t("footer.addressLabel")}:{" "}

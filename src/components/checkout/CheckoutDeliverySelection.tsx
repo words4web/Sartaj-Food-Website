@@ -31,6 +31,7 @@ export function CheckoutDeliverySelection({
   selectedSlot,
   onSelectDate,
   onSelectSlot,
+  hasError = false,
 }: CheckoutDeliverySelectionProps) {
   const t = useTranslations("checkout");
 
@@ -44,7 +45,13 @@ export function CheckoutDeliverySelection({
   };
 
   return (
-    <div className="bg-card rounded-2xl border border-border/60 shadow-sm p-5 space-y-5">
+    <div
+      className={`bg-card rounded-2xl border p-5 space-y-5 transition-all duration-300 ${
+        hasError
+          ? "border-rose-500 ring-2 ring-rose-500/20 shadow-md shadow-rose-100/50"
+          : "border-border/60 shadow-sm"
+      }`}
+    >
       {/* Header */}
       <div className="flex items-center gap-2">
         <CalendarDays className="h-5 w-5 text-primary shrink-0" />

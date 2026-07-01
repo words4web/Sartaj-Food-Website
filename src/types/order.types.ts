@@ -131,6 +131,8 @@ export interface OrderDetailInfoProps {
   trackOrder?: string | null;
   notes?: string | null;
   cancelReason?: string | null;
+  deliveryDate?: string | null;
+  deliverySlot?: string | null;
 }
 
 export interface OrderDetailItemsProps {

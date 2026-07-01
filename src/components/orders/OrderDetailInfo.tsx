@@ -1,8 +1,9 @@
 "use client";
 
-import { Calendar, CreditCard, MapPin, Truck, StickyNote, XCircle } from "lucide-react";
+import { Calendar, CreditCard, MapPin, Truck, StickyNote, XCircle, Clock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { OrderDetailInfoProps } from "@/types/order.types";
+import { formatDeliveryDate, getSlotLabel } from "@/utils/delivery/delivery.utils";
 
 export function OrderDetailInfo({
   createdAt,
@@ -12,13 +13,19 @@ export function OrderDetailInfo({
   trackOrder,
   notes,
   cancelReason,
+  deliveryDate,
+  deliverySlot,
 }: OrderDetailInfoProps) {
   const t = useTranslations();
+
+  const formattedDeliveryDate = formatDeliveryDate(deliveryDate);
+  const slotLabel = getSlotLabel(deliverySlot);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
       <div className="md:col-span-2 bg-card border border-border/80 p-5 sm:p-6 rounded-3xl shadow-sm flex flex-col justify-between">
         <div className="space-y-4">
+          {/* Order Date */}
           <div className="flex items-center gap-3 text-sm">
             <Calendar className="h-5 w-5 text-muted-foreground" />
             <div>
@@ -37,6 +44,26 @@ export function OrderDetailInfo({
               </p>
             </div>
           </div>
+
+          {/* Delivery Schedule */}
+          {deliveryDate && (
+            <div className="flex items-center gap-3 text-sm animate-fade-in">
+              <Clock className="h-5 w-5 text-primary shrink-0" />
+              <div>
+                <p className="text-xs text-muted-foreground font-semibold">
+                  {t("checkout.deliverySchedule") || "Delivery Schedule"}
+                </p>
+                <p className="font-bold text-foreground">
+                  {formattedDeliveryDate}
+                  {slotLabel && (
+                    <span className="ml-2 text-xs font-normal text-muted-foreground">
+                      ({slotLabel})
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+          )}
 
           <div className="flex items-center gap-3 text-sm">
             <CreditCard className="h-5 w-5 text-muted-foreground" />
