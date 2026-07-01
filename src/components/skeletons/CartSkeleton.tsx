@@ -1,4 +1,5 @@
 import { Skeleton } from "./Skeleton";
+import { ProductGridSkeleton } from "./ProductCardSkeleton";
 
 export function CartSkeleton() {
   return (
@@ -42,6 +43,15 @@ export function CartSkeleton() {
               <Skeleton className="h-12 w-full rounded-xl" />
             </div>
           </div>
+        </div>
+
+        {/* Special Offers Skeleton */}
+        <div className="mt-12 sm:mt-16">
+          <Skeleton className="h-7 w-48 mb-6 rounded-lg" />
+          <ProductGridSkeleton
+            count={4}
+            columnsClass="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          />
         </div>
       </div>
     </main>

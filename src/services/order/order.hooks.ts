@@ -69,3 +69,16 @@ export const useCancelOrder = () => {
     },
   });
 };
+
+export const useReorderToCart = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await orderService.reorderToCart(id);
+      return response?.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+};

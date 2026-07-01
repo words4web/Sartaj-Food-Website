@@ -4,8 +4,10 @@ import { AxiosResponse } from "axios";
 import { IAddToCartPayload, IUpdateCartPayload } from "@/types/cart.types";
 
 export const cartService = {
-  getCart: async (): Promise<AxiosResponse<{ success: boolean; data: any }>> => {
-    return axiosInstance.get(API_ROUTES.CART.GET);
+  getCart: async (
+    signal?: AbortSignal,
+  ): Promise<AxiosResponse<{ success: boolean; data: any }>> => {
+    return axiosInstance.get(API_ROUTES.CART.GET, { signal });
   },
 
   addToCart: async (

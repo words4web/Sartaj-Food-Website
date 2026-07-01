@@ -8,6 +8,7 @@ import { getOrderStatusColor, formatOrderStatus } from "@/utils/common/common.ut
 import { ThemedImage } from "@/components/common";
 import { Calendar, CreditCard, Download, ChevronRight } from "lucide-react";
 import type { OrderCardProps } from "@/types/order.types";
+import { ReorderButton } from "./ReorderButton";
 
 export function OrderCard({ order }: OrderCardProps) {
   const t = useTranslations();
@@ -130,6 +131,9 @@ export function OrderCard({ order }: OrderCardProps) {
                 {t("orders.downloadInvoice") || "Invoice"}
               </a>
             </Button>
+          )}
+          {(order?.status === "delivered" || order?.status === "cancelled") && (
+            <ReorderButton orderId={order?._id} itemsCount={order?.items?.length || 0} />
           )}
           <Button
             size="sm"

@@ -13,6 +13,7 @@ export function CheckoutAddressSelection({
   addresses = [],
   selectedAddressId,
   onSelectAddress,
+  hasError = false,
 }: CheckoutAddressSelectionProps) {
   const t = useTranslations("checkout");
   const tCommon = useTranslations("common");
@@ -27,7 +28,11 @@ export function CheckoutAddressSelection({
 
   return (
     <>
-      <div className="bg-card rounded-2xl border border-border/60 shadow-sm p-5 space-y-4 transition-all duration-300">
+      <div className={`bg-card rounded-2xl border p-5 space-y-4 transition-all duration-300 ${
+        hasError
+          ? "border-rose-500 ring-2 ring-rose-500/20 shadow-md shadow-rose-100/50"
+          : "border-border/60 shadow-sm"
+      }`}>
         <div className="flex items-center justify-between pb-3 border-b border-border/40">
           <div className="flex items-center gap-3">
             <MapPin className="h-5 w-5 text-primary shrink-0" />

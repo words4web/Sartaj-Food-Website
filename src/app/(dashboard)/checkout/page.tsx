@@ -50,6 +50,34 @@ export default function CheckoutPage() {
   const [dbOrderId, setDbOrderId] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  const [addressError, setAddressError] = useState(false);
+  const [deliveryError, setDeliveryError] = useState(false);
+  const [paymentError, setPaymentError] = useState(false);
+
+  const handleSelectAddress = (id: string) => {
+    setSelectedAddressId(id);
+    setAddressError(false);
+  };
+
+  const handleSelectDate = (date: string) => {
+    setSelectedDeliveryDate(date);
+    if (date && selectedDeliverySlot) {
+      setDeliveryError(false);
+    }
+  };
+
+  const handleSelectSlot = (slot: string) => {
+    setSelectedDeliverySlot(slot);
+    if (selectedDeliveryDate && slot) {
+      setDeliveryError(false);
+    }
+  };
+
+  const handleSelectPaymentMethod = (method: string) => {
+    setSelectedPaymentMethod(method);
+    setPaymentError(false);
+  };
+
   useEffect(() => {
     const status = searchParams?.get("status");
     const orderId = searchParams?.get("orderId");
@@ -67,12 +95,16 @@ export default function CheckoutPage() {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
       toast.success(t("orderPlaced") || "Order placed successfully!");
+
+      router.replace(ROUTES.CHECKOUT, { scroll: false });
     } else if (status === "cancelled") {
       setErrorMessage(reason || t("orderFailed") || "Failed to place order.");
       setOverlayState(CheckoutStatus.FAILED);
       toast.error(reason || t("orderFailed") || "Failed to place order.");
+
+      router.replace(ROUTES.CHECKOUT, { scroll: false });
     }
-  }, [searchParams, queryClient, t]);
+  }, [searchParams, queryClient, t, router]);
 
   const {
     data: cart,
@@ -113,23 +145,31 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = () => {
-    if (!selectedAddressId) {
-      toast.error(t("selectAddressRequired") || "Please select a shipping address");
-      return;
-    }
+    let hasValidationError = false;
 
-    if (!selectedPaymentMethod) {
-      toast.error(t("selectPaymentRequired") || "Please select a payment method");
-      return;
+    if (!selectedAddressId) {
+      setAddressError(true);
+      toast.error(t("selectAddressRequired") || "Please select a shipping address");
+      hasValidationError = true;
     }
 
     if (!selectedDeliveryDate) {
+      setDeliveryError(true);
       toast.error(t("selectDeliveryDateRequired") || "Please select a delivery date");
-      return;
+      hasValidationError = true;
+    } else if (!selectedDeliverySlot) {
+      setDeliveryError(true);
+      toast.error(t("selectDeliverySlotRequired") || "Please select a delivery time slot");
+      hasValidationError = true;
     }
 
-    if (!selectedDeliverySlot) {
-      toast.error(t("selectDeliverySlotRequired") || "Please select a delivery time slot");
+    if (!selectedPaymentMethod) {
+      setPaymentError(true);
+      toast.error(t("selectPaymentRequired") || "Please select a payment method");
+      hasValidationError = true;
+    }
+
+    if (hasValidationError) {
       return;
     }
 
@@ -248,15 +288,17 @@ export default function CheckoutPage() {
             <CheckoutAddressSelection
               addresses={addresses}
               selectedAddressId={selectedAddressId}
-              onSelectAddress={setSelectedAddressId}
+              onSelectAddress={handleSelectAddress}
+              hasError={addressError}
             />
 
             {/* C. Delivery Date & Slot Selector */}
             <CheckoutDeliverySelection
               selectedDate={selectedDeliveryDate}
               selectedSlot={selectedDeliverySlot}
-              onSelectDate={setSelectedDeliveryDate}
-              onSelectSlot={setSelectedDeliverySlot}
+              onSelectDate={handleSelectDate}
+              onSelectSlot={handleSelectSlot}
+              hasError={deliveryError}
             />
 
             {/* D. Order Notes */}
@@ -267,7 +309,8 @@ export default function CheckoutPage() {
           <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-24">
             <CheckoutPaymentMethod
               selectedPaymentMethod={selectedPaymentMethod}
-              onSelectPaymentMethod={setSelectedPaymentMethod}
+              onSelectPaymentMethod={handleSelectPaymentMethod}
+              hasError={paymentError}
             />
             <CheckoutWalletSelection
               applyWallet={applyWallet}

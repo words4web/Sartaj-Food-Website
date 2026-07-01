@@ -66,9 +66,9 @@ export default function ProductDetailPage() {
       <div className="max-w-7xl mx-auto px-4 pt-6">
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors duration-200 cursor-pointer"
+          className="inline-flex items-center gap-2.5 px-4 py-2 text-base font-bold text-foreground bg-card hover:bg-accent border border-border rounded-full mb-6 transition-all duration-200 shadow-sm cursor-pointer hover:shadow hover:-translate-x-0.5"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-5 w-5 stroke-[2.5]" />
           <span>{t("common.back")}</span>
         </button>
       </div>

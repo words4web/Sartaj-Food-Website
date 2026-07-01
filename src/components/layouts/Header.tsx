@@ -23,8 +23,8 @@ export function Header() {
     <>
       {/* Top Header */}
       <header className="sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
-        <div className="relative z-40 max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
+        <div className="relative z-40 max-w-7xl mx-auto pl-1 pr-2 sm:px-4 py-3">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             {/* Logo */}
             <Link href={ROUTES.HOME} className="flex items-center min-w-fit">
               <img

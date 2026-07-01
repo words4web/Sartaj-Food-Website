@@ -71,8 +71,8 @@ export function LanguageSelector({ variant = "light", align }: LanguageSelectorP
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Globe className="h-4 w-4 flex-shrink-0" />
-        <span>{currentLanguage.nativeName}</span>
+        <span className="text-base select-none mr-1">{currentLanguage?.flag || "🌐"}</span>
+        <span>{currentLanguage?.nativeName}</span>
         <ChevronDown
           className={`h-3 w-3 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         />
@@ -87,10 +87,11 @@ export function LanguageSelector({ variant = "light", align }: LanguageSelectorP
                 changeLanguage(lang?.code as any);
                 setIsOpen(false);
               }}
-              className={itemClasses(locale === lang?.code)}
+              className={`${itemClasses(locale === lang?.code)} flex items-center gap-2`}
               role="menuitem"
             >
-              {lang?.nativeName}
+              <span className="text-base select-none">{lang?.flag || "🌐"}</span>
+              <span>{lang?.nativeName}</span>
             </button>
           ))}
         </div>

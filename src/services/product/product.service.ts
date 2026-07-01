@@ -38,4 +38,11 @@ export const productService = {
   }): Promise<AxiosResponse<any>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.GET_ALL, { params });
   },
+
+  getDiscountedProducts: async (params?: {
+    page?: number;
+    limit?: number;
+  }): Promise<AxiosResponse<any>> => {
+    return axiosInstance.get(API_ROUTES.PRODUCTS.GET_OFFERS, { params });
+  },
 };

@@ -60,3 +60,13 @@ export const useGetProductsByCategory = (
     },
   });
 };
+
+export const useGetDiscountedProducts = (params?: { page?: number; limit?: number }) => {
+  return useQuery({
+    queryKey: ["products", "offers", params],
+    queryFn: async () => {
+      const response = await productService.getDiscountedProducts(params);
+      return response.data?.data || [];
+    },
+  });
+};
