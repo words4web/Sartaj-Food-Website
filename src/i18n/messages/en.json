@@ -128,6 +128,7 @@
     "shopByCategories": "Shop by Categories",
     "shopByBrands": "Brands We Have",
     "allCategories": "All Categories",
+    "specialOffers": "Special Offers",
     "popularProducts": "Popular Products",
     "newArrivals": "New Arrivals",
     "featuredProducts": "Featured Products",
@@ -178,6 +179,8 @@
     "ageWarning": "20+ Age Restriction: This item contains alcohol or is restricted to adults.",
     "loadError": "Could not load product details. Please try again.",
     "ageRestrictionBadge": "Age 20+ Only",
+    "ageRestrictionTitle": "Age Restriction",
+    "ageRestrictionMessage": "This product is age-restricted. Only customers aged 20+ can purchase it.",
     "writeReview": "Write a Review",
     "reviewsTitle": "Customer Reviews",
     "ratingRequired": "Please select a rating",
@@ -312,7 +315,10 @@
     "cancelling": "Cancelling...",
     "cancelSuccess": "Order cancelled successfully",
     "cancelFailed": "Failed to cancel order",
-    "characters": "characters"
+    "characters": "characters",
+    "reorderConfirmTitle": "Reorder Products",
+    "reorderProceed": "You are adding {count} items from a previous order to your cart.\n\n• New items will be added to your current selection.\n• Existing items in your cart will have their quantities updated to match this order.\n\nNote: Out-of-stock products will be skipped automatically.\n\nWould you like to proceed?",
+    "proceed": "Proceed"
   },
   "wallet": {
     "wallet": "Wallet",
@@ -417,6 +423,10 @@
     "emailLabel": "Email",
     "emailValue": "info@sartajfoods.jp",
     "hoursLabel": "Hours",
-    "hoursValue": "Monday to Saturday from 09:00AM-18:00PM (except national holiday)"
+    "hoursValue": "Monday to Saturday from 09:00AM-18:00PM (except national holiday)",
+    "customerSupportLabel": "Customer Support",
+    "customerSupportValue": "070-5577-1975",
+    "whatsappLabel": "WhatsApp",
+    "viberLabel": "Viber"
   }
 }

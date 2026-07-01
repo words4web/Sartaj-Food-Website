@@ -7,6 +7,7 @@ import { ManufacturersGrid } from "@/components/home/ManufacturersGrid";
 import { CategoriesGrid } from "@/components/home/CategoriesGrid";
 import { PromoBanner } from "@/components/home/PromoBanner";
 import { ProductSection } from "@/components/home/ProductSection";
+import { OffersSection } from "@/components/home/OffersSection";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { Testimonials } from "@/components/home/Testimonials";
 
@@ -41,9 +42,10 @@ export function ThemedProductZone() {
         <TrustSignals />
         <CategoriesGrid />
         <PromoBanner />
+        <OffersSection />
+        <ProductSection title="New Arrivals" badge={PRODUCT_BADGES.NEW_ARRIVAL} />
         <ProductSection title="Featured Products" badge={PRODUCT_BADGES.FEATURED} />
         <ProductSection title="Hot Products" badge={PRODUCT_BADGES.HOT} />
-        <ProductSection title="New Arrivals" badge={PRODUCT_BADGES.NEW_ARRIVAL} />
         <ManufacturersGrid />
         <Testimonials />
       </div>

@@ -18,6 +18,7 @@ export const API_ROUTES = {
     GET_BY_CATEGORY: (id: string) => `/customer/products/category/${id}`,
     FILTER: "/customer/products/filter",
     GET_RELATED: (id: string) => `/customer/products/${id}/related`,
+    GET_OFFERS: "/customer/products/offers",
   },
 
   // Categories
@@ -49,6 +50,7 @@ export const API_ROUTES = {
     CREATE: "/customer/orders",
     CHECKOUT_SUMMARY: "/customer/orders/checkout-summary",
     CANCEL: (id: string) => `/customer/orders/${id}/cancel`,
+    REORDER: (id: string) => `/customer/orders/${id}/reorder-to-cart`,
   },
 
   // Addresses

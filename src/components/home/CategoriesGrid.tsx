@@ -86,7 +86,7 @@ export function CategoriesGrid() {
             No categories available.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8 md:gap-12 lg:gap-16 justify-items-center">
+          <div className="flex flex-wrap gap-6 sm:gap-8 md:gap-12 lg:gap-16 justify-center">
             {categories?.map((category: any, idx: number) => {
               const isVisible = visibleElements[`cat-${idx}`];
               const transformValue = !isDesktop
@@ -100,7 +100,7 @@ export function CategoriesGrid() {
                   key={category?.id || category?._id}
                   ref={elementRefCallback}
                   data-index={`cat-${idx}`}
-                  className="w-full h-full"
+                  className="w-fit h-fit"
                 >
                   <div
                     style={{
@@ -113,7 +113,7 @@ export function CategoriesGrid() {
                         ? "cubic-bezier(0.16, 1, 0.3, 1)"
                         : "none",
                     }}
-                    className={isDesktop ? "w-full h-full transform" : "w-full h-full"}
+                    className={isDesktop ? "w-fit h-fit transform" : "w-fit h-fit"}
                   >
                     <CategoryCard category={category} size="lg" />
                   </div>

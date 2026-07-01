@@ -12,7 +12,7 @@ export const ThemedImage = forwardRef<HTMLImageElement, ThemedImageProps>(
     if (!src || hasError) {
       if (fallbackType === "category") {
         return (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 text-foreground transition-colors duration-300">
+          <div className="w-full h-full rounded-full flex items-center justify-center bg-gradient-to-br from-primary/10 via-accent/5 to-primary/5 text-foreground transition-colors duration-300">
             <Package className="h-1/2 w-1/2 text-primary/70" />
           </div>
         );

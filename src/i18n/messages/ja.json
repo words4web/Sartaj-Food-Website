@@ -128,6 +128,7 @@
     "shopByCategories": "カテゴリで購入",
     "shopByBrands": "取り扱いブランド",
     "allCategories": "すべてのカテゴリ",
+    "specialOffers": "特別オファー",
     "popularProducts": "人気商品",
     "newArrivals": "新着商品",
     "featuredProducts": "おすすめ商品",
@@ -178,6 +179,8 @@
     "ageWarning": "20歳未満購入禁止: この商品にはアルコールが含まれているか、成人向けに制限されています。",
     "loadError": "商品情報の読み込みに失敗しました。時間をおいてもう一度お試しください。",
     "ageRestrictionBadge": "20歳以上限定",
+    "ageRestrictionTitle": "年齢制限",
+    "ageRestrictionMessage": "この商品は年齢制限があります。20歳以上のお客様のみ購入できます。",
     "writeReview": "レビューを書く",
     "reviewsTitle": "カスタマーレビュー",
     "ratingRequired": "評価を選択してください",
@@ -312,7 +315,10 @@
     "cancelling": "キャンセル中...",
     "cancelSuccess": "注文が正常にキャンセルされました",
     "cancelFailed": "注文のキャンセルに失敗しました",
-    "characters": "文字"
+    "characters": "文字",
+    "reorderConfirmTitle": "商品の再注文",
+    "reorderProceed": "前の注文から {count} 個の商品をカートに追加しようとしています。\n\n• 新しい商品は現在のカート内容に追加されます。\n• カート内の既存商品の数量は、今回の注文内容に合わせて更新されます。\n\n注：在庫切れの商品は自動的にスキップされます。\n\n続行しますか？",
+    "proceed": "続行する"
   },
   "wallet": {
     "wallet": "ウォレット",
@@ -417,6 +423,10 @@
     "emailLabel": "メール",
     "emailValue": "info@sartajfoods.jp",
     "hoursLabel": "営業時間",
-    "hoursValue": "月曜日〜土曜日 09:00〜18:00（祝日を除く）"
+    "hoursValue": "月曜日〜土曜日 09:00〜18:00（祝日を除く）",
+    "customerSupportLabel": "カスタマーサポート",
+    "customerSupportValue": "070-5577-1975",
+    "whatsappLabel": "WhatsApp",
+    "viberLabel": "Viber"
   }
 }

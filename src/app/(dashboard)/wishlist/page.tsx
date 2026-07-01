@@ -24,10 +24,10 @@ export default function WishlistPage() {
         <div className="mb-6">
           <Link
             href={ROUTES.HOME}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2.5 px-4 py-2 text-base font-bold text-foreground bg-card hover:bg-accent border border-border rounded-full transition-all duration-200 shadow-sm cursor-pointer hover:shadow hover:-translate-x-0.5"
           >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            {t("common.backToHome") || "Back to Home"}
+            <ArrowLeft className="h-5 w-5 stroke-[2.5]" />
+            <span>{t("common.backToHome") || "Back to Home"}</span>
           </Link>
         </div>
 
@@ -102,7 +102,7 @@ export default function WishlistPage() {
           </div>
         ) : (
           /* Grid list direct rendering */
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products?.map((product) => (
               <ProductCard key={product._id || product.id} product={product} />
             ))}
