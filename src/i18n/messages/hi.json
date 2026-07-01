@@ -178,6 +178,8 @@
     "ageWarning": "20+ आयु प्रतिबंध: इस वस्तु में अल्कोहल है या यह वयस्कों के लिए प्रतिबंधित है।",
     "loadError": "उत्पाद विवरण लोड नहीं किया जा सका। कृपया पुनः प्रयास करें।",
     "ageRestrictionBadge": "केवल 20+",
+    "ageRestrictionTitle": "आयु प्रतिबंध",
+    "ageRestrictionMessage": "यह उत्पाद आयु-सीमित है। केवल 20 वर्ष या उससे अधिक आयु के ग्राहक ही इसे खरीद सकते हैं।",
     "writeReview": "समीक्षा लिखें",
     "reviewsTitle": "ग्राहक समीक्षाएं",
     "ratingRequired": "कृपया रेटिंग चुनें",
@@ -417,6 +419,10 @@
     "emailLabel": "ईमेल",
     "emailValue": "info@sartajfoods.jp",
     "hoursLabel": "कार्य समय",
-    "hoursValue": "सोमवार से शनिवार सुबह 09:00 बजे से शाम 18:00 बजे तक (राष्ट्रीय अवकाश को छोड़कर)"
+    "hoursValue": "सोमवार से शनिवार सुबह 09:00 बजे से शाम 18:00 बजे तक (राष्ट्रीय अवकाश को छोड़कर)",
+    "customerSupportLabel": "ग्राहक सहायता",
+    "customerSupportValue": "070-5577-1975",
+    "whatsappLabel": "WhatsApp",
+    "viberLabel": "Viber"
   }
 }

@@ -48,6 +48,41 @@ export function Footer() {
               </div>
               <div>
                 <strong className="text-foreground/90 font-semibold">
+                  {t("footer.customerSupportLabel")}:{" "}
+                </strong>
+                <a
+                  href={`tel:${t("footer.customerSupportValue")?.replace(/-/g, "")}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.customerSupportValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.whatsappLabel")}:{" "}
+                </strong>
+                <a
+                  href={`https://wa.me/81${t("footer.customerSupportValue")?.replace(/-/g, "")?.substring(1)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.customerSupportValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
+                  {t("footer.viberLabel")}:{" "}
+                </strong>
+                <a
+                  href={`viber://chat?number=%2B81${t("footer.customerSupportValue")?.replace(/-/g, "")?.substring(1)}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  {t("footer.customerSupportValue")}
+                </a>
+              </div>
+              <div>
+                <strong className="text-foreground/90 font-semibold">
                   {t("footer.emailLabel")}:{" "}
                 </strong>
                 <a

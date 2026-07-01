@@ -86,7 +86,7 @@ export function CategoriesGrid() {
             No categories available.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8 md:gap-12 lg:gap-16 justify-items-center">
+          <div className="categories-home-grid gap-6 sm:gap-8 md:gap-12 lg:gap-16 justify-items-center">
             {categories?.map((category: any, idx: number) => {
               const isVisible = visibleElements[`cat-${idx}`];
               const transformValue = !isDesktop

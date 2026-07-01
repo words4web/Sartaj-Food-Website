@@ -178,6 +178,8 @@
     "ageWarning": "20+ Age Restriction: This item contains alcohol or is restricted to adults.",
     "loadError": "Could not load product details. Please try again.",
     "ageRestrictionBadge": "Age 20+ Only",
+    "ageRestrictionTitle": "Age Restriction",
+    "ageRestrictionMessage": "This product is age-restricted. Only customers aged 20+ can purchase it.",
     "writeReview": "Write a Review",
     "reviewsTitle": "Customer Reviews",
     "ratingRequired": "Please select a rating",
@@ -417,6 +419,10 @@
     "emailLabel": "Email",
     "emailValue": "info@sartajfoods.jp",
     "hoursLabel": "Hours",
-    "hoursValue": "Monday to Saturday from 09:00AM-18:00PM (except national holiday)"
+    "hoursValue": "Monday to Saturday from 09:00AM-18:00PM (except national holiday)",
+    "customerSupportLabel": "Customer Support",
+    "customerSupportValue": "070-5577-1975",
+    "whatsappLabel": "WhatsApp",
+    "viberLabel": "Viber"
   }
 }

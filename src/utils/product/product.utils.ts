@@ -17,27 +17,27 @@ export const getCategorySizeClasses = (size?: "sm" | "md" | "lg"): CategorySizeC
   const isSmall = size === "sm";
   const isLarge = size === "lg";
 
-  let sizeClasses = "w-[150px] h-[150px] p-4";
+  let sizeClasses = "w-[150px] h-[150px] p-3";
   if (isSmall) {
-    sizeClasses = "w-[120px] h-[120px] p-2.5";
+    sizeClasses = "w-[120px] h-[120px] p-2";
   } else if (isLarge) {
-    sizeClasses = "w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] p-4 sm:p-5";
+    sizeClasses = "w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] p-3 sm:p-4";
   }
 
-  let innerSizeClasses = "h-16 w-16";
+  let innerSizeClasses = "h-22 w-22";
   if (isSmall) {
     innerSizeClasses = "h-13 w-13";
   } else if (isLarge) {
-    innerSizeClasses = "h-20 w-20 sm:h-24 sm:w-24";
+    innerSizeClasses = "h-28 w-28 sm:h-30 sm:w-30";
   }
 
-  let textClasses = "text-xs";
+  let textClasses = "text-xs font-bold";
   let textSkeletonClasses = "h-3.5 w-16";
   if (isSmall) {
-    textClasses = "text-[10px]";
+    textClasses = "text-[10px] font-bold";
     textSkeletonClasses = "h-3 w-12";
   } else if (isLarge) {
-    textClasses = "text-xs sm:text-sm font-bold";
+    textClasses = "text-xs sm:text-sm font-extrabold";
     textSkeletonClasses = "h-3.5 w-20";
   }
 

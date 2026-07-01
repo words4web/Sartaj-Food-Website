@@ -66,15 +66,21 @@
 - **Theme-Aware Scrollbar UI**:
   - Implemented dynamic scrollbar styling in `src/app/globals.css` using standard `scrollbar-color`/`scrollbar-width` and WebKit fallbacks.
   - Bound the scrollbar thumb color dynamically to the selected theme's primary color using `color-mix(in oklch, var(--primary) 30%, transparent)` for a premium, themed scroll experience.
-- **Optimistic Cart Actions & Stepper Integration**:
-  - Implemented the unified `CartActions` component in [`CartActions.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/cart/CartActions.tsx). Features card and detail mode layouts updating Redux store state optimistically (`addOrUpdateItem`, `updateItemQuantity`, `removeItem` in `cartSlice.ts`) and synchronising in the background using an 800ms debounce.
-  - Runs automatic background cart updates (`syncCartFromServer`) on both success and error paths of mutations to pull authoritative server totals.
+- **Optimistic Cart Actions & Stepper Integration (Race Condition Fixes)**:
+  - Implemented the unified `CartActions` component in [`CartActions.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/cart/CartActions.tsx). Features card and detail mode layouts.
+  - Refactored logic out of the UI into the custom [`useCartActions.ts`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/cart/useCartActions.ts) hook.
+  - Extracted global sync logic into [`cartSync.ts`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/cart/cartSync.ts) utilizing a 500ms module-level `debouncedGlobalSync` to batch and collapse concurrent GET requests across items.
+  - Resolved quantity jumps and flickering items (where stale server responses overwrote fresh optimistic UI states) by keeping track of in-flight API mutations using a per-component `pendingOpsRef` counter and checking for pending debounces.
+  - Integrated `AbortController` cancellation: any active `/api/v1/customer/cart` GET request and scheduled sync timer is immediately aborted and cancelled when the user starts a new cart operation.
+  - Extended `cartService.getCart` to accept `AbortSignal` parameters and extended the generic `debounce` utility to return `.pending()` checks for active timer monitoring.
   - Removed the standalone "Remove" button from Detail Mode, converting the `- qty +` stepper into the single interface control.
 - **Product Specs Component Separation**:
   - Extracted the static specifications grid metadata layout into a dedicated [`ProductSpecs.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/product/ProductSpecs.tsx) component and deleted the obsolete legacy composite `ProductCartActions.tsx` file.
-- **Simplified Cart Page Summary**:
+- **Simplified Cart Page Summary & CartItemRow Extraction**:
   - Streamlined the checkout Summary card on the Cart page ([`page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/cart/page.tsx>)) to display only the Subtotal field returned directly from the backend, removing shipping, tax, and grand total lines.
-  - Reused `<CartActions mode="card" />` for cart items to execute debounced updates and background store refreshes seamlessly.
+  - Extracted each cart item card into a standalone, optimized [`CartItemRow.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/cart/CartItemRow.tsx) component.
+  - Implemented an explicit, hover-styled remove button (Trash2 icon) in the bottom-right of each item card, invoking the safe `handleRemove` action directly.
+  - Reused `<CartActions mode="card" />` for cart items inside the row to execute debounced updates and background store refreshes seamlessly.
 - **Dynamic Categories Carousel Grid**:
   - Created [`CategoryCard.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/category/CategoryCard.tsx) and service layers to fetch categories tree dynamically via React Query (`useGetCategories()`) from the backend `/customer/categories` endpoint.
   - Refactored [`CategoriesGrid.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/home/CategoriesGrid.tsx) as a horizontal carousel. Hides scrollbars via `.no-scrollbar` and offers smooth navigation using Left and Right arrow buttons.

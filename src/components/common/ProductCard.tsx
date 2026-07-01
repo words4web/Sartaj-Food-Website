@@ -56,7 +56,12 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   };
 
   const renderBadgesOverlay = () => (
-    <div className="absolute top-2 left-2 flex flex-col gap-1.5 z-20 pointer-events-none hidden sm:flex">
+    <div className="absolute top-2 left-2 flex flex-row flex-wrap items-center gap-1.5 z-20 pointer-events-none">
+      {isDiscounted && discountPercent && (
+        <span className="bg-red-500 text-white shadow-sm text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider w-fit">
+          -{discountPercent}%
+        </span>
+      )}
       {renderBadge()}
     </div>
   );
@@ -77,19 +82,10 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
     <div className="p-3 sm:p-4 flex items-center justify-between gap-2 mt-auto pt-3 border-t border-border/60 bg-card z-20">
       {/* Price */}
       <div className="flex flex-col min-w-0">
-        <div className="flex items-baseline gap-1 flex-wrap">
-          <span className="text-base font-black text-foreground leading-none">
-            ¥{price?.toLocaleString()}
-          </span>
-          {isDiscounted && originalPrice && originalPrice > price && (
-            <span className="text-[10px] text-muted-foreground line-through leading-none">
-              ¥{originalPrice?.toLocaleString()}
-            </span>
-          )}
-        </div>
-        {isDiscounted && discountPercent && (
-          <span className="text-[9px] text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30 border border-green-200/50 dark:border-green-800/30 px-1.5 py-0.5 rounded-md font-bold mt-1 leading-none w-fit">
-            {discountPercent}% OFF
+        <span className="text-base font-black text-foreground">¥{price?.toLocaleString()}</span>
+        {isDiscounted && originalPrice && originalPrice > price && (
+          <span className="text-xs text-muted-foreground line-through">
+            ¥{originalPrice?.toLocaleString()}
           </span>
         )}
       </div>

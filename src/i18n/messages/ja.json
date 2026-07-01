@@ -178,6 +178,8 @@
     "ageWarning": "20歳未満購入禁止: この商品にはアルコールが含まれているか、成人向けに制限されています。",
     "loadError": "商品情報の読み込みに失敗しました。時間をおいてもう一度お試しください。",
     "ageRestrictionBadge": "20歳以上限定",
+    "ageRestrictionTitle": "年齢制限",
+    "ageRestrictionMessage": "この商品は年齢制限があります。20歳以上のお客様のみ購入できます。",
     "writeReview": "レビューを書く",
     "reviewsTitle": "カスタマーレビュー",
     "ratingRequired": "評価を選択してください",
@@ -417,6 +419,10 @@
     "emailLabel": "メール",
     "emailValue": "info@sartajfoods.jp",
     "hoursLabel": "営業時間",
-    "hoursValue": "月曜日〜土曜日 09:00〜18:00（祝日を除く）"
+    "hoursValue": "月曜日〜土曜日 09:00〜18:00（祝日を除く）",
+    "customerSupportLabel": "カスタマーサポート",
+    "customerSupportValue": "070-5577-1975",
+    "whatsappLabel": "WhatsApp",
+    "viberLabel": "Viber"
   }
 }

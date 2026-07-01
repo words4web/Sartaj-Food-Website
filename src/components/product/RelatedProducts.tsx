@@ -23,11 +23,19 @@ export function RelatedProducts({ productId }: RelatedProductsProps) {
         </div>
       ) : (
         <div className="flex gap-6 overflow-x-auto overflow-y-hidden py-4 -my-4 px-2 -mx-2 scrollbar-thin">
-          {relatedProducts.slice(0, 30).map((prod: any) => (
-            <div key={prod?._id || prod?.id} className="w-[240px] sm:w-[280px] shrink-0">
-              <ProductCard product={prod} />
-            </div>
-          ))}
+          {Array.from(
+            new Map(
+              relatedProducts
+                ?.filter((prod: any) => prod?._id || prod?.id)
+                ?.map((prod: any) => [prod?._id || prod?.id, prod]),
+            )?.values(),
+          )
+            ?.slice(0, 30)
+            ?.map((prod: any) => (
+              <div key={prod?._id || prod?.id} className="w-[240px] sm:w-[280px] shrink-0">
+                <ProductCard product={prod} />
+              </div>
+            ))}
         </div>
       )}
     </section>

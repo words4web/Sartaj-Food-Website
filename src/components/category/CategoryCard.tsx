@@ -6,9 +6,7 @@ import { ROUTES } from "@/constants/routes";
 import { ThemedImage } from "@/components/common";
 import { CategoryCardProps } from "@/types/product/product.types";
 import { getLocalizedValue, getCategorySizeClasses } from "@/utils/product/product.utils";
-
 import { useSearchParams } from "next/navigation";
-
 import { memo } from "react";
 
 export const CategoryCard = memo(function CategoryCard({
@@ -49,12 +47,12 @@ export const CategoryCard = memo(function CategoryCard({
       <div className="absolute inset-0 bg-primary rounded-full scale-y-0 lg:group-hover:scale-y-100 origin-bottom transition-transform duration-200 ease-out -z-10" />
 
       <div
-        className={`rounded-full bg-primary/10 lg:group-hover:bg-primary-foreground/20 lg:group-hover:scale-105 lg:group-hover:rotate-3 lg:group-hover:shadow-sm flex items-center justify-center lg:transition-all lg:duration-300 lg:ease-out overflow-hidden shrink-0 ${innerSizeClasses}`}
+        className={`flex items-center justify-center lg:transition-all lg:duration-300 lg:ease-out lg:group-hover:scale-105 lg:group-hover:rotate-3 shrink-0 ${innerSizeClasses}`}
       >
         <ThemedImage
           src={category?.image}
           alt={name}
-          className="h-full w-full object-contain p-1.5 lg:transition-transform lg:duration-300 lg:group-hover:scale-105"
+          className="h-full w-full object-contain p-1 lg:transition-transform lg:duration-300 lg:group-hover:scale-105"
           fallbackType="category"
         />
       </div>

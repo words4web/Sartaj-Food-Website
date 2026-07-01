@@ -1,7 +1,7 @@
 export function debounce<T extends (...args: any[]) => void>(
   fn: T,
   delay: number,
-): T & { cancel: () => void } {
+): T & { cancel: () => void; pending: () => boolean } {
   let timer: ReturnType<typeof setTimeout> | null = null;
 
   const debounced = (...args: Parameters<T>) => {
@@ -21,5 +21,7 @@ export function debounce<T extends (...args: any[]) => void>(
     }
   };
 
-  return debounced as T & { cancel: () => void };
+  debounced.pending = () => timer !== null;
+
+  return debounced as T & { cancel: () => void; pending: () => boolean };
 }

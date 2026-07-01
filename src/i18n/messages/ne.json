@@ -178,6 +178,8 @@
     "ageWarning": "२०+ उमेर प्रतिबन्ध: यस वस्तुमा मदिरा छ वा वयस्कहरूका लागि प्रतिबन्धित छ।",
     "loadError": "उत्पाद विवरण लोड हुन सकेन। कृपया पुनः प्रयास गर्नुहोस्।",
     "ageRestrictionBadge": "केवल २०+",
+    "ageRestrictionTitle": "उमेर प्रतिबन्ध",
+    "ageRestrictionMessage": "यो उत्पादन उमेर-सीमित छ। केवल २० वर्ष वा सोभन्दा माथिका ग्राहकहरूले मात्र किन्न सक्छन्।",
     "writeReview": "समीक्षा लेख्नुहोस्",
     "reviewsTitle": "ग्राहक समीक्षाहरू",
     "ratingRequired": "कृपया मूल्याङ्कन चयन गर्नुहोस्",
@@ -417,6 +419,10 @@
     "emailLabel": "इमेल",
     "emailValue": "info@sartajfoods.jp",
     "hoursLabel": "समय",
-    "hoursValue": "सोमबार देखि शनिबार बिहान ०९:०० बजे देखि बेलुका १८:०० बजे सम्म (सार्वजनिक बिदा बाहेक)"
+    "hoursValue": "सोमबार देखि शनिबार बिहान ०९:०० बजे देखि बेलुका १८:०० बजे सम्म (सार्वजनिक बिदा बाहेक)",
+    "customerSupportLabel": "ग्राहक सहायता",
+    "customerSupportValue": "070-5577-1975",
+    "whatsappLabel": "WhatsApp",
+    "viberLabel": "Viber"
   }
 }
