@@ -314,7 +314,10 @@
     "cancelling": "Cancelling...",
     "cancelSuccess": "Order cancelled successfully",
     "cancelFailed": "Failed to cancel order",
-    "characters": "characters"
+    "characters": "characters",
+    "reorderConfirmTitle": "Reorder Products",
+    "reorderProceed": "You are adding {count} items from a previous order to your cart.\n\n• New items will be added to your current selection.\n• Existing items in your cart will have their quantities updated to match this order.\n\nNote: Out-of-stock products will be skipped automatically.\n\nWould you like to proceed?",
+    "proceed": "Proceed"
   },
   "wallet": {
     "wallet": "Wallet",

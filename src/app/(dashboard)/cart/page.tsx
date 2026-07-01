@@ -11,12 +11,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import { CartItemRow } from "@/components/cart/CartItemRow";
 import { CartSkeleton } from "@/components/skeletons/CartSkeleton";
+import { useGetDiscountedProducts } from "@/services/product/product.hooks";
+import { ProductCard } from "@/components/common/ProductCard";
+import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
 
 export default function CartPage() {
   const router = useRouter();
   const t = useTranslations();
 
   const { isLoading } = useGetCart(true);
+  const { data: offers, isLoading: isOffersLoading } = useGetDiscountedProducts({ limit: 4 });
 
   const cart = useSelector((state: RootState) => state.cart?.cart);
   const cartItems = cart?.items || [];
@@ -35,7 +39,7 @@ export default function CartPage() {
           {t("cart.cart")}
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
           {/* Cart Items */}
           <div className="lg:col-span-2">
             <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
@@ -88,6 +92,27 @@ export default function CartPage() {
             </div>
           </div>
         </div>
+
+        {/* Special Offers Section */}
+        {(!isOffersLoading && offers && offers.length > 0) || isOffersLoading ? (
+          <div className="mt-12 sm:mt-16">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">
+              {t("home.bestPrices")}
+            </h2>
+            {isOffersLoading ? (
+              <ProductGridSkeleton
+                count={4}
+                columnsClass="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+              />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {offers?.map((product: any) => (
+                  <ProductCard key={product?._id || product?.id} product={product} />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : null}
       </div>
     </main>
   );

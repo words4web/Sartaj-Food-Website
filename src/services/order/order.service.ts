@@ -41,4 +41,8 @@ export const orderService = {
   cancelOrder: async (id: string, cancelReason: string): Promise<AxiosResponse<any>> => {
     return axiosInstance.patch(API_ROUTES.ORDERS.CANCEL(id), { cancelReason });
   },
+
+  reorderToCart: async (id: string): Promise<AxiosResponse<any>> => {
+    return axiosInstance.post(API_ROUTES.ORDERS.REORDER(id));
+  },
 };

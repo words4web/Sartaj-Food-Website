@@ -67,12 +67,16 @@ export default function CheckoutPage() {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
       toast.success(t("orderPlaced") || "Order placed successfully!");
+
+      router.replace(ROUTES.CHECKOUT, { scroll: false });
     } else if (status === "cancelled") {
       setErrorMessage(reason || t("orderFailed") || "Failed to place order.");
       setOverlayState(CheckoutStatus.FAILED);
       toast.error(reason || t("orderFailed") || "Failed to place order.");
+
+      router.replace(ROUTES.CHECKOUT, { scroll: false });
     }
-  }, [searchParams, queryClient, t]);
+  }, [searchParams, queryClient, t, router]);
 
   const {
     data: cart,
@@ -118,11 +122,6 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (!selectedPaymentMethod) {
-      toast.error(t("selectPaymentRequired") || "Please select a payment method");
-      return;
-    }
-
     if (!selectedDeliveryDate) {
       toast.error(t("selectDeliveryDateRequired") || "Please select a delivery date");
       return;
@@ -130,6 +129,11 @@ export default function CheckoutPage() {
 
     if (!selectedDeliverySlot) {
       toast.error(t("selectDeliverySlotRequired") || "Please select a delivery time slot");
+      return;
+    }
+
+    if (!selectedPaymentMethod) {
+      toast.error(t("selectPaymentRequired") || "Please select a payment method");
       return;
     }
 

@@ -118,7 +118,7 @@ export function CheckoutPriceBreakdown({
       {/* Submit Button */}
       <Button
         onClick={onPlaceOrder}
-        disabled={!isAddressSelected || isPlacingOrder || summaryLoading}
+        disabled={isPlacingOrder}
         size="lg"
         className="w-full rounded-xl font-bold cursor-pointer transition-all active:scale-[0.98] shadow-md flex items-center justify-center gap-2"
       >

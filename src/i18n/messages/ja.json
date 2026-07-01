@@ -314,7 +314,10 @@
     "cancelling": "キャンセル中...",
     "cancelSuccess": "注文が正常にキャンセルされました",
     "cancelFailed": "注文のキャンセルに失敗しました",
-    "characters": "文字"
+    "characters": "文字",
+    "reorderConfirmTitle": "商品の再注文",
+    "reorderProceed": "前の注文から {count} 個の商品をカートに追加しようとしています。\n\n• 新しい商品は現在のカート内容に追加されます。\n• カート内の既存商品の数量は、今回の注文内容に合わせて更新されます。\n\n注：在庫切れの商品は自動的にスキップされます。\n\n続行しますか？",
+    "proceed": "続行する"
   },
   "wallet": {
     "wallet": "ウォレット",
