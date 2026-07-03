@@ -108,10 +108,10 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Product Reviews */}
-      <ProductReviews productId={id} hasReviewed={product?.hasReviewed} />
+      <ProductReviews productId={product?._id} hasReviewed={product?.hasReviewed} />
 
       {/* Related Products */}
-      <RelatedProducts productId={id} />
+      <RelatedProducts productId={product?._id} />
     </main>
   );
 }

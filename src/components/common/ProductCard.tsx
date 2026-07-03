@@ -7,11 +7,14 @@ import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { ROUTES } from "@/constants/routes";
 import { CartActions } from "@/components/cart/CartActions";
 import { ThemedImage, WishlistButton } from "@/components/common";
+import { useAuth } from "@/hooks/useAuth";
 
 export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   const t = useTranslations();
+  const { isAuthenticated } = useAuth();
 
   const id = product?._id || product?.id;
+  const identifier = product?.slug || id;
   const name = typeof product?.name === "object" ? product?.name?.en : product?.name;
   const brand = product?.brand || (product?.manufacturer as any)?.name || "Sartaj";
   const price = product?.unitPrice ?? product?.price ?? 0;
@@ -67,7 +70,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   );
 
   const renderWishlistOverlay = () => {
-    if (!id) return null;
+    if (!id || !isAuthenticated) return null;
     return (
       <div className="absolute top-2 right-2 z-20">
         <WishlistButton
@@ -113,7 +116,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
             {/* Image Container */}
             <div className="relative w-full aspect-square bg-muted/40 lg:group-hover:bg-primary/5 flex items-center justify-center p-2 sm:p-4 shrink-0 lg:transition-colors lg:duration-300">
               <Link
-                href={ROUTES.PRODUCTS(id)}
+                href={ROUTES.PRODUCTS(identifier)}
                 className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 cursor-pointer"
               >
                 <ThemedImage
@@ -128,7 +131,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
 
             {/* Name & Brand Content */}
             <div className="p-3 sm:p-4 flex flex-col justify-start min-w-0 bg-card flex-grow">
-              <Link href={ROUTES.PRODUCTS(id)} className="cursor-pointer mb-1 block">
+              <Link href={ROUTES.PRODUCTS(identifier)} className="cursor-pointer mb-1 block">
                 <p className="text-[10px] sm:text-xs text-muted-foreground mb-0.5">By {brand}</p>
                 <h3 className="font-semibold text-foreground text-sm line-clamp-2 h-10 lg:transition-colors lg:group-hover:text-primary">
                   {typeof name === "string" ? name : ""}
@@ -141,7 +144,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
           <div className="hidden lg:flex absolute inset-0 lg:[backface-visibility:hidden] lg:[transform:rotateY(180deg)] flex-col h-full bg-card pointer-events-none lg:group-hover:pointer-events-auto">
             {/* Scrollable Description Container with extra top padding */}
             <Link
-              href={ROUTES.PRODUCTS(id)}
+              href={ROUTES.PRODUCTS(identifier)}
               className="p-4 pt-10 sm:pt-12 flex flex-col justify-start overflow-y-auto no-scrollbar flex-grow bg-muted/5 cursor-pointer block h-full"
             >
               <p className="text-[10px] sm:text-xs font-bold text-primary/80 mb-2 select-none uppercase tracking-wider">
