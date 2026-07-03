@@ -10,10 +10,12 @@ import { CommonError } from "@/components/ui/common-error";
 import { ProductReviewsSkeleton } from "@/components/skeletons/ProductReviewsSkeleton";
 import { ProductReviewForm } from "./ProductReviewForm";
 import { Skeleton } from "@/components/skeletons/Skeleton";
+import { useAuth } from "@/hooks/useAuth";
 
 export function ProductReviews({ productId, hasReviewed = false }: ProductReviewsProps) {
   const t = useTranslations();
   const locale = useLocale();
+  const { isAuthenticated } = useAuth();
 
   const [page, setPage] = useState(1);
   const limit = 5;
@@ -201,7 +203,9 @@ export function ProductReviews({ productId, hasReviewed = false }: ProductReview
             </div>
 
             {/* Render decoupled Review Submission Form */}
-            <ProductReviewForm productId={productId} hasReviewed={hasReviewed} />
+            {isAuthenticated && (
+              <ProductReviewForm productId={productId} hasReviewed={hasReviewed} />
+            )}
           </div>
         </div>
       </div>

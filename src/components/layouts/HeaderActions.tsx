@@ -33,7 +33,8 @@ export function HeaderActions() {
 
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
   const currentConfig = themes[currentTheme];
-  const cartItemsCount = useSelector((state: RootState) => state.cart?.cart?.items?.length || 0);
+  const rawCartCount = useSelector((state: RootState) => state.cart?.cart?.items?.length || 0);
+  const cartItemsCount = isAuthenticated ? rawCartCount : 0;
   const wishlistItemsCount = useSelector((state: RootState) => state.wishlist?.items?.length || 0);
 
   const locale = useSelector((state: RootState) => state?.locale?.locale);
@@ -58,20 +59,22 @@ export function HeaderActions() {
       )}
 
       {/* Cart */}
-      <Link
-        href={ROUTES.CART}
-        className="relative flex items-center justify-center h-9 w-9 rounded-full text-foreground hover:text-primary hover:bg-accent/60 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 cursor-pointer"
-      >
-        <ShoppingCart className="h-5 w-5" />
-        {cartItemsCount > 0 && (
-          <span
-            aria-hidden="true"
-            className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[16px] h-4 px-0.5 rounded-full bg-red-500 text-white text-[9px] font-extrabold leading-none ring-2 ring-background animate-in zoom-in duration-200"
-          >
-            {cartItemsCount > 99 ? "99+" : cartItemsCount}
-          </span>
-        )}
-      </Link>
+      {isAuthenticated && (
+        <Link
+          href={ROUTES.CART}
+          className="relative flex items-center justify-center h-9 w-9 rounded-full text-foreground hover:text-primary hover:bg-accent/60 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 cursor-pointer"
+        >
+          <ShoppingCart className="h-5 w-5" />
+          {cartItemsCount > 0 && (
+            <span
+              aria-hidden="true"
+              className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[16px] h-4 px-0.5 rounded-full bg-red-500 text-white text-[9px] font-extrabold leading-none ring-2 ring-background animate-in zoom-in duration-200"
+            >
+              {cartItemsCount > 99 ? "99+" : cartItemsCount}
+            </span>
+          )}
+        </Link>
+      )}
 
       {/* Wishlist */}
       {isAuthenticated && (

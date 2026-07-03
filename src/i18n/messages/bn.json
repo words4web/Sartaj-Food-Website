@@ -191,7 +191,8 @@
     "alreadyReviewed": "আপনি ইতিমধ্যে এই পণ্যটির পর্যালোচনা করেছেন।",
     "star": "স্টার",
     "stars": "স্টার",
-    "averageRatingLabel": "গড় রেটিং"
+    "averageRatingLabel": "গড় রেটিং",
+    "loginToOrder": "অর্ডার করতে লগইন করুন"
   },
   "cart": {
     "cart": "কার্ট",

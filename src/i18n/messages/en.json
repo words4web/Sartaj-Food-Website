@@ -191,7 +191,8 @@
     "alreadyReviewed": "You have already reviewed this product.",
     "star": "star",
     "stars": "stars",
-    "averageRatingLabel": "Average Rating"
+    "averageRatingLabel": "Average Rating",
+    "loginToOrder": "Login to Order"
   },
   "cart": {
     "cart": "Cart",

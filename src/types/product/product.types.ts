@@ -1,6 +1,7 @@
 export interface IProduct {
   _id?: string;
   id?: string | number;
+  slug?: string;
   sku?: string;
   name: string | { en?: string; ja?: string; ne?: string; hi?: string; bn?: string };
   description?: string | { en?: string; ja?: string; ne?: string; hi?: string; bn?: string };

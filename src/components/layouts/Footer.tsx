@@ -5,9 +5,11 @@ import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { Facebook, Instagram, Linkedin, Phone } from "lucide-react";
 import { LanguageSelector } from "@/components/common";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Footer() {
   const t = useTranslations();
+  const { isAuthenticated } = useAuth();
 
   return (
     <footer className="relative z-10 bg-gradient-to-b from-primary/4 via-background to-accent/8 border-t border-border/40 text-muted-foreground mt-12 md:mt-16 font-sans w-full">
@@ -163,22 +165,26 @@ export function Footer() {
                   {t("products.products")}
                 </Link>
               </li>
-              <li>
-                <Link
-                  href={ROUTES.CART}
-                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  {t("cart.cart")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={ROUTES.ORDERS()}
-                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  {t("orders.orders")}
-                </Link>
-              </li>
+              {isAuthenticated && (
+                <>
+                  <li>
+                    <Link
+                      href={ROUTES.CART}
+                      className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
+                    >
+                      {t("cart.cart")}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href={ROUTES.ORDERS()}
+                      className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
+                    >
+                      {t("orders.orders")}
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 

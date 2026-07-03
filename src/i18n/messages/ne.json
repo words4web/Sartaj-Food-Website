@@ -191,7 +191,8 @@
     "alreadyReviewed": "तपाईंले पहिले नै यस उत्पादनको समीक्षा गरिसक्नुभएको छ।",
     "star": "तारा",
     "stars": "ताराहरू",
-    "averageRatingLabel": "औसत मूल्याङ्कन"
+    "averageRatingLabel": "औसत मूल्याङ्कन",
+    "loginToOrder": "अर्डर गर्न लगइन गर्नुहोस्"
   },
   "cart": {
     "cart": "कार्ट",

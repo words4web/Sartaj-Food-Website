@@ -45,7 +45,7 @@ export function OrderDetailItems({ items = [] }: OrderDetailItemsProps) {
                 </div>
                 <div className="min-w-0">
                   <h4 className="font-bold text-foreground text-sm truncate hover:text-primary transition-colors">
-                    <Link href={ROUTES.PRODUCTS(product?._id)}>{prodName}</Link>
+                    <Link href={ROUTES.PRODUCTS(product?.slug || product?._id)}>{prodName}</Link>
                   </h4>
                   <p className="text-xs text-muted-foreground mt-1">
                     ¥{price?.toLocaleString()} × {quantity}
