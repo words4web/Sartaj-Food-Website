@@ -56,7 +56,7 @@ export function CheckoutCartItems() {
               {/* Product Details */}
               <div className="flex-1 min-w-0">
                 <Link
-                  href={ROUTES.PRODUCTS(item?.productId)}
+                  href={ROUTES.PRODUCTS(product?.slug || item?.productId)}
                   className="font-semibold text-foreground text-sm line-clamp-1 hover:text-primary transition-colors"
                 >
                   {name || "Product"}

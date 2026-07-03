@@ -191,7 +191,8 @@
     "alreadyReviewed": "この商品に対するレビューは既に投稿されています。",
     "star": "星",
     "stars": "星",
-    "averageRatingLabel": "平均評価"
+    "averageRatingLabel": "平均評価",
+    "loginToOrder": "ログインして注文"
   },
   "cart": {
     "cart": "カート",

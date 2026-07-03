@@ -37,7 +37,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-4">
           <div className="min-w-0">
             <Link
-              href={ROUTES.PRODUCTS(item.productId)}
+              href={ROUTES.PRODUCTS(product?.slug || item?.productId)}
               className="font-semibold text-foreground text-sm sm:text-base line-clamp-2 hover:text-primary transition-colors"
             >
               {typeof name === "string" ? name : "Product"}

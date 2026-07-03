@@ -1,24 +1,42 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Header } from "@/components/layouts/Header";
 import { Footer } from "@/components/layouts/Footer";
 import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { AuthLoadingOverlay } from "@/components/common/AuthLoadingOverlay";
 
+const isPublicPath = (path: string): boolean => {
+  if (
+    path === "/" ||
+    path === "/privacy" ||
+    path === "/terms" ||
+    path === "/about-us" ||
+    path === "/contact-us" ||
+    path === "/faq"
+  ) {
+    return true;
+  }
+  if (path.startsWith("/products")) return true;
+  return false;
+};
+
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { isAuthenticated, isLoading } = useAuth();
 
+  const isPublic = isPublicPath(pathname);
+
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isPublic && !isLoading && !isAuthenticated) {
       router.push(ROUTES.LOGIN);
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, router, isPublic]);
 
-  if (isLoading || !isAuthenticated) {
+  if (!isPublic && (isLoading || !isAuthenticated)) {
     return <AuthLoadingOverlay />;
   }
 

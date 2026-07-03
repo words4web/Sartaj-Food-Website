@@ -191,7 +191,8 @@
     "alreadyReviewed": "आप पहले ही इस उत्पाद की समीक्षा कर चुके हैं।",
     "star": "स्टार",
     "stars": "स्टार",
-    "averageRatingLabel": "औसत रेटिंग"
+    "averageRatingLabel": "औसत रेटिंग",
+    "loginToOrder": "ऑर्डर करने के लिए लॉगिन करें"
   },
   "cart": {
     "cart": "कार्ट",

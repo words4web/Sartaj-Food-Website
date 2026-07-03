@@ -7,9 +7,18 @@ import { Button } from "@/components/ui/button";
 import { CartActionsProps } from "@/types/product/product.types";
 import { ConfirmModal } from "@/components/common/ConfirmModal";
 import { useCartActions } from "./useCartActions";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
-export function CartActions({ product, mode = "card", showRemoveButton = false }: CartActionsProps) {
+export function CartActions({
+  product,
+  mode = "card",
+  showRemoveButton = false,
+}: CartActionsProps) {
   const t = useTranslations();
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [showAgeConfirm, setShowAgeConfirm] = useState(false);
 
   const {
@@ -56,6 +65,34 @@ export function CartActions({ product, mode = "card", showRemoveButton = false }
         disabled
       >
         {t("products.outOfStock") || "Out of Stock"}
+      </Button>
+    );
+  }
+
+  if (!isAuthenticated) {
+    if (mode === "card") {
+      return (
+        <Button
+          className="w-full cursor-pointer rounded-xl flex items-center justify-center gap-1 text-[10px] sm:text-xs font-bold h-8 active:scale-95 transition-all shadow-sm"
+          size="sm"
+          variant="outline"
+          onClick={(e) => {
+            e.stopPropagation();
+            router.push(ROUTES.LOGIN);
+          }}
+        >
+          <span>{t("products.loginToOrder") || "Login to Order"}</span>
+        </Button>
+      );
+    }
+
+    return (
+      <Button
+        onClick={() => router.push(ROUTES.LOGIN)}
+        className="w-full sm:w-fit px-6 h-11 rounded-xl cursor-pointer font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+        variant="outline"
+      >
+        <span>{t("products.loginToOrder") || "Login to Order"}</span>
       </Button>
     );
   }
