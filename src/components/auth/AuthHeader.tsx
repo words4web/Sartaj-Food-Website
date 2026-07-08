@@ -1,6 +1,6 @@
 "use client";
 
-import { LanguageSelector, ThemeSelector } from "@/components/common";
+import { LanguageSelector } from "@/components/common";
 import Link from "next/link";
 
 export function AuthHeader() {
@@ -16,10 +16,9 @@ export function AuthHeader() {
         <span className="font-bold text-lg tracking-tight text-foreground">Sartaj Foods</span>
       </Link>
 
-      {/* Settings controls: Theme and Language selector */}
       <div className="flex items-center gap-3 ml-auto">
         <LanguageSelector variant="light" />
-        <ThemeSelector variant="light" />
+        {/* <ThemeSelector variant="light" /> */}
       </div>
     </div>
   );

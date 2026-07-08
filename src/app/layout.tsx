@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { I18nProvider } from "@/providers/I18nProvider";
-import { LoadingOverlay } from "@/components/common";
+import { LoadingOverlay, ThemeProvider } from "@/components/common";
 import { NotificationListener } from "@/providers/NotificationListener";
 import "./globals.css";
 
@@ -53,10 +53,13 @@ export default function RootLayout({
         <ReduxProvider>
           <QueryProvider>
             <I18nProvider>
-              {children}
-              <LoadingOverlay />
-              <NotificationListener />
+              <ThemeProvider>
+                {children}
+                <LoadingOverlay />
+                <NotificationListener />
+              </ThemeProvider>
             </I18nProvider>
+
             <Toaster position="top-right" />
             {process.env.NODE_ENV === "production" && <Analytics />}
           </QueryProvider>

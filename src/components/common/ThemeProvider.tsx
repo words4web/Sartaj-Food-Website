@@ -7,6 +7,7 @@ import { setTheme } from "@/lib/store/localeSlice";
 import { RootState } from "@/lib/store";
 import { ParticleCanvas } from "./ParticleCanvas";
 import { ParticleType } from "@/types/common.types";
+import { useGetActiveTheme } from "@/services/theme/theme.hooks";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyTheme(saved);
     dispatch(setTheme(saved as Theme));
   }, [dispatch]);
+
+  useGetActiveTheme();
 
   useEffect(() => {
     applyTheme(currentTheme);

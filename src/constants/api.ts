@@ -113,6 +113,12 @@ export const API_ROUTES = {
     GET: (productId: string) => `/customer/reviews/${productId}`,
     ADD: (productId: string) => `/customer/reviews/${productId}`,
   },
+
+  // Theme
+  THEME: {
+    GET_ACTIVE: "/admin/theme/active",
+    GET_ALL: "/admin/theme",
+  },
 } as const;
 
 export const PAGINATION = {
