@@ -178,7 +178,7 @@ export function HeaderActions() {
             </>
           )}
 
-          {/* Theme settings submenu */}
+          {/* Theme settings submenu commented out — controlled via admin panel
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="flex items-center gap-2 w-full px-2 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors cursor-pointer focus:bg-accent focus:text-accent-foreground">
               <Palette className="h-4 w-4 text-muted-foreground" />
@@ -220,6 +220,7 @@ export function HeaderActions() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
+          */}
 
           {isAuthenticated && (
             <>
