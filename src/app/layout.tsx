@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { I18nProvider } from "@/providers/I18nProvider";
-import { LoadingOverlay, ThemeProvider } from "@/components/common";
+import { LoadingOverlay, ThemeProvider, MaintenancePage } from "@/components/common";
 import { NotificationListener } from "@/providers/NotificationListener";
 import "./globals.css";
 
@@ -42,28 +42,36 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+
   return (
     <html lang="en" className="bg-background">
       <body className="font-sans antialiased relative min-h-screen">
-        {/* Large premium global header-backdrop glow pools wrapper to prevent horizontal scroll */}
-        <div className="absolute inset-x-0 top-0 h-[800px] overflow-hidden pointer-events-none -z-50">
-          <div className="absolute top-0 left-[10%] w-[600px] h-[450px] rounded-full bg-primary/22 blur-[130px]" />
-          <div className="absolute top-0 right-[15%] w-[500px] h-[400px] rounded-full bg-accent/18 blur-[110px]" />
-        </div>
-        <ReduxProvider>
-          <QueryProvider>
-            <I18nProvider>
-              <ThemeProvider>
-                {children}
-                <LoadingOverlay />
-                <NotificationListener />
-              </ThemeProvider>
-            </I18nProvider>
+        {isMaintenance ? (
+          <MaintenancePage />
+        ) : (
+          <>
+            {/* Large premium global header-backdrop glow pools wrapper to prevent horizontal scroll */}
+            <div className="absolute inset-x-0 top-0 h-[800px] overflow-hidden pointer-events-none -z-50">
+              <div className="absolute top-0 left-[10%] w-[600px] h-[450px] rounded-full bg-primary/22 blur-[130px]" />
+              <div className="absolute top-0 right-[15%] w-[500px] h-[400px] rounded-full bg-accent/18 blur-[110px]" />
+            </div>
+            <ReduxProvider>
+              <QueryProvider>
+                <I18nProvider>
+                  <ThemeProvider>
+                    {children}
+                    <LoadingOverlay />
+                    <NotificationListener />
+                  </ThemeProvider>
+                </I18nProvider>
 
-            <Toaster position="top-right" />
-            {process.env.NODE_ENV === "production" && <Analytics />}
-          </QueryProvider>
-        </ReduxProvider>
+                <Toaster position="top-right" />
+                {process.env.NODE_ENV === "production" && <Analytics />}
+              </QueryProvider>
+            </ReduxProvider>
+          </>
+        )}
       </body>
     </html>
   );
