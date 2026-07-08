@@ -54,8 +54,11 @@
   - Deleted the unused, legacy component at `src/components/common/Loader.tsx` and cleaned up its export reference in `src/components/common/index.ts`.
   - Registered address deletion translations under `"profile"` inside all five JSON translation files (`en.json`, `ja.json`, `hi.json`, `bn.json`, `ne.json`).
 - **Profile Dropdown Theme Selector**:
-  - Shifted the `<ThemeSelector />` from the header top actions to a premium, theme-swatch integrated Submenu (`DropdownMenuSub`) inside the Profile Dropdown menu in [Header.tsx](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/layouts/Header.tsx).
-  - Triggers theme changes instantly and dynamically updates Redux state/DOM root attributes.
+  - Commented out theme selector components and user dropdown sub-menus; theme is now managed centrally by administrators via the admin panel.
+- **Admin-Controlled Active Theme**:
+  - Integrated public active theme loading. The website calls `/api/v1/admin/theme/active` on load/reload to fetch the active theme name.
+  - `ThemeProvider` instantly applies the local cached theme from `localStorage` to guarantee zero-flicker rendering, then fetches the admin-selected active theme name in the background, updating Redux, local styles, and `localStorage` on success.
+
 - **Header Cart Button Overlap & Dynamic Count**:
   - Wrapped the `ShoppingCart` icon in a dedicated relative div, positioning the badge relative to the icon instead of the entire text container. This resolves the layout issue where the badge overlapped with the "Cart" text.
   - Linked the badge quantity dynamically to the Redux store (`state.cart.cart.totalItems`).

@@ -163,5 +163,10 @@ export function applyTheme(theme: Theme) {
 
 export function getStoredTheme(): Theme {
   if (typeof window === "undefined") return "default";
-  return (localStorage.getItem("sartaj-theme") as Theme) || "default";
+  const saved = localStorage.getItem("sartaj-theme");
+  if (!saved) {
+    localStorage.setItem("sartaj-theme", "default");
+    return "default";
+  }
+  return saved as Theme;
 }
