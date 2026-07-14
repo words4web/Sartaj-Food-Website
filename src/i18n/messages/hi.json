@@ -279,6 +279,9 @@
     "slotUnavailable": "उपलब्ध नहीं",
     "selectDeliveryDateRequired": "कृपया डिलीवरी तारीख चुनें",
     "selectDeliverySlotRequired": "कृपया डिलीवरी समय स्लॉट चुनें",
+    "selectAddressFirst": "उपलब्ध डिलीवरी शेड्यूल देखने के लिए कृपया पहले एक शिपिंग पता चुनें।",
+    "confirmDeliveryTitle": "डिलीवरी वरीयता की पुष्टि करें",
+    "confirmDeliveryDescription": "कृपया ध्यान दें कि चयनित डिलीवरी तिथि और समय स्लॉट केवल एक वरीयता है और इसकी गारंटी नहीं है।",
     "orderNotes": "ऑर्डर नोट्स (वैकल्पिक)",
     "notesPlaceholder": "अपनी डिलीवरी के लिए विशेष निर्देश, या कोई अन्य नोट्स जोड़ें..."
   },

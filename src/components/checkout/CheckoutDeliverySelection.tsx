@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { CalendarDays, Clock } from "lucide-react";
+import { CalendarDays, Clock, Info } from "lucide-react";
 import {
   getValidDeliveryDates,
   getDeliverySlots,
@@ -32,15 +32,33 @@ export function CheckoutDeliverySelection({
   onSelectDate,
   onSelectSlot,
   hasError = false,
+  prefecture,
+  isAddressSelected,
 }: CheckoutDeliverySelectionProps) {
   const t = useTranslations("checkout");
 
-  const validDates = useMemo(() => getValidDeliveryDates(), []);
+  const validDates = useMemo(() => getValidDeliveryDates(prefecture), [prefecture]);
   const slots = useMemo(() => (selectedDate ? getDeliverySlots(selectedDate) : []), [selectedDate]);
+
+  if (!isAddressSelected) {
+    return (
+      <div className="bg-card rounded-2xl border border-border/60 p-5 space-y-4 shadow-sm opacity-70">
+        <div className="flex items-center gap-2">
+          <CalendarDays className="h-5 w-5 text-primary shrink-0" />
+          <h3 className="text-base font-bold text-foreground">
+            {t("deliverySchedule") || "Delivery Schedule"}
+          </h3>
+        </div>
+        <p className="text-xs text-muted-foreground italic">
+          {t("selectAddressFirst") ||
+            "Please select a shipping address first to see available delivery schedules."}
+        </p>
+      </div>
+    );
+  }
 
   const handleDateClick = (date: string) => {
     onSelectDate(date);
-    // Reset slot when date changes — previously-chosen slot may now be unavailable
     onSelectSlot("");
   };
 
@@ -146,6 +164,15 @@ export function CheckoutDeliverySelection({
           {t("selectDateFirst") || "Please select a delivery date to see available time slots."}
         </p>
       )}
+
+      {/* Disclaimer / Preference note */}
+      <div className="flex gap-2.5 items-start bg-amber-50 dark:bg-amber-955/20 border border-amber-200/60 dark:border-amber-900/40 rounded-xl p-3.5">
+        <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+        <p className="text-xs font-medium text-amber-800 dark:text-amber-300 leading-relaxed">
+          {t("confirmDeliveryDescription") ||
+            "Please note that the selected delivery date and slot are a preference and not guaranteed."}
+        </p>
+      </div>
     </div>
   );
 }

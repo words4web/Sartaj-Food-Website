@@ -57,6 +57,8 @@ export default function CheckoutPage() {
   const handleSelectAddress = (id: string) => {
     setSelectedAddressId(id);
     setAddressError(false);
+    setSelectedDeliveryDate("");
+    setSelectedDeliverySlot("");
   };
 
   const handleSelectDate = (date: string) => {
@@ -299,6 +301,8 @@ export default function CheckoutPage() {
               onSelectDate={handleSelectDate}
               onSelectSlot={handleSelectSlot}
               hasError={deliveryError}
+              prefecture={addresses.find((a) => a?._id === selectedAddressId)?.prefecture}
+              isAddressSelected={!!selectedAddressId}
             />
 
             {/* D. Order Notes */}

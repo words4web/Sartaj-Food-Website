@@ -279,6 +279,9 @@
     "slotUnavailable": "Unavailable",
     "selectDeliveryDateRequired": "Please select a delivery date",
     "selectDeliverySlotRequired": "Please select a delivery time slot",
+    "selectAddressFirst": "Please select a shipping address first to see available delivery schedules.",
+    "confirmDeliveryTitle": "Confirm Delivery Preference",
+    "confirmDeliveryDescription": "Please note that the selected delivery date and slot are a preference and not guaranteed.",
     "orderNotes": "Order Notes (Optional)",
     "notesPlaceholder": "Add special instructions for your delivery, or any other notes..."
   },

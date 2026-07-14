@@ -279,6 +279,9 @@
     "slotUnavailable": "受付終了",
     "selectDeliveryDateRequired": "配達日を選択してください",
     "selectDeliverySlotRequired": "配達時間帯を選択してください",
+    "selectAddressFirst": "配達スケジュールを表示するには、まず配送先住所を選択してください。",
+    "confirmDeliveryTitle": "配達希望日時の確認",
+    "confirmDeliveryDescription": "選択された配達日および時間帯は希望であり、確定ではありませんのでご了承ください。",
     "orderNotes": "注文メモ (任意)",
     "notesPlaceholder": "配達に関する特別な指示や、その他のメモを追加してください..."
   },
