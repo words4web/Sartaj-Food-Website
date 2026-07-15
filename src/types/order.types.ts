@@ -73,6 +73,7 @@ export interface ICreateOrderBody {
   deliveryDate: string;
   deliverySlot: string;
   notes?: string;
+  giftProductId?: string;
 }
 
 export interface ICreateOrderMutationArgs {

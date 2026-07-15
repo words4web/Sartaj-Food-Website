@@ -49,32 +49,50 @@ function nowJSTParts(): {
  * Returns up to 3 upcoming valid delivery dates (non-Sunday).
  * Matches backend `getValidDeliveryDates()`.
  */
-export function getValidDeliveryDates(): string[] {
+export function getValidDeliveryDates(prefecture?: string): string[] {
   const dates: string[] = [];
-  const { year, month, day } = nowJSTParts();
-  const todayStr = `${year}-${String(month)?.padStart(2, "0")}-${String(day)?.padStart(2, "0")}`;
+  const { year, month, day, hour } = nowJSTParts();
 
-  // Get the 3 dates that the backend's validation accepts (starting from today)
-  let cursor = new Date(Date.UTC(year, month - 1, day)); // midnight UTC = same calendar date
+  const normalizedPref = prefecture ? prefecture.toLowerCase().trim() : "";
+  const isRemote =
+    normalizedPref === "hokkaido" ||
+    normalizedPref === "okinawa" ||
+    normalizedPref === "jp-01" ||
+    normalizedPref === "jp-47";
 
-  while (dates.length < 3) {
-    // Get the weekday for this calendar date *in JST*
+  // Before 12 PM: normal = Tomorrow (1 day offset), remote = 3 days offset
+  // After 12 PM: normal = Day after tomorrow (2 days offset), remote = 4 days offset
+  const isPast12PM = hour >= 12;
+
+  let minOffsetDays = 1;
+  if (isPast12PM) {
+    minOffsetDays = 2;
+  }
+  if (isRemote) {
+    minOffsetDays = isPast12PM ? 4 : 3;
+  }
+
+  let cursor = new Date(Date.UTC(year, month - 1, day)); // midnight UTC = today
+  let currentOffset = 0;
+
+  // We loop to collect enough upcoming days (excluding Sundays) after our minOffsetDays
+  while (dates.length < 3 && currentOffset < 15) {
     const weekdayInJST = new Intl.DateTimeFormat("en-US", {
       timeZone: JAPAN_TZ,
       weekday: "short",
     }).format(cursor);
 
-    if (weekdayInJST !== "Sun") {
+    if (weekdayInJST !== "Sun" && currentOffset >= minOffsetDays) {
       const y = cursor.getUTCFullYear();
       const m = String(cursor.getUTCMonth() + 1).padStart(2, "0");
       const d = String(cursor.getUTCDate()).padStart(2, "0");
       dates.push(`${y}-${m}-${d}`);
     }
     cursor = new Date(cursor.getTime() + 24 * 60 * 60 * 1000);
+    currentOffset++;
   }
 
-  // Filter out today's date so the customer cannot select it, leaving only tomorrow and the day after (1 or 2 valid dates)
-  return dates?.filter((d) => d !== todayStr);
+  return dates;
 }
 
 /** Parse a YYYY-MM-DD string for display — returns a plain UTC-midnight Date so getUTC* reads the correct calendar date. */

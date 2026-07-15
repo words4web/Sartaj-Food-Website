@@ -63,4 +63,6 @@ export interface CheckoutDeliverySelectionProps {
   onSelectDate: (date: string) => void;
   onSelectSlot: (slot: string) => void;
   hasError?: boolean;
+  prefecture?: string;
+  isAddressSelected: boolean;
 }

@@ -45,4 +45,8 @@ export const productService = {
   }): Promise<AxiosResponse<any>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.GET_OFFERS, { params });
   },
+
+  getGiftProducts: async (): Promise<AxiosResponse<any>> => {
+    return axiosInstance.get(API_ROUTES.PRODUCTS.GET_GIFTS);
+  },
 };
