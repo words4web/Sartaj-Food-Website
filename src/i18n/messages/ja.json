@@ -282,6 +282,9 @@
     "selectAddressFirst": "配達スケジュールを表示するには、まず配送先住所を選択してください。",
     "confirmDeliveryTitle": "配達希望日時の確認",
     "confirmDeliveryDescription": "選択された配達日および時間帯は希望であり、確定ではありませんのでご了承ください。",
+    "chooseFreeGift": "無料ギフトを選択",
+    "chooseFreeGiftDesc": "ご注文に含める無料ギフトを1つ選んでください。",
+    "free": "無料",
     "orderNotes": "注文メモ (任意)",
     "notesPlaceholder": "配達に関する特別な指示や、その他のメモを追加してください..."
   },

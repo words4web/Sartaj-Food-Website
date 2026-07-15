@@ -154,6 +154,20 @@
 
 - **Real-time FCM Notification Query Invalidations**:
   - Modified `NotificationListener.tsx` to invalidate `["orders"]`, `["order", "detail", orderId]`, and `["cart"]` React Query keys on foreground FCM push notification receipt.
+- **Area-Specific Delivery Timing (Hokkaido / Okinawa)**:
+  - Updated delivery date calculation in `CheckoutDeliverySelection.tsx` to apply prefecture-based transit day offsets.
+  - Hokkaido and Okinawa require a 3-day (before 12:00 PM) or 4-day (after 12:00 PM) transit buffer; all other prefectures use the standard 1-day offset.
+  - The selected prefecture is read from the chosen shipping address and compared against the `PREFECTURES` constant.
+- **Delivery Schedule Reset on Address Change**:
+  - Whenever the selected shipping address changes on the checkout page, `selectedDeliveryDate` and `selectedDeliverySlot` are automatically cleared.
+  - The delivery slot picker is locked and shows a prompt if no address is selected, preventing stale date/slot combinations from being submitted with a new address.
+  - Added missing `selectAddressFirst` translation key across all 5 locale files (`en.json`, `ja.json`, `hi.json`, `bn.json`, `ne.json`).
+- **Checkout Free Gift Selection**:
+  - Added `useGetGiftProducts` React Query hook in `product.hooks.ts` calling `GET /api/v1/customer/products/gifts`.
+  - Created [`CheckoutGiftSelection.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/checkout/CheckoutGiftSelection.tsx) — a card grid picker that allows the customer to toggle-select one free gift product (or deselect it). Shows a FREE badge, a check-mark indicator, product name, and image.
+  - Integrated `CheckoutGiftSelection` into [`checkout/page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/checkout/page.tsx>) between the delivery schedule card and the order notes textarea. The selected gift's ID is sent as `giftProductId` in the create-order mutation payload.
+  - Added `giftProductId?: string` to [`ICreateOrderBody`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/types/order.types.ts) in `order.types.ts` to resolve a TypeScript "unknown property" compile error.
+  - Added `chooseFreeGift`, `chooseFreeGiftDesc`, and `free` translation keys across all 5 locale files.
 
 ## Next Steps / Outstanding Bugs
 

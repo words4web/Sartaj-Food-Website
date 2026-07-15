@@ -17,10 +17,12 @@ import { useGetAddresses } from "@/services/address/address.hooks";
 import { useGetCart } from "@/services/cart/cart.hooks";
 import { useGetCheckoutSummary, useCreateOrder } from "@/services/order/order.hooks";
 import { useGetPublicCoupons } from "@/services/coupon/coupon.hooks";
+import { useGetGiftProducts } from "@/services/product/product.hooks";
 
 import { CheckoutCartItems } from "@/components/checkout/CheckoutCartItems";
 import { CheckoutAddressSelection } from "@/components/checkout/CheckoutAddressSelection";
 import { CheckoutDeliverySelection } from "@/components/checkout/CheckoutDeliverySelection";
+import { CheckoutGiftSelection } from "@/components/checkout/CheckoutGiftSelection";
 import { CheckoutNotes } from "@/components/checkout/CheckoutNotes";
 import { CheckoutPaymentMethod } from "@/components/checkout/CheckoutPaymentMethod";
 import { CheckoutPriceBreakdown } from "@/components/checkout/CheckoutPriceBreakdown";
@@ -44,6 +46,7 @@ export default function CheckoutPage() {
   const [notes, setNotes] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<string>("");
   const [applyWallet, setApplyWallet] = useState<boolean>(false);
+  const [selectedGiftId, setSelectedGiftId] = useState<string>("");
   const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
   const [overlayState, setOverlayState] = useState<CheckoutOverlayState>(CheckoutStatus.IDLE);
   const [createdOrderId, setCreatedOrderId] = useState<string>("");
@@ -121,6 +124,7 @@ export default function CheckoutPage() {
     refetch: refetchAddresses,
   } = useGetAddresses();
   const { data: publicCoupons = [], isLoading: couponsLoading } = useGetPublicCoupons();
+  const { data: gifts = [], isLoading: giftsLoading } = useGetGiftProducts();
 
   const createOrderMutation = useCreateOrder();
 
@@ -194,6 +198,7 @@ export default function CheckoutPage() {
           deliveryDate: selectedDeliveryDate,
           deliverySlot: selectedDeliverySlot,
           notes: notes || undefined,
+          giftProductId: selectedGiftId || undefined,
         },
         idempotencyKey,
       },
@@ -307,6 +312,14 @@ export default function CheckoutPage() {
 
             {/* D. Order Notes */}
             <CheckoutNotes notes={notes} onChange={setNotes} />
+
+            {/* C.1 Free Gift Selector */}
+            <CheckoutGiftSelection
+              gifts={gifts}
+              selectedGiftId={selectedGiftId}
+              onSelectGift={setSelectedGiftId}
+              isLoading={giftsLoading}
+            />
           </div>
 
           {/* Sticky Billing Sidebar Details */}

@@ -19,6 +19,7 @@ export const API_ROUTES = {
     FILTER: "/customer/products/filter",
     GET_RELATED: (id: string) => `/customer/products/${id}/related`,
     GET_OFFERS: "/customer/products/offers",
+    GET_GIFTS: "/customer/products/gifts",
   },
 
   // Categories
