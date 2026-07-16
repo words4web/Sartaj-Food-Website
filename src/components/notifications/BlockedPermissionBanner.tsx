@@ -15,6 +15,7 @@ export function BlockedPermissionBanner({ className }: BlockedPermissionBannerPr
     // Show only if permission is denied AND the user hasn't dismissed it this session
     if (
       typeof window !== "undefined" &&
+      "Notification" in window &&
       Notification.permission === "denied" &&
       !sessionStorage.getItem(STORAGE_KEYS.NOTIF_BANNER_DISMISSED)
     ) {
