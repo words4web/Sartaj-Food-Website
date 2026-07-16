@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Theme } from "@/lib/themes";
 
 interface LocaleState {
   locale: "en" | "ja" | "ne" | "hi" | "bn";
-  theme: "default" | "sakura" | "snowfall" | "diwali";
+  theme: Theme;
 }
 
 const initialState: LocaleState = {
@@ -17,7 +18,7 @@ const localeSlice = createSlice({
     setLocale(state, action: PayloadAction<"en" | "ja" | "ne" | "hi" | "bn">) {
       state.locale = action.payload;
     },
-    setTheme(state, action: PayloadAction<"default" | "sakura" | "snowfall" | "diwali">) {
+    setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
     },
     restoreLocale(state, action: PayloadAction<LocaleState>) {
