@@ -117,9 +117,11 @@ export const useFcmLifecycle = () => {
     let permissionStatus: PermissionStatus | undefined;
 
     const handlePermissionChange = () => {
-      const currentPermission = Notification.permission;
-      dispatch(setPermissionStatus(currentPermission));
-      performSync();
+      if (typeof window !== "undefined" && "Notification" in window) {
+        const currentPermission = Notification.permission;
+        dispatch(setPermissionStatus(currentPermission));
+        performSync();
+      }
     };
 
     const setupPermissionListener = async () => {

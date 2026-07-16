@@ -28,20 +28,24 @@ export function NotificationToggle({ className }: NotificationToggleProps) {
         localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS_ENABLED, "true");
       }
 
-      let permission = Notification.permission;
-      if (permission === "default") {
-        permission = await Notification.requestPermission();
-      }
-
-      dispatch(setPermissionStatus(permission));
-
-      if (permission === "granted") {
-        dispatch(setToggledOn(true));
-      } else {
-        if (typeof window !== "undefined") {
-          localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS_ENABLED, "false");
+      if (typeof window !== "undefined" && "Notification" in window) {
+        let permission = Notification.permission;
+        if (permission === "default") {
+          permission = await Notification.requestPermission();
         }
-        dispatch(setToggledOn(false));
+
+        dispatch(setPermissionStatus(permission));
+
+        if (permission === "granted") {
+          dispatch(setToggledOn(true));
+        } else {
+          if (typeof window !== "undefined") {
+            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS_ENABLED, "false");
+          }
+          dispatch(setToggledOn(false));
+        }
+      } else {
+        dispatch(setPermissionStatus("unsupported"));
       }
     } catch (err) {
       console.error("[NotificationToggle] Enable error:", err);
