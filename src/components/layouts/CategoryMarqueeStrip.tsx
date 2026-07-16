@@ -38,7 +38,6 @@ export function CategoryMarqueeStrip() {
 
   // Hybrid auto-scroll loop animation frame
   useEffect(() => {
-    if (!isDesktop) return;
     const container = containerRef.current;
     if (!container || isLoading || categories?.length === 0 || isInteracting) return;
 
@@ -61,7 +60,7 @@ export function CategoryMarqueeStrip() {
     animationFrameId = requestAnimationFrame(scroll);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isLoading, categories.length, isInteracting, isDesktop]);
+  }, [isLoading, categories.length, isInteracting]);
 
   if (isLoading) {
     return (
@@ -77,7 +76,7 @@ export function CategoryMarqueeStrip() {
 
   if (categories?.length === 0) return null;
 
-  const marqueeItems = isDesktop ? [...categories, ...categories] : categories;
+  const marqueeItems = [...categories, ...categories];
 
   return (
     <div className="w-full bg-card border-b border-border py-2 overflow-hidden select-none relative z-30">

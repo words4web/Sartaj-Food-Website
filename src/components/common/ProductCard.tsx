@@ -142,25 +142,35 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
 
           {/* BACK FACE (Description Details) - Hidden on Mobile */}
           <div className="hidden lg:flex absolute inset-0 lg:[backface-visibility:hidden] lg:[transform:rotateY(180deg)] flex-col h-full bg-card pointer-events-none lg:group-hover:pointer-events-auto">
-            {/* Scrollable Description Container with extra top padding */}
             <Link
               href={ROUTES.PRODUCTS(identifier)}
-              className="p-4 pt-10 sm:pt-12 flex flex-col justify-start overflow-y-auto no-scrollbar flex-grow bg-muted/5 cursor-pointer block h-full"
+              className="p-4 pt-10 sm:pt-12 flex flex-col justify-start bg-muted/5 cursor-pointer block h-full"
             >
-              <p className="text-[10px] sm:text-xs font-bold text-primary/80 mb-2 select-none uppercase tracking-wider">
+              {/* Product Name - STATIC */}
+              <div className="mb-2 border-b border-border/60 pb-2 shrink-0">
+                <h4 className="font-bold text-sm text-foreground line-clamp-2 mb-1">
+                  {typeof name === "string" ? name : ""}
+                </h4>
+              </div>
+
+              {/* Description Header - STATIC */}
+              <p className="text-[10px] sm:text-xs font-bold text-primary/80 mb-2 select-none uppercase tracking-wider shrink-0">
                 {t("products.description")}
               </p>
-              <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed font-medium pt-1">
-                {typeof product?.description === "string" && product?.description?.trim()
-                  ? product?.description
-                  : "Description not available"}
-              </p>
+
+              {/* Scrollable Description Content */}
+              <div className="overflow-y-auto no-scrollbar flex-grow min-h-0">
+                <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed font-medium">
+                  {typeof product?.description === "string" && product?.description?.trim()
+                    ? product?.description
+                    : "Description not available"}
+                </p>
+              </div>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Static Bottom Bar (Price & Cart Actions - Rendered exactly once) */}
       {renderBottomBar()}
     </div>
   );

@@ -44,7 +44,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     <div className="flex flex-col min-h-screen bg-card">
       <Header />
       <main className="flex-1">{children}</main>
-      <Footer />
+      {pathname !== "/products" && <Footer />}
     </div>
   );
 }

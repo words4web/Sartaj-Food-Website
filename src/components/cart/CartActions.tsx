@@ -57,6 +57,27 @@ export function CartActions({
   );
 
   if (isOutOfStock) {
+    if (isInCart) {
+      return (
+        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+          <span className="text-xs font-bold text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-2.5 py-1.5 select-none shrink-0">
+            {product?.isActive === false
+              ? t("products.unavailable") || "Unavailable"
+              : t("products.outOfStock") || "Out of Stock"}
+          </span>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleRemove}
+            title={t("cart.removeItem") || "Remove"}
+            className="h-8.5 w-8.5 shrink-0 text-destructive hover:bg-destructive/10 rounded-lg active:scale-95 transition-all"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      );
+    }
+
     return (
       <Button
         className="w-full rounded-xl"

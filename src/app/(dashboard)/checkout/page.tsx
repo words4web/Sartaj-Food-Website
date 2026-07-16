@@ -262,6 +262,25 @@ export default function CheckoutPage() {
   const cartItems = cart?.items || [];
   const hasStatusParam = !!searchParams?.get("status");
 
+  const hasInvalidCartItems = cartItems?.some((item: any) => {
+    const p = item?.product;
+    if (!p) return true;
+    return (
+      p?.stockStatus === "OUT_OF_STOCK" ||
+      (p?.stockQuantity !== undefined && p?.stockQuantity <= 0) ||
+      p?.isActive === false
+    );
+  });
+
+  if (hasInvalidCartItems && !hasStatusParam && overlayState === CheckoutStatus.IDLE) {
+    router.replace(ROUTES.CART);
+    toast.error(
+      tCommon("invalidCartItems") ||
+        "Please remove out-of-stock or unavailable items from your cart.",
+    );
+    return null;
+  }
+
   if (cartItems?.length === 0 && !hasStatusParam && overlayState === CheckoutStatus.IDLE) {
     return (
       <main className="relative z-10 min-h-[70vh] flex flex-col items-center justify-center bg-muted/30 px-6 text-center">

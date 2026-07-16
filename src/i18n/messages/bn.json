@@ -31,7 +31,8 @@
     "somethingWentWrong": "কিছু ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
     "add": "যোগ করুন",
     "recentSearches": "সাম্প্রতিক অনুসন্ধান",
-    "clearAll": "সব মুছে ফেলুন"
+    "clearAll": "সব মুছে ফেলুন",
+    "invalidCartItems": "চেকআউটের আগে অনুপলব্ধ বা স্টক বহির্ভূত আইটেম সরিয়ে নিন।"
   },
   "auth": {
     "login": "প্রবেশ",
@@ -156,6 +157,7 @@
     "discount": "ছাড়",
     "inStock": "স্টকে আছে",
     "outOfStock": "স্টক বহির্ভূত",
+    "unavailable": "অনুপলব্ধ",
     "addToCart": "কার্টে যোগ করুন",
     "addToWishlist": "ইচ্ছা তালিকায় যোগ করুন",
     "removeFromWishlist": "ইচ্ছা তালিকা থেকে সরান",
@@ -192,7 +194,8 @@
     "star": "স্টার",
     "stars": "স্টার",
     "averageRatingLabel": "গড় রেটিং",
-    "loginToOrder": "অর্ডারের জন্য লগইন"
+    "loginToOrder": "অর্ডারের জন্য লগইন",
+    "noMoreProducts": "আপনি সব পণ্য দেখেছেন"
   },
   "cart": {
     "cart": "কার্ট",
@@ -210,7 +213,8 @@
     "clearCart": "কার্ট সাফ করুন",
     "removeItem": "আইটেম সরান",
     "quantity": "পরিমাণ",
-    "inCart": "কার্টে"
+    "inCart": "কার্টে",
+    "invalidItemsWarning": "আপনার কার্টে কিছু আইটেম স্টক বহির্ভূত বা অনুপলব্ধ। আগে বাড়ানোর আগে সেগুলি সরিয়ে নিন।"
   },
   "wishlist": {
     "wishlist": "ইচ্ছা তালিকা",
