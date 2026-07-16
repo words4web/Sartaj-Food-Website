@@ -31,7 +31,8 @@
     "somethingWentWrong": "Something went wrong. Please try again.",
     "add": "Add",
     "recentSearches": "Recent Searches",
-    "clearAll": "Clear All"
+    "clearAll": "Clear All",
+    "invalidCartItems": "Please remove out-of-stock or unavailable items from your cart before checking out."
   },
   "auth": {
     "login": "Login",
@@ -156,6 +157,7 @@
     "discount": "Discount",
     "inStock": "In Stock",
     "outOfStock": "Out of Stock",
+    "unavailable": "Unavailable",
     "addToCart": "Add to Cart",
     "addToWishlist": "Add to Wishlist",
     "removeFromWishlist": "Remove from Wishlist",
@@ -192,7 +194,8 @@
     "star": "star",
     "stars": "stars",
     "averageRatingLabel": "Average Rating",
-    "loginToOrder": "Login to Order"
+    "loginToOrder": "Login to Order",
+    "noMoreProducts": "You have viewed all products"
   },
   "cart": {
     "cart": "Cart",
@@ -210,7 +213,8 @@
     "clearCart": "Clear Cart",
     "removeItem": "Remove Item",
     "quantity": "Quantity",
-    "inCart": "in cart"
+    "inCart": "in cart",
+    "invalidItemsWarning": "Your cart has out-of-stock or unavailable items. Please remove them before proceeding."
   },
   "wishlist": {
     "wishlist": "Wishlist",

@@ -31,7 +31,8 @@
     "somethingWentWrong": "何か問題が発生しました。もう一度お試しください。",
     "add": "追加",
     "recentSearches": "最近の検索",
-    "clearAll": "すべて削除"
+    "clearAll": "すべて削除",
+    "invalidCartItems": "チェックアウト前に在庫切れまたは購入不可の商品をカートから削除してください。"
   },
   "auth": {
     "login": "ログイン",
@@ -156,6 +157,7 @@
     "discount": "割引",
     "inStock": "在庫あり",
     "outOfStock": "在庫なし",
+    "unavailable": "購入不可",
     "addToCart": "カートに追加",
     "addToWishlist": "ウィッシュリストに追加",
     "removeFromWishlist": "ウィッシュリストから削除",
@@ -192,7 +194,8 @@
     "star": "星",
     "stars": "星",
     "averageRatingLabel": "平均評価",
-    "loginToOrder": "ログインして注文"
+    "loginToOrder": "ログインして注文",
+    "noMoreProducts": "すべての商品を表示しました"
   },
   "cart": {
     "cart": "カート",
@@ -210,7 +213,8 @@
     "clearCart": "カートをクリア",
     "removeItem": "商品を削除",
     "quantity": "数量",
-    "inCart": "カートに入っています"
+    "inCart": "カートに入っています",
+    "invalidItemsWarning": "カートに在庫切れまたは購入不可の商品があります。先に進む前に削除してください。"
   },
   "wishlist": {
     "wishlist": "ウィッシュリスト",

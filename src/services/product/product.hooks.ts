@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { productService } from "./product.service";
 
 export const useGetFilteredProducts = (params?: {
@@ -57,6 +57,36 @@ export const useGetProductsByCategory = (
         products: response.data?.data || [],
         meta: response.data?.meta || { total: 0, page: 1, limit: 12 },
       };
+    },
+  });
+};
+
+export const useGetInfiniteProductsByCategory = (
+  categoryId?: string,
+  params?: { search?: string; limit?: number },
+) => {
+  return useInfiniteQuery({
+    queryKey: ["products", "category", "infinite", categoryId, params],
+    queryFn: async ({ pageParam = 1 }) => {
+      const queryParams = { ...params, page: pageParam };
+      if (!categoryId || categoryId === "all") {
+        const response = await productService.getAllProducts(queryParams);
+        return {
+          products: response?.data?.data || [],
+          meta: response?.data?.meta || { total: 0, page: pageParam, limit: 12 },
+        };
+      }
+      const response = await productService.getProductsByCategory(categoryId, queryParams);
+      return {
+        products: response?.data?.data || [],
+        meta: response?.data?.meta || { total: 0, page: pageParam, limit: 12 },
+      };
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { page, limit, total } = lastPage.meta;
+      const totalPages = Math.ceil(total / limit);
+      return page < totalPages ? page + 1 : undefined;
     },
   });
 };

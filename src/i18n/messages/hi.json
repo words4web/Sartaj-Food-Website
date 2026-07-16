@@ -31,7 +31,8 @@
     "somethingWentWrong": "कुछ गलत हो गया। कृपया फिर से प्रयास करें।",
     "add": "जोड़ें",
     "recentSearches": "हाल की खोजें",
-    "clearAll": "सभी साफ़ करें"
+    "clearAll": "सभी साफ़ करें",
+    "invalidCartItems": "चेकआउट से पहले अनुपलब्ध या स्टॉक से बाहर आइटम हटाएं।"
   },
   "auth": {
     "login": "लॉगिन",
@@ -156,6 +157,7 @@
     "discount": "छूट",
     "inStock": "स्टॉक में",
     "outOfStock": "स्टॉक से बाहर",
+    "unavailable": "अनुपलब्ध",
     "addToCart": "कार्ट में जोड़ें",
     "addToWishlist": "विशलिस्ट में जोड़ें",
     "removeFromWishlist": "विशलिस्ट से हटाएं",
@@ -192,7 +194,8 @@
     "star": "स्टार",
     "stars": "स्टार",
     "averageRatingLabel": "औसत रेटिंग",
-    "loginToOrder": "ऑर्डर के लिए लॉगिन"
+    "loginToOrder": "ऑर्डर के लिए लॉगिन",
+    "noMoreProducts": "आपने सभी उत्पाद देख लिए हैं"
   },
   "cart": {
     "cart": "कार्ट",
@@ -210,7 +213,8 @@
     "clearCart": "कार्ट साफ़ करें",
     "removeItem": "आइटम हटाएं",
     "quantity": "मात्रा",
-    "inCart": "कार्ट में"
+    "inCart": "कार्ट में",
+    "invalidItemsWarning": "आपकी कार्ट में कुछ आइटम उपलब्ध नहीं हैं। आगे बढ़ने से पहले उन्हें हटाएं।"
   },
   "wishlist": {
     "wishlist": "विशलिस्ट",

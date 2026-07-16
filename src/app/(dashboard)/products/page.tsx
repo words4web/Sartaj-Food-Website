@@ -10,12 +10,11 @@ import { CategoryCardSkeleton } from "@/components/skeletons/CategorySkeleton";
 import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
 import { CommonError } from "@/components/ui/common-error";
 import { useGetCategories } from "@/services/category/category.hooks";
-import { useGetProductsByCategory } from "@/services/product/product.hooks";
-import { ICategory, IProduct } from "@/types/product/product.types";
+import { useGetInfiniteProductsByCategory } from "@/services/product/product.hooks";
+import { ICategory } from "@/types/product/product.types";
 import { AuthLoadingOverlay } from "@/components/common/AuthLoadingOverlay";
 import { ROUTES } from "@/constants/routes";
 import { getLocalizedValue } from "@/utils/product/product.utils";
-import { PaginationControls } from "@/components/common/PaginationControls";
 
 function ProductsContent() {
   const t = useTranslations();
@@ -24,7 +23,6 @@ function ProductsContent() {
   const activeCategoryId = searchParams.get("category") || "all";
   const activeSubCategoryId = searchParams.get("subcategory") || "";
   const searchQuery = searchParams.get("search") || "";
-  const page = Number(searchParams.get("page") || "1");
   const limit = 32;
 
   const {
@@ -88,14 +86,79 @@ function ProductsContent() {
   const queryCategoryId = activeSubCategoryId || activeCategoryId;
 
   const {
-    data = { products: [], meta: { total: 0, page: 1, limit: 12 } },
+    data,
     isLoading: isProductsLoading,
     error: productsError,
     refetch: refetchProducts,
-  } = useGetProductsByCategory(queryCategoryId, { page, limit, search: searchQuery });
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetInfiniteProductsByCategory(queryCategoryId, { limit, search: searchQuery });
 
-  const products: IProduct[] = data?.products;
-  const meta = data?.meta;
+  const products = useMemo(() => {
+    return data?.pages?.flatMap((page) => page?.products) || [];
+  }, [data]);
+
+  const bottomLoadRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const fetchNextPageRef = useRef(fetchNextPage);
+  const hasNextPageRef = useRef(hasNextPage);
+  const isFetchingNextPageRef = useRef(isFetchingNextPage);
+  const isProductsLoadingRef = useRef(isProductsLoading);
+
+  fetchNextPageRef.current = fetchNextPage;
+  hasNextPageRef.current = hasNextPage;
+  isFetchingNextPageRef.current = isFetchingNextPage;
+  isProductsLoadingRef.current = isProductsLoading;
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        const isAnyIntersecting = entries?.some((entry) => entry?.isIntersecting);
+        if (
+          isAnyIntersecting &&
+          hasNextPageRef.current &&
+          !isFetchingNextPageRef.current &&
+          !isProductsLoadingRef.current
+        ) {
+          fetchNextPageRef.current();
+        }
+      },
+      {
+        rootMargin: "400px",
+        threshold: 0.01,
+      },
+    );
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const triggerEl = document.getElementById("infinite-scroll-trigger");
+    const bottomEl = bottomLoadRef.current;
+
+    if (triggerEl && observerRef.current) {
+      observerRef.current.observe(triggerEl);
+    }
+    if (bottomEl && observerRef.current) {
+      observerRef.current.observe(bottomEl);
+    }
+
+    return () => {
+      if (triggerEl && observerRef.current) {
+        observerRef.current.unobserve(triggerEl);
+      }
+      if (bottomEl && observerRef.current) {
+        observerRef.current.unobserve(bottomEl);
+      }
+    };
+  }, [products?.length]);
 
   const categoriesList = useMemo(() => {
     const allCategory: ICategory = {
@@ -118,17 +181,9 @@ function ProductsContent() {
     return currentCategory?.subCategories || [];
   }, [currentCategory]);
 
-  const totalPages = Math.ceil((meta?.total || 0) / (meta?.limit || limit));
-
-  const createPageUrl = (pageNumber: number) => {
-    const params = new URLSearchParams(searchParams?.toString());
-    params.set("page", pageNumber?.toString());
-    return ROUTES.PRODUCTS_WITH_QUERY(params?.toString());
-  };
-
   const createSubcategoryUrl = (subId?: string) => {
     const params = new URLSearchParams(searchParams?.toString());
-    params.set("page", "1");
+    params.delete("page");
     if (subId) {
       params.set("subcategory", subId);
     } else {
@@ -259,21 +314,41 @@ function ProductsContent() {
             ) : (
               <div className="space-y-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {products?.map((product) => (
-                    <ProductCard key={product?.id || product?._id} product={product} />
-                  ))}
+                  {products?.map((product, index) => {
+                    const isTriggerIndex = index === Math.max(0, products?.length - 16);
+                    return (
+                      <div
+                        key={product?.id || product?._id}
+                        id={isTriggerIndex ? "infinite-scroll-trigger" : undefined}
+                        className="h-full w-full"
+                      >
+                        <ProductCard product={product} />
+                      </div>
+                    );
+                  })}
                 </div>
 
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <div className="flex justify-center pt-4 border-t border-border/60">
-                    <PaginationControls
-                      totalPages={totalPages}
-                      currentPage={page}
-                      createPageUrl={createPageUrl}
+                {/* Loading more skeletons */}
+                {isFetchingNextPage && (
+                  <div className="mt-6">
+                    <ProductGridSkeleton
+                      count={4}
+                      columnsClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                     />
                   </div>
                 )}
+
+                {/* End of list indicator */}
+                {!hasNextPage && products?.length > 0 && (
+                  <div className="flex justify-center py-6 border-t border-border/40">
+                    <span className="text-sm font-semibold text-muted-foreground/60 bg-muted/30 border border-border/40 rounded-full px-5 py-2 select-none">
+                      ✨ {t("products.noMoreProducts")}
+                    </span>
+                  </div>
+                )}
+
+                {/* Fallback bottom observer and spacing element */}
+                <div ref={bottomLoadRef} className="h-4" />
               </div>
             )}
           </div>

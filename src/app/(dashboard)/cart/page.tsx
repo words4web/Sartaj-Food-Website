@@ -27,6 +27,17 @@ export default function CartPage() {
 
   const subtotal = cart?.subtotal || 0;
 
+  const hasInvalidCartItems = cartItems?.some((item) => {
+    const p = item?.product;
+
+    if (!p) return true;
+    return (
+      p?.stockStatus === "OUT_OF_STOCK" ||
+      (p?.stockQuantity !== undefined && p?.stockQuantity <= 0) ||
+      p?.isActive === false
+    );
+  });
+
   if (isLoading) {
     return <CartSkeleton />;
   }
@@ -77,10 +88,18 @@ export default function CartPage() {
                 </span>
               </div>
 
+              {hasInvalidCartItems && (
+                <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 text-destructive text-xs font-semibold rounded-xl leading-relaxed">
+                  ⚠️{" "}
+                  {t("cart.invalidItemsWarning") ||
+                    "Please remove out-of-stock or unavailable items from your cart before proceeding."}
+                </div>
+              )}
+
               <Button
                 className="w-full rounded-xl font-bold"
                 size="lg"
-                disabled={cartItems?.length === 0}
+                disabled={cartItems?.length === 0 || hasInvalidCartItems}
                 onClick={() => router.push(ROUTES.CHECKOUT)}
               >
                 {t("cart.proceedToCheckout")}

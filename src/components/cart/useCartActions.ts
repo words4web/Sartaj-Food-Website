@@ -36,7 +36,8 @@ export function useCartActions(product: IProduct) {
 
   const isOutOfStock =
     product?.stockStatus === STOCK_STATUSES.OUT_OF_STOCK ||
-    (product?.stockQuantity !== undefined && product?.stockQuantity <= 0);
+    (product?.stockQuantity !== undefined && product?.stockQuantity <= 0) ||
+    product?.isActive === false;
   const maxStock = product?.stockQuantity ?? 99;
 
   const guardedSyncRef = useRef(() => {});

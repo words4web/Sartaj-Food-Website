@@ -55,6 +55,7 @@ export interface IProduct {
   };
   hasReviewed?: boolean;
   isWishListed?: boolean;
+  isActive?: boolean;
 }
 
 export interface ICategory {

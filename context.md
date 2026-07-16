@@ -168,6 +168,19 @@
   - Integrated `CheckoutGiftSelection` into [`checkout/page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/checkout/page.tsx>) between the delivery schedule card and the order notes textarea. The selected gift's ID is sent as `giftProductId` in the create-order mutation payload.
   - Added `giftProductId?: string` to [`ICreateOrderBody`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/types/order.types.ts) in `order.types.ts` to resolve a TypeScript "unknown property" compile error.
   - Added `chooseFreeGift`, `chooseFreeGiftDesc`, and `free` translation keys across all 5 locale files.
+- **Infinite Scroll Migration on Catalog**:
+  - Refactored the Products catalog page ([`products/page.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/products/page.tsx>)) to implement an infinite scroll grid, replacing page-number pagination.
+  - Added a new dynamic React Query hook `useGetInfiniteProductsByCategory` inside [`product.hooks.ts`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/services/product/product.hooks.ts).
+  - Implemented a dual-observer trigger in the list: an early trigger card at `products.length - 16` (`id="infinite-scroll-trigger"`) to fetch next pages in advance, and a fallback spacer (`bottomLoadRef`) for fast scrollbar drags.
+  - Synchronized mutable fetch state refs (`hasNextPageRef`, `isFetchingNextPageRef`, etc.) during the component's render phase to resolve render-race conditions. Created a stable, mount-only `IntersectionObserver` instance to prevent loop API triggers when staying at the bottom.
+  - Disabled browser automatic scroll anchoring by applying `overflowAnchor: "none"` styles to the list, skeleton loader, and bottom spacer wrappers to prevent scroll jumps and item skipping when new products are appended.
+  - Conditionally hid the global `<Footer />` inside [`layout.tsx`](<file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/app/(dashboard)/layout.tsx>) on the `/products` path to optimize infinite scroll UX.
+- **Product Card Flip Side Scroll Containment**:
+  - Re-designed the back face of the common [`ProductCard.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/common/ProductCard.tsx) to make only the description text scrollable: the product name and description label are rendered as fixed static elements, and the description content paragraph is nested in an `overflow-y-auto no-scrollbar` block. Removed the weight display.
+- **Mobile Marquee Auto-Scroll**:
+  - Enabled the marquee auto-scroll loop animation on mobile screen sizes in [`CategoryMarqueeStrip.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/layouts/CategoryMarqueeStrip.tsx) by removing the `isDesktop` layout guard and duplicating marquee items on all devices. Swiping dynamically pauses the marquee animation during user touches.
+- **Redux Store Theme State Type Correction**:
+  - Updated [`localeSlice.ts`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/lib/store/localeSlice.ts) to type-bind the theme state to the global `Theme` type from `@/lib/themes` instead of a restricted 4-theme union, resolving 5 TypeScript compilation errors across the website project and enabling all 17 custom themes.
 
 ## Next Steps / Outstanding Bugs
 
