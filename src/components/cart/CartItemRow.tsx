@@ -57,7 +57,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
           {/* Quantity stepper + remove button (single hook instance) */}
           {product && (
             <div className="w-fit shrink-0">
-              <CartActions product={product} mode="card" showRemoveButton />
+              <CartActions product={product} mode="cart-page" showRemoveButton />
             </div>
           )}
 

@@ -65,7 +65,7 @@ export default function CartPage() {
                   <ShoppingCart className="h-12 w-12 text-muted-foreground/40" />
                   <p className="text-muted-foreground text-base">{t("cart.emptyCart")}</p>
                   <Button variant="default" asChild className="rounded-xl">
-                    <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping")}</Link>
+                    <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShopping")}</Link>
                   </Button>
                 </div>
               )}
@@ -106,7 +106,7 @@ export default function CartPage() {
               </Button>
 
               <Button variant="link" className="w-full mt-2 text-sm" asChild>
-                <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping")}</Link>
+                <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShopping")}</Link>
               </Button>
             </div>
           </div>

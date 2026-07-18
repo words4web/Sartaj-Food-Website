@@ -118,20 +118,20 @@ export function CartActions({
     );
   }
 
-  if (mode === "card") {
+  if (mode === "cart-page") {
     if (isInCart) {
       return (
         <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center justify-center gap-1 sm:justify-between sm:gap-0 w-full bg-primary text-primary-foreground rounded-xl h-7 sm:h-8 px-0.5 sm:px-1 shadow-sm transition-all duration-200">
+          <div className="flex items-center justify-between w-24 sm:w-28 bg-primary text-primary-foreground rounded-xl h-8 px-1 sm:px-1.5 shadow-sm transition-all duration-200">
             <Button
               variant="ghost"
               size="icon-sm"
               onClick={handleDecrement}
-              className="h-5 w-5 sm:h-6 sm:w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all flex items-center justify-center shrink-0"
+              className="h-6 w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all flex items-center justify-center shrink-0"
             >
-              <Minus className="h-2.5 w-2.5 sm:h-3 sm:w-3 stroke-[2.5]" />
+              <Minus className="h-3 w-3 stroke-[2.5]" />
             </Button>
-            <span className="text-[10px] sm:text-xs font-extrabold tabular-nums min-w-[12px] sm:min-w-[16px] text-center select-none">
+            <span className="text-xs sm:text-sm font-extrabold tabular-nums min-w-[16px] sm:min-w-[20px] text-center select-none">
               {quantityInCart}
             </span>
             <Button
@@ -139,9 +139,51 @@ export function CartActions({
               size="icon-sm"
               onClick={handleIncrement}
               disabled={quantityInCart >= maxStock}
-              className="h-5 w-5 sm:h-6 sm:w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center shrink-0"
+              className="h-6 w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center shrink-0"
             >
-              <Plus className="h-2.5 w-2.5 sm:h-3 sm:w-3 stroke-[2.5]" />
+              <Plus className="h-3 w-3 stroke-[2.5]" />
+            </Button>
+          </div>
+          {showRemoveButton && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleRemove}
+              title={t("cart.removeItem") || "Remove"}
+              className="h-9 w-9 shrink-0 text-destructive hover:bg-destructive/10 rounded-lg active:scale-95 transition-all"
+            >
+              <Trash2 className="h-4.5 w-4.5" />
+            </Button>
+          )}
+        </div>
+      );
+    }
+  }
+
+  if (mode === "card") {
+    if (isInCart) {
+      return (
+        <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center justify-between w-full bg-primary text-primary-foreground rounded-xl h-8 px-1 sm:px-2 shadow-sm transition-all duration-200">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={handleDecrement}
+              className="h-6 w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all flex items-center justify-center shrink-0 px-8 sm:px-0"
+            >
+              <Minus className="h-3 w-3 stroke-[2.5]" />
+            </Button>
+            <span className="text-sm sm:text-base font-extrabold tabular-nums min-w-[24px] text-center select-none">
+              {quantityInCart}
+            </span>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={handleIncrement}
+              disabled={quantityInCart >= maxStock}
+              className="h-6 w-6 rounded-lg cursor-pointer text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground active:scale-90 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center shrink-0 px-8 sm:px-0"
+            >
+              <Plus className="h-3 w-3 stroke-[2.5]" />
             </Button>
           </div>
           {showRemoveButton && (

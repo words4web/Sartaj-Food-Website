@@ -18,8 +18,8 @@ export default function WishlistPage() {
   const products: IProduct[] = wishlist?.products || [];
 
   return (
-    <main className="relative z-10 min-h-screen bg-muted/30 py-6 sm:py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main className="relative z-10 min-h-screen bg-muted/30 py-4 sm:py-10">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-6">
           <Link
@@ -32,14 +32,13 @@ export default function WishlistPage() {
         </div>
 
         {/* Header Block */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-border/40">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground flex items-center gap-3">
-              <Heart className="h-8 w-8 sm:h-9 sm:w-9 text-red-500 fill-red-500 animate-pulse duration-1000" />
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
               {t("wishlist.title") || "My Wishlist"}
             </h1>
             {products?.length > 0 && (
-              <p className="text-sm sm:text-base text-muted-foreground mt-2 font-medium">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-medium">
                 {t("wishlist.itemsCount", { count: products?.length })}
               </p>
             )}
@@ -48,11 +47,12 @@ export default function WishlistPage() {
             <Button
               asChild
               variant="outline"
-              className="rounded-xl font-semibold gap-2 border-primary/20 hover:bg-primary/5 hover:text-primary transition-all self-start md:self-auto"
+              size="sm"
+              className="rounded-xl font-semibold gap-1.5 border-border hover:bg-muted hover:text-foreground transition-all self-start sm:self-auto h-9"
             >
               <Link href={ROUTES.PRODUCTS()}>
                 <ShoppingBag className="h-4 w-4" />
-                {t("cart.continueShipping") || "Continue Shopping"}
+                <span>{t("cart.continueShopping") || "Continue Shopping"}</span>
               </Link>
             </Button>
           )}
@@ -102,7 +102,7 @@ export default function WishlistPage() {
           </div>
         ) : (
           /* Grid list direct rendering */
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6">
             {products?.map((product) => (
               <ProductCard key={product._id || product.id} product={product} />
             ))}

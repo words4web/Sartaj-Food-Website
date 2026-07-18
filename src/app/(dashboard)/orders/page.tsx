@@ -84,7 +84,7 @@ export default function OrdersPage() {
                   : "You don't have any cancelled orders."}
             </p>
             <Button asChild className="rounded-xl px-6 h-11 font-bold shadow-md hover:shadow-lg">
-              <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShipping") || "Start Shopping"}</Link>
+              <Link href={ROUTES.PRODUCTS()}>{t("cart.continueShopping") || "Start Shopping"}</Link>
             </Button>
           </div>
         ) : (
