@@ -101,10 +101,9 @@ export const useGetDiscountedProducts = (params?: { page?: number; limit?: numbe
   });
 };
 
-export const useGetGiftProducts = (cartItems?: any[]) => {
-  const cartItemIds = cartItems?.map((i) => i.productId).join(",") || "";
+export const useGetGiftProducts = () => {
   return useQuery({
-    queryKey: ["products", "gifts", cartItemIds],
+    queryKey: ["products", "gifts"],
     queryFn: async () => {
       const response = await productService.getGiftProducts();
       return response.data?.data || [];

@@ -32,7 +32,9 @@
     "add": "追加",
     "recentSearches": "最近の検索",
     "clearAll": "すべて削除",
-    "invalidCartItems": "チェックアウト前に在庫切れまたは購入不可の商品をカートから削除してください。"
+    "invalidCartItems": "チェックアウト前に在庫切れまたは購入不可の商品をカートから削除してください。",
+    "marqueeRecommendation": "💡 混雑時の配達遅延を避けるため、早めのご注文をおすすめします！ご希望の配達日時を確保するためにお早めにご予約ください。 💡",
+    "freeDeliveryMsg": "✨ ¥{amount}以上のご注文で送料無料！ ✨"
   },
   "auth": {
     "login": "ログイン",

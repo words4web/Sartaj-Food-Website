@@ -105,7 +105,7 @@ export default function OrderDetailPage({ params }: OrderDetailPageProps) {
           couponCode={order?.couponCode}
         />
 
-        <OrderDetailItems items={order?.items} />
+        <OrderDetailItems items={order?.items} giftProduct={order?.giftProduct} />
 
         <OrderCancelAlert
           status={order?.status}

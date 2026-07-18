@@ -46,7 +46,7 @@ function nowJSTParts(): {
 }
 
 /**
- * Returns up to 3 upcoming valid delivery dates (non-Sunday).
+ * Returns up to 3 upcoming valid delivery dates (including Sundays).
  * Matches backend `getValidDeliveryDates()`.
  */
 export function getValidDeliveryDates(prefecture?: string): string[] {
@@ -75,14 +75,9 @@ export function getValidDeliveryDates(prefecture?: string): string[] {
   let cursor = new Date(Date.UTC(year, month - 1, day)); // midnight UTC = today
   let currentOffset = 0;
 
-  // We loop to collect enough upcoming days (excluding Sundays) after our minOffsetDays
+  // We loop to collect enough upcoming days after our minOffsetDays
   while (dates.length < 3 && currentOffset < 15) {
-    const weekdayInJST = new Intl.DateTimeFormat("en-US", {
-      timeZone: JAPAN_TZ,
-      weekday: "short",
-    }).format(cursor);
-
-    if (weekdayInJST !== "Sun" && currentOffset >= minOffsetDays) {
+    if (currentOffset >= minOffsetDays) {
       const y = cursor.getUTCFullYear();
       const m = String(cursor.getUTCMonth() + 1).padStart(2, "0");
       const d = String(cursor.getUTCDate()).padStart(2, "0");

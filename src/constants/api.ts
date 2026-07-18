@@ -118,7 +118,10 @@ export const API_ROUTES = {
   // Theme
   THEME: {
     GET_ACTIVE: "/admin/theme/active",
-    GET_ALL: "/admin/theme",
+  },
+  // Config
+  CONFIG: {
+    GET: "/customer/config",
   },
 } as const;
 

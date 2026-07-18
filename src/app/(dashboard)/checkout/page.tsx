@@ -111,17 +111,6 @@ export default function CheckoutPage() {
     }
   }, [searchParams, queryClient, t, router]);
 
-  useEffect(() => {
-    if (selectedGiftId && gifts.length > 0) {
-      const isStillAvailable = gifts.some((g) => g._id === selectedGiftId);
-      if (!isStillAvailable) {
-        setSelectedGiftId("");
-      }
-    } else if (selectedGiftId && gifts.length === 0 && !giftsLoading) {
-      setSelectedGiftId("");
-    }
-  }, [gifts, selectedGiftId, giftsLoading]);
-
   const {
     data: cart,
     isLoading: cartLoading,
@@ -135,7 +124,23 @@ export default function CheckoutPage() {
     refetch: refetchAddresses,
   } = useGetAddresses();
   const { data: publicCoupons = [], isLoading: couponsLoading } = useGetPublicCoupons();
-  const { data: gifts = [], isLoading: giftsLoading } = useGetGiftProducts(cart?.items);
+  const { data: gifts = [], isLoading: giftsLoading, refetch: refetchGifts } = useGetGiftProducts();
+
+  const cartItemIds = cart?.items?.map((i: any) => i.productId).join(",") ?? "";
+  useEffect(() => {
+    if (cart) refetchGifts();
+  }, [cartItemIds]);
+
+  useEffect(() => {
+    if (selectedGiftId && gifts?.length > 0) {
+      const isStillAvailable = gifts?.some((g: any) => g?._id === selectedGiftId);
+      if (!isStillAvailable) {
+        setSelectedGiftId("");
+      }
+    } else if (selectedGiftId && gifts?.length === 0 && !giftsLoading) {
+      setSelectedGiftId("");
+    }
+  }, [gifts, selectedGiftId, giftsLoading]);
 
   const createOrderMutation = useCreateOrder();
 
