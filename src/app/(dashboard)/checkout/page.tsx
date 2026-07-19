@@ -123,12 +123,19 @@ export default function CheckoutPage() {
     isError: addressesError,
     refetch: refetchAddresses,
   } = useGetAddresses();
-  const { data: publicCoupons = [], isLoading: couponsLoading } = useGetPublicCoupons();
+  const {
+    data: publicCoupons = [],
+    isLoading: couponsLoading,
+    refetch: refetchCoupons,
+  } = useGetPublicCoupons();
   const { data: gifts = [], isLoading: giftsLoading, refetch: refetchGifts } = useGetGiftProducts();
 
   const cartItemIds = cart?.items?.map((i: any) => i.productId).join(",") ?? "";
   useEffect(() => {
-    if (cart) refetchGifts();
+    if (cart) {
+      refetchGifts();
+      refetchCoupons();
+    }
   }, [cartItemIds]);
 
   useEffect(() => {
@@ -369,6 +376,7 @@ export default function CheckoutPage() {
               onToggleWallet={setApplyWallet}
               walletBalance={summary?.walletBalance || 0}
               maxWalletApplicable={summary?.maxWalletApplicable || 0}
+              isAddressSelected={!!selectedAddressId}
             />
             <CheckoutCouponSelection
               appliedCoupon={appliedCoupon}

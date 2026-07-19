@@ -25,7 +25,7 @@ export function OrderDetailSummary({
           <span className="font-semibold text-foreground">¥{subtotal?.toLocaleString()}</span>
         </div>
 
-        {couponCode && (
+        {/* {couponCode && (
           <div className="flex justify-between items-center text-emerald-600 font-medium">
             <span className="flex items-center gap-1.5">
               {t("checkout.couponApplied") || "Coupon Applied"}
@@ -34,7 +34,7 @@ export function OrderDetailSummary({
               </span>
             </span>
           </div>
-        )}
+        )} */}
 
         {priceBreakdown?.map((item) => {
           const isDeduction =

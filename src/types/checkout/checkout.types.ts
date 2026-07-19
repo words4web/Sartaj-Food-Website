@@ -20,6 +20,7 @@ export interface CheckoutWalletSelectionProps {
   onToggleWallet: (apply: boolean) => void;
   walletBalance: number;
   maxWalletApplicable: number;
+  isAddressSelected: boolean;
 }
 
 export interface CheckoutCouponSelectionProps {
