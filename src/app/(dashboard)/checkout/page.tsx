@@ -123,8 +123,31 @@ export default function CheckoutPage() {
     isError: addressesError,
     refetch: refetchAddresses,
   } = useGetAddresses();
-  const { data: publicCoupons = [], isLoading: couponsLoading } = useGetPublicCoupons();
-  const { data: gifts = [], isLoading: giftsLoading } = useGetGiftProducts();
+  const {
+    data: publicCoupons = [],
+    isLoading: couponsLoading,
+    refetch: refetchCoupons,
+  } = useGetPublicCoupons();
+  const { data: gifts = [], isLoading: giftsLoading, refetch: refetchGifts } = useGetGiftProducts();
+
+  const cartItemIds = cart?.items?.map((i: any) => i.productId).join(",") ?? "";
+  useEffect(() => {
+    if (cart) {
+      refetchGifts();
+      refetchCoupons();
+    }
+  }, [cartItemIds]);
+
+  useEffect(() => {
+    if (selectedGiftId && gifts?.length > 0) {
+      const isStillAvailable = gifts?.some((g: any) => g?._id === selectedGiftId);
+      if (!isStillAvailable) {
+        setSelectedGiftId("");
+      }
+    } else if (selectedGiftId && gifts?.length === 0 && !giftsLoading) {
+      setSelectedGiftId("");
+    }
+  }, [gifts, selectedGiftId, giftsLoading]);
 
   const createOrderMutation = useCreateOrder();
 
@@ -353,6 +376,7 @@ export default function CheckoutPage() {
               onToggleWallet={setApplyWallet}
               walletBalance={summary?.walletBalance || 0}
               maxWalletApplicable={summary?.maxWalletApplicable || 0}
+              isAddressSelected={!!selectedAddressId}
             />
             <CheckoutCouponSelection
               appliedCoupon={appliedCoupon}

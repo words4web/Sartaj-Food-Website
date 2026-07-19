@@ -7,7 +7,7 @@ import { ROUTES } from "@/constants/routes";
 import { ThemedImage } from "@/components/common";
 import type { OrderDetailItemsProps } from "@/types/order.types";
 
-export function OrderDetailItems({ items = [] }: OrderDetailItemsProps) {
+export function OrderDetailItems({ items = [], giftProduct }: OrderDetailItemsProps) {
   const t = useTranslations();
 
   return (
@@ -61,6 +61,42 @@ export function OrderDetailItems({ items = [] }: OrderDetailItemsProps) {
           );
         })}
       </div>
+      {giftProduct && (
+        <div className="bg-primary/5 border-t border-border/60 p-4 sm:p-6 flex gap-4 items-center justify-between flex-wrap sm:flex-nowrap">
+          <div className="flex gap-3 sm:gap-4 items-center min-w-0">
+            <div className="h-16 w-16 bg-background border border-border/60 rounded-2xl flex items-center justify-center p-2 shrink-0">
+              <ThemedImage
+                src={giftProduct?.images?.[0]}
+                alt={
+                  typeof giftProduct?.name === "object"
+                    ? giftProduct?.name.en || giftProduct?.name?.ja || "Gift"
+                    : giftProduct?.name
+                }
+                className="max-h-full max-w-full object-contain"
+                fallbackType="product"
+              />
+            </div>
+            <div className="min-w-0">
+              <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-primary border border-primary/20 mb-1">
+                {t("checkout.free") || "FREE GIFT"}
+              </span>
+              <h4 className="font-bold text-foreground text-sm truncate">
+                {typeof giftProduct?.name === "object"
+                  ? giftProduct?.name?.en || giftProduct?.name?.ja || "Gift"
+                  : giftProduct?.name}
+              </h4>
+              {giftProduct?.sku && (
+                <p className="text-[10px] text-muted-foreground mt-0.5">SKU: {giftProduct?.sku}</p>
+              )}
+            </div>
+          </div>
+          <div className="text-right shrink-0">
+            <p className="font-extrabold text-primary text-sm uppercase">
+              {t("checkout.free") || "FREE"}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -193,8 +193,8 @@ function ProductsContent() {
   };
 
   return (
-    <main className="relative z-10 min-h-screen bg-muted/40 py-6 sm:py-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <main className="relative z-10 min-h-screen bg-muted/40 py-4 sm:py-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
           {t("products.products")}
         </h1>
@@ -300,7 +300,7 @@ function ProductsContent() {
             {isProductsLoading ? (
               <ProductGridSkeleton
                 count={16}
-                columnsClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                columnsClass="grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6"
               />
             ) : productsError ? (
               <CommonError
@@ -313,7 +313,7 @@ function ProductsContent() {
               </div>
             ) : (
               <div className="space-y-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6">
                   {products?.map((product, index) => {
                     const isTriggerIndex = index === Math.max(0, products?.length - 16);
                     return (
@@ -333,7 +333,7 @@ function ProductsContent() {
                   <div className="mt-6">
                     <ProductGridSkeleton
                       count={4}
-                      columnsClass="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                      columnsClass="grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6"
                     />
                   </div>
                 )}

@@ -2,7 +2,7 @@ import { Skeleton } from "./Skeleton";
 
 export function ProductCardSkeleton() {
   return (
-    <div className="bg-card rounded-xl border border-border/80 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[420px] overflow-hidden w-full">
+    <div className="bg-card rounded-xl border border-border/80 flex flex-col justify-between h-full min-h-[290px] sm:min-h-[420px] overflow-hidden w-full">
       {/* Image Skeleton */}
       <div className="relative w-full aspect-square bg-muted/40 flex items-center justify-center p-2 sm:p-4 shrink-0">
         <Skeleton className="h-full w-full aspect-square rounded-lg" />
@@ -18,14 +18,14 @@ export function ProductCardSkeleton() {
       </div>
 
       {/* Price & Actions Bottom Skeleton */}
-      <div className="p-3 sm:p-4 flex items-center justify-between gap-2 mt-auto pt-3 border-t border-border/60 bg-card">
+      <div className="p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-auto pt-3 border-t border-border/60 bg-card">
         {/* Price Skeleton */}
         <div className="space-y-1">
           <Skeleton className="h-5 w-16" />
         </div>
 
         {/* Button Skeleton */}
-        <Skeleton className="h-7 sm:h-8 w-20 sm:w-28 rounded-xl shrink-0" />
+        <Skeleton className="h-7 sm:h-8 w-full sm:w-32 rounded-xl shrink-0" />
       </div>
     </div>
   );
@@ -39,7 +39,7 @@ interface ProductGridSkeletonProps {
 
 export function ProductGridSkeleton({
   count = 4,
-  columnsClass = "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10",
+  columnsClass = "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 lg:gap-10",
   scrollable = false,
 }: ProductGridSkeletonProps) {
   if (scrollable) {

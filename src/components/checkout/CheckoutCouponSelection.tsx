@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Tag, ChevronRight, Check, Search, AlertCircle, X, Loader2 } from "lucide-react";
+import { Tag, ChevronRight, Check, Search, AlertCircle, X, Loader2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CheckoutCouponSelectionProps } from "@/types/checkout/checkout.types";
@@ -81,6 +81,9 @@ export function CheckoutCouponSelection({
     (c) => c.code.toUpperCase() === appliedCoupon.toUpperCase(),
   );
 
+  const validCouponsCount = allCoupons?.filter((c) => c?.isValid)?.length || 0;
+  const hasValidCoupons = validCouponsCount > 0;
+
   return (
     <>
       <div className="bg-card rounded-2xl border border-border/60 shadow-sm p-4 space-y-2.5 transition-all duration-300">
@@ -90,6 +93,11 @@ export function CheckoutCouponSelection({
             <h2 className="text-sm font-bold text-foreground">
               {tCoupons("coupons") || "Coupons"}
             </h2>
+            {hasValidCoupons && !appliedCoupon && (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-blue-600 text-white animate-pulse">
+                Offers Available
+              </span>
+            )}
           </div>
         </div>
 
@@ -128,25 +136,44 @@ export function CheckoutCouponSelection({
           <button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="w-full text-left group border border-dashed border-border/80 hover:border-primary/40 hover:bg-primary/[0.01] rounded-xl p-3 flex items-center justify-between gap-3 cursor-pointer transition-all duration-200"
+            className={`w-full text-left group border rounded-xl p-3 flex items-center justify-between gap-3 cursor-pointer transition-all duration-300 relative overflow-hidden ${
+              hasValidCoupons
+                ? "border-primary/30 bg-gradient-to-r from-primary/[0.03] via-blue-500/[0.03] to-primary/[0.005] hover:border-primary/50 hover:from-primary/[0.05] hover:via-blue-500/[0.05]"
+                : "border-dashed border-border/80 hover:border-primary/40 hover:bg-primary/[0.01]"
+            }`}
           >
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 select-none">
+            {hasValidCoupons && (
+              <span className="absolute inset-0 bg-gradient-to-r from-primary/10 via-blue-500/5 to-transparent opacity-25 animate-pulse duration-[3000ms] pointer-events-none" />
+            )}
+
+            <div className="flex items-center gap-3 min-w-0 relative z-10">
+              <div
+                className={`h-9 w-9 rounded-full flex items-center justify-center shrink-0 select-none transition-all duration-300 ${
+                  hasValidCoupons
+                    ? "bg-primary/20 text-primary relative"
+                    : "bg-primary/10 text-primary"
+                }`}
+              >
                 <Tag className="h-4.5 w-4.5" />
+                {hasValidCoupons && (
+                  <Sparkles className="h-3 w-3 absolute -top-0.5 -right-0.5 text-blue-500 animate-bounce duration-[2000ms]" />
+                )}
               </div>
               <div className="min-w-0">
-                <p className="font-bold text-foreground text-xs leading-normal">
-                  {tCoupons("applyCoupon") || "Apply Coupon"}
-                </p>
+                <div className="flex items-center gap-1.5">
+                  <p className="font-bold text-foreground text-xs leading-normal">
+                    {tCoupons("applyCoupon") || "Apply Coupon"}
+                  </p>
+                </div>
                 <p className="text-[10px] text-muted-foreground mt-0.5 leading-normal font-medium">
-                  {allCoupons?.filter((c) => c?.isValid)?.length > 0
-                    ? `${allCoupons?.filter((c) => c?.isValid)?.length} eligible coupons available`
+                  {hasValidCoupons
+                    ? `${validCouponsCount} eligible coupon(s) available`
                     : "Select or enter promo code"}
                 </p>
               </div>
             </div>
 
-            <ChevronRight className="h-4 w-4 text-muted-foreground/60 group-hover:text-primary transition-colors shrink-0" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground/60 group-hover:text-primary transition-colors shrink-0 relative z-10" />
           </button>
         )}
       </div>

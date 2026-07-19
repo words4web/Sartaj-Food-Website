@@ -10,6 +10,7 @@ import { useFcmLifecycle } from "@/hooks/useFcmLifecycle";
 import { HeaderActions } from "./HeaderActions";
 import { CategoryMarqueeStrip } from "./CategoryMarqueeStrip";
 import { SearchBar } from "./SearchBar";
+import { useTranslations } from "next-intl";
 
 export function Header() {
   const { isAuthenticated } = useAuth();
@@ -19,8 +20,19 @@ export function Header() {
 
   useFcmLifecycle();
 
+  const tTranslate = useTranslations();
+
   return (
     <>
+      <div className="w-full bg-[#1e293b] text-white py-2.5 overflow-hidden border-b border-slate-900/60 text-sm font-bold select-none relative z-50">
+        <div className="flex animate-marquee-slow gap-8">
+          <span>{tTranslate("common.marqueeRecommendation")}</span>
+          <span>{tTranslate("common.marqueeRecommendation")}</span>
+          <span>{tTranslate("common.marqueeRecommendation")}</span>
+          <span>{tTranslate("common.marqueeRecommendation")}</span>
+        </div>
+      </div>
+
       {/* Top Header */}
       <header className="sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
         <div className="relative z-40 max-w-7xl mx-auto pl-1 pr-2 sm:px-4 py-3">

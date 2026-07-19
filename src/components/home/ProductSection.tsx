@@ -45,8 +45,8 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
             : title;
 
   return (
-    <section className="py-12 bg-muted/50">
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+    <section className="py-6 sm:py-10 md:py-12 bg-muted/50">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 relative z-10">
         {/* Header */}
         <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{displayTitle}</h2>
@@ -89,7 +89,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
         {isLoading ? (
           <ProductGridSkeleton
             count={skeletonCount}
-            columnsClass="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
+            columnsClass="grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 lg:gap-8"
           />
         ) : isError ? (
           <CommonError onRetry={refetch} message="Could not load products." />
@@ -99,7 +99,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
             <p className="text-muted-foreground text-sm font-medium">{t("common.noResults")}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 lg:gap-8">
             {productsToRender?.map((product, idx) => (
               <div
                 key={product?._id || product?.id}
