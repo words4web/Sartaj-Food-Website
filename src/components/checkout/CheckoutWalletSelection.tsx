@@ -13,6 +13,7 @@ export function CheckoutWalletSelection({
   onToggleWallet,
   walletBalance = 0,
   maxWalletApplicable = 0,
+  isAddressSelected,
 }: CheckoutWalletSelectionProps) {
   const t = useTranslations("checkout");
   const tCommon = useTranslations("common");
@@ -21,7 +22,7 @@ export function CheckoutWalletSelection({
 
   const isWalletEmpty = walletBalance <= 0;
   const applicableAmount = Math.min(walletBalance, maxWalletApplicable);
-  const canUseWallet = applicableAmount > 0;
+  const canUseWallet = isAddressSelected && applicableAmount > 0;
 
   const handleToggle = (checked: boolean) => {
     if (!canUseWallet) return;
@@ -65,13 +66,15 @@ export function CheckoutWalletSelection({
                   : t("wallet") || "Use Wallet Balance"}
               </p>
               <p className="text-[10px] text-muted-foreground mt-0.5 leading-normal font-medium">
-                {isWalletEmpty
-                  ? "Available: ¥0"
-                  : applyWallet
-                    ? `¥${applicableAmount?.toLocaleString()} applied to this order`
-                    : maxWalletApplicable <= 0
-                      ? `Available: ¥${walletBalance?.toLocaleString()} (Not applicable)`
-                      : `Available: ¥${walletBalance?.toLocaleString()} (Max: ¥${applicableAmount?.toLocaleString()})`}
+                {!isAddressSelected
+                  ? t("selectAddressFirstWallet") || "Select a delivery address first"
+                  : isWalletEmpty
+                    ? "Available: ¥0"
+                    : applyWallet
+                      ? `¥${applicableAmount?.toLocaleString()} applied to this order`
+                      : maxWalletApplicable <= 0
+                        ? `Available: ¥${walletBalance?.toLocaleString()} (Not applicable)`
+                        : `Available: ¥${walletBalance?.toLocaleString()} (Max: ¥${applicableAmount?.toLocaleString()})`}
               </p>
             </div>
           </div>
@@ -97,24 +100,52 @@ export function CheckoutWalletSelection({
             </DialogTitle>
           </DialogHeader>
 
-          <div className="py-6 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 select-none">
-              <Wallet className="h-7 w-7" />
+          <div className="py-5 space-y-5">
+            {/* Visual Icon Header */}
+            <div className="flex flex-col items-center text-center space-y-2">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-1">
+                <Wallet className="h-6 w-6" />
+              </div>
+              <h4 className="text-sm font-bold text-foreground">
+                {t("confirmWalletDebit") || "Confirm Wallet Debit"}
+              </h4>
             </div>
 
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground font-semibold">
-                Available Wallet Balance
-              </p>
-              <p className="text-3xl font-black text-foreground">
-                ¥{walletBalance?.toLocaleString()}
-              </p>
-              <p className="text-xs text-muted-foreground font-medium max-w-xs pt-2">
-                Are you sure you want to use your wallet balance?
-                <span className="text-foreground font-bold">
-                  ¥{applicableAmount?.toLocaleString()}
+            {/* Structured Passbook Card */}
+            <div className="rounded-2xl border border-border/80 bg-muted/20 p-4 space-y-3">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-muted-foreground font-medium">
+                  {t("availableBalance") || "Available Balance"}
                 </span>
-                will be applied to this order.
+                <span className="font-extrabold text-foreground">
+                  ¥{walletBalance?.toLocaleString()}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-xs border-t border-border/60 pt-3">
+                <span className="text-muted-foreground font-medium">
+                  {t("debitAmount") || "Debit Amount"}
+                </span>
+                <span className="font-black text-primary">
+                  -¥{applicableAmount?.toLocaleString()}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-xs border-t border-dashed border-border/80 pt-3">
+                <span className="text-muted-foreground font-medium">
+                  {t("remainingBalance") || "Remaining Balance"}
+                </span>
+                <span className="font-extrabold text-foreground">
+                  ¥{(walletBalance - applicableAmount)?.toLocaleString()}
+                </span>
+              </div>
+            </div>
+
+            {/* Highlighted Warning/Helper note */}
+            <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3">
+              <p className="text-[11px] leading-relaxed text-amber-800 dark:text-amber-300 font-medium">
+                {t.rich("useWalletConfirmMsg", {
+                  amount: applicableAmount?.toLocaleString(),
+                  span: (chunks) => <span className="font-black text-foreground">{chunks}</span>,
+                })}
               </p>
             </div>
           </div>

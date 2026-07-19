@@ -98,7 +98,7 @@ export interface ProductCardProps {
 
 export interface CartActionsProps {
   product: IProduct;
-  mode?: "card" | "detail";
+  mode?: "card" | "detail" | "cart-page";
   showRemoveButton?: boolean;
 }
 

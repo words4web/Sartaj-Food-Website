@@ -147,6 +147,12 @@ export interface OrderDetailItemsProps {
       lineSubtotal?: number;
     };
   }>;
+  giftProduct?: {
+    productId: string;
+    sku?: string;
+    name: string | { [key: string]: string };
+    images?: string[];
+  } | null;
 }
 
 export interface PriceBreakdownItem {
@@ -192,6 +198,12 @@ export interface ICustomerOrder {
   paypalOrderId: string | null;
   paypalCaptureId: string | null;
   expiresAt: string | null;
+  giftProduct?: {
+    productId: string;
+    sku?: string;
+    name: string | { en?: string; ja?: string; [key: string]: any };
+    images?: string[];
+  } | null;
   createdAt: string;
   updatedAt: string;
 }

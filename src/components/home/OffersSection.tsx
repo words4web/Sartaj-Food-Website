@@ -30,8 +30,8 @@ export function OffersSection() {
   }
 
   return (
-    <section className="py-12 bg-muted/50 border-t border-b border-border/40">
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+    <section className="py-6 sm:py-10 md:py-12 bg-muted/50 border-t border-b border-border/40">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 relative z-10">
         {/* Header */}
         <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
@@ -49,12 +49,12 @@ export function OffersSection() {
         {isLoading ? (
           <ProductGridSkeleton
             count={skeletonCount}
-            columnsClass="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
+            columnsClass="grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 lg:gap-8"
           />
         ) : isError ? (
           <CommonError onRetry={refetch} message="Could not load special offers." />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 lg:gap-8">
             {productsToRender?.slice(0, 4)?.map((product: IProduct, idx: number) => (
               <div
                 key={product?._id || product?.id}

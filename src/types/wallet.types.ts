@@ -27,3 +27,16 @@ export interface IWalletState {
   isLoading: boolean;
   error: string | null;
 }
+
+export interface WalletStatsCardsProps {
+  balance: number;
+  total: number;
+  transactionsCount: number;
+  isBalanceLoading: boolean;
+  isTxLoading: boolean;
+}
+
+export interface WalletTransactionListProps {
+  transactions: any[];
+  isTxLoading: boolean;
+}

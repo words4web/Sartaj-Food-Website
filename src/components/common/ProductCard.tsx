@@ -82,9 +82,9 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   };
 
   const renderBottomBar = () => (
-    <div className="p-3 sm:p-4 flex items-center justify-between gap-2 mt-auto pt-3 border-t border-border/60 bg-card z-20">
+    <div className="p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-auto pt-3 border-t border-border/60 bg-card z-20">
       {/* Price */}
-      <div className="flex flex-col min-w-0">
+      <div className="flex flex-row sm:flex-col items-baseline sm:items-start gap-1.5 sm:gap-0 min-w-0">
         <span className="text-base font-black text-foreground">¥{price?.toLocaleString()}</span>
         {isDiscounted && originalPrice && originalPrice > price && (
           <span className="text-xs text-muted-foreground line-through">
@@ -95,7 +95,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
 
       {/* Cart Actions */}
       {product && (
-        <div className="w-20 sm:w-28 shrink-0">
+        <div className="w-full sm:w-32 shrink-0">
           <CartActions product={product} mode="card" />
         </div>
       )}
@@ -103,7 +103,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   );
 
   return (
-    <div className="group relative w-full bg-card rounded-xl border border-border/80 shadow-sm lg:hover:shadow-[0_16px_36px_-8px_color-mix(in_oklch,var(--primary)_15%,transparent)] lg:hover:border-primary/35 lg:hover:scale-[1.01] lg:transition-all lg:duration-300 flex flex-col justify-between overflow-hidden h-full min-h-[380px] sm:min-h-[420px]">
+    <div className="group relative w-full bg-card rounded-xl border border-border/80 shadow-sm lg:hover:shadow-[0_16px_36px_-8px_color-mix(in_oklch,var(--primary)_15%,transparent)] lg:hover:border-primary/35 lg:hover:scale-[1.01] lg:transition-all lg:duration-300 flex flex-col justify-between overflow-hidden h-full min-h-[290px] sm:min-h-[420px]">
       {/* Static Overlays - Badges & Wishlist */}
       {renderBadgesOverlay()}
       {renderWishlistOverlay()}

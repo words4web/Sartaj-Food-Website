@@ -21,6 +21,7 @@ export const ROUTES = {
   PROFILE: "/profile",
   NOTIFICATIONS: "/notifications",
   WISHLIST: "/wishlist",
+  WALLET: "/wallet",
 };
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES];
