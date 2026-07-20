@@ -22,6 +22,8 @@ const ManufacturerCard = memo(function ManufacturerCard({
 }) {
   const name = item?.name || "Brand";
   const image = item?.image || "";
+  const isSartaj = name?.toLowerCase() === "sartaj";
+
   const transformValue = !isDesktop
     ? "none"
     : isVisible
@@ -40,10 +42,21 @@ const ManufacturerCard = memo(function ManufacturerCard({
       }}
       className={
         isDesktop
-          ? "flex flex-col items-center justify-center p-3 sm:p-4 bg-card hover:bg-primary/[0.02] border border-border/80 hover:border-primary/30 rounded-2xl w-full h-full hover:shadow-[0_8px_24px_-8px_color-mix(in_oklch,var(--primary)_10%,transparent)] transition-all duration-300 cursor-pointer transform group/mfg-card"
-          : "flex flex-col items-center justify-center p-3 sm:p-4 bg-card border border-border/80 rounded-2xl w-full h-full cursor-pointer"
+          ? `relative flex flex-col items-center justify-center p-3 sm:p-4 bg-card hover:bg-primary/[0.02] border rounded-2xl w-full h-full hover:shadow-[0_8px_24px_-8px_color-mix(in_oklch,var(--primary)_10%,transparent)] transition-all duration-300 cursor-pointer transform group/mfg-card ${
+              isSartaj
+                ? "border-primary/60 bg-primary/[0.03] shadow-[0_4px_20px_-4px_color-mix(in_oklch,var(--primary)_15%,transparent)]"
+                : "border-border/80 hover:border-primary/30"
+            }`
+          : `relative flex flex-col items-center justify-center p-3 sm:p-4 bg-card border rounded-2xl w-full h-full cursor-pointer ${
+              isSartaj ? "border-primary/60 bg-primary/[0.03]" : "border-border/80"
+            }`
       }
     >
+      {isSartaj && (
+        <span className="absolute -top-2 px-2 py-0.5 text-[8.5px] font-extrabold text-white bg-primary rounded-full shadow-sm uppercase tracking-wider scale-90 z-20">
+          Our Brand
+        </span>
+      )}
       <div
         className={`h-12 w-12 sm:h-16 sm:w-16 mb-2 sm:mb-3 overflow-hidden rounded-full bg-muted/30 border border-border/40 p-1 flex items-center justify-center ${isDesktop ? "transition-transform duration-300 lg:group-hover/mfg-card:scale-110 lg:group-hover/mfg-card:rotate-3" : ""}`}
       >
@@ -72,18 +85,20 @@ export function ManufacturersGrid() {
   const [isDragging, setIsDragging] = useState(false);
   const isDesktop = useIsDesktop();
 
+  const [isTouched, setIsTouched] = useState(false);
+
   const displayItems =
-    isDesktop && manufacturers?.length > 0 ? [...manufacturers, ...manufacturers] : manufacturers;
+    manufacturers?.length > 0 ? [...manufacturers, ...manufacturers] : manufacturers;
 
   useEffect(() => {
     const container = scrollContainerRef.current;
-    if (!container || manufacturers?.length === 0 || !isDesktop) return;
+    if (!container || manufacturers?.length === 0) return;
 
     let animationFrameId: number;
     const speed = 0.7; // adjust auto-scroll speed here
 
     const animate = () => {
-      if (!isHovered && !isDownRef.current) {
+      if (!isHovered && !isDownRef.current && !isTouched) {
         container.scrollLeft += speed;
       }
       animationFrameId = requestAnimationFrame(animate);
@@ -91,15 +106,14 @@ export function ManufacturersGrid() {
 
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [isHovered, manufacturers.length, isDesktop]);
+  }, [isHovered, manufacturers.length, isTouched]);
 
   const handleScroll = () => {
-    if (!isDesktop) return;
     const container = scrollContainerRef.current;
     if (!container || manufacturers?.length === 0) return;
 
     const scrollWidth = container.scrollWidth;
-    const singleSetWidth = scrollWidth / 2; // Divided by 2 to match desktop duplication
+    const singleSetWidth = scrollWidth / 2;
 
     // Warp around seamlessly
     if (container.scrollLeft >= singleSetWidth) {
@@ -173,6 +187,8 @@ export function ManufacturersGrid() {
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovered(true)}
+            onTouchStart={() => setIsTouched(true)}
+            onTouchEnd={() => setIsTouched(false)}
             className={`flex items-center gap-6 sm:gap-8 overflow-x-auto no-scrollbar py-4 px-2 select-none active:cursor-grabbing ${
               isDragging ? "cursor-grabbing" : "cursor-grab"
             }`}
