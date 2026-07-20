@@ -61,6 +61,7 @@ export interface IProduct {
 export interface ICategory {
   id?: string;
   _id?: string;
+  slug?: string;
   name: string | { en?: string; ja?: string; ne?: string; hi?: string; bn?: string };
   description?: string;
   icon?: string;
