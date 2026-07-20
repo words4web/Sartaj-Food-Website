@@ -76,7 +76,7 @@ export function HeroSection() {
             <ThemedImage
               src={slide?.image}
               alt={slide?.title}
-              className="w-full h-full object-contain mix-blend-multiply opacity-85 dark:opacity-90 lg:transition-all lg:duration-1000"
+              className="w-full h-full object-contain mix-blend-multiply lg:transition-all lg:duration-1000"
               emoji="🌾"
               fallbackType="product"
             />
