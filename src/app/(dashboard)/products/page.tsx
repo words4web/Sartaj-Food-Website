@@ -173,7 +173,8 @@ function ProductsContent() {
   // Find active parent category in the categories tree (excluding the virtual "All Products" category)
   const currentCategory = useMemo(() => {
     return categories?.find(
-      (c: ICategory) => c?.id === activeCategoryId || c?._id === activeCategoryId,
+      (c: ICategory) =>
+        c?.slug === activeCategoryId || c?.id === activeCategoryId || c?._id === activeCategoryId,
     );
   }, [categories, activeCategoryId]);
 
@@ -277,8 +278,11 @@ function ProductsContent() {
                   {t("common.all") || "All"}
                 </Link>
                 {subCategories?.map((subCat: ICategory) => {
-                  const subCatId = subCat?.id || subCat?._id;
-                  const isSubActive = activeSubCategoryId === subCatId;
+                  const subCatId = subCat?.slug || subCat?.id || subCat?._id;
+                  const isSubActive =
+                    activeSubCategoryId === subCatId ||
+                    activeSubCategoryId === subCat?.id ||
+                    activeSubCategoryId === subCat?._id;
                   const subName = getLocalizedValue(subCat?.name, locale);
                   return (
                     <Link

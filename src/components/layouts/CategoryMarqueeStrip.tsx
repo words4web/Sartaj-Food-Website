@@ -118,9 +118,12 @@ export function CategoryMarqueeStrip() {
             className="flex items-center overflow-x-auto no-scrollbar gap-3 sm:gap-4 py-0.5 cursor-grab active:cursor-grabbing w-full"
           >
             {marqueeItems?.map((category: any, idx: number) => {
-              const currentId = category?.id || category?._id;
+              const currentId = category?.slug || category?.id || category?._id;
               const name = getLocalizedValue(category?.name, locale);
-              const isActive = activeCategoryId === currentId;
+              const isActive =
+                activeCategoryId === currentId ||
+                activeCategoryId === category?.id ||
+                activeCategoryId === category?._id;
 
               return (
                 <Link
