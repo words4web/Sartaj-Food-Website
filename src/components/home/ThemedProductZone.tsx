@@ -10,6 +10,7 @@ import { ProductSection } from "@/components/home/ProductSection";
 import { OffersSection } from "@/components/home/OffersSection";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { Testimonials } from "@/components/home/Testimonials";
+import { StoreLocation } from "@/components/home/StoreLocation";
 
 export function ThemedProductZone() {
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
@@ -25,7 +26,11 @@ export function ThemedProductZone() {
     default: "none",
   };
 
-  const gradient = themeGradient[currentTheme] ?? "none";
+  const gradient =
+    currentTheme === "default"
+      ? "none"
+      : themeGradient[currentTheme] ||
+        "radial-gradient(ellipse at 20% 50%, color-mix(in oklch, var(--primary) 12%, transparent) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, color-mix(in oklch, var(--accent) 8%, transparent) 0%, transparent 55%)";
 
   return (
     <div className="relative">
@@ -48,6 +53,7 @@ export function ThemedProductZone() {
         <ProductSection title="Hot Products" badge={PRODUCT_BADGES.HOT} />
         <ManufacturersGrid />
         <Testimonials />
+        <StoreLocation />
       </div>
     </div>
   );

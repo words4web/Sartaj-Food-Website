@@ -45,7 +45,7 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
       );
     } else if (badgeLower === PRODUCT_BADGES.NEW_ARRIVAL || badgeLower === "new") {
       return (
-        <span className="bg-accent-foreground/15 text-accent-foreground border border-accent-foreground/25 backdrop-blur-sm shadow-sm text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+        <span className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 backdrop-blur-sm shadow-sm text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
           {t("home.new")}
         </span>
       );
