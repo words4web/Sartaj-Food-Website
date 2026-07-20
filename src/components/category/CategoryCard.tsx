@@ -17,9 +17,12 @@ export const CategoryCard = memo(function CategoryCard({
   const searchParams = useSearchParams();
 
   const name = getLocalizedValue(category?.name, locale);
-  const currentId = category?.id || category?._id || "all";
+  const currentId = category?.slug || category?.id || category?._id || "all";
   const activeCategoryId = searchParams.get("category") || "all";
-  const isActive = activeCategoryId === currentId;
+  const isActive =
+    activeCategoryId === currentId ||
+    activeCategoryId === category?.id ||
+    activeCategoryId === category?._id;
 
   const params = new URLSearchParams(searchParams?.toString() || "");
   params.set("page", "1");
