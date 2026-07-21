@@ -22,6 +22,7 @@ const ManufacturerCard = memo(function ManufacturerCard({
 }) {
   const name = item?.name || "Brand";
   const image = item?.image || "";
+  console.log(name, " => ", image);
   const isSartaj = name?.toLowerCase() === "sartaj";
 
   const transformValue = !isDesktop
@@ -199,7 +200,7 @@ export function ManufacturersGrid() {
             {displayItems?.map((item: IManufacturer, idx: number) => {
               return (
                 <div
-                  key={`${item.id}-${idx}`}
+                  key={`${item?.id}-${idx}`}
                   className="flex-shrink-0 w-36 sm:w-44 h-28 sm:h-32 transition-transform duration-300 lg:hover:scale-[1.03]"
                 >
                   <ManufacturerCard
