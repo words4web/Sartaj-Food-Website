@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ROUTES } from "@/constants/routes";
 import { ThemedImage } from "@/components/common";
 import { CategoryCardProps } from "@/types/product/product.types";
@@ -14,6 +14,7 @@ export const CategoryCard = memo(function CategoryCard({
   size = "md",
 }: CategoryCardProps) {
   const locale = useLocale();
+  const t = useTranslations();
   const searchParams = useSearchParams();
 
   const name = getLocalizedValue(category?.name, locale);
@@ -25,7 +26,7 @@ export const CategoryCard = memo(function CategoryCard({
     activeCategoryId === category?._id;
 
   const params = new URLSearchParams(searchParams?.toString() || "");
-  params.set("page", "1");
+  params.delete("page");
   params.delete("subcategory");
   if (currentId === "all") {
     params.delete("category");
@@ -68,13 +69,13 @@ export const CategoryCard = memo(function CategoryCard({
         <p
           className={`${subTextClasses} text-muted-foreground lg:group-hover:text-primary-foreground/80 lg:transition-colors lg:duration-300 leading-none`}
         >
-          {category?.productCount} items
+          {category?.productCount} {t("common.items")}
         </p>
       ) : category?.subCategories && category?.subCategories?.length > 0 ? (
         <p
           className={`${subTextClasses} text-muted-foreground lg:group-hover:text-primary-foreground/80 lg:transition-colors lg:duration-300 leading-none`}
         >
-          {category?.subCategories?.length} subs
+          {category?.subCategories?.length} {t("common.subs")}
         </p>
       ) : null}
     </Link>
