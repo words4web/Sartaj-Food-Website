@@ -88,15 +88,18 @@ export function HeroSection() {
       <div className="hidden lg:block absolute top-[-10%] left-[-5%] w-[550px] h-[550px] rounded-full bg-primary/15 blur-[130px] pointer-events-none lg:animate-orb-drift mix-blend-multiply dark:mix-blend-screen z-10" />
       <div className="hidden lg:block absolute bottom-[-10%] right-[-5%] w-[450px] h-[450px] rounded-full bg-accent/12 blur-[100px] pointer-events-none lg:animate-orb-drift lg:animation-delay-500 mix-blend-multiply dark:mix-blend-screen z-10" />
 
-      {/* Foreground Content Container (Centered & Constrained) */}
-      <div className="absolute inset-0 max-w-7xl mx-auto px-6 sm:px-4 z-20 pointer-events-none">
+      {/* Subtle Gradient Overlay for Text Readability */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/10 to-transparent pointer-events-none z-15" />
+
+      {/* Foreground Content Container */}
+      <div className="absolute inset-0 z-20 pointer-events-none">
         {slides?.map((slide, idx) => {
           const isActive = idx === activeSlide;
 
           return (
             <div
               key={`fg-${slide?.id || idx}`}
-              className={`absolute left-3 min-[375px]:left-4 sm:left-6 md:left-8 bottom-3 min-[375px]:bottom-4 sm:bottom-6 md:bottom-8 w-[calc(100%-1.5rem)] min-[375px]:w-[calc(100%-2rem)] sm:w-auto max-w-lg md:max-w-xl text-left bg-background/60 dark:bg-black/45 backdrop-blur-sm p-2 min-[375px]:p-2.5 min-[480px]:p-3 sm:p-4 md:p-5 rounded-xl min-[375px]:rounded-2xl sm:rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl z-20 pointer-events-auto lg:transition-all lg:duration-1000 lg:ease-in-out ${
+              className={`absolute left-4 bottom-4 sm:left-8 sm:bottom-8 w-[calc(100%-2rem)] sm:w-auto max-w-lg md:max-w-xl text-left z-20 pointer-events-auto lg:transition-all lg:duration-1000 lg:ease-in-out ${
                 isActive
                   ? "opacity-100 lg:scale-100 lg:translate-y-0"
                   : "opacity-0 lg:scale-95 lg:translate-y-4"
@@ -104,7 +107,7 @@ export function HeroSection() {
             >
               {/* Title */}
               <h1
-                className={`text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-foreground drop-shadow-sm leading-tight uppercase lg:transition-all lg:duration-700 lg:delay-300 lg:transform ${
+                className={`text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-sans font-bold tracking-tight text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] leading-tight normal-case lg:transition-all lg:duration-700 lg:delay-300 lg:transform ${
                   isActive ? "opacity-100 lg:translate-y-0" : "opacity-0 lg:translate-y-4"
                 }`}
               >
