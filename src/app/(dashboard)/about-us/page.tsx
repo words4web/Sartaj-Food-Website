@@ -191,7 +191,7 @@ export default function AboutUsPage() {
             <div className="md:col-span-4 flex justify-center">
               <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-card border border-border/80 p-2.5 shadow-md flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
                 <ThemedImage
-                  src="https://sartaj-foods-assets-jp.s3.ap-northeast-1.amazonaws.com/manufacturers/cb120785-0591-4276-87fc-609bc3620c6b.webp"
+                  src="https://www.sartajfoods.jp/sartaj_logo.svg"
                   alt="Sartaj Brand Logo"
                   className="h-full w-full object-contain rounded-full"
                   fallbackType="manufacturer"

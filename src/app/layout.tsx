@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 import { ReduxProvider } from "@/providers/ReduxProvider";
@@ -11,6 +11,11 @@ import "./globals.css";
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "700", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Sartaj Foods - Authentic South Asian Flavors in Japan",
@@ -45,7 +50,7 @@ export default function RootLayout({
   const isMaintenance = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className={`bg-background ${playfair.variable}`}>
       <body className="font-sans antialiased relative min-h-screen">
         {isMaintenance ? (
           <MaintenancePage />
