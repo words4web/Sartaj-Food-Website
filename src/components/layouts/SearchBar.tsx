@@ -56,7 +56,7 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
     if (e) e.preventDefault();
     const query = (customQuery !== undefined ? customQuery : searchValue)?.trim();
     const params = new URLSearchParams(searchParams?.toString());
-    params.set("page", "1");
+    params.delete("page");
     if (query) {
       params.set("search", query);
       saveSearchQuery(query);
@@ -72,9 +72,10 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
 
   const handleClearSearch = () => {
     setSearchValue("");
+    if (!searchParams.get("search")) return;
     const params = new URLSearchParams(searchParams?.toString());
     params.delete("search");
-    params.set("page", "1");
+    params.delete("page");
     router.push(ROUTES.PRODUCTS_WITH_QUERY(params?.toString()));
   };
 
@@ -105,7 +106,7 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
             onChange={(e) => {
               const val = e.target.value;
               setSearchValue(val);
-              if (val?.trim() === "") {
+              if (val?.trim() === "" && searchParams.get("search")) {
                 handleClearSearch();
               }
             }}

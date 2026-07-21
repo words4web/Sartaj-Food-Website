@@ -32,6 +32,8 @@
     "add": "Add",
     "recentSearches": "Recent Searches",
     "clearAll": "Clear All",
+    "items": "items",
+    "subs": "subs",
     "invalidCartItems": "Please remove out-of-stock or unavailable items from your cart before checking out.",
     "marqueeRecommendation": "💡 Recommend ordering soon to avoid delivery slot delays during peak hours! 💡 Book your preferred delivery dates early for guaranteed slots.",
     "freeDeliveryMsg": "✨ Free delivery on orders above ¥{amount}! ✨"

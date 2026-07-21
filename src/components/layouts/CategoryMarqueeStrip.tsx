@@ -26,7 +26,7 @@ export function CategoryMarqueeStrip() {
   // Build route path for category clicks
   const getCategoryHref = (categoryId: string) => {
     const params = new URLSearchParams(searchParams?.toString() || "");
-    params.set("page", "1");
+    params.delete("page");
     params.delete("subcategory");
     if (categoryId === "all") {
       params.delete("category");
