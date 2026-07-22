@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authService } from "./auth.service";
 import { useDispatch } from "react-redux";
 import { setAuthUser, updateAuthUser } from "@/lib/store/authSlice";
@@ -147,5 +147,20 @@ export const useGetProfile = (isAuthenticated: boolean) => {
     enabled: isAuthenticated,
     retry: false,
     refetchOnWindowFocus: true,
+  });
+};
+
+export const useUpdateMobileNumber = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (mobileNumber: string) => authService.updateMobileNumber(mobileNumber),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      toast.success("Mobile number updated successfully");
+    },
+    onError: (error: any) => {
+      const msg = error?.response?.data?.message || error?.message;
+      toast.error(msg || "Failed to update mobile number");
+    },
   });
 };

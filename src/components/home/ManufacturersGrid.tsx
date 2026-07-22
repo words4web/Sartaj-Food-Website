@@ -8,6 +8,8 @@ import { useState, useEffect, useRef, memo } from "react";
 import { useTranslations } from "next-intl";
 import { ThemedImage } from "@/components/common";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 
 const ManufacturerCard = memo(function ManufacturerCard({
   item,
@@ -22,7 +24,6 @@ const ManufacturerCard = memo(function ManufacturerCard({
 }) {
   const name = item?.name || "Brand";
   const image = item?.image || "";
-  console.log(name, " => ", image);
   const isSartaj = name?.toLowerCase() === "sartaj";
 
   const transformValue = !isDesktop
@@ -31,8 +32,11 @@ const ManufacturerCard = memo(function ManufacturerCard({
       ? "translateY(0) scale(1)"
       : "translateY(30px) scale(0.95)";
 
+  const mIdentifier = item?.slug || item?.id;
+
   return (
-    <div
+    <Link
+      href={ROUTES.PRODUCTS_WITH_QUERY(`manufacturers=${mIdentifier}`)}
       style={{
         transform: transformValue,
         opacity: !isDesktop ? 1 : isVisible ? 1 : 0,
@@ -40,6 +44,7 @@ const ManufacturerCard = memo(function ManufacturerCard({
         transitionProperty: isDesktop ? "transform, opacity" : "none",
         transitionDuration: isDesktop ? "800ms" : "0ms",
         transitionTimingFunction: isDesktop ? "cubic-bezier(0.16, 1, 0.3, 1)" : "none",
+        display: "flex",
       }}
       className={
         isDesktop
@@ -71,7 +76,7 @@ const ManufacturerCard = memo(function ManufacturerCard({
       <span className="font-semibold text-foreground text-xs sm:text-sm text-center line-clamp-1 leading-tight px-1">
         {name}
       </span>
-    </div>
+    </Link>
   );
 });
 

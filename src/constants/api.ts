@@ -80,6 +80,7 @@ export const API_ROUTES = {
   PROFILE: {
     GET: "/customer/profile",
     UPDATE: "/customer/profile",
+    UPDATE_MOBILE_NUMBER: "/customer/profile/mobile-number",
   },
 
   // Notifications

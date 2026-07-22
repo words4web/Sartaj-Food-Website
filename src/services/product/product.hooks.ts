@@ -40,7 +40,7 @@ export const useGetRelatedProducts = (id: string, limit: number = 30) => {
 
 export const useGetProductsByCategory = (
   categoryId?: string,
-  params?: { search?: string; page?: number; limit?: number },
+  params?: { search?: string; page?: number; limit?: number; manufacturers?: string },
 ) => {
   return useQuery({
     queryKey: ["products", "category", categoryId, params],
@@ -63,7 +63,7 @@ export const useGetProductsByCategory = (
 
 export const useGetInfiniteProductsByCategory = (
   categoryId?: string,
-  params?: { search?: string; limit?: number },
+  params?: { search?: string; limit?: number; manufacturers?: string },
 ) => {
   return useInfiniteQuery({
     queryKey: ["products", "category", "infinite", categoryId, params],

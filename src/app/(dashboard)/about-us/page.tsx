@@ -1,10 +1,14 @@
 "use client";
 
+import { useMemo } from "react";
 import { Typography, ThemedImage } from "@/components/common";
 import { StoreLocation } from "@/components/home/StoreLocation";
 import { ManufacturersGrid } from "@/components/home/ManufacturersGrid";
-import { CheckCircle2, ShieldCheck, MapPin, Truck } from "lucide-react";
+import { CheckCircle2, ShieldCheck, MapPin, Truck, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
+import { useGetManufacturers } from "@/services/manufacturer/manufacturer.hooks";
 
 interface FeatureCardProps {
   title: string;
@@ -59,6 +63,14 @@ function FeatureCard({ title, description, icon, themeColor }: FeatureCardProps)
 }
 
 export default function AboutUsPage() {
+  const { data: manufacturers = [] } = useGetManufacturers();
+
+  const sartajManufacturer = useMemo(() => {
+    return manufacturers?.find((m: any) => m.name?.toLowerCase()?.includes("sartaj"));
+  }, [manufacturers]);
+
+  const sartajSlug = sartajManufacturer?.slug || sartajManufacturer?.id || "sartaj";
+
   return (
     <div className="min-h-screen bg-background text-foreground pb-0">
       {/* Header Banner */}
@@ -89,11 +101,11 @@ export default function AboutUsPage() {
 
       {/* Main Content Area */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-6 md:py-8 space-y-10">
-        {/* Intro Section Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          {/* Left Text Column */}
-          <div className="md:col-span-6 space-y-4">
-            <h2 className="text-xl md:text-2xl font-extrabold text-foreground tracking-tight leading-snug">
+        {/* Intro Section Layout */}
+        <div className="space-y-8">
+          {/* Top Text Column */}
+          <div className="max-w-3xl space-y-4">
+            <h2 className="text-xl md:text-3xl font-extrabold text-foreground tracking-tight leading-snug">
               Your Trusted Grocery Partner in Japan
             </h2>
             <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm font-medium">
@@ -108,41 +120,25 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          {/* Right Image Showcase Column */}
-          <div className="md:col-span-6 space-y-3">
-            {/* Main Featured Shop Photo */}
-            <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-border/80 shadow-md group">
+          {/* Bottom Image Showcase Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+            <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-md group">
               <Image
-                src="/shop/image_1.png"
-                alt="Sartaj Foods Main Storefront"
+                src="/shop/shop_1.png"
+                alt="Sartaj Foods Store Aisles"
                 fill
                 priority
                 className="object-cover transition-transform duration-500 group-hover:scale-102"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-[10px] text-white px-2.5 py-1 rounded-md font-bold uppercase tracking-wider">
-                Osaka Main Store
-              </span>
             </div>
-
-            {/* Sub/Supporting Shop Photos Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border/80 shadow-sm group">
-                <Image
-                  src="/shop/image_2.png"
-                  alt="Sartaj Foods Store Aisles"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-103"
-                />
-              </div>
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border/80 shadow-sm group">
-                <Image
-                  src="/shop/image_3.png"
-                  alt="Sartaj Foods Premium Selection"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-103"
-                />
-              </div>
+            <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-md group">
+              <Image
+                src="/shop/shop_2.png"
+                alt="Sartaj Foods Premium Selection"
+                fill
+                priority
+                className="object-cover transition-transform duration-500 group-hover:scale-102"
+              />
             </div>
           </div>
         </div>
@@ -187,6 +183,15 @@ export default function AboutUsPage() {
                 ensure it delivers the authentic, rich taste of home directly to your kitchen in
                 Japan.
               </p>
+              <div className="pt-2">
+                <Link
+                  href={ROUTES.PRODUCTS_WITH_QUERY(`manufacturers=${sartajSlug}`)}
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-extrabold px-4.5 py-2.5 rounded-xl transition-all duration-300 shadow-xs hover:shadow-sm cursor-pointer select-none"
+                >
+                  <span>View Products</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
             <div className="md:col-span-4 flex justify-center">
               <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-card border border-border/80 p-2.5 shadow-md flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500">

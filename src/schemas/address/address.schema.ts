@@ -19,7 +19,7 @@ export const addressSchema = z.object({
   phone: z
     .string()
     .min(1, "phoneRequired")
-    .regex(/^\+81\d{9,10}$/, "invalidPhone"),
+    .regex(/^\+81\d{10}$/, "invalidPhone"),
 });
 
 export type AddressFormData = z.infer<typeof addressSchema>;
