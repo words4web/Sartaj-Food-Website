@@ -181,6 +181,14 @@
   - Enabled the marquee auto-scroll loop animation on mobile screen sizes in [`CategoryMarqueeStrip.tsx`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/layouts/CategoryMarqueeStrip.tsx) by removing the `isDesktop` layout guard and duplicating marquee items on all devices. Swiping dynamically pauses the marquee animation during user touches.
 - **Redux Store Theme State Type Correction**:
   - Updated [`localeSlice.ts`](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/lib/store/localeSlice.ts) to type-bind the theme state to the global `Theme` type from `@/lib/themes` instead of a restricted 4-theme union, resolving 5 TypeScript compilation errors across the website project and enabling all 17 custom themes.
+- **Banner Customization & Styling**:
+  - Moved the text overlay card to the absolute bottom-left corner of the hero section, removed the container box and background/backdrop blur effects, and added a soft background gradient overlay (`bg-gradient-to-tr from-black/60 via-black/10 to-transparent`) at `z-15` over the slide images for high text contrast.
+  - Colored the title `text-blue-500` with standard drop-shadow, normalized letter tracking to `tracking-tight`, set font-weight to `font-bold` and case to `normal-case` for a modern, clean look.
+- **Homepage Section Reordering**:
+  - Reorganized home page content flow in `ThemedProductZone.tsx` to: Banner -> Brands We Have -> Shop Categories -> Products List -> What We Provide -> Testimonials/Map.
+- **Split Free Shipping Thresholds & Caching**:
+  - Updated marquee translations across all five locale files (`en.json`, `ja.json`, `hi.json`, `ne.json`, `bn.json`) to show distinct shipping thresholds for dry and frozen products in the marquee (`freeDeliveryMsg`).
+  - Updated home `page.tsx` to read the dry and frozen thresholds, store/cache them in `localStorage` (`app_config_thresholds`) upon API load, and read from the cache on mount to prevent layout shifts.
 
 ## Next Steps / Outstanding Bugs
 

@@ -51,10 +51,22 @@ export function formatPostalCode(val: string): string {
 
 export function formatJapanPhone(val: string): string {
   if (!val) return "";
+
+  // Allow user to clear completely if they backspace through the prefix
+  if (val === "+" || val === "+8" || val === "+81") return "";
+
   let cleaned = val?.replace(/[^\d]/g, "");
+
+  // Strip country code if present at the start of digits
+  if (cleaned?.startsWith("81")) {
+    cleaned = cleaned?.slice(2);
+  }
+
+  // Strip leading zero for local JP numbers
   if (cleaned?.startsWith("0")) {
     cleaned = cleaned?.slice(1);
   }
+
   return cleaned ? `+81${cleaned}` : "";
 }
 

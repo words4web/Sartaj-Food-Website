@@ -1,6 +1,7 @@
 export interface IManufacturer {
   id: string;
   name: string;
+  slug: string;
   image: string;
 }
 

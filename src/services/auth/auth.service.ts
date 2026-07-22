@@ -36,4 +36,10 @@ export const authService = {
   getProfile: async (): Promise<AxiosResponse<{ success: boolean; data: { user: IUser } }>> => {
     return axiosInstance.get(API_ROUTES.AUTH.GET_PROFILE);
   },
+
+  updateMobileNumber: async (
+    mobileNumber: string,
+  ): Promise<AxiosResponse<{ success: boolean; data: { user: IUser } }>> => {
+    return axiosInstance.patch(API_ROUTES.PROFILE.UPDATE_MOBILE_NUMBER, { mobileNumber });
+  },
 };
