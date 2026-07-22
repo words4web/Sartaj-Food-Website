@@ -1,5 +1,8 @@
-import { User, Mail, Phone } from "lucide-react";
+"use client";
+
+import { User, Mail } from "lucide-react";
 import { ProfileCardProps } from "@/types/profile/profile.types";
+import { EditableMobileNumber } from "./EditableMobileNumber";
 
 export function ProfileCard({ user }: ProfileCardProps) {
   return (
@@ -20,12 +23,12 @@ export function ProfileCard({ user }: ProfileCardProps) {
 
       <div className="border-t border-border mt-6 pt-6 space-y-4">
         <div className="flex items-center gap-3 text-sm">
-          <Mail className="h-4 w-4 text-muted-foreground" />
+          <Mail className="h-4 w-4 text-muted-foreground shrink-0" />
           <span className="text-foreground truncate">{user?.email}</span>
         </div>
-        <div className="flex items-center gap-3 text-sm">
-          <Phone className="h-4 w-4 text-muted-foreground" />
-          <span className="text-foreground">{user?.mobileNumber}</span>
+
+        <div className="flex items-center text-sm">
+          <EditableMobileNumber mobileNumber={user?.mobileNumber} />
         </div>
       </div>
     </div>
