@@ -26,7 +26,7 @@ export const productService = {
 
   getProductsByCategory: async (
     categoryId: string,
-    params?: { search?: string; page?: number; limit?: number },
+    params?: { search?: string; page?: number; limit?: number; manufacturers?: string },
   ): Promise<AxiosResponse<any>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.GET_BY_CATEGORY(categoryId), { params });
   },
@@ -35,6 +35,7 @@ export const productService = {
     search?: string;
     page?: number;
     limit?: number;
+    manufacturers?: string;
   }): Promise<AxiosResponse<any>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.GET_ALL, { params });
   },

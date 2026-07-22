@@ -15,6 +15,8 @@ import { ICategory } from "@/types/product/product.types";
 import { AuthLoadingOverlay } from "@/components/common/AuthLoadingOverlay";
 import { ROUTES } from "@/constants/routes";
 import { getLocalizedValue } from "@/utils/product/product.utils";
+import { ManufacturerFilter } from "@/components/product/ManufacturerFilter";
+import { X } from "lucide-react";
 
 function ProductsContent() {
   const t = useTranslations();
@@ -31,6 +33,17 @@ function ProductsContent() {
     error: categoriesError,
     refetch: refetchCategories,
   } = useGetCategories();
+
+  const activeManufacturersParam = searchParams?.get("manufacturers") || "";
+
+  const hasActiveFilters = useMemo(() => {
+    return (
+      (activeCategoryId !== "all" && activeCategoryId !== "") ||
+      activeSubCategoryId !== "" ||
+      searchQuery !== "" ||
+      activeManufacturersParam !== ""
+    );
+  }, [activeCategoryId, activeSubCategoryId, searchQuery, activeManufacturersParam]);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState({
@@ -93,7 +106,11 @@ function ProductsContent() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetInfiniteProductsByCategory(queryCategoryId, { limit, search: searchQuery });
+  } = useGetInfiniteProductsByCategory(queryCategoryId, {
+    limit,
+    search: searchQuery,
+    manufacturers: activeManufacturersParam,
+  });
 
   const products = useMemo(() => {
     return data?.pages?.flatMap((page) => page?.products) || [];
@@ -263,43 +280,71 @@ function ProductsContent() {
           </div>
 
           {/* Right Products Area */}
-          <div className="flex-1 w-full space-y-6">
-            {/* Subcategory Filter Chips */}
-            {subCategories?.length > 0 && (
-              <div className="flex flex-wrap gap-2 items-center pb-4 border-b border-border/60">
-                <Link
-                  href={createSubcategoryUrl()}
-                  className={`text-xs font-semibold px-4 py-2 rounded-full border shadow-sm transition-all duration-200 cursor-pointer select-none ${
-                    !activeSubCategoryId
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "border-border bg-card text-foreground hover:bg-muted"
-                  }`}
-                >
-                  {t("common.all") || "All"}
-                </Link>
-                {subCategories?.map((subCat: ICategory) => {
-                  const subCatId = subCat?.slug || subCat?.id || subCat?._id;
-                  const isSubActive =
-                    activeSubCategoryId === subCatId ||
-                    activeSubCategoryId === subCat?.id ||
-                    activeSubCategoryId === subCat?._id;
-                  const subName = getLocalizedValue(subCat?.name, locale);
-                  return (
+          <div className="flex-1 w-full min-w-0 space-y-6">
+            {/* Filter Controls Row */}
+            <div className="flex flex-col gap-3 pb-4 border-b border-border/60">
+              {/* Subcategory Filter Chips */}
+              {subCategories?.length > 0 && (
+                <div className="w-full overflow-hidden">
+                  <div className="flex flex-nowrap gap-2 items-center overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                     <Link
-                      key={subCatId}
-                      href={createSubcategoryUrl(subCatId)}
-                      className={`text-xs font-semibold px-4 py-2 rounded-full border shadow-sm transition-all duration-200 cursor-pointer select-none ${
-                        isSubActive
+                      href={createSubcategoryUrl()}
+                      className={`text-xs font-semibold px-4 py-2 rounded-full border shadow-sm transition-all duration-200 cursor-pointer select-none shrink-0 ${
+                        !activeSubCategoryId
                           ? "bg-primary text-primary-foreground border-primary"
                           : "border-border bg-card text-foreground hover:bg-muted"
                       }`}
                     >
-                      {subName}
+                      {t("common.all") || "All"}
                     </Link>
-                  );
-                })}
+                    {subCategories?.map((subCat: ICategory) => {
+                      const subCatId = subCat?.slug || subCat?.id || subCat?._id;
+                      const isSubActive =
+                        activeSubCategoryId === subCatId ||
+                        activeSubCategoryId === subCat?.id ||
+                        activeSubCategoryId === subCat?._id;
+                      const subName = getLocalizedValue(subCat?.name, locale);
+                      return (
+                        <Link
+                          key={subCatId}
+                          href={createSubcategoryUrl(subCatId)}
+                          className={`text-xs font-semibold px-4 py-2 rounded-full border shadow-sm transition-all duration-200 cursor-pointer select-none shrink-0 ${
+                            isSubActive
+                              ? "bg-primary text-primary-foreground border-primary"
+                              : "border-border bg-card text-foreground hover:bg-muted"
+                          }`}
+                        >
+                          {subName}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Action Filters Row */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="text-xs text-muted-foreground font-medium">
+                  {products?.length > 0 && (
+                    <span>
+                      {products?.length} {t("common.items") || "items"}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <ManufacturerFilter />
+                  {hasActiveFilters && (
+                    <Link
+                      href={ROUTES.PRODUCTS()}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-destructive/20 bg-destructive/5 text-destructive hover:bg-destructive/10 text-xs font-semibold transition-all duration-200"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                      Reset Filters
+                    </Link>
+                  )}
+                </div>
               </div>
-            )}
+            </div>
 
             {isProductsLoading ? (
               <ProductGridSkeleton
