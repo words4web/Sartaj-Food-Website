@@ -1,6 +1,59 @@
 import { Info, ShieldAlert } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import type { ProductInfoProps } from "@/types/product/product.types";
+import { CollapsibleSection } from "./CollapsibleSection";
+
+const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
+  en: [
+    "Flavour Profile",
+    "Product Highlights",
+    "Key Ingredients",
+    "Added Colours",
+    "No Added Colours",
+    "How to Use",
+  ],
+  ja: [
+    "風味プロファイル",
+    "風味",
+    "味の特徴",
+    "製品ハイライト",
+    "商品の特徴",
+    "原材料",
+    "主な原材料",
+    "着色料",
+    "着色料不使用",
+    "無着色",
+    "使用方法",
+    "使い方",
+    "召し上がり方",
+    "お召し上がり方",
+  ],
+  hi: [
+    "स्वाद प्रोफ़ाइल",
+    "उत्पाद मुख्य विशेषताएं",
+    "मुख्य सामग्री",
+    "अतिरिक्त रंग",
+    "कोई अतिरिक्त रंग नहीं",
+    "कैसे उपयोग करें",
+    "उपयोग करने का तरीका",
+  ],
+  ne: [
+    "स्वाद प्रोफाइल",
+    "उत्पादन हाइलाइटहरू",
+    "मुख्य सामग्रीहरू",
+    "थप रंगहरू",
+    "कुनै थप रंगहरू छैनन्",
+    "कसरी प्रयोग गर्ने",
+  ],
+  bn: [
+    "ফ্লেভার প্রোফাইল",
+    "পণ্য হাইলেট",
+    "মূল উপাদান",
+    "যোগ করা রং",
+    "কোন যোগ করা রং নেই",
+    "কিভাবে ব্যবহার করবেন",
+  ],
+};
 
 export function ProductInfo({
   product,
@@ -14,6 +67,7 @@ export function ProductInfo({
   isOutOfStock,
 }: ProductInfoProps) {
   const t = useTranslations();
+  const locale = useLocale();
 
   const taxAmount = product?.tax?.amount || 0;
   const taxRate = product?.tax?.rate || 8;
@@ -101,14 +155,64 @@ export function ProductInfo({
       )}
 
       {/* Description */}
-      {description && (
-        <div className="mb-6">
-          <h3 className="text-sm font-bold text-foreground mb-2">{t("products.description")}</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-            {description}
-          </p>
-        </div>
-      )}
+      {description &&
+        (() => {
+          const cleanHtml = description.replace(/&nbsp;/g, " ").replace(/\u00a0/g, " ");
+
+          // Get subheadings list for current locale and merge with English fallbacks
+          const currentLocale = locale || "en";
+          const localeHeaders = LOCALIZED_SUBHEADINGS[currentLocale] || LOCALIZED_SUBHEADINGS?.en;
+          const allHeaders = Array.from(new Set([...localeHeaders, ...LOCALIZED_SUBHEADINGS.en]));
+
+          // Escape special regex characters in subheadings
+          const escapedHeaders = allHeaders
+            ?.map((h) => h?.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"))
+            ?.join("|");
+
+          const regex = new RegExp(
+            `(<(?:p|h3)[^>]*>(?:<strong>)?\\s*(?:${escapedHeaders})\\s*(?::|：|\\?|\\？)?\\s*(?:</strong>)?</(?:p|h3)>)`,
+            "gi",
+          );
+
+          const parts = cleanHtml?.split(regex);
+
+          const introHtml = parts[0];
+          const collapsibleSections: { headerHtml: string; contentHtml: string }[] = [];
+
+          for (let i = 1; i < parts?.length; i += 2) {
+            if (parts[i]) {
+              collapsibleSections.push({
+                headerHtml: parts[i],
+                contentHtml: parts[i + 1] || "",
+              });
+            }
+          }
+
+          return (
+            <div className="mb-6">
+              <h3 className="text-sm font-bold text-foreground mb-3">
+                {t("products.description")}
+              </h3>
+
+              {/* Always visible intro paragraph */}
+              {introHtml && introHtml?.trim() !== "" && (
+                <div
+                  className="product-rich-description mb-4"
+                  dangerouslySetInnerHTML={{ __html: introHtml }}
+                />
+              )}
+
+              {/* Collapsible sections */}
+              {collapsibleSections?.map((sec, idx) => (
+                <CollapsibleSection
+                  key={idx}
+                  headerHtml={sec?.headerHtml}
+                  contentHtml={sec?.contentHtml}
+                />
+              ))}
+            </div>
+          );
+        })()}
     </div>
   );
 }

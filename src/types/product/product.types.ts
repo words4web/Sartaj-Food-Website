@@ -147,3 +147,8 @@ export interface ProductInfoProps {
   discountPercent: number;
   isOutOfStock: boolean;
 }
+
+export interface CollapsibleSectionProps {
+  headerHtml: string;
+  contentHtml: string;
+}

@@ -161,9 +161,22 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
               {/* Scrollable Description Content */}
               <div className="overflow-y-auto no-scrollbar flex-grow min-h-0">
                 <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed font-medium">
-                  {typeof product?.description === "string" && product?.description?.trim()
-                    ? product?.description
-                    : "Description not available"}
+                  {(() => {
+                    const desc = product?.description;
+                    if (typeof desc !== "string" || !desc?.trim()) {
+                      return "Description not available";
+                    }
+                    const cleanHtml = desc?.replace(/&nbsp;/g, " ")?.replace(/\u00a0/g, " ");
+                    const regex =
+                      /(<(?:p|h3)[^>]*>(?:<strong>)?\s*(?:Flavour Profile|Product Highlights|Key Ingredients|Added Colours|No Added Colours|How to Use|風味プロファイル|風味|味の特徴|製品ハイライト|商品の特徴|原材料|主な原材料|着色料|着色料不使用|無着色|使用方法|使い方|召し上がり方|お召し上がり方)\s*(?::|：|\?|\？)?\s*(?:<\/strong>)?<\/(?:p|h3)>)/gi;
+                    const parts = cleanHtml?.split(regex);
+                    const introHtml = parts[0] || "";
+                    const plainIntro = introHtml
+                      ?.replace(/<[^>]*>/g, "")
+                      ?.replace(/\s+/g, " ")
+                      ?.trim();
+                    return plainIntro || "Description not available";
+                  })()}
                 </p>
               </div>
             </Link>
