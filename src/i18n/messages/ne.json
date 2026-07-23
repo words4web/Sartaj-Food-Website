@@ -150,7 +150,10 @@
     "herbalWellness": "अर्गानिक र स्वास्थ्य",
     "wellnessTitle": "प्राकृतिक आयुर्वेदिक जडिबुटी र चिया",
     "wellnessSubtitle": "अर्गानिक चिया, जडिबुटी पूरक र आयुर्वेदिक सामग्रीहरूद्वारा आफ्नो स्वास्थ्य र रोग प्रतिरोधात्मक क्षमता बढाउनुहोस्।",
-    "promoBannerTitle": "असली भारतीय <highlight>स्वाद</highlight>, हरेक घरको लागि।"
+    "promoBannerTitle": "असली भारतीय <highlight>स्वाद</highlight>, हरेक घरको लागि।",
+    "osakaStoreName": "सरताज फूड्स ओसाका",
+    "mainStoreAndHeadquarters": "मुख्य स्टोर र मुख्यालय",
+    "getDirections": "दिशा-निर्देश प्राप्त गर्नुहोस्"
   },
   "products": {
     "allProducts": "सबै उत्पादनहरू",
@@ -446,7 +449,10 @@
     "loadError": "सूचनाहरू लोड गर्न सकिएन। कृपया पुनः प्रयास गर्नुहोस्।",
     "markReadError": "सूचना पढिएको चिह्नित गर्न असफल।",
     "fallbackTitle": "सरताज फूड्स",
-    "fallbackBody": "तपाईंसँग नयाँ सूचना छ।"
+    "fallbackBody": "तपाईंसँग नयाँ सूचना छ।",
+    "unsupported": "यस ब्राउजरमा पुश सूचनाहरू समर्थित छैनन्।",
+    "enabledDesc": "तपाईंले पुश सूचनाहरू प्राप्त गर्नुहुनेछ।",
+    "disabledDesc": "अर्डर अपडेटहरू प्राप्त गर्न सक्षम गर्नुहोस्।"
   },
   "notFound": {
     "title": "उफ! पृष्ठ फेला परेन",
@@ -469,7 +475,7 @@
     "hoursValue": "सोमबार देखि शनिबार बिहान ०९:०० बजे देखि बेलुका १८:०० बजे सम्म (सार्वजनिक बिदा बाहेक)",
     "customerSupportLabel": "ग्राहक सहायता",
     "customerSupportValue": "070-5577-1975",
-    "whatsappLabel": "WhatsApp",
-    "viberLabel": "Viber"
+    "whatsappLabel": "ह्वाट्सएप",
+    "viberLabel": "भाइबर"
   }
 }

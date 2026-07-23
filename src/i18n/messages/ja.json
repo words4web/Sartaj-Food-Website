@@ -150,7 +150,10 @@
     "herbalWellness": "オーガニック＆ウェルネス",
     "wellnessTitle": "天然のアーユルヴェーダハーブ＆ティー",
     "wellnessSubtitle": "本物のオーガニックティー, ハーブサプリメント, アーユルヴェーダの成分で健康と免疫力を高めましょう。",
-    "promoBannerTitle": "本場インドの<highlight>味</highlight>を、すべてのご家庭へ。"
+    "promoBannerTitle": "本場インドの<highlight>味</highlight>を、すべてのご家庭へ。",
+    "osakaStoreName": "サルタージフーズ 大阪",
+    "mainStoreAndHeadquarters": "本店 ＆ 本社",
+    "getDirections": "アクセス・道順"
   },
   "products": {
     "allProducts": "すべての商品",
@@ -446,7 +449,10 @@
     "loadError": "通知を読み込めませんでした。もう一度お試しください。",
     "markReadError": "通知を既読にできませんでした。",
     "fallbackTitle": "サルタジ・フーズ",
-    "fallbackBody": "新しい通知があります。"
+    "fallbackBody": "新しい通知があります。",
+    "unsupported": "プッシュ通知はこのブラウザではサポートされていません。",
+    "enabledDesc": "プッシュ通知を受信します。",
+    "disabledDesc": "有効にして注文の更新情報を受信します。"
   },
   "notFound": {
     "title": "おっと！ページが見つかりません",
@@ -469,7 +475,7 @@
     "hoursValue": "月曜日〜土曜日 09:00〜18:00（祝日を除く）",
     "customerSupportLabel": "カスタマーサポート",
     "customerSupportValue": "070-5577-1975",
-    "whatsappLabel": "WhatsApp",
-    "viberLabel": "Viber"
+    "whatsappLabel": "ワッツアップ",
+    "viberLabel": "バイバー"
   }
 }

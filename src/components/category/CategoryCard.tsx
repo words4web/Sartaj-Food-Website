@@ -41,7 +41,7 @@ export const CategoryCard = memo(function CategoryCard({
   return (
     <Link
       href={href}
-      className={`relative overflow-hidden isolate flex flex-col items-center justify-center gap-1.5 rounded-full border lg:transition-all lg:duration-300 group text-center shrink-0 select-none ${sizeClasses} ${
+      className={`relative overflow-hidden isolate flex flex-col items-center justify-center rounded-full border lg:transition-all lg:duration-300 group text-center shrink-0 select-none ${sizeClasses} ${
         isActive
           ? "border-primary bg-primary/5 shadow-md ring-2 ring-primary/20"
           : "border-border bg-card lg:hover:border-primary lg:hover:shadow-xl"
@@ -61,7 +61,7 @@ export const CategoryCard = memo(function CategoryCard({
         />
       </div>
       <h3
-        className={`font-semibold text-foreground lg:group-hover:text-primary-foreground lg:transition-colors lg:duration-300 line-clamp-2 px-1 leading-tight ${textClasses}`}
+        className={`font-semibold text-foreground lg:group-hover:text-primary-foreground lg:transition-colors lg:duration-300 line-clamp-2 px-1 leading-tight ${textClasses} pt-1`}
       >
         {name}
       </h3>
@@ -73,7 +73,7 @@ export const CategoryCard = memo(function CategoryCard({
         </p>
       ) : category?.subCategories && category?.subCategories?.length > 0 ? (
         <p
-          className={`${subTextClasses} text-muted-foreground lg:group-hover:text-primary-foreground/80 lg:transition-colors lg:duration-300 leading-none`}
+          className={`${subTextClasses} text-muted-foreground lg:group-hover:text-primary-foreground/80 lg:transition-colors lg:duration-300 leading-none pt-1`}
         >
           {category?.subCategories?.length} {t("common.subs")}
         </p>

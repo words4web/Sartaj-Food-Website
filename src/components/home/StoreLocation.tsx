@@ -10,7 +10,6 @@ export function StoreLocation() {
   const t = useTranslations();
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
 
-  // Theme-specific styles matching the site's rich aesthetics
   const themeStyles: Record<
     string,
     { border: string; glow: string; text: string; bg: string; accent: string }
@@ -67,66 +66,49 @@ export function StoreLocation() {
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-extrabold text-foreground mb-1">Sartaj Foods Osaka</h3>
+                <h3 className="text-xl font-extrabold text-foreground mb-1">
+                  {t("home.osakaStoreName")}
+                </h3>
                 <p className="text-xs text-muted-foreground font-semibold">
-                  Main Store & Headquarters
+                  {t("home.mainStoreAndHeadquarters")}
                 </p>
               </div>
 
               <div className="space-y-6">
-                {/* Address */}
-                <div className="flex gap-4 items-start">
-                  <div className={`p-2.5 rounded-xl ${style.bg} ${style.text} shrink-0`}>
-                    <MapPin className="h-5 w-5" />
+                {[
+                  {
+                    icon: <MapPin className="h-5 w-5" />,
+                    label: t("footer.addressLabel"),
+                    value: t("footer.addressValue"),
+                  },
+                  {
+                    icon: <Clock className="h-5 w-5" />,
+                    label: t("footer.hoursLabel"),
+                    value: t("footer.hoursValue"),
+                  },
+                  {
+                    icon: <Phone className="h-5 w-5" />,
+                    label: t("footer.callUsLabel"),
+                    value: t("footer.callUsValue"),
+                  },
+                  {
+                    icon: <Mail className="h-5 w-5" />,
+                    label: t("footer.emailLabel"),
+                    value: t("footer.emailValue"),
+                  },
+                ]?.map((item, idx) => (
+                  <div key={idx} className="flex gap-4 items-start">
+                    <div className={`p-2.5 rounded-xl ${style?.bg} ${style?.text} shrink-0`}>
+                      {item?.icon}
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-foreground">{item?.label}</h4>
+                      <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed font-medium">
+                        {item?.value}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-foreground">
-                      {t("footer.addressLabel")}
-                    </h4>
-                    <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed font-medium">
-                      {t("footer.addressValue")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Hours */}
-                <div className="flex gap-4 items-start">
-                  <div className={`p-2.5 rounded-xl ${style.bg} ${style.text} shrink-0`}>
-                    <Clock className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-foreground">{t("footer.hoursLabel")}</h4>
-                    <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed font-medium">
-                      {t("footer.hoursValue")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Call Us */}
-                <div className="flex gap-4 items-start">
-                  <div className={`p-2.5 rounded-xl ${style.bg} ${style.text} shrink-0`}>
-                    <Phone className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-foreground">{t("footer.callUsLabel")}</h4>
-                    <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed font-medium">
-                      {t("footer.callUsValue")}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Email */}
-                <div className="flex gap-4 items-start">
-                  <div className={`p-2.5 rounded-xl ${style.bg} ${style.text} shrink-0`}>
-                    <Mail className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-foreground">{t("footer.emailLabel")}</h4>
-                    <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed font-medium">
-                      {t("footer.emailValue")}
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -138,16 +120,15 @@ export function StoreLocation() {
                 className="w-full inline-block"
               >
                 <Button className="w-full flex items-center justify-center gap-2 group/btn cursor-pointer rounded-2xl py-6 font-bold shadow-md hover:shadow-xl transition-all">
-                  <span>Get Directions</span>
+                  <span>{t("home.getDirections")}</span>
                   <ExternalLink className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                 </Button>
               </a>
             </div>
           </div>
 
-          {/* Interactive Google Map iframe container */}
           <div
-            className={`lg:col-span-8 rounded-3xl overflow-hidden border border-border/60 ${style.glow} min-h-[350px] lg:min-h-auto relative`}
+            className={`lg:col-span-8 rounded-3xl overflow-hidden border border-border/60 ${style?.glow} min-h-[350px] lg:min-h-auto relative`}
           >
             <iframe
               src={mapEmbedUrl}

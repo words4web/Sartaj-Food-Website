@@ -150,7 +150,10 @@
     "herbalWellness": "Organic & Wellness",
     "wellnessTitle": "Natural Ayurvedic Herbs & Teas",
     "wellnessSubtitle": "Boost your health and immunity with authentic organic teas, herbal supplements, and Ayurvedic ingredients.",
-    "promoBannerTitle": "Bringing <highlight>Authentic Indian Flavours</highlight> to Every Home."
+    "promoBannerTitle": "Bringing <highlight>Authentic Indian Flavours</highlight> to Every Home.",
+    "osakaStoreName": "Sartaj Foods Osaka",
+    "mainStoreAndHeadquarters": "Main Store & Headquarters",
+    "getDirections": "Get Directions"
   },
   "products": {
     "allProducts": "All Products",
@@ -446,7 +449,10 @@
     "loadError": "Could not load notifications. Please try again.",
     "markReadError": "Failed to mark notification as read.",
     "fallbackTitle": "Sartaj Foods",
-    "fallbackBody": "You have a new notification."
+    "fallbackBody": "You have a new notification.",
+    "unsupported": "Push notifications are not supported in this browser.",
+    "enabledDesc": "You will receive push notifications.",
+    "disabledDesc": "Enable to receive order updates."
   },
   "notFound": {
     "title": "Oops! Page Not Found",
