@@ -44,13 +44,13 @@ export function ThemedProductZone() {
       )}
 
       <div className="relative">
-        <ManufacturersGrid />
-        <CategoriesGrid />
-        <PromoBanner />
         <OffersSection />
         <ProductSection title="New Arrivals" badge={PRODUCT_BADGES.NEW_ARRIVAL} />
         <ProductSection title="Featured Products" badge={PRODUCT_BADGES.FEATURED} />
         <ProductSection title="Hot Products" badge={PRODUCT_BADGES.HOT} />
+        <ManufacturersGrid />
+        <PromoBanner />
+        <CategoriesGrid />
         <TrustSignals />
         <Testimonials />
         <StoreLocation />

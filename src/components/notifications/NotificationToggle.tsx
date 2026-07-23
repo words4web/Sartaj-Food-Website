@@ -80,9 +80,7 @@ export function NotificationToggle({ className }: NotificationToggleProps) {
         <BellOff className="h-5 w-5 text-muted-foreground shrink-0" />
         <div>
           <p className="text-sm font-medium text-foreground">{t("enableNotifications")}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Push notifications are not supported in this browser.
-          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">{t("unsupported")}</p>
         </div>
       </div>
     );
@@ -108,11 +106,7 @@ export function NotificationToggle({ className }: NotificationToggleProps) {
           <div className="min-w-0">
             <p className="text-sm font-semibold text-foreground">{t("notifications")}</p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {isDenied
-                ? t("permissionDenied")
-                : isEnabled
-                  ? "You will receive push notifications."
-                  : "Enable to receive order updates."}
+              {isDenied ? t("permissionDenied") : isEnabled ? t("enabledDesc") : t("disabledDesc")}
             </p>
           </div>
         </div>

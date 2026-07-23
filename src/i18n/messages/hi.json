@@ -150,7 +150,10 @@
     "herbalWellness": "ऑर्गेनिक और स्वास्थ्य",
     "wellnessTitle": "प्राकृतिक आयुर्वेदिक जड़ी-बूटियाँ और चाय",
     "wellnessSubtitle": "प्राकृतिक जैविक चाय, हर्बल सप्लीमेंट्स और आयुर्वेदिक सामग्री के साथ अपने स्वास्थ्य और प्रतिरक्षा को बढ़ावा दें।",
-    "promoBannerTitle": "असली भारतीय <highlight>स्वाद</highlight> हर घर के लिए।"
+    "promoBannerTitle": "असली भारतीय <highlight>स्वाद</highlight> हर घर के लिए।",
+    "osakaStoreName": "सरताज फूड्स ओसाका",
+    "mainStoreAndHeadquarters": "मुख्य स्टोर और मुख्यालय",
+    "getDirections": "दिशा-निर्देश प्राप्त करें"
   },
   "products": {
     "allProducts": "सभी उत्पाद",
@@ -446,7 +449,10 @@
     "loadError": "सूचनाएं लोड नहीं हो सकीं। कृपया पुनः प्रयास करें।",
     "markReadError": "सूचना को पढ़ा हुआ चिह्नित करने में विफल।",
     "fallbackTitle": "सरताज फूड्स",
-    "fallbackBody": "आपके पास एक नई सूचना है।"
+    "fallbackBody": "आपके पास एक नई सूचना है।",
+    "unsupported": "इस ब्राउज़र में पुश सूचनाएं समर्थित नहीं हैं।",
+    "enabledDesc": "आपको पुश सूचनाएं प्राप्त होंगी।",
+    "disabledDesc": "ऑर्डर अपडेट प्राप्त करने के लिए सक्षम करें।"
   },
   "notFound": {
     "title": "उफ़! पेज नहीं मिला",
@@ -469,7 +475,7 @@
     "hoursValue": "सोमवार से शनिवार सुबह 09:00 बजे से शाम 18:00 बजे तक (राष्ट्रीय अवकाश को छोड़कर)",
     "customerSupportLabel": "ग्राहक सहायता",
     "customerSupportValue": "070-5577-1975",
-    "whatsappLabel": "WhatsApp",
-    "viberLabel": "Viber"
+    "whatsappLabel": "व्हाट्सएप",
+    "viberLabel": "वाइबर"
   }
 }
