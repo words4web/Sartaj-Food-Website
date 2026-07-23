@@ -150,7 +150,10 @@
     "herbalWellness": "জৈব ও সুস্থতা",
     "wellnessTitle": "প্রাকৃতিক আয়ুর্বেদিক ভেষজ এবং চা",
     "wellnessSubtitle": "খাঁটি জৈব চা, ভেষজ পরিপূরক এবং আয়ুর্বেদিক উপাদান দিয়ে আপনার স্বাস্থ্য এবং রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করুন।",
-    "promoBannerTitle": "প্রতিটি ঘরে আসল ভারতীয় <highlight>স্বাদ</highlight> নিয়ে আসা।"
+    "promoBannerTitle": "প্রতিটি ঘরে আসল ভারতীয় <highlight>স্বাদ</highlight> নিয়ে আসা।",
+    "osakaStoreName": "সারতাজ ফুডস ওসাকা",
+    "mainStoreAndHeadquarters": "প্রধান শাখা এবং সদর দপ্তর",
+    "getDirections": "দিকনির্দেশ পান"
   },
   "products": {
     "allProducts": "সব পণ্য",
@@ -446,7 +449,10 @@
     "loadError": "বিজ্ঞপ্তি লোড করা যায়নি। আবার চেষ্টা করুন।",
     "markReadError": "বিজ্ঞপ্তি পঠিত চিহ্নিত করতে ব্যর্থ হয়েছে।",
     "fallbackTitle": "সরতাজ ফুডস",
-    "fallbackBody": "আপনার একটি নতুন বিজ্ঞপ্তি আছে।"
+    "fallbackBody": "আপনার একটি নতুন বিজ্ঞপ্তি আছে।",
+    "unsupported": "এই ব্রাউজারে পুশ বিজ্ঞপ্তি সমর্থিত নয়।",
+    "enabledDesc": "আপনি পুশ বিজ্ঞপ্তি পাবেন।",
+    "disabledDesc": "অর্ডার আপডেট পেতে সক্ষম করুন।"
   },
   "notFound": {
     "title": "ওহ! পেজটি পাওয়া যায়নি",
@@ -469,7 +475,7 @@
     "hoursValue": "সোমবার থেকে শনিবার সকাল ০৯:০০ টা থেকে সন্ধ্যা ১৮:০০ টা পর্যন্ত (সরকারি ছুটির দিন ব্যতীত)",
     "customerSupportLabel": "গ্রাহক সহায়তা",
     "customerSupportValue": "070-5577-1975",
-    "whatsappLabel": "WhatsApp",
-    "viberLabel": "Viber"
+    "whatsappLabel": "হোয়াটসঅ্যাপ",
+    "viberLabel": "ভাইবার"
   }
 }

@@ -189,6 +189,15 @@
 - **Split Free Shipping Thresholds & Caching**:
   - Updated marquee translations across all five locale files (`en.json`, `ja.json`, `hi.json`, `ne.json`, `bn.json`) to show distinct shipping thresholds for dry and frozen products in the marquee (`freeDeliveryMsg`).
   - Updated home `page.tsx` to read the dry and frozen thresholds, store/cache them in `localStorage` (`app_config_thresholds`) upon API load, and read from the cache on mount to prevent layout shifts.
+- **Mobile Catalog Filters Layout**:
+  - Restructured subcategories row in `products/page.tsx` into a horizontally scrolling row (`flex-nowrap overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0`) wrapped inside a `w-full overflow-hidden` container to prevent viewport horizontal stretching.
+  - Aligned action controls below the subcategory list in a single clean row, aligning item counts on the left and Brand filters + global Resets side-by-side on the right.
+- **Home Brands Grid Direct Filter Links**:
+  - Wrapped brand carousel items in `ManufacturersGrid.tsx` using `Link` from `next/link` mapping directly to `ROUTES.PRODUCTS_WITH_QUERY("manufacturers=<identifier>")` to instantly filter catalog results on brand click.
+- **About Us Page Layout Refinement**:
+  - Replaced legacy shop storefront images with two new assets `/shop/shop_1.png` and `/shop/shop_2.png` rendering side-by-side in a responsive landscape layout (`aspect-[4/3]`) without borders.
+  - Placed descriptive story text full-width at the top, and positioned the images grid at the bottom of the section.
+  - Integrated dynamic brand slug resolution using `useGetManufacturers` inside the Sartaj homegrown brand spotlight card, linking the View Products button safely to `/products?manufacturers=${sartajSlug}`.
 
 ## Next Steps / Outstanding Bugs
 

@@ -17,6 +17,16 @@ export function HeroSection() {
 
   const slides = banners || [];
 
+  const CtaButton = () => (
+    <Button
+      size="default"
+      className="h-6 min-[320px]:h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-2.5 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[8px] min-[320px]:text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
+    >
+      {t("home.shopEssentials")}
+      <ChevronRight className="h-2.5 w-2.5 min-[320px]:h-3 min-[320px]:w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
+    </Button>
+  );
+
   const nextSlide = () => {
     if (slides.length === 0) return;
     setActiveSlide((prev) => (prev + 1) % slides.length);
@@ -51,7 +61,7 @@ export function HeroSection() {
       nextSlide();
     }, 6000);
     return () => clearInterval(timer);
-  }, [activeSlide, slides.length]);
+  }, [activeSlide, slides?.length]);
 
   // Show skeleton if loading, or if banners list is empty/missing
   if (isLoading || slides?.length === 0) {
@@ -61,7 +71,7 @@ export function HeroSection() {
     <section
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative mt-4 sm:mt-6 md:mt-8 h-[260px] sm:h-[380px] md:h-[480px] lg:h-[560px] xl:h-[600px] overflow-hidden bg-gradient-to-br from-primary/8 to-accent/12 lg:transition-all lg:duration-700 lg:ease-in-out border-b border-border/20"
+      className="relative aspect-[16/6] sm:aspect-[21/7] h-auto w-full overflow-hidden bg-gradient-to-br from-primary/8 to-accent/12 lg:transition-all lg:duration-700 lg:ease-in-out border-b border-border/20"
     >
       {/* ── Full-width background slide image layer ── */}
       {slides?.map((slide, idx) => {
@@ -69,14 +79,14 @@ export function HeroSection() {
         return (
           <div
             key={`bg-${slide?.id || idx}`}
-            className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none lg:transition-all lg:duration-1000 lg:ease-in-out ${
-              isActive ? "opacity-100 lg:scale-100 z-10" : "opacity-0 lg:scale-105 z-0"
+            className={`absolute inset-0 w-full h-full overflow-hidden pointer-events-none transition-all duration-1000 ease-in-out ${
+              isActive ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
             }`}
           >
             <ThemedImage
               src={slide?.image}
               alt={slide?.title}
-              className="w-full h-full object-contain mix-blend-multiply lg:transition-all lg:duration-1000"
+              className="w-full h-full object-contain mix-blend-multiply transition-all duration-1000"
               emoji="🌾"
               fallbackType="product"
             />
@@ -99,16 +109,16 @@ export function HeroSection() {
           return (
             <div
               key={`fg-${slide?.id || idx}`}
-              className={`absolute left-4 bottom-4 sm:left-8 sm:bottom-8 w-[calc(100%-2rem)] sm:w-auto max-w-lg md:max-w-xl text-left z-20 pointer-events-auto lg:transition-all lg:duration-1000 lg:ease-in-out ${
+              className={`absolute left-3 bottom-3 min-[375px]:left-4 min-[375px]:bottom-4 sm:left-8 sm:bottom-8 w-[calc(100%-1.5rem)] sm:w-auto max-w-lg md:max-w-xl text-left z-20 pointer-events-auto transition-all duration-1000 ease-in-out ${
                 isActive
-                  ? "opacity-100 lg:scale-100 lg:translate-y-0"
-                  : "opacity-0 lg:scale-95 lg:translate-y-4"
+                  ? "opacity-100 scale-100 translate-y-0"
+                  : "opacity-0 scale-95 translate-y-4"
               }`}
             >
               {/* Title */}
               <h1
-                className={`text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-sans font-bold tracking-tight text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] leading-tight normal-case lg:transition-all lg:duration-700 lg:delay-300 lg:transform ${
-                  isActive ? "opacity-100 lg:translate-y-0" : "opacity-0 lg:translate-y-4"
+                className={`text-[10px] min-[320px]:text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-sans font-bold tracking-tight text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] leading-tight normal-case transition-all duration-700 delay-300 transform ${
+                  isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
               >
                 {slide?.title}
@@ -116,31 +126,20 @@ export function HeroSection() {
 
               {/* CTA Button */}
               <div
-                className={`mt-2.5 min-[375px]:mt-3 sm:mt-4 md:mt-5 w-fit lg:transition-all lg:duration-700 lg:delay-500 lg:transform ${
-                  isActive ? "opacity-100 lg:translate-y-0" : "opacity-0 lg:translate-y-4"
+                className={`mt-2 min-[375px]:mt-3 sm:mt-4 md:mt-5 w-fit transition-all duration-700 delay-500 transform ${
+                  isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                 }`}
               >
                 {slide?.link ? (
                   <Link
                     href={slide?.link}
                     target={slide?.link?.startsWith("http") ? "_blank" : "_self"}
+                    key={`link-${slide?.id || idx}`}
                   >
-                    <Button
-                      size="default"
-                      className="h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-3 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
-                    >
-                      {t("home.shopEssentials")}
-                      <ChevronRight className="h-3 w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
-                    </Button>
+                    <CtaButton />
                   </Link>
                 ) : (
-                  <Button
-                    size="default"
-                    className="h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-3 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
-                  >
-                    {t("home.shopEssentials")}
-                    <ChevronRight className="h-3 w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
-                  </Button>
+                  <CtaButton />
                 )}
               </div>
             </div>
@@ -155,7 +154,7 @@ export function HeroSection() {
             variant="ghost"
             size="icon"
             onClick={prevSlide}
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all lg:hover:scale-105"
+            className="absolute left-1 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all lg:hover:scale-105"
           >
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
@@ -163,7 +162,7 @@ export function HeroSection() {
             variant="ghost"
             size="icon"
             onClick={nextSlide}
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all lg:hover:scale-105"
+            className="absolute right-1 top-1/2 -translate-y-1/2 bg-card/60 hover:bg-card/90 text-foreground border border-border/40 z-30 rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center cursor-pointer shadow-md backdrop-blur-sm transition-all lg:hover:scale-105"
           >
             <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
