@@ -7,6 +7,7 @@ import { ROUTES } from "@/constants/routes";
 import { useTranslations } from "next-intl";
 import { STORAGE_KEYS } from "@/constants/storage.constants";
 import { cn } from "@/utils/common/common.utils";
+import { getCleanCategorySearchParams } from "@/utils/product/product.utils";
 
 interface SearchBarProps {
   className?: string;
@@ -24,11 +25,15 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceClearRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
+      if (debounceClearRef.current) {
+        clearTimeout(debounceClearRef.current);
       }
     };
   }, []);
@@ -54,8 +59,8 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
       const stored = localStorage.getItem(STORAGE_KEYS.RECENT_SEARCHES);
       let list: string[] = stored ? JSON.parse(stored) : [];
       if (!Array.isArray(list)) list = [];
-      list = [query, ...list.filter((item) => item !== query)];
-      list = list.slice(0, 5);
+      list = [query, ...list?.filter((item) => item !== query)];
+      list = list?.slice(0, 5);
       localStorage.setItem(STORAGE_KEYS.RECENT_SEARCHES, JSON.stringify(list));
       setRecentSearches(list);
     } catch (err) {
@@ -65,14 +70,17 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
 
   const handleSearchSubmit = (e?: React.FormEvent, customQuery?: string) => {
     if (e) e.preventDefault();
+    if (debounceClearRef.current) {
+      clearTimeout(debounceClearRef.current);
+    }
     const query = (customQuery !== undefined ? customQuery : searchValue)?.trim();
-    const params = new URLSearchParams(searchParams?.toString());
+    let params = new URLSearchParams(searchParams?.toString());
     params.delete("page");
     if (query) {
       params.set("search", query);
       saveSearchQuery(query);
     } else {
-      params.delete("search");
+      params = getCleanCategorySearchParams(searchParams?.toString() || "", ["search", "page"]);
     }
     router.push(ROUTES.PRODUCTS_WITH_QUERY(params?.toString()));
     setIsFocused(false);
@@ -82,14 +90,15 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
   };
 
   const handleClearSearch = () => {
+    if (debounceClearRef.current) {
+      clearTimeout(debounceClearRef.current);
+    }
     setSearchValue("");
     if (inputRef.current) {
       inputRef.current.focus();
     }
     if (!searchParams.get("search")) return;
-    const params = new URLSearchParams(searchParams?.toString());
-    params.delete("search");
-    params.delete("page");
+    const params = getCleanCategorySearchParams(searchParams?.toString() || "", ["search", "page"]);
     router.push(ROUTES.PRODUCTS_WITH_QUERY(params?.toString()));
   };
 
@@ -118,7 +127,20 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
             ref={inputRef}
             type="text"
             value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              setSearchValue(val);
+
+              if (debounceClearRef.current) {
+                clearTimeout(debounceClearRef.current);
+              }
+
+              if (val.trim() === "" && searchParams.get("search")) {
+                debounceClearRef.current = setTimeout(() => {
+                  handleClearSearch();
+                }, 2500);
+              }
+            }}
             onFocus={() => {
               if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current);

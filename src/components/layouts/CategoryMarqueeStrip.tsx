@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams, usePathname } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import { useGetCategories } from "@/services/category/category.hooks";
-import { getLocalizedValue } from "@/utils/product/product.utils";
+import { getLocalizedValue, getCleanCategorySearchParams } from "@/utils/product/product.utils";
 import { Skeleton } from "@/components/skeletons/Skeleton";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import { Home } from "lucide-react";
@@ -25,9 +25,7 @@ export function CategoryMarqueeStrip() {
 
   // Build route path for category clicks
   const getCategoryHref = (categoryId: string) => {
-    const params = new URLSearchParams(searchParams?.toString() || "");
-    params.delete("page");
-    params.delete("subcategory");
+    const params = getCleanCategorySearchParams(searchParams?.toString() || "");
     if (categoryId === "all") {
       params.delete("category");
     } else {

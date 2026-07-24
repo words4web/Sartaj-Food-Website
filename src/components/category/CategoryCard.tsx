@@ -5,7 +5,11 @@ import { useLocale, useTranslations } from "next-intl";
 import { ROUTES } from "@/constants/routes";
 import { ThemedImage } from "@/components/common";
 import { CategoryCardProps } from "@/types/product/product.types";
-import { getLocalizedValue, getCategorySizeClasses } from "@/utils/product/product.utils";
+import {
+  getLocalizedValue,
+  getCategorySizeClasses,
+  getCleanCategorySearchParams,
+} from "@/utils/product/product.utils";
 import { useSearchParams } from "next/navigation";
 import { memo } from "react";
 
@@ -25,9 +29,7 @@ export const CategoryCard = memo(function CategoryCard({
     activeCategoryId === category?.id ||
     activeCategoryId === category?._id;
 
-  const params = new URLSearchParams(searchParams?.toString() || "");
-  params.delete("page");
-  params.delete("subcategory");
+  const params = getCleanCategorySearchParams(searchParams?.toString() || "");
   if (currentId === "all") {
     params.delete("category");
   } else {
