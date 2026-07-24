@@ -20,7 +20,7 @@ export function HeroSection() {
   const CtaButton = () => (
     <Button
       size="default"
-      className="h-6 min-[320px]:h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-2.5 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[8px] min-[320px]:text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
+      className="h-6 min-[320px]:h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-2.5 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[8px] min-[320px]:text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:bg-primary hover:opacity-100 hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
     >
       {t("home.shopEssentials")}
       <ChevronRight className="h-2.5 w-2.5 min-[320px]:h-3 min-[320px]:w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
@@ -98,9 +98,6 @@ export function HeroSection() {
       <div className="hidden lg:block absolute top-[-10%] left-[-5%] w-[550px] h-[550px] rounded-full bg-primary/15 blur-[130px] pointer-events-none lg:animate-orb-drift mix-blend-multiply dark:mix-blend-screen z-10" />
       <div className="hidden lg:block absolute bottom-[-10%] right-[-5%] w-[450px] h-[450px] rounded-full bg-accent/12 blur-[100px] pointer-events-none lg:animate-orb-drift lg:animation-delay-500 mix-blend-multiply dark:mix-blend-screen z-10" />
 
-      {/* Subtle Gradient Overlay for Text Readability */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-black/10 to-transparent pointer-events-none z-15" />
-
       {/* Foreground Content Container */}
       <div className="absolute inset-0 z-20 pointer-events-none">
         {slides?.map((slide, idx) => {
@@ -115,7 +112,7 @@ export function HeroSection() {
                   : "opacity-0 scale-95 translate-y-4"
               }`}
             >
-              {/* Title */}
+              {/* 
               <h1
                 className={`text-[10px] min-[320px]:text-xs min-[375px]:text-sm min-[480px]:text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl font-sans font-bold tracking-tight text-blue-500 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] leading-tight normal-case transition-all duration-700 delay-300 transform ${
                   isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
@@ -123,6 +120,7 @@ export function HeroSection() {
               >
                 {slide?.title}
               </h1>
+              */}
 
               {/* CTA Button */}
               <div
@@ -135,6 +133,7 @@ export function HeroSection() {
                     href={slide?.link}
                     target={slide?.link?.startsWith("http") ? "_blank" : "_self"}
                     key={`link-${slide?.id || idx}`}
+                    className="hover:!opacity-100 inline-block w-fit"
                   >
                     <CtaButton />
                   </Link>

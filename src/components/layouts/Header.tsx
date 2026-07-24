@@ -35,26 +35,23 @@ export function Header() {
 
       {/* Top Header */}
       <header className="sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
-        <div className="relative z-40 max-w-7xl mx-auto pl-1 pr-2 sm:px-4 py-3">
-          <div className="flex items-center justify-between gap-2 sm:gap-4">
-            {/* Logo */}
-            <Link href={ROUTES.HOME} className="flex items-center min-w-fit">
-              <img
-                src="/sartaj_logo.svg"
-                alt="Sartaj Foods Logo"
-                className="h-12 w-auto object-contain"
-              />
-            </Link>
+        <div className="relative z-40 max-w-7xl mx-auto pl-1 pr-2 sm:px-4 py-3 grid grid-cols-[auto_1fr_auto] gap-x-2 sm:gap-x-4 gap-y-3 items-center">
+          {/* Logo */}
+          <Link href={ROUTES.HOME} className="flex items-center min-w-fit col-start-1">
+            <img
+              src="/sartaj_logo.svg"
+              alt="Sartaj Foods Logo"
+              className="h-12 w-auto object-contain"
+            />
+          </Link>
 
-            {/* Search Bar - Desktop */}
-            <SearchBar className="hidden md:block flex-1 max-w-md" />
+          {/* Search Bar - Unified Mobile & Desktop */}
+          <SearchBar className="col-span-3 md:col-span-1 md:col-start-2 order-last md:order-none w-full max-w-full md:max-w-md md:mx-auto" />
 
-            {/* Right Actions */}
+          {/* Right Actions */}
+          <div className="col-start-3 justify-self-end">
             <HeaderActions />
           </div>
-
-          {/* Mobile Search */}
-          <SearchBar className="md:hidden mt-3" isMobile />
         </div>
         <CategoryMarqueeStrip />
       </header>
