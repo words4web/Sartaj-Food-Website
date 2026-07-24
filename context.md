@@ -127,6 +127,12 @@
   - Dynamically computes gradients using active theme variables (`bg-gradient-to-br from-primary/15 via-accent/5 to-background`) with centered, drop-shadowed emojis for products (e.g. `emoji || "📦"`), a circular styled package background for categories, and a styled vector icon for avatars.
   - Deployed this across product catalog cards (`ProductCard.tsx`), product image zoom galleries (`ProductImageGallery.tsx`), shopping cart page item rows (`cart/page.tsx`), checkout page items (`CheckoutCartItems.tsx`), and category sliders (`CategoryCard.tsx`).
   - Added type specifications (`ThemedImageProps`) inside `src/types/common.types.ts` supporting generic image variables, style overrides, and standard forward refs.
+- **Rich Text Product Descriptions**:
+  - Replaced plain text `<p>` product description containers in `ProductInfo.tsx` with dynamic HTML parsing using `dangerouslySetInnerHTML`.
+  - Added `.product-rich-description` Vanilla CSS styling rules in `globals.css` to format paragraphs, lists, bold text, headings, and spec tables with responsive borders, zebra striping, padding, and hover states.
+  - Implemented space normalization inside `ProductInfo.tsx` to replace non-breaking spaces (`&nbsp;` / `\u00a0`) with standard breakable spaces to prevent text breaking layout boundary overflows.
+  - Integrated dynamic multilingual subheading-based collapsible logic. Description parses HTML on subheadings matching current active locale (English, Japanese, Hindi, Bengali, Nepali) and renders them as separate collapsible sections, leaving the introductory paragraph always visible.
+  - Created a separate component [CollapsibleSection.tsx](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/product/CollapsibleSection.tsx) with type definitions moved to [product.types.ts](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/types/product/product.types.ts). Optimized the clickable container padding and added hover states.
 
 - **Tabbed Order History Page (`/orders`)**:
   - Implemented a three-tab order listing page (`active`, `completed`, `cancelled`) using a new `OrderTab` enum defined in `src/types/order.types.ts`.

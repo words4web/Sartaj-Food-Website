@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, X, Clock, Trash2 } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
@@ -21,6 +21,17 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState("");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setSearchValue(searchParams.get("search") || "");
@@ -72,6 +83,9 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
 
   const handleClearSearch = () => {
     setSearchValue("");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
     if (!searchParams.get("search")) return;
     const params = new URLSearchParams(searchParams?.toString());
     params.delete("search");
@@ -101,17 +115,19 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
       <form onSubmit={handleSearchSubmit} className="w-full">
         <div className="w-full relative">
           <input
+            ref={inputRef}
             type="text"
             value={searchValue}
-            onChange={(e) => {
-              const val = e.target.value;
-              setSearchValue(val);
-              if (val?.trim() === "" && searchParams.get("search")) {
-                handleClearSearch();
+            onChange={(e) => setSearchValue(e.target.value)}
+            onFocus={() => {
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
               }
+              setIsFocused(true);
             }}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+            onBlur={() => {
+              timeoutRef.current = setTimeout(() => setIsFocused(false), 200);
+            }}
             placeholder={`${t("common.search")}...`}
             className="w-full pl-4 pr-20 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           />
@@ -131,7 +147,7 @@ export function SearchBar({ className, isMobile = false }: SearchBarProps) {
       </form>
 
       {/* Recent Searches Dropdown */}
-      {isFocused && recentSearches.length > 0 && (
+      {isFocused && recentSearches?.length > 0 && !searchValue && (
         <div className="absolute left-0 right-0 mt-1.5 bg-popover border border-border rounded-lg shadow-xl z-[999] overflow-hidden divide-y divide-border animate-in fade-in slide-in-from-top-1 duration-150">
           <div className="px-3 py-2 text-xs font-semibold text-muted-foreground flex justify-between items-center bg-muted/40">
             <span>{t("common.recentSearches")}</span>
