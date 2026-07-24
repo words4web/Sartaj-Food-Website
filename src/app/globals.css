@@ -669,3 +669,107 @@
 .animate-marquee-slow:hover {
   animation-play-state: paused;
 }
+
+/* ── Product Rich Text Description Styling ── */
+.product-rich-description {
+  line-height: 1.75;
+  font-size: 0.875rem;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.product-rich-description,
+.product-rich-description * {
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+}
+
+.product-rich-description p {
+  margin-bottom: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.product-rich-description p:last-child {
+  margin-bottom: 0;
+}
+
+.product-rich-description h3,
+.product-rich-description h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--foreground);
+}
+
+.product-rich-description ul,
+.product-rich-description ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.product-rich-description ul {
+  list-style-type: disc;
+}
+
+.product-rich-description ol {
+  list-style-type: decimal;
+}
+
+.product-rich-description li {
+  margin-bottom: 0.375rem;
+  color: var(--muted-foreground);
+}
+
+.product-rich-description strong {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.product-rich-description table {
+  display: table !important;
+  width: 100% !important;
+  table-layout: auto !important;
+  border-collapse: collapse !important;
+  margin: 1.25rem 0;
+  font-size: 0.8125rem;
+  background-color: var(--card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.product-rich-description tr {
+  display: table-row !important;
+}
+
+.product-rich-description th,
+.product-rich-description td {
+  display: table-cell !important;
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+/* For 2-column key-value lookup tables, balance cell distribution */
+.product-rich-description td:first-child {
+  width: 30% !important;
+  min-width: 120px;
+}
+.product-rich-description td:last-child {
+  width: 70% !important;
+}
+
+.product-rich-description th {
+  background-color: var(--muted);
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.product-rich-description tr:nth-child(even) {
+  background-color: color-mix(in oklch, var(--muted) 30%, transparent);
+}
+
+.product-rich-description tr:hover {
+  background-color: color-mix(in oklch, var(--accent) 50%, transparent);
+}
