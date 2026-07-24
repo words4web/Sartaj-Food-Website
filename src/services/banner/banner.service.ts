@@ -7,6 +7,6 @@ export const bannerService = {
   getActiveBanners: async (): Promise<
     AxiosResponse<{ success: boolean; message: string; data: { banners: ICustomerBannerItem[] } }>
   > => {
-    return axiosInstance.get(API_ROUTES.BANNERS.GET_ACTIVE);
+    return axiosInstance.get(`${API_ROUTES.BANNERS.GET_ACTIVE}?platform=web`);
   },
 };

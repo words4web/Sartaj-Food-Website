@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IProduct {
   _id?: string;
   id?: string | number;
@@ -151,4 +153,37 @@ export interface ProductInfoProps {
 export interface CollapsibleSectionProps {
   headerHtml: string;
   contentHtml: string;
+}
+
+export interface CategorySidebarProps {
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+  scrollState: {
+    canScrollLeft: boolean;
+    canScrollRight: boolean;
+    canScrollTop: boolean;
+    canScrollBottom: boolean;
+  };
+  isCategoriesLoading: boolean;
+  categoriesError: any;
+  refetchCategories: () => void;
+  categoriesList: ICategory[];
+}
+
+export interface FilterControlsProps {
+  subCategories: ICategory[];
+  activeSubCategoryId: string;
+  createSubcategoryUrl: (subId?: string) => string;
+  productsLength: number;
+  hasActiveFilters: boolean;
+  locale: string;
+}
+
+export interface ProductGridProps {
+  isProductsLoading: boolean;
+  productsError: any;
+  refetchProducts: () => void;
+  products: any[];
+  isFetchingNextPage: boolean;
+  hasNextPage: boolean | undefined;
+  bottomLoadRef: React.RefObject<HTMLDivElement | null>;
 }
