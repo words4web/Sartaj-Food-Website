@@ -63,7 +63,7 @@ export const useGetProductsByCategory = (
 
 export const useGetInfiniteProductsByCategory = (
   categoryId?: string,
-  params?: { search?: string; limit?: number; manufacturers?: string },
+  params?: { search?: string; limit?: number; manufacturers?: string; badge?: string },
 ) => {
   return useInfiniteQuery({
     queryKey: ["products", "category", "infinite", categoryId, params],
