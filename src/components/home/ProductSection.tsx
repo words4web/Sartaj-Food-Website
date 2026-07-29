@@ -51,7 +51,7 @@ export function ProductSection({ title, badge, showTabs = false }: ProductSectio
         <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">{displayTitle}</h2>
           <Link
-            href={ROUTES.PRODUCTS()}
+            href={badge ? `${ROUTES.PRODUCTS()}?badge=${badge}` : ROUTES.PRODUCTS()}
             className="text-primary hover:text-primary font-semibold text-sm shrink-0"
           >
             {t("common.viewAll")} →

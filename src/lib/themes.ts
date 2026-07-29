@@ -14,7 +14,8 @@ export type Theme =
   | "crimson"
   | "nordic"
   | "terracotta"
-  | "peachy";
+  | "peachy"
+  | "gurupurnima";
 
 export interface ThemeConfig {
   name: string;
@@ -415,6 +416,28 @@ export const themes: Record<Theme, ThemeConfig> = {
       mutedForeground: "oklch(0.52 0.05 45)",
     },
   },
+  gurupurnima: {
+    name: "gurupurnima",
+    label: "Guru Purnima",
+    description: "Spiritual saffron and sandalwood tones",
+    cssVars: {
+      primary: "oklch(0.48 0.18 30)",
+      primaryForeground: "oklch(0.985 0 0)",
+      secondary: "oklch(0.94 0.07 80)",
+      secondaryForeground: "oklch(0.15 0.03 55)",
+      accent: "oklch(0.94 0.07 80)",
+      accentForeground: "oklch(0.15 0.03 55)",
+      background: "oklch(0.985 0.02 85)",
+      foreground: "oklch(0.15 0.03 55)",
+      card: "oklch(1 0.005 85)",
+      cardForeground: "oklch(0.15 0.03 55)",
+      border: "oklch(0.89 0.04 80)",
+      input: "oklch(0.89 0.04 80)",
+      ring: "oklch(0.48 0.18 30)",
+      muted: "oklch(0.94 0.07 80)",
+      mutedForeground: "oklch(0.48 0.05 80)",
+    },
+  },
 };
 
 /** Colors shown in the theme picker swatches (hex for canvas gradients) */
@@ -435,6 +458,7 @@ export const themeSwatchColors: Record<Theme, [string, string]> = {
   nordic: ["#1d4ed8", "#38bdf8"],
   terracotta: ["#9a3412", "#fed7aa"],
   peachy: ["#f97316", "#86efac"],
+  gurupurnima: ["#8a1a12", "#f8eed1"],
 };
 
 export function applyTheme(theme: Theme) {

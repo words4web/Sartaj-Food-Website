@@ -71,7 +71,7 @@ export const getCleanCategorySearchParams = (
   keysToClear?: string[],
 ): URLSearchParams => {
   const params = new URLSearchParams(searchParams?.toString());
-  const keys = keysToClear || ["page", "subcategory", "search", "manufacturers"];
+  const keys = keysToClear || ["page", "subcategory", "search", "manufacturers", "badge"];
   keys.forEach((key) => {
     params.delete(key);
   });
