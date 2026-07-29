@@ -1,3 +1,5 @@
+import * as React from "react";
+
 export interface ICmsResponse {
   _id: string;
   slug: string;
@@ -10,4 +12,11 @@ export interface ICmsResponse {
 export interface FAQItem {
   question: string;
   answer: string;
+}
+
+export interface FeatureCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  themeColor: "primary" | "accent" | "emerald" | "blue";
 }

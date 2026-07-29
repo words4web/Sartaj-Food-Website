@@ -55,7 +55,7 @@ export function OffersSection() {
           <CommonError onRetry={refetch} message="Could not load special offers." />
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 lg:gap-8">
-            {productsToRender?.slice(0, 4)?.map((product: IProduct, idx: number) => (
+            {productsToRender?.map((product: IProduct, idx: number) => (
               <div
                 key={product?._id || product?.id}
                 className={isDesktop ? "animate-fade-in-up-card" : ""}

@@ -29,15 +29,23 @@ function ProductsContent() {
   } = useGetCategories();
 
   const activeManufacturersParam = searchParams?.get("manufacturers") || "";
+  const activeBadgeParam = searchParams?.get("badge") || "";
 
   const hasActiveFilters = useMemo(() => {
     return (
       (activeCategoryId !== "all" && activeCategoryId !== "") ||
       activeSubCategoryId !== "" ||
       searchQuery !== "" ||
-      activeManufacturersParam !== ""
+      activeManufacturersParam !== "" ||
+      activeBadgeParam !== ""
     );
-  }, [activeCategoryId, activeSubCategoryId, searchQuery, activeManufacturersParam]);
+  }, [
+    activeCategoryId,
+    activeSubCategoryId,
+    searchQuery,
+    activeManufacturersParam,
+    activeBadgeParam,
+  ]);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState({
@@ -104,6 +112,7 @@ function ProductsContent() {
     limit,
     search: searchQuery,
     manufacturers: activeManufacturersParam,
+    badge: activeBadgeParam,
   });
 
   const products = useMemo(() => {

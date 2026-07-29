@@ -106,10 +106,10 @@ export function HeroSection() {
           return (
             <div
               key={`fg-${slide?.id || idx}`}
-              className={`absolute left-3 bottom-3 min-[375px]:left-4 min-[375px]:bottom-4 sm:left-8 sm:bottom-8 w-[calc(100%-1.5rem)] sm:w-auto max-w-lg md:max-w-xl text-left z-20 pointer-events-auto transition-all duration-1000 ease-in-out ${
+              className={`absolute left-3 bottom-3 min-[375px]:left-4 min-[375px]:bottom-4 sm:left-8 sm:bottom-8 w-[calc(100%-1.5rem)] sm:w-auto max-w-lg md:max-w-xl text-left z-20 transition-all duration-1000 ease-in-out ${
                 isActive
-                  ? "opacity-100 scale-100 translate-y-0"
-                  : "opacity-0 scale-95 translate-y-4"
+                  ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+                  : "opacity-0 scale-95 translate-y-4 pointer-events-none"
               }`}
             >
               {/* 

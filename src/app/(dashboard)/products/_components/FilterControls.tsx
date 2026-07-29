@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import { ManufacturerFilter } from "@/components/product/ManufacturerFilter";
+import { BadgeFilter } from "@/components/product/BadgeFilter";
 import { ROUTES } from "@/constants/routes";
 import { getLocalizedValue } from "@/utils/product/product.utils";
 import { ICategory, FilterControlsProps } from "@/types/product/product.types";
@@ -70,6 +71,7 @@ export function FilterControls({
       {/* Right side: Action Filters Row */}
       <div className="flex items-center gap-2 shrink-0 pb-3">
         <ManufacturerFilter />
+        <BadgeFilter />
         {hasActiveFilters && (
           <Link
             href={ROUTES.PRODUCTS()}
