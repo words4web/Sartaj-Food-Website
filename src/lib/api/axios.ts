@@ -43,6 +43,8 @@ axiosInstance.interceptors.request.use(
       config.headers["Accept-Language"] = locale;
     }
 
+    config.headers["x-platform"] = "web";
+
     return config;
   },
   (error) => {

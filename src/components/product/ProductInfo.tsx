@@ -2,6 +2,7 @@ import { Info, ShieldAlert } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import type { ProductInfoProps } from "@/types/product/product.types";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { CartActions } from "@/components/cart/CartActions";
 
 const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
   en: [
@@ -116,31 +117,40 @@ export function ProductInfo({
       </div>
 
       {/* Price / Discount block */}
-      <div className="border-t border-b border-border py-4 mb-6">
-        <div className="flex items-baseline gap-3 flex-wrap">
-          <span className="text-3xl font-black text-foreground">¥{price?.toLocaleString()}</span>
-          {isDiscounted && (
-            <>
-              <span className="text-sm text-muted-foreground line-through">
+      <div className="border-t border-b border-border py-5 mb-6 bg-muted/10 rounded-2xl px-4 sm:px-5">
+        {isDiscounted ? (
+          // Discounted Layout: Premium and highly visible sale tags
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="text-4xl font-extrabold text-foreground tracking-tight">
+                ¥{price?.toLocaleString()}
+              </span>
+              <span className="text-base text-muted-foreground/70 line-through font-medium">
                 ¥{originalPrice?.toLocaleString()}
               </span>
-              <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full dark:bg-green-900/30 dark:text-green-400">
+              <span className="bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400 text-xs font-extrabold px-2.5 py-1 rounded-full tracking-wider uppercase animate-pulse">
                 {discountPercent}% OFF
               </span>
-            </>
-          )}
-        </div>
-
-        {/* VAT / Tax Breakdown */}
-        <div className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
-          <Info className="h-3 w-3 text-primary/70" />
-          <span>
-            {t("products.includesTax", {
-              rate: taxRate,
-              amount: taxAmount?.toLocaleString(),
-            })}
-          </span>
-        </div>
+            </div>
+          </div>
+        ) : (
+          // Regular Layout: Show '¥Y with tax' in big text on top and '¥X without tax' below
+          <div className="flex flex-col gap-1">
+            <span className="text-4xl font-extrabold text-foreground tracking-tight flex items-baseline gap-2">
+              ¥{(price + taxAmount)?.toLocaleString()}
+              {taxAmount > 0 && (
+                <span className="text-lg font-bold text-foreground/80">
+                  {t("products.taxIncluded", { rate: taxRate })}
+                </span>
+              )}
+            </span>
+            {taxAmount > 0 && (
+              <span className="text-sm font-semibold text-muted-foreground/80 mt-0.5">
+                ¥{price?.toLocaleString()} {t("products.taxExcluded")}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Age Restriction Alert */}
@@ -201,6 +211,11 @@ export function ProductInfo({
                   dangerouslySetInnerHTML={{ __html: introHtml }}
                 />
               )}
+
+              {/* Cart Actions */}
+              <div className={` ${collapsibleSections?.length === 0 ? "mb-0" : "mb-6"}`}>
+                <CartActions product={product} mode="detail" />
+              </div>
 
               {/* Collapsible sections */}
               {collapsibleSections?.map((sec, idx) => (

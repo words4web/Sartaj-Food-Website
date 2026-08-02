@@ -7,7 +7,8 @@ export const useGetManufacturers = () => {
     queryKey: ["manufacturers"],
     queryFn: async () => {
       const response = await manufacturerService.getAllManufacturers();
-      return response?.data?.data?.manufacturers || [];
+      const manufacturers = response?.data?.data?.manufacturers || [];
+      return manufacturers?.filter((m) => m?.slug !== "chings" && m?.slug !== "dermoviva");
     },
   });
 };

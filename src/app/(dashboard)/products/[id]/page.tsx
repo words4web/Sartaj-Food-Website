@@ -77,12 +77,14 @@ export default function ProductDetailPage() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="bg-card rounded-2xl border border-border shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8 p-4 sm:p-6 lg:p-8 relative">
           {/* Left: Image Gallery */}
-          <ProductImageGallery
-            product={product}
-            name={name}
-            activeImage={activeImage}
-            onSetActiveImage={setActiveImage}
-          />
+          <div className="md:sticky md:top-40 md:self-start z-1">
+            <ProductImageGallery
+              product={product}
+              name={name}
+              activeImage={activeImage}
+              onSetActiveImage={setActiveImage}
+            />
+          </div>
 
           {/* Right: Info + Actions */}
           <div className="flex flex-col justify-between gap-6">
@@ -98,9 +100,8 @@ export default function ProductDetailPage() {
               isOutOfStock={isOutOfStock}
             />
 
-            {/* Cart Actions (self-contained, reads from Redux) */}
+            {/* Product Specs */}
             <div className="space-y-4">
-              <CartActions product={product} mode="detail" />
               <ProductSpecs product={product} />
             </div>
           </div>
