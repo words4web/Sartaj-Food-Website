@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import type { CollapsibleSectionProps } from "@/types/product/product.types";
 
 export function CollapsibleSection({ headerHtml, contentHtml }: CollapsibleSectionProps) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const headerText = headerHtml
     ?.replace(/<[^>]*>/g, "")
     ?.trim()
