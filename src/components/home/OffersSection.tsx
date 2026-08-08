@@ -10,6 +10,7 @@ import { CommonError } from "@/components/ui/common-error";
 import { useCachedSkeletonCount } from "@/hooks/useCachedSkeletonCount";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import { IProduct } from "@/types/product/product.types";
+import { CountdownTimer, IndiaFlagIcon } from "@/components/common/CountdownTimer";
 
 export function OffersSection() {
   const t = useTranslations();
@@ -20,7 +21,7 @@ export function OffersSection() {
     isLoading,
     isError,
     refetch,
-  } = useGetDiscountedProducts({ limit: 50 });
+  } = useGetDiscountedProducts({ limit: 100 });
 
   const productsToRender = discountedProducts || [];
 
@@ -30,28 +31,31 @@ export function OffersSection() {
     4,
   );
 
-  if (!isLoading && !isError && productsToRender?.length === 0) {
-    return null;
-  }
+  // if (!isLoading && !isError && productsToRender?.length === 0) {
+  //   return null;
+  // }
 
   return (
     <section className="py-6 sm:py-10 md:py-12 bg-muted/50 border-t border-b border-border/40">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 relative z-10 space-y-6 sm:space-y-8">
+        <CountdownTimer targetDate="2026-08-10T00:00:00+09:00" />
+
         {/* Header */}
-        <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
+        {/* <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
             {t("home.specialOffers") || "Special Offers"}
           </h2>
           <Link
-            href={ROUTES.PRODUCTS()}
-            className="text-primary hover:text-primary font-semibold text-sm shrink-0"
+            href={ROUTES.SALE}
+            className="text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1.5 text-sm font-semibold shrink-0"
           >
-            {t("common.viewAll")} →
+            <IndiaFlagIcon className="w-5 h-3.5 rounded-sm shadow-sm shrink-0" />
+            <span>{t("common.viewAll") || "View All"} →</span>
           </Link>
-        </div>
+        </div> */}
 
         {/* Products Grid / Loading State */}
-        {isLoading ? (
+        {/* {isLoading ? (
           <ProductGridSkeleton
             count={skeletonCount}
             columnsClass="grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 lg:gap-8"
@@ -70,7 +74,7 @@ export function OffersSection() {
               </div>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );

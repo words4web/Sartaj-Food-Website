@@ -480,5 +480,42 @@
     "customerSupportValue": "070-5577-1975",
     "whatsappLabel": "ワッツアップ",
     "viberLabel": "バイバー"
+  },
+  "countdown": {
+    "celebrationCountdown": "お祝いカウントダウン",
+    "days": "日",
+    "hours": "時間",
+    "mins": "分",
+    "secs": "秒",
+    "comingSoon": "近日公開",
+    "liveTitle": "独立記念日セール開催中！",
+    "liveSubTitle": "お祝い割引で、お気に入りのプレミアムインド食材を今すぐゲットしましょう！",
+    "timerTitle": "独立記念日セール",
+    "timerSubTitle": "お祝いの割引セールがスタートしました！以下の特別オファーをご覧いただくか、専用のセール会場をご覧ください。",
+    "goToSale": "今すぐセールで買い物をする"
+  },
+  "sale": {
+    "celebrate": "祝う",
+    "independenceDay": "独立記念日",
+    "heroSubtitle": "伝統的なスパイス、プレミアムな穀物、スナック、スイーツ、新鮮な自家製食材など、特別なお祝いセールでインドの精神を称えましょう。",
+    "sectionTitle": "お祝い特別オファー",
+    "sectionSubtitle": "お祝い価格の高品質な直輸入商品。",
+    "offersCount": "{count}件のオファーが利用可能",
+    "noOffersTitle": "現在、セール商品はございません",
+    "noOffersSubtitle": "お祝いに向けて新鮮な商品を準備中ですので、しばらくしてからもう一度ご確認ください！",
+    "bundle": {
+      "sectionTitle": "ペアで節約",
+      "sectionSubtitle": "あなたが気に入るセット商品",
+      "addBundleToCart": "セットをカートに追加",
+      "adding": "追加中…",
+      "save": "¥{amount}お得",
+      "originalPrice": "元の価格",
+      "bundlePrice": "セット価格",
+      "errorAdding": "セットの追加に失敗しました。もう一度お試しください。",
+      "partialSuccess": "1点目は追加されましたが、2点目が失敗しました。2点目を手動でご追加ください。",
+      "bothAdded": "両方の商品をカートに追加しました！",
+      "bundleCountOne": "セット",
+      "bundleCountMany": "セット"
+    }
   }
 }
