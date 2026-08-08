@@ -13,6 +13,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { BundleSection } from "@/components/sale/BundleSection";
+import Image from "next/image";
 
 export default function SalePage() {
   const tCommon = useTranslations("common");
@@ -75,6 +76,19 @@ export default function SalePage() {
         </div>
       </div>
 
+      {/* Promotional Banner */}
+      <div className="max-w-7xl mx-auto px-4 mt-8">
+        <div className="relative aspect-[16/6] sm:aspect-[21/7] w-full overflow-hidden rounded-none border border-border/40 shadow-md hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+          <Image
+            src="/sartaj banner offers.webp"
+            alt="Sartaj Banner Offers"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      </div>
+
       {/* Pair & Save Bundles Section */}
       <BundleSection products={productsToRender} />
 
@@ -110,7 +124,7 @@ export default function SalePage() {
             {productsToRender?.map((product: IProduct, idx: number) => (
               <div
                 key={product?._id || product?.id}
-                className={isDesktop ? "animate-fade-in-up-card" : ""}
+                className={`relative z-10 ${isDesktop ? "animate-fade-in-up-card" : ""}`}
                 style={{ animationDelay: isDesktop ? `${idx * 50}ms` : undefined }}
               >
                 <ProductCard product={product} />
