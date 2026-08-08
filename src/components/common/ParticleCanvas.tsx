@@ -15,12 +15,14 @@ const CHARACTERS: Record<string, string[]> = {
   sakura: ["🌸"],
   snowflake: ["❄"],
   "diwali-light": ["✨"],
+  independence: ["saffron", "green"],
 };
 
 const GLOW: Record<string, string> = {
   sakura: "drop-shadow(0 0 1px rgba(249,168,212,0.08))",
   snowflake: "drop-shadow(0 0 1px rgba(255,255,255,0.08))",
   "diwali-light": "drop-shadow(0 0 1px rgba(253,230,138,0.08))",
+  independence: "drop-shadow(0 0 1.5px rgba(255,153,51,0.12))",
 };
 
 // ── Inject keyframes once
@@ -244,10 +246,10 @@ export const ParticleCanvas = memo(function ParticleCanvas({
         clearInterval(interval);
       };
     } else {
-      const baseCount = type === "snowflake" ? 35 : 25;
+      const baseCount = type === "snowflake" ? 35 : type === "independence" ? 65 : 25;
       const count = Math.min(
         Math.round(baseCount * density * countMultiplier),
-        type === "snowflake" ? 55 : 40,
+        type === "snowflake" ? 55 : type === "independence" ? 100 : 40,
       );
       setFallingFlakes(buildFallingParticles(type, count));
       setTwinkleFlakes([]);
@@ -363,7 +365,20 @@ export const ParticleCanvas = memo(function ParticleCanvas({
                 ["--cf-spin" as string]: f.spin,
               }}
             >
-              {f.char}
+              {type === "independence" ? (
+                <div
+                  style={{
+                    width: "8px",
+                    height: "18px",
+                    borderRadius: "1px",
+                    backgroundColor: f.char === "saffron" ? "#FF9933" : "#128807",
+                    border: "none",
+                    boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                  }}
+                />
+              ) : (
+                f.char
+              )}
             </span>
           </span>
         ))}

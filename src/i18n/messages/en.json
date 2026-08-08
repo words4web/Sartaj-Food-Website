@@ -480,5 +480,42 @@
     "customerSupportValue": "070-5577-1975",
     "whatsappLabel": "WhatsApp",
     "viberLabel": "Viber"
+  },
+  "countdown": {
+    "celebrationCountdown": "Celebration Countdown",
+    "days": "Days",
+    "hours": "Hours",
+    "mins": "Mins",
+    "secs": "Secs",
+    "comingSoon": "Coming Soon",
+    "liveTitle": "Independence Day Sale is LIVE!",
+    "liveSubTitle": "Grab your favorite premium Indian groceries now with celebratory discounts!",
+    "timerTitle": "Independence Day Sale",
+    "timerSubTitle": "Our celebratory savings are live! Explore special offers below or browse the dedicated sale pavilion.",
+    "goToSale": "Shop the Sale Now"
+  },
+  "sale": {
+    "celebrate": "Celebrate",
+    "independenceDay": "Independence Day",
+    "heroSubtitle": "Honor the spirit of India with special celebratory deals on traditional spices, premium grains, snacks, sweets, and fresh home-style essentials.",
+    "sectionTitle": "Celebration Special Offers",
+    "sectionSubtitle": "Top quality imported products at celebratory prices.",
+    "offersCount": "{count} Offers Available",
+    "noOffersTitle": "No Sale Items Available Right Now",
+    "noOffersSubtitle": "Please check back shortly as we prepare fresh stock for the celebration!",
+    "bundle": {
+      "sectionTitle": "Pair & Save",
+      "sectionSubtitle": "Hand-picked combinations you'll love",
+      "addBundleToCart": "Add Bundle to Cart",
+      "adding": "Adding…",
+      "save": "SAVE ¥{amount}",
+      "originalPrice": "Original",
+      "bundlePrice": "Bundle Price",
+      "errorAdding": "Failed to add bundle. Please try again.",
+      "partialSuccess": "First item was added but the second failed. Please add the second item manually.",
+      "bothAdded": "Both products added to cart!",
+      "bundleCountOne": "Bundle",
+      "bundleCountMany": "Bundles"
+    }
   }
 }

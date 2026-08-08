@@ -8,6 +8,7 @@ export const ROUTES = {
   ABOUT: "/about-us",
   CONTACT: "/contact-us",
   FAQ: "/faq",
+  SALE: "/sale",
 
   // Authenticated / Dashboard routes
   HOME: "/",

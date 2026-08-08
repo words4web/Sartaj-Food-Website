@@ -15,7 +15,8 @@ export type Theme =
   | "nordic"
   | "terracotta"
   | "peachy"
-  | "gurupurnima";
+  | "gurupurnima"
+  | "independence";
 
 export interface ThemeConfig {
   name: string;
@@ -41,7 +42,7 @@ export interface ThemeConfig {
   };
   particles?: {
     enabled: boolean;
-    type: "sakura" | "snowflake" | "diwali-light" | "none";
+    type: "sakura" | "snowflake" | "diwali-light" | "independence" | "none";
   };
 }
 
@@ -438,6 +439,29 @@ export const themes: Record<Theme, ThemeConfig> = {
       mutedForeground: "oklch(0.48 0.05 80)",
     },
   },
+  independence: {
+    name: "independence",
+    label: "Independence Day",
+    description: "Vibrant celebratory saffron, white, and green theme",
+    cssVars: {
+      primary: "oklch(0.68 0.22 45)",
+      primaryForeground: "oklch(0.995 0 0)",
+      secondary: "oklch(0.97 0.01 140)",
+      secondaryForeground: "oklch(0.28 0.16 260)",
+      accent: "oklch(0.48 0.18 140)",
+      accentForeground: "oklch(0.995 0 0)",
+      background: "oklch(0.995 0.005 55)",
+      foreground: "oklch(0.18 0.02 260)",
+      card: "oklch(1 0 0)",
+      cardForeground: "oklch(0.18 0.02 260)",
+      border: "oklch(0.92 0.02 140)",
+      input: "oklch(0.92 0.02 140)",
+      ring: "oklch(0.28 0.16 260)",
+      muted: "oklch(0.96 0.01 140)",
+      mutedForeground: "oklch(0.5 0.05 140)",
+    },
+    particles: { enabled: true, type: "independence" },
+  },
 };
 
 /** Colors shown in the theme picker swatches (hex for canvas gradients) */
@@ -459,6 +483,7 @@ export const themeSwatchColors: Record<Theme, [string, string]> = {
   terracotta: ["#9a3412", "#fed7aa"],
   peachy: ["#f97316", "#86efac"],
   gurupurnima: ["#8a1a12", "#f8eed1"],
+  independence: ["#FF9933", "#128807"],
 };
 
 export function applyTheme(theme: Theme) {
