@@ -15,7 +15,12 @@ export function OffersSection() {
   const t = useTranslations();
   const isDesktop = useIsDesktop();
 
-  const { data: discountedProducts, isLoading, isError, refetch } = useGetDiscountedProducts();
+  const {
+    data: discountedProducts,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetDiscountedProducts({ limit: 50 });
 
   const productsToRender = discountedProducts || [];
 
