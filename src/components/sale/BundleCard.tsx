@@ -84,7 +84,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
   const img2 = p2?.images?.[0] ?? "";
 
   return (
-    <div className="relative flex flex-col bg-card border border-border/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group min-w-[280px] sm:min-w-0">
+    <div className="relative z-10 flex flex-col bg-card border border-border/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group min-w-[280px] sm:min-w-0">
       {bundle?.savings > 0 && (
         <div className="absolute top-3 right-3 z-10">
           <span className="bg-gradient-to-br from-orange-500 to-orange-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm uppercase tracking-wider">
