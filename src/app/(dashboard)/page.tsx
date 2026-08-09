@@ -41,22 +41,37 @@ export default function HomePage() {
     }
   }, [appConfig]);
 
-  const threshold = appConfig?.freeDeliveryThreshold ?? cachedConfig.freeDeliveryThreshold;
-  const frozenThreshold = appConfig?.frozenWeightThreshold ?? cachedConfig.frozenWeightThreshold;
-  const marqueeText =
-    threshold !== undefined && frozenThreshold !== undefined
-      ? `${t("common.appName") || "Sartaj Foods"}: ${t("common.freeDeliveryMsg", {
-          dryAmount: threshold?.toLocaleString(),
-          frozenWeight: frozenThreshold?.toString(),
-        })}`
-      : "✨ Free delivery options available! Secure your delivery slots early. ✨";
+  const threshold = appConfig?.freeDeliveryThreshold ?? cachedConfig?.freeDeliveryThreshold;
+  const frozenThreshold = appConfig?.frozenWeightThreshold ?? cachedConfig?.frozenWeightThreshold;
+  let marqueeText = "✨ Free delivery options available! Secure your delivery slots early. ✨";
+
+  if (threshold !== undefined && frozenThreshold !== undefined) {
+    const isFrozenFree = frozenThreshold === 0;
+    const isDryFree = threshold <= 1;
+    if (isFrozenFree && isDryFree) {
+      marqueeText = t("common.freeAllMsg");
+    } else if (isFrozenFree) {
+      marqueeText = t("common.freeFrozenMsgOnly", {
+        dryAmount: threshold?.toLocaleString(),
+      });
+    } else if (isDryFree) {
+      marqueeText = t("common.freeDryMsgOnly", {
+        frozenWeight: frozenThreshold?.toString(),
+      });
+    } else {
+      marqueeText = t("common.freeDeliveryMsg", {
+        dryAmount: threshold?.toLocaleString(),
+        frozenWeight: frozenThreshold?.toString(),
+      });
+    }
+  }
 
   return (
     <main className="min-h-screen bg-card">
       <HeroSection />
 
       {/* Dynamic Free Delivery Marquee Bar */}
-      <div className="w-full bg-primary text-primary-foreground py-2.5 overflow-hidden border-y border-primary/20 text-xs font-black uppercase tracking-wider select-none">
+      <div className="w-full bg-primary text-primary-foreground py-2 overflow-hidden border-y border-primary/20 text-sm sm:text-base font-black uppercase tracking-wider select-none">
         <div className="flex animate-marquee-slow gap-12">
           <span>{marqueeText}</span>
           <span>{marqueeText}</span>
