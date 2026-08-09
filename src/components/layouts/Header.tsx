@@ -24,7 +24,7 @@ export function Header() {
 
   return (
     <>
-      <div className="w-full bg-[#1e293b] text-white py-2.5 overflow-hidden border-b border-slate-900/60 text-sm font-bold select-none relative z-50">
+      <div className="w-full bg-[#1e293b] text-white py-2 overflow-hidden border-b border-slate-900/60 text-base sm:text-lg font-extrabold select-none relative z-50">
         <div className="flex animate-marquee-slow gap-8">
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>

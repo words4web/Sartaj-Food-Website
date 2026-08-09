@@ -52,7 +52,8 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`bg-background ${playfair.variable}`}>
-      <head>
+      <head />
+      <body className="font-sans antialiased relative min-h-screen">
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-375874196"
           strategy="afterInteractive"
@@ -65,8 +66,6 @@ export default function RootLayout({
             gtag('config', 'AW-375874196');
           `}
         </Script>
-      </head>
-      <body className="font-sans antialiased relative min-h-screen">
         {isMaintenance ? (
           <MaintenancePage />
         ) : (
