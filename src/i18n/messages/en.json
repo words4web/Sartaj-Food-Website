@@ -310,7 +310,9 @@
     "chooseFreeGiftDesc": "Select one free gift to include with your order.",
     "free": "FREE",
     "orderNotes": "Order Notes (Optional)",
-    "notesPlaceholder": "Add special instructions for your delivery, or any other notes..."
+    "notesPlaceholder": "Add special instructions for your delivery, or any other notes...",
+    "transitGuaranteeTitle": "Transit Mishap Guarantee",
+    "transitGuaranteeDesc": "Damaged or melted items during delivery? We will resend a free replacement with no extra shipping fees."
   },
   "orders": {
     "orders": "Orders",
