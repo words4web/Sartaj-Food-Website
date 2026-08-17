@@ -44,3 +44,11 @@ export function getOrderStatusColor(status: string): string {
 export function formatOrderStatus(status: string): string {
   return status?.replace(/_/g, " ")?.toUpperCase() || "UNKNOWN";
 }
+
+export function parseMarkdown(text: string) {
+  let html = text?.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" class="text-primary font-bold hover:underline" target="_blank" rel="noopener noreferrer">$1</a>',
+  );
+  return html?.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-foreground">$1</strong>');
+}

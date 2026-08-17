@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { Loader2, HelpCircle } from "lucide-react";
+import { Loader2, HelpCircle, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CheckoutPriceBreakdownProps } from "@/types/checkout/checkout.types";
@@ -131,6 +131,19 @@ export function CheckoutPriceBreakdown({
           t("placeOrder") || "Place Order"
         )}
       </Button>
+
+      <div className="flex items-start gap-3 bg-primary/5 border border-primary/10 rounded-xl p-3 text-xs text-muted-foreground">
+        <ShieldCheck className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+        <div className="space-y-0.5">
+          <p className="font-bold text-foreground">
+            {t("transitGuaranteeTitle") || "Transit Mishap Guarantee"}
+          </p>
+          <p className="leading-normal">
+            {t("transitGuaranteeDesc") ||
+              "Free replacements at no extra cost if any damage occurs during transit."}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

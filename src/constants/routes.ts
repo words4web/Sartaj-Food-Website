@@ -23,6 +23,8 @@ export const ROUTES = {
   NOTIFICATIONS: "/notifications",
   WISHLIST: "/wishlist",
   WALLET: "/wallet",
+  BLOG: "/blog",
+  BLOG_DETAIL: (slug: string) => `/blog/${slug}`,
 };
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES];

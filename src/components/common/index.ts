@@ -12,3 +12,5 @@ export { Typography } from "./Typography";
 export { ThemedImage } from "./ThemedImage";
 export { WishlistButton } from "./WishlistButton";
 export { MaintenancePage } from "./MaintenancePage";
+export { BlogCard } from "./BlogCard";
+export { GoogleTranslator } from "./GoogleTranslator";

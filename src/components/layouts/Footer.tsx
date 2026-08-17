@@ -12,7 +12,7 @@ export function Footer() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <footer className="relative z-10 bg-gradient-to-b from-primary/4 via-background to-accent/8 border-t border-border/40 text-muted-foreground mt-12 md:mt-16 font-sans w-full">
+    <footer className="notranslate relative z-10 bg-gradient-to-b from-primary/4 via-background to-accent/8 border-t border-border/40 text-muted-foreground mt-12 md:mt-16 font-sans w-full">
       <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 pt-10 md:pt-14 lg:pt-16 pb-6 md:pb-8 lg:pb-10 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 lg:gap-12 mb-10">
           {/* Brand Column */}
