@@ -52,7 +52,7 @@ export function StoreLocation() {
     "https://www.google.com/maps/place/SARTAJ+FOODS/@34.8098806,135.4287325,17z/data=!3m1!4b1!4m6!3m5!1s0x6000f0ea898962a7:0xffad651a0bf33e66!8m2!3d34.8098806!4d135.4287325!16s%2Fg%2F11bwnbyl_8?hl=en&entry=ttu&g_ep=EgoyMDI2MDcxNS4wIKXMDSoASAFQAw%3D%3D";
 
   return (
-    <section className="py-20 relative z-20 overflow-hidden border-b border-border/10 bg-background/30 backdrop-blur-[2px]">
+    <section className="py-10 md:py-20 relative z-20 overflow-hidden border-b border-border/10 bg-background/30 backdrop-blur-[2px]">
       {/* Decorative gradient accents */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none -z-10" />
 

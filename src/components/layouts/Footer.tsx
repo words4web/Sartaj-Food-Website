@@ -165,6 +165,14 @@ export function Footer() {
                   {t("products.products")}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href={ROUTES.BLOG}
+                  className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors duration-200"
+                >
+                  {t("cms.blogs")}
+                </Link>
+              </li>
               {isAuthenticated && (
                 <>
                   <li>
