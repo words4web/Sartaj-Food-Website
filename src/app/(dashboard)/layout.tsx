@@ -20,7 +20,7 @@ const isPublicPath = (path: string): boolean => {
   ) {
     return true;
   }
-  if (path.startsWith("/products")) return true;
+  if (path?.startsWith("/products") || path?.startsWith("/blog")) return true;
   return false;
 };
 
@@ -42,7 +42,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-card">
+    <div
+      className={`flex flex-col min-h-screen bg-card ${pathname?.startsWith("/blog") ? "" : "notranslate"}`}
+    >
       <Header />
       <main className="flex-1">{children}</main>
       {pathname !== "/products" && <Footer />}

@@ -310,7 +310,9 @@
     "chooseFreeGiftDesc": "ご注文に含める無料ギフトを1つ選んでください。",
     "free": "無料",
     "orderNotes": "注文メモ (任意)",
-    "notesPlaceholder": "配達に関する特別な指示や、その他のメモを追加してください..."
+    "notesPlaceholder": "配達に関する特別な指示や、その他のメモを追加してください...",
+    "transitGuaranteeTitle": "配送トラブル保証",
+    "transitGuaranteeDesc": "配送中に商品の破損や冷凍商品の融解などが発生しましたか？配送料を含む追加費用なしで、すぐに代替品を再発送いたします。"
   },
   "orders": {
     "orders": "注文",

@@ -62,10 +62,6 @@ export const getCategorySizeClasses = (size?: "sm" | "md" | "lg"): CategorySizeC
   };
 };
 
-/**
- * Clears search-specific, pagination-specific, and filter-specific parameters
- * from URLSearchParams when switching or resetting categories.
- */
 export const getCleanCategorySearchParams = (
   searchParams: URLSearchParams | string,
   keysToClear?: string[],
