@@ -12,6 +12,10 @@ const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
     "Added Colours",
     "No Added Colours",
     "How to Use",
+    "Why You'll Love It",
+    "Why you'll love it",
+    "Why You’ll Love It",
+    "Why you’ll love it",
   ],
   ja: [
     "風味プロファイル",
@@ -19,6 +23,7 @@ const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
     "味の特徴",
     "製品ハイライト",
     "商品の特徴",
+    "製品の特徴",
     "原材料",
     "主な原材料",
     "着色料",
@@ -28,6 +33,7 @@ const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
     "使い方",
     "召し上がり方",
     "お召し上がり方",
+    "おすすめポイント",
   ],
   hi: [
     "स्वाद प्रोफ़ाइल",
@@ -37,6 +43,8 @@ const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
     "कोई अतिरिक्त रंग नहीं",
     "कैसे उपयोग करें",
     "उपयोग करने का तरीका",
+    "आपको यह क्यों पसंद आएगा",
+    "आपको यह क्यों पसंद आएगा:",
   ],
   ne: [
     "स्वाद प्रोफाइल",
@@ -45,14 +53,17 @@ const LOCALIZED_SUBHEADINGS: Record<string, string[]> = {
     "थप रंगहरू",
     "कुनै थप रंगहरू छैनन्",
     "कसरी प्रयोग गर्ने",
+    "तपाईंलाई यो किन मन पर्नेछ",
   ],
   bn: [
     "ফ্লেভার প্রোফাইল",
     "পণ্য হাইলেট",
+    "পণ্য হাইলাইট",
     "মূল উপাদান",
     "যোগ করা রং",
     "কোন যোগ করা রং নেই",
     "কিভাবে ব্যবহার করবেন",
+    "আপনি এটি কেন পছন্দ করবেন",
   ],
 };
 

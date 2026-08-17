@@ -24,7 +24,7 @@ export function Header() {
 
   return (
     <>
-      <div className="w-full bg-[#1e293b] text-white py-2 overflow-hidden border-b border-slate-900/60 text-base sm:text-lg font-extrabold select-none relative z-50">
+      <div className="notranslate w-full bg-[#1e293b] text-white py-2 overflow-hidden border-b border-slate-900/60 text-base sm:text-lg font-extrabold select-none relative z-50">
         <div className="flex animate-marquee-slow gap-8">
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
@@ -34,7 +34,7 @@ export function Header() {
       </div>
 
       {/* Top Header */}
-      <header className="sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+      <header className="notranslate sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
         <div className="relative z-40 max-w-7xl mx-auto pl-1 pr-2 sm:px-4 py-3 grid grid-cols-[auto_1fr_auto] gap-x-2 sm:gap-x-4 gap-y-3 items-center">
           {/* Logo */}
           <Link href={ROUTES.HOME} className="flex items-center min-w-fit col-start-1">
