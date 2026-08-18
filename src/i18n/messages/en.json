@@ -523,5 +523,11 @@
       "bundleCountOne": "Bundle",
       "bundleCountMany": "Bundles"
     }
+  },
+  "rakhiBanner": {
+    "badge": "Raksha Bandhan Special",
+    "title": "Celebrate the Bond of Love & Protection",
+    "description": "Tie the thread of love this Rakhi. Explore our handcrafted designer Rakhi collection and authentic premium Indian sweets to send to your brother.",
+    "btnText": "Explore Rakhi Collection"
   }
 }
