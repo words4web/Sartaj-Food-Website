@@ -132,7 +132,7 @@ export function CheckoutPriceBreakdown({
         )}
       </Button>
 
-      <div className="flex items-start gap-3 bg-primary/5 border border-primary/10 rounded-xl p-3 text-xs text-muted-foreground">
+      {/* <div className="flex items-start gap-3 bg-primary/5 border border-primary/10 rounded-xl p-3 text-xs text-muted-foreground">
         <ShieldCheck className="h-5 w-5 text-primary shrink-0 mt-0.5" />
         <div className="space-y-0.5">
           <p className="font-bold text-foreground">
@@ -143,7 +143,7 @@ export function CheckoutPriceBreakdown({
               "Free replacements at no extra cost if any damage occurs during transit."}
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
