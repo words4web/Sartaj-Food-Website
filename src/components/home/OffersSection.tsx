@@ -10,7 +10,7 @@ import { CommonError } from "@/components/ui/common-error";
 import { useCachedSkeletonCount } from "@/hooks/useCachedSkeletonCount";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import { IProduct } from "@/types/product/product.types";
-import { CountdownTimer, IndiaFlagIcon } from "@/components/common/CountdownTimer";
+import { RakshaBandhanBanner } from "@/components/home/RakshaBandhanBanner";
 
 export function OffersSection() {
   const t = useTranslations();
@@ -38,7 +38,7 @@ export function OffersSection() {
   return (
     <section className="py-6 sm:py-10 md:py-12 bg-muted/50 border-t border-b border-border/40">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 relative z-10 space-y-6 sm:space-y-8">
-        <CountdownTimer targetDate="2026-08-10T00:00:00+09:00" />
+        <RakshaBandhanBanner />
 
         {/* Header */}
         {/* <div className="flex items-baseline justify-between gap-4 mb-6 sm:mb-8">
