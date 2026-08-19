@@ -1,37 +1,44 @@
-name: Auto Merge and Sync Branches
+name: Auto Create Pull Requests
 
 on:
   push:
     branches:
       - "SW-23-client-changes"
+      - "dev"
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
-  merge-and-sync:
+  create-pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Configure Git Credentials
+      - name: Create Pull Request to dev
+        if: github.ref_name == 'SW-23-client-changes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          gh pr create \
+            --title "Sync: ${{ github.ref_name }} to dev" \
+            --body "Automated Sync Pull Request from ${{ github.ref_name }} to dev branch." \
+            --base dev \
+            --head ${{ github.ref_name }} || echo "PR already exists"
 
-      - name: Merge feature branch to dev
-        run: |
-          git checkout dev
-          git pull origin dev
-          git merge ${{ github.ref_name }} --no-edit
-          git push origin dev
+          gh pr merge ${{ github.ref_name }} --merge || echo "Merge failed or already merged"
 
-      - name: Merge dev branch to main
+      - name: Create Pull Request to main
+        if: github.ref_name == 'dev'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git checkout main
-          git pull origin main
-          git merge dev --no-edit
-          git push origin main
+          gh pr create \
+            --title "Release: dev to main" \
+            --body "Automated Pull Request to sync dev changes into main." \
+            --base main \
+            --head dev || echo "PR already exists"
+
+          gh pr merge dev --merge || echo "Merge failed or already merged"
