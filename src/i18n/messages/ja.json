@@ -501,14 +501,14 @@
     "goToSale": "今すぐセールで買い物をする"
   },
   "sale": {
-    "celebrate": "祝う",
-    "independenceDay": "独立記念日",
-    "heroSubtitle": "伝統的なスパイス、プレミアムな穀物、スナック、スイーツ、新鮮な自家製食材など、特別なお祝いセールでインドの精神を称えましょう。",
+    "celebrate": "お祝いしましょう",
+    "independenceDay": "ラクシャ・バンダン",
+    "heroSubtitle": "お菓子、プレミアムドライフルーツ、プージャ用アイテム、お祝い用の料理などを揃えた特別なラキセールで、兄弟姉妹の神聖な絆を祝いましょう。",
     "sectionTitle": "お祝い特別オファー",
-    "sectionSubtitle": "お祝い価格の高品質な直輸入商品。",
+    "sectionSubtitle": "お祝い価格での最高品質の輸入品。",
     "offersCount": "{count}件のオファーが利用可能",
     "noOffersTitle": "現在、セール商品はございません",
-    "noOffersSubtitle": "お祝いに向けて新鮮な商品を準備中ですので、しばらくしてからもう一度ご確認ください！",
+    "noOffersSubtitle": "ラクシャ・バンダンに向けて新鮮な在庫を準備しておりますので、今しばらくお待ちください！",
     "bundle": {
       "sectionTitle": "ペアで節約",
       "sectionSubtitle": "あなたが気に入るセット商品",

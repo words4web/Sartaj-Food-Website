@@ -6,10 +6,37 @@ import { Sparkles } from "lucide-react";
 import { BundleSectionProps } from "@/types/bundle.types";
 import { generateProductBundles } from "@/utils/bundles/bundle.utils";
 import { BundleCard } from "./BundleCard";
+import { BundleSectionSkeleton } from "@/components/skeletons/BundleSkeleton";
 
-export function BundleSection({ products }: BundleSectionProps) {
+export function BundleSection({ products, isLoading }: BundleSectionProps) {
   const t = useTranslations("sale");
   const bundles = generateProductBundles(products);
+
+  if (isLoading) {
+    return (
+      <section className="max-w-7xl mx-auto px-4 mt-12" aria-label="Pair and Save Bundles">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-border/40 pb-6 mb-8 gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-sm shrink-0">
+              <Sparkles
+                className="w-4.5 h-4.5 text-white animate-spin"
+                style={{ animationDuration: "3s" }}
+              />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">
+                {t("bundle.sectionTitle") ?? "Pair & Save"}
+              </h2>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                {t("bundle.sectionSubtitle") ?? "Hand-picked combinations you'll love"}
+              </p>
+            </div>
+          </div>
+        </div>
+        <BundleSectionSkeleton count={6} />
+      </section>
+    );
+  }
 
   if (bundles?.length === 0) return null;
 

@@ -20,6 +20,7 @@ export const API_ROUTES = {
     GET_RELATED: (id: string) => `/customer/products/${id}/related`,
     GET_OFFERS: "/customer/products/offers",
     GET_GIFTS: "/customer/products/gifts",
+    GET_BY_IDS: "/customer/products/by-ids",
   },
 
   // Categories

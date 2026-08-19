@@ -50,4 +50,8 @@ export const productService = {
   getGiftProducts: async (): Promise<AxiosResponse<any>> => {
     return axiosInstance.get(API_ROUTES.PRODUCTS.GET_GIFTS);
   },
+
+  getProductsByIds: async (ids: string[]): Promise<AxiosResponse<any>> => {
+    return axiosInstance.post(API_ROUTES.PRODUCTS.GET_BY_IDS, { ids });
+  },
 };
