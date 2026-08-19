@@ -11,7 +11,7 @@ const DotLottieReact = dynamic(
   { ssr: false },
 );
 
-export function RakshaBandhanBanner() {
+export function RakshaBandhanBanner({ onSalePage = false }: { onSalePage?: boolean }) {
   const t = useTranslations("rakhiBanner");
 
   return (
@@ -59,7 +59,7 @@ export function RakshaBandhanBanner() {
 
           <div className="pt-2 flex justify-center lg:justify-start">
             <Link
-              href={ROUTES.PRODUCTS_WITH_QUERY("search=rakhi")}
+              href={onSalePage ? ROUTES.PRODUCTS_WITH_QUERY("search=rakhi") : ROUTES.SALE}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:via-orange-600 hover:to-rose-600 text-white font-extrabold text-sm sm:text-base rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               <span>{t("btnText")}</span>

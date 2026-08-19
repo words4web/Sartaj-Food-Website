@@ -91,6 +91,21 @@ export const useGetInfiniteProductsByCategory = (
   });
 };
 
+export const useGetAllProducts = (params?: {
+  search?: string;
+  page?: number;
+  limit?: number;
+  manufacturers?: string;
+}) => {
+  return useQuery({
+    queryKey: ["products", "all", params],
+    queryFn: async () => {
+      const response = await productService.getAllProducts(params);
+      return response?.data?.data || [];
+    },
+  });
+};
+
 export const useGetDiscountedProducts = (params?: { page?: number; limit?: number }) => {
   return useQuery({
     queryKey: ["products", "offers", params],
@@ -108,5 +123,16 @@ export const useGetGiftProducts = () => {
       const response = await productService.getGiftProducts();
       return response.data?.data || [];
     },
+  });
+};
+
+export const useGetProductsByIds = (ids: string[]) => {
+  return useQuery({
+    queryKey: ["products", "by-ids", ids],
+    queryFn: async () => {
+      const response = await productService.getProductsByIds(ids);
+      return response?.data?.data || [];
+    },
+    enabled: Array.isArray(ids) && ids?.length > 0,
   });
 };
