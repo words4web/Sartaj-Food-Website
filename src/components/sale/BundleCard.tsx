@@ -157,23 +157,36 @@ export function BundleCard({ bundle }: BundleCardProps) {
         </div>
 
         <div className="flex items-center justify-between bg-muted/40 rounded-xl px-3 py-2.5 border border-border/50">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
-              {t("bundle.originalPrice") ?? "Original"}
-            </span>
-            <span className="text-sm text-muted-foreground line-through font-semibold">
-              ¥{bundle?.originalPrice?.toLocaleString()}
-            </span>
-          </div>
-          <div className="w-px h-8 bg-border/60 mx-2" />
-          <div className="flex flex-col gap-0.5 items-end">
-            <span className="text-[10px] text-primary uppercase tracking-wider font-semibold">
-              {t("bundle.bundlePrice") ?? "Bundle Price"}
-            </span>
-            <span className="text-base font-black text-foreground">
-              ¥{bundle?.bundlePrice?.toLocaleString()}
-            </span>
-          </div>
+          {bundle?.originalPrice !== bundle?.bundlePrice ? (
+            <>
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
+                  {t("bundle.originalPrice") ?? "Original"}
+                </span>
+                <span className="text-sm text-muted-foreground line-through font-semibold">
+                  ¥{bundle?.originalPrice?.toLocaleString()}
+                </span>
+              </div>
+              <div className="w-px h-8 bg-border/60 mx-2" />
+              <div className="flex flex-col gap-0.5 items-end">
+                <span className="text-[10px] text-primary uppercase tracking-wider font-semibold">
+                  {t("bundle.bundlePrice") ?? "Bundle Price"}
+                </span>
+                <span className="text-base font-black text-foreground">
+                  ¥{bundle?.bundlePrice?.toLocaleString()}
+                </span>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center justify-between w-full">
+              <span className="text-xs text-muted-foreground font-bold">
+                {t("bundle.bundlePrice") ?? "Price"}
+              </span>
+              <span className="text-base font-black text-foreground">
+                ¥{bundle?.bundlePrice?.toLocaleString()}
+              </span>
+            </div>
+          )}
         </div>
 
         <Button

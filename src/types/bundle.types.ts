@@ -26,4 +26,5 @@ export interface BundleCardProps {
 
 export interface BundleSectionProps {
   products: IProduct[];
+  isLoading?: boolean;
 }
