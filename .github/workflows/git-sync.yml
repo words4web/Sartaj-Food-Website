@@ -17,28 +17,44 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create Pull Request to dev
+      - name: Create and Merge Pull Requests (SW-23-client-changes Flow)
         if: github.ref_name == 'SW-23-client-changes'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "Creating PR from SW-23-client-changes to dev..."
           gh pr create \
-            --title "Sync: ${{ github.ref_name }} to dev" \
-            --body "Automated Sync Pull Request from ${{ github.ref_name }} to dev branch." \
+            --title "Sync: SW-23-client-changes to dev" \
+            --body "Automated Sync Pull Request from SW-23-client-changes to dev branch." \
             --base dev \
-            --head ${{ github.ref_name }} || echo "PR already exists"
+            --head SW-23-client-changes || echo "PR to dev already exists"
 
-          gh pr merge ${{ github.ref_name }} --merge || echo "Merge failed or already merged"
+          echo "Merging SW-23-client-changes to dev..."
+          gh pr merge SW-23-client-changes --merge || echo "Merge to dev failed or already merged"
 
-      - name: Create Pull Request to main
+          sleep 15
+
+          echo "Creating PR from dev to main..."
+          gh pr create \
+            --title "Release: dev to main" \
+            --body "Automated Pull Request to sync dev changes into main." \
+            --base main \
+            --head dev || echo "PR to main already exists"
+
+          echo "Merging dev to main..."
+          gh pr merge dev --merge || echo "Merge to main failed or already merged"
+
+      - name: Create and Merge Pull Request (dev Flow)
         if: github.ref_name == 'dev'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "Creating PR from dev to main..."
           gh pr create \
             --title "Release: dev to main" \
             --body "Automated Pull Request to sync dev changes into main." \
             --base main \
             --head dev || echo "PR already exists"
 
+          echo "Merging dev to main..."
           gh pr merge dev --merge || echo "Merge failed or already merged"
