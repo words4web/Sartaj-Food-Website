@@ -117,6 +117,32 @@ export function useCartActions(product: IProduct) {
       });
   };
 
+  const trackAddToCartEvent = (qty: number) => {
+    try {
+      const productName =
+        typeof product?.name === "string"
+          ? product.name
+          : product?.name?.en || product?.name?.ja || "";
+
+      (window as any).dataLayer = (window as any)?.dataLayer || [];
+      (window as any)?.dataLayer.push({
+        event: "add_to_cart",
+        ecommerce: {
+          items: [
+            {
+              item_id: productId,
+              item_name: productName,
+              price: product?.price || product?.unitPrice || 0,
+              quantity: qty,
+            },
+          ],
+        },
+      });
+    } catch (e) {
+      console.warn("Failed to track add_to_cart in GTM:", e);
+    }
+  };
+
   const handleIncrement = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (quantityInCart >= maxStock) {
@@ -129,6 +155,7 @@ export function useCartActions(product: IProduct) {
     dispatch(updateItemQuantity({ productId, quantity: newQty }));
     debouncedAdd.current.cancel();
     debouncedUpdate.current(newQty);
+    trackAddToCartEvent(1);
   };
 
   const handleDecrement = (e?: React.MouseEvent) => {
@@ -151,6 +178,7 @@ export function useCartActions(product: IProduct) {
     abortActiveSync();
     dispatch(addOrUpdateItem({ productId, quantity: 1, product }));
     debouncedAdd.current(1);
+    trackAddToCartEvent(1);
   };
 
   const handleRemove = (e?: React.MouseEvent) => {
