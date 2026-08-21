@@ -31,4 +31,10 @@ export const cartService = {
   clearCart: async (): Promise<AxiosResponse<{ success: boolean; message: string }>> => {
     return axiosInstance.delete(API_ROUTES.CART.CLEAR);
   },
+
+  addBundleToCart: async (
+    bundleId: string,
+  ): Promise<AxiosResponse<{ success: boolean; message: string }>> => {
+    return axiosInstance.post(API_ROUTES.CART.ADD_BUNDLE, { bundleId });
+  },
 };

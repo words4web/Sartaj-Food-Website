@@ -1,109 +1,65 @@
 import { IProduct } from "@/types/product/product.types";
-import { IProductBundle, IBundlePairDefinition } from "@/types/bundle.types";
-
-const BUNDLE_PAIR_DEFINITIONS: IBundlePairDefinition[] = [
-  {
-    id: "bundle-milk-cake-rakhi-1",
-    productId1: "6a27c870343e0d539bf46577",
-    productId2: "6a859c332c49e3fe45e89f0f",
-    title: "Milk Cake & Rakhi Combo",
-    description:
-      "Enjoy sweet celebrations with fresh milk cake paired with a designer Rakhi thread.",
-  },
-  {
-    id: "bundle-milk-cake-rakhi-2",
-    productId1: "6a27c870343e0d539bf46577",
-    productId2: "6a859c5a2c49e3fe45e89f24",
-    title: "Milk Cake & Rakhi Combo",
-    description:
-      "Enjoy sweet celebrations with fresh milk cake paired with a designer Rakhi thread.",
-  },
-  {
-    id: "bundle-milk-cake-rakhi-3",
-    productId1: "6a27c870343e0d539bf46577",
-    productId2: "6a859c7c2c49e3fe45e89f39",
-    title: "Milk Cake & Rakhi Combo",
-    description:
-      "Enjoy sweet celebrations with fresh milk cake paired with a designer Rakhi thread.",
-  },
-  {
-    id: "bundle-milk-cake-rakhi-4",
-    productId1: "6a27c870343e0d539bf46577",
-    productId2: "6a859ce62c49e3fe45e89f64",
-    title: "Milk Cake & Rakhi Combo",
-    description:
-      "Enjoy sweet celebrations with fresh milk cake paired with a designer Rakhi thread.",
-  },
-  {
-    id: "bundle-milk-cake-rakhi-5",
-    productId1: "6a27c870343e0d539bf46577",
-    productId2: "6a859d442c49e3fe45e89f79",
-    title: "Milk Cake & Rakhi Combo",
-    description:
-      "Enjoy sweet celebrations with fresh milk cake paired with a designer Rakhi thread.",
-  },
-  {
-    id: "bundle-milk-cake-rakhi-6",
-    productId1: "6a27c870343e0d539bf46577",
-    productId2: "6a859cad2c49e3fe45e89f4e",
-    title: "Milk Cake & Rakhi Combo",
-    description:
-      "Enjoy sweet celebrations with fresh milk cake paired with a designer Rakhi thread.",
-  },
-];
+import { IProductBundle } from "@/types/bundle.types";
 
 function isValidBundleProduct(product: IProduct | undefined): product is IProduct & {
   _id: string;
-  name: string;
+  name: any;
   images: string[];
   unitPrice: number;
   originalPrice: number;
 } {
   if (!product) return false;
-  if (!product._id) return false;
-  if (!product.name || (typeof product.name === "string" && !product.name.trim())) return false;
-  if (!product.images?.[0]) return false;
-  if (typeof product.unitPrice !== "number" || product.unitPrice <= 0) return false;
-  if (typeof product.originalPrice !== "number" || product.originalPrice <= 0) return false;
-  if (product.isActive === false) return false;
+  const id = product?._id || product?.id;
+  if (!id) return false;
+  if (!product?.name) return false;
+  if (typeof product?.name === "string" && !product?.name?.trim()) return false;
+  if (!product?.images?.[0]) return false;
+  if (typeof product?.unitPrice !== "number" || product?.unitPrice <= 0) return false;
+  if (typeof product?.originalPrice !== "number" || product?.originalPrice <= 0) return false;
+  if (product?.isActive === false) return false;
 
-  const stockStatus = product.stockStatus?.toLowerCase();
+  const stockStatus = product?.stockStatus?.toLowerCase();
   if (stockStatus === "out_of_stock" || stockStatus === "out of stock") return false;
-  if (product.stockQuantity !== undefined && product.stockQuantity <= 0) return false;
+  if (product?.stockQuantity !== undefined && product?.stockQuantity <= 0) return false;
 
   return true;
 }
 
-export function generateProductBundles(products: IProduct[]): IProductBundle[] {
-  const productMap = new Map<string, IProduct>();
-  for (const product of products) {
-    const id = product._id || product.id;
-    if (id) {
-      productMap.set(String(id), product);
-    }
-  }
+export function generateProductBundles(bundleDefinitions: any[] = []): IProductBundle[] {
+  if (!bundleDefinitions || bundleDefinitions.length === 0) return [];
 
   const bundles: IProductBundle[] = [];
 
-  for (const def of BUNDLE_PAIR_DEFINITIONS) {
-    const p1 = productMap.get(def?.productId1);
-    const p2 = productMap.get(def?.productId2);
+  for (const def of bundleDefinitions) {
+    if (!def || !Array.isArray(def.productIds)) continue;
 
-    if (!isValidBundleProduct(p1) || !isValidBundleProduct(p2)) {
+    const mappedProducts: IProduct[] = [];
+    let isValid = true;
+
+    for (const item of def.productIds) {
+      if (!isValidBundleProduct(item)) {
+        isValid = false;
+        break;
+      }
+      mappedProducts.push(item);
+    }
+
+    if (!isValid || mappedProducts.length < 2) {
       continue;
     }
 
-    const originalPrice = p1?.originalPrice + p2?.originalPrice;
-    const bundlePrice = p1?.unitPrice + p2?.unitPrice;
+    const originalPrice = mappedProducts.reduce((sum, p) => sum + (p.originalPrice || 0), 0);
+    const regularSum = mappedProducts.reduce((sum, p) => sum + (p.unitPrice || 0), 0);
+    const bundlePrice = Math.max(0, regularSum - (def.discountValue || 0));
     const savings = originalPrice - bundlePrice;
-    const savingsPercent = Math.round((savings / originalPrice) * 100);
+    const savingsPercent = originalPrice > 0 ? Math.round((savings / originalPrice) * 100) : 0;
 
     bundles.push({
-      id: def?.id,
-      productIds: [p1?._id, p2?._id],
-      products: [p1, p2],
-      title: def?.title,
-      description: def?.description,
+      id: def._id || def.id,
+      productIds: mappedProducts?.map((p) => String(p._id || p.id)),
+      products: mappedProducts,
+      title: typeof def.title === "object" ? def.title.en : def.title || "Bundle Deal",
+      description: `Get these ${mappedProducts?.length} items together and save ¥${savings}!`,
       originalPrice,
       bundlePrice,
       savings,

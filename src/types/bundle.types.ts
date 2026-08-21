@@ -2,8 +2,8 @@ import { IProduct } from "@/types/product/product.types";
 
 export interface IProductBundle {
   id: string;
-  productIds: [string, string];
-  products: [IProduct, IProduct];
+  productIds: string[];
+  products: IProduct[];
   title: string;
   description: string;
   originalPrice: number;
@@ -12,19 +12,6 @@ export interface IProductBundle {
   savingsPercent: number;
 }
 
-export interface IBundlePairDefinition {
-  id: string;
-  productId1: string;
-  productId2: string;
-  title: string;
-  description: string;
-}
-
 export interface BundleCardProps {
   bundle: IProductBundle;
-}
-
-export interface BundleSectionProps {
-  products: IProduct[];
-  isLoading?: boolean;
 }
