@@ -12,7 +12,7 @@ import { IProduct } from "@/types/product/product.types";
 import { BundleCardProps } from "@/types/bundle.types";
 import { Button } from "@/components/ui/button";
 import { ThemedImage } from "@/components/common";
-import { cartService } from "@/services/cart/cart.service";
+import { useAddBundleToCart } from "@/services/cart/cart.hooks";
 import { addOrUpdateItem, removeItem } from "@/lib/store/cartSlice";
 import { debouncedGlobalSync, setPendingSync } from "@/components/cart/cartSync";
 import { ROUTES } from "@/constants/routes";
@@ -27,44 +27,38 @@ export function BundleCard({ bundle }: BundleCardProps) {
   const t = useTranslations("sale");
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const { mutateAsync: addBundleToCartApi } = useAddBundleToCart();
   const [isAdding, setIsAdding] = useState(false);
   const addingRef = useRef(false);
 
-  const [p1, p2] = bundle.products;
+  const products = bundle?.products;
+  const isTriple = products?.length === 3;
+  const [p1, p2, p3] = products;
 
   const handleAddBundle = async () => {
     if (addingRef.current) return;
     addingRef.current = true;
     setIsAdding(true);
 
-    const productId1 = p1._id!;
-    const productId2 = p2._id!;
-
-    dispatch(addOrUpdateItem({ productId: productId1, quantity: 1, product: p1 }));
-    dispatch(addOrUpdateItem({ productId: productId2, quantity: 1, product: p2 }));
+    products?.forEach((p) => {
+      const pid = p?._id || p?.id;
+      if (pid) {
+        dispatch(addOrUpdateItem({ productId: String(pid), quantity: 1, product: p }));
+      }
+    });
 
     try {
-      await cartService.addToCart({ productId: productId1, quantity: 1 });
-
-      try {
-        await cartService.addToCart({ productId: productId2, quantity: 1 });
-
-        setPendingSync({ dispatch, queryClient });
-        debouncedGlobalSync();
-        toast.success(t("bundle.bothAdded") ?? "Both products added to cart!");
-      } catch (err: any) {
-        dispatch(removeItem({ productId: productId2 }));
-
-        setPendingSync({ dispatch, queryClient });
-        debouncedGlobalSync();
-        toast.warning(
-          t("bundle.partialSuccess") ??
-            "First item was added but the second failed. Please add it manually.",
-        );
-      }
+      await addBundleToCartApi(bundle?.id);
+      setPendingSync({ dispatch, queryClient });
+      debouncedGlobalSync();
+      toast.success(t("bundle.bothAdded") ?? "Bundle products added to cart!");
     } catch (err: any) {
-      dispatch(removeItem({ productId: productId1 }));
-      dispatch(removeItem({ productId: productId2 }));
+      products?.forEach((p) => {
+        const pid = p?._id || p?.id;
+        if (pid) {
+          dispatch(removeItem({ productId: String(pid) }));
+        }
+      });
       setPendingSync({ dispatch, queryClient });
       debouncedGlobalSync();
       toast.error(
@@ -80,8 +74,11 @@ export function BundleCard({ bundle }: BundleCardProps) {
 
   const name1 = getProductName(p1);
   const name2 = getProductName(p2);
+  const name3 = p3 ? getProductName(p3) : "";
+
   const img1 = p1?.images?.[0] ?? "";
   const img2 = p2?.images?.[0] ?? "";
+  const img3 = p3?.images?.[0] ?? "";
 
   return (
     <div className="relative z-10 flex flex-col bg-card border border-border/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 group min-w-[280px] sm:min-w-0">
@@ -100,7 +97,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
           className="flex flex-col items-center gap-1.5 flex-1 min-w-0"
           tabIndex={-1}
         >
-          <div className="relative w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-card rounded-xl border border-border/60 shadow-sm flex items-center justify-center p-1.5 xs:p-2 overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative w-16 h-16 xs:w-20 xs:h-20 bg-card rounded-xl border border-border/60 shadow-sm flex items-center justify-center p-1.5 overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
             <ThemedImage
               src={img1}
               alt={name1}
@@ -109,18 +106,18 @@ export function BundleCard({ bundle }: BundleCardProps) {
             />
           </div>
           <div className="text-center min-w-0 w-full">
-            <p className="text-[11px] sm:text-xs font-semibold text-foreground line-clamp-2 leading-tight">
+            <p className="text-[10px] font-semibold text-foreground line-clamp-1 leading-tight">
               {name1}
             </p>
-            <p className="text-xs sm:text-sm font-black text-primary mt-0.5">
+            <p className="text-[11px] font-black text-primary mt-0.5">
               ¥{p1?.unitPrice?.toLocaleString()}
             </p>
           </div>
         </Link>
 
         <div className="flex flex-col items-center shrink-0">
-          <div className="w-7 h-7 xs:w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shadow-sm">
-            <Plus className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-primary stroke-[2.5]" />
+          <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+            <Plus className="w-3 text-primary stroke-[2.5]" />
           </div>
         </div>
 
@@ -129,7 +126,7 @@ export function BundleCard({ bundle }: BundleCardProps) {
           className="flex flex-col items-center gap-1.5 flex-1 min-w-0"
           tabIndex={-1}
         >
-          <div className="relative w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28 bg-card rounded-xl border border-border/60 shadow-sm flex items-center justify-center p-1.5 xs:p-2 overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative w-16 h-16 xs:w-20 xs:h-20 bg-card rounded-xl border border-border/60 shadow-sm flex items-center justify-center p-1.5 overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
             <ThemedImage
               src={img2}
               alt={name2}
@@ -138,14 +135,47 @@ export function BundleCard({ bundle }: BundleCardProps) {
             />
           </div>
           <div className="text-center min-w-0 w-full">
-            <p className="text-[11px] sm:text-xs font-semibold text-foreground line-clamp-2 leading-tight">
+            <p className="text-[10px] font-semibold text-foreground line-clamp-1 leading-tight">
               {name2}
             </p>
-            <p className="text-xs sm:text-sm font-black text-primary mt-0.5">
+            <p className="text-[11px] font-black text-primary mt-0.5">
               ¥{p2?.unitPrice?.toLocaleString()}
             </p>
           </div>
         </Link>
+
+        {isTriple && p3 && (
+          <>
+            <div className="flex flex-col items-center shrink-0">
+              <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <Plus className="w-3 text-primary stroke-[2.5]" />
+              </div>
+            </div>
+
+            <Link
+              href={ROUTES.PRODUCTS(p3?.slug || p3?._id || "")}
+              className="flex flex-col items-center gap-1.5 flex-1 min-w-0"
+              tabIndex={-1}
+            >
+              <div className="relative w-16 h-16 xs:w-20 xs:h-20 bg-card rounded-xl border border-border/60 shadow-sm flex items-center justify-center p-1.5 overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                <ThemedImage
+                  src={img3}
+                  alt={name3}
+                  className="max-w-full max-h-full object-contain"
+                  fallbackType="product"
+                />
+              </div>
+              <div className="text-center min-w-0 w-full">
+                <p className="text-[10px] font-semibold text-foreground line-clamp-1 leading-tight">
+                  {name3}
+                </p>
+                <p className="text-[11px] font-black text-primary mt-0.5">
+                  ¥{p3?.unitPrice?.toLocaleString()}
+                </p>
+              </div>
+            </Link>
+          </>
+        )}
       </div>
 
       <div className="flex flex-col gap-3 px-5 py-4 flex-1">
