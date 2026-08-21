@@ -144,7 +144,7 @@ export default function SalePage() {
         <RakshaBandhanBanner onSalePage={true} />
       </div>
 
-      <BundleSection products={productsToRender} isLoading={isLoading} />
+      <BundleSection />
 
       <div className="max-w-7xl mx-auto px-4 mt-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-border/40 pb-6 mb-8 gap-4">

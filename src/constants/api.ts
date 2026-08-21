@@ -33,9 +33,15 @@ export const API_ROUTES = {
   CART: {
     GET: "/customer/cart",
     ADD_ITEM: "/customer/cart/add",
+    ADD_BUNDLE: "/customer/cart/add-bundle",
     UPDATE_ITEM: "/customer/cart/update",
     REMOVE_ITEM: (id: string) => `/customer/cart/remove/${id}`,
     CLEAR: "/customer/cart/clear",
+  },
+
+  // Bundles
+  BUNDLES: {
+    GET_ACTIVE: "/customer/bundles",
   },
 
   // Wishlist

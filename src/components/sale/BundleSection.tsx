@@ -3,14 +3,16 @@
 import { useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 
-import { BundleSectionProps } from "@/types/bundle.types";
 import { generateProductBundles } from "@/utils/bundles/bundle.utils";
 import { BundleCard } from "./BundleCard";
 import { BundleSectionSkeleton } from "@/components/skeletons/BundleSkeleton";
+import { useGetActiveBundles } from "@/services/bundle/bundle.hooks";
 
-export function BundleSection({ products, isLoading }: BundleSectionProps) {
+export function BundleSection() {
   const t = useTranslations("sale");
-  const bundles = generateProductBundles(products);
+  const { data: bundleDefs, isLoading } = useGetActiveBundles();
+
+  const bundles = generateProductBundles(bundleDefs || []);
 
   if (isLoading) {
     return (

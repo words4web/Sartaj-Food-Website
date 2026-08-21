@@ -63,3 +63,5 @@ export const useClearCart = () => {
     },
   });
 };
+
+export const useAddBundleToCart = () => useMutation({ mutationFn: cartService.addBundleToCart });
