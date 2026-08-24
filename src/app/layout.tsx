@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import { ReduxProvider } from "@/providers/ReduxProvider";
@@ -63,19 +62,6 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-PVDFQRH7');
           `}
         </Script>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-88KYPVV2L3"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-88KYPVV2L3');
-            gtag('config', 'AW-375874196');
-          `}
-        </Script>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-PVDFQRH7"
@@ -104,7 +90,6 @@ export default function RootLayout({
                 </I18nProvider>
 
                 <Toaster position="top-right" />
-                {process.env.NODE_ENV === "production" && <Analytics />}
               </QueryProvider>
             </ReduxProvider>
           </>
