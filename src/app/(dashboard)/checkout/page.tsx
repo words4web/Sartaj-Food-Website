@@ -18,6 +18,7 @@ import { useGetCart } from "@/services/cart/cart.hooks";
 import { useGetCheckoutSummary, useCreateOrder } from "@/services/order/order.hooks";
 import { useGetPublicCoupons } from "@/services/coupon/coupon.hooks";
 import { useGetGiftProducts } from "@/services/product/product.hooks";
+import { useOrderTracking } from "@/hooks/useOrderTracking";
 
 import { CheckoutCartItems } from "@/components/checkout/CheckoutCartItems";
 import { CheckoutAddressSelection } from "@/components/checkout/CheckoutAddressSelection";
@@ -38,6 +39,8 @@ export default function CheckoutPage() {
   const t = useTranslations("checkout");
   const tCommon = useTranslations("common");
   const queryClient = useQueryClient();
+  const { trackPurchase, prepareRedirectPurchase, trackRedirectPurchase, clearRedirectPurchase } =
+    useOrderTracking();
 
   const [selectedAddressId, setSelectedAddressId] = useState<string>("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("");
@@ -101,8 +104,11 @@ export default function CheckoutPage() {
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
       toast.success(t("orderPlaced") || "Order placed successfully!");
 
+      trackRedirectPurchase(orderId);
+
       router.replace(ROUTES.CHECKOUT, { scroll: false });
     } else if (status === "cancelled") {
+      clearRedirectPurchase();
       setErrorMessage(reason || t("orderFailed") || "Failed to place order.");
       setOverlayState(CheckoutStatus.FAILED);
       toast.error(reason || t("orderFailed") || "Failed to place order.");
@@ -233,8 +239,10 @@ export default function CheckoutPage() {
           queryClient.invalidateQueries({ queryKey: ["notifications"] });
 
           if (data?.approvalUrl) {
+            prepareRedirectPurchase(data, summary, cart?.items);
             window.location.replace(data?.approvalUrl);
           } else {
+            trackPurchase(data, summary, cart?.items);
             setCreatedOrderId(data?.orderId || data?._id || "N/A");
             setDbOrderId(data?._id || "");
             setOverlayState(CheckoutStatus.SUCCESS);
