@@ -123,16 +123,19 @@ export function useCartActions(product: IProduct) {
         typeof product?.name === "string"
           ? product.name
           : product?.name?.en || product?.name?.ja || "";
+      const price = product?.price || product?.unitPrice || 0;
 
       (window as any).dataLayer = (window as any)?.dataLayer || [];
       (window as any)?.dataLayer.push({
         event: "add_to_cart",
         ecommerce: {
+          currency: "JPY",
+          value: price * qty,
           items: [
             {
               item_id: productId,
               item_name: productName,
-              price: product?.price || product?.unitPrice || 0,
+              price: price,
               quantity: qty,
             },
           ],
