@@ -180,4 +180,8 @@ export const bestIndianSnacksPost: BlogPostData = {
         "Sartaj Foods offers snacks as part of its wide range of South Asian groceries available in Japan.",
     },
   ],
+  cta: {
+    label: "Shop Indian Snacks",
+    href: "https://www.sartajfoods.jp/products?category=snacks",
+  },
 };
