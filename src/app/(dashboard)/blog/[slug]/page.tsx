@@ -60,7 +60,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
         </div>
       </header>
 
-      <div className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden shadow-md">
+      <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-md">
         <Image
           src={post?.headerImage}
           alt={post?.title}
