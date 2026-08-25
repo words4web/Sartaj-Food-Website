@@ -1,0 +1,24 @@
+User-agent: *
+Disallow: /cart
+Disallow: /checkout
+Disallow: /orders
+Disallow: /profile
+Disallow: /notifications
+Disallow: /wallet
+Disallow: /wishlist
+Disallow: /login
+
+User-agent: Googlebot
+Disallow: /cart
+Disallow: /checkout
+Disallow: /orders
+Disallow: /profile
+Disallow: /notifications
+Disallow: /wallet
+Disallow: /wishlist
+Disallow: /login
+
+User-agent: Googlebot-image
+Disallow:
+
+Sitemap: https://www.sartajfoods.jp/sitemap.xml
