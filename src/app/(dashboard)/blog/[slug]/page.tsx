@@ -60,7 +60,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
         </div>
       </header>
 
-      <div className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden shadow-md">
+      <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-md">
         <Image
           src={post?.headerImage}
           alt={post?.title}
@@ -184,23 +184,25 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
         )}
       </div>
 
-      <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 sm:p-8 text-center space-y-4 my-10 notranslate">
-        <h4 className="text-xl sm:text-2xl font-bold text-foreground">
-          Bring Authentic South Asian Flavors Home
-        </h4>
-        <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
-          Visit Sartaj Foods and discover premium basmati rice, aromatic spices, and traditional
-          lentils imported directly for your kitchen in Japan.
-        </p>
-        <a
-          href="https://www.sartajfoods.jp/products?search=dal"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary/95 text-primary-foreground font-bold text-sm shadow-md transition-all hover:scale-102"
-        >
-          <ShoppingBag className="w-4 h-4" /> Shop Indian Lentils
-        </a>
-      </div>
+      {post?.cta && (
+        <div className="bg-primary/5 border border-primary/20 rounded-3xl p-6 sm:p-8 text-center space-y-4 my-10 notranslate">
+          <h4 className="text-xl sm:text-2xl font-bold text-foreground">
+            Bring Authentic South Asian Flavors Home
+          </h4>
+          <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
+            Visit Sartaj Foods and discover premium basmati rice, aromatic spices, and traditional
+            lentils imported directly for your kitchen in Japan.
+          </p>
+          <a
+            href={post?.cta?.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary/95 text-primary-foreground font-bold text-sm shadow-md transition-all hover:scale-102"
+          >
+            <ShoppingBag className="w-4 h-4" /> {post?.cta?.label}
+          </a>
+        </div>
+      )}
     </article>
   );
 }

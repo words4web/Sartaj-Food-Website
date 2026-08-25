@@ -8,6 +8,11 @@ export interface FAQItem {
   answer: string;
 }
 
+export interface BlogCta {
+  label: string;
+  href: string;
+}
+
 export interface BlogPostData {
   slug: string;
   title: string;
@@ -17,4 +22,5 @@ export interface BlogPostData {
   content: BlogContentBlock[];
   faqs: FAQItem[];
   citations?: string[];
+  cta?: BlogCta;
 }

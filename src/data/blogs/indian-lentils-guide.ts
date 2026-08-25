@@ -196,4 +196,8 @@ export const indianLentilsPost: BlogPostData = {
     },
   ],
   citations: ["https://medimadad.com/glycemic-index-indian-foods/"],
+  cta: {
+    label: "Shop Indian Lentils",
+    href: "https://www.sartajfoods.jp/products?search=dal",
+  },
 };
