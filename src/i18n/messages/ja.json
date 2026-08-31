@@ -501,14 +501,14 @@
     "goToSale": "今すぐセールで買い物をする"
   },
   "sale": {
-    "celebrate": "お祝いしましょう",
-    "independenceDay": "ラクシャ・バンダン",
-    "heroSubtitle": "お菓子、プレミアムドライフルーツ、プージャ用アイテム、お祝い用の料理などを揃えた特別なラキセールで、兄弟姉妹の神聖な絆を祝いましょう。",
-    "sectionTitle": "お祝い特別オファー",
-    "sectionSubtitle": "お祝い価格での最高品質の輸入品。",
+    "celebrate": "チェック",
+    "independenceDay": "特別セール",
+    "heroSubtitle": "お気に入りの本格的な食料品、スパイス、お菓子、プレミアム製品の素晴らしい割引をご覧ください。",
+    "sectionTitle": "特別オファー＆セール",
+    "sectionSubtitle": "特別価格での最高品質の輸入品。",
     "offersCount": "{count}件のオファーが利用可能",
     "noOffersTitle": "現在、セール商品はございません",
-    "noOffersSubtitle": "ラクシャ・バンダンに向けて新鮮な在庫を準備しておりますので、今しばらくお待ちください！",
+    "noOffersSubtitle": "新鮮な在庫や新しいセール商品を準備中ですので、今しばらくお待ちください！",
     "bundle": {
       "sectionTitle": "ペアで節約",
       "sectionSubtitle": "あなたが気に入るセット商品",
