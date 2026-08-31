@@ -501,14 +501,14 @@
     "goToSale": "Shop the Sale Now"
   },
   "sale": {
-    "celebrate": "Celebrate",
-    "independenceDay": "Raksha Bandhan",
-    "heroSubtitle": "Celebrate the sacred bond of sibling love with our special Rakhi deals on sweets, premium dry fruits, puja essentials, and festive delicacies.",
-    "sectionTitle": "Celebration Special Offers",
-    "sectionSubtitle": "Top quality imported products at festive prices.",
+    "celebrate": "Explore",
+    "independenceDay": "Special Sale Deals",
+    "heroSubtitle": "Discover amazing discounts on your favorite authentic groceries, spices, sweets, and premium products.",
+    "sectionTitle": "Special Offers & Deals",
+    "sectionSubtitle": "Top quality imported products at discounted prices.",
     "offersCount": "{count} Offers Available",
     "noOffersTitle": "No Sale Items Available Right Now",
-    "noOffersSubtitle": "Please check back shortly as we prepare fresh stock for the Raksha Bandhan festival!",
+    "noOffersSubtitle": "Please check back shortly as we prepare fresh stock and new deals!",
     "bundle": {
       "sectionTitle": "Pair & Save",
       "sectionSubtitle": "Hand-picked combinations you'll love",
