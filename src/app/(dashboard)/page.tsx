@@ -68,9 +68,11 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-card">
+      <h1 className="sr-only">
+        {t("home.heroTitle") || "Sartaj Foods - Authentic South Asian & Indian Groceries in Japan"}
+      </h1>
       <HeroSection />
 
-      {/* Dynamic Free Delivery Marquee Bar */}
       <div className="w-full bg-primary text-primary-foreground py-2 overflow-hidden border-y border-primary/20 text-sm sm:text-base font-black uppercase tracking-wider select-none">
         <div className="flex animate-marquee-slow gap-12">
           <span>{marqueeText}</span>
