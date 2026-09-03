@@ -18,11 +18,20 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.sartajfoods.jp"),
   title: "Sartaj Foods - Authentic South Asian Flavors in Japan",
   description:
-    "Premium basmati rice, aromatic spices, and traditional sweets imported directly for authentic culinary experience in Japan",
+    "Sartaj Foods Japan trusted source for authentic Indian groceries. Shop premium basmati rice, aromatic spices, snacks & traditional sweets, imported for authentic culinary experience in Japan.",
+  alternates: {
+    canonical: "./",
+  },
   icons: {
     icon: [
+      {
+        url: "/favicons_sartaj/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
       {
         url: "/favicons_sartaj/favicon-32x32.png",
         sizes: "32x32",
@@ -34,7 +43,7 @@ export const metadata: Metadata = {
         type: "image/png",
       },
       {
-        url: "/favicons_sartaj/favicon.ico",
+        url: "/favicon.ico",
       },
     ],
     apple: "/favicons_sartaj/apple-touch-icon.png",
