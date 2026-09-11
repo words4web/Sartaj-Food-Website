@@ -51,6 +51,52 @@ export const metadata: Metadata = {
   manifest: "/favicons_sartaj/site.webmanifest",
 };
 
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "GroceryStore",
+  "@id": "https://www.sartajfoods.jp/#localbusiness",
+  name: "Sartaj Foods",
+  url: "https://www.sartajfoods.jp/",
+  logo: "https://www.sartajfoods.jp/sartaj_logo.svg",
+  image: "https://www.sartajfoods.jp/sartaj_logo.svg",
+  description:
+    "Sartaj Foods is an Indian and South Asian grocery store and food supplier in Japan, offering authentic Indian groceries, spices, rice, lentils, snacks, ready-to-eat foods and other food products.",
+  telephone: "+81-72-751-1975",
+  email: "info@sartajfoods.jp",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "2 Chome-10-23 Koda",
+    addressLocality: "Ikeda",
+    addressRegion: "Osaka",
+    postalCode: "563-0043",
+    addressCountry: "JP",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 34.8098806,
+    longitude: 135.4261576,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  priceRange: "¥¥",
+  currenciesAccepted: "JPY",
+  areaServed: {
+    "@type": "Country",
+    name: "Japan",
+  },
+  sameAs: [
+    "https://www.facebook.com/sartaj.foods",
+    "https://www.linkedin.com/company/sartaj-foods-japan/home/",
+    "https://www.instagram.com/sartaj_foods_official/",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -60,7 +106,14 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`bg-background ${playfair.variable}`}>
-      <head />
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessSchema),
+          }}
+        />
+      </head>
       <body className="font-sans antialiased relative min-h-screen">
         <Script id="google-tag-manager" strategy="beforeInteractive">
           {`
@@ -83,7 +136,6 @@ export default function RootLayout({
           <MaintenancePage />
         ) : (
           <>
-            {/* Large premium global header-backdrop glow pools wrapper to prevent horizontal scroll */}
             <div className="absolute inset-x-0 top-0 h-[800px] overflow-hidden pointer-events-none -z-50">
               <div className="absolute top-0 left-[10%] w-[600px] h-[450px] rounded-full bg-primary/22 blur-[130px]" />
               <div className="absolute top-0 right-[15%] w-[500px] h-[400px] rounded-full bg-accent/18 blur-[110px]" />
