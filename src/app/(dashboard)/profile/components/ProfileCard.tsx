@@ -3,6 +3,7 @@
 import { User, Mail } from "lucide-react";
 import { ProfileCardProps } from "@/types/profile/profile.types";
 import { EditableMobileNumber } from "./EditableMobileNumber";
+import { EditableDateOfBirth } from "./EditableDateOfBirth";
 
 export function ProfileCard({ user }: ProfileCardProps) {
   return (
@@ -29,6 +30,10 @@ export function ProfileCard({ user }: ProfileCardProps) {
 
         <div className="flex items-center text-sm">
           <EditableMobileNumber mobileNumber={user?.mobileNumber} />
+        </div>
+
+        <div className="flex items-center text-sm pt-1 border-t border-border/50">
+          <EditableDateOfBirth dateOfBirth={user?.dateOfBirth} />
         </div>
       </div>
     </div>
