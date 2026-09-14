@@ -132,6 +132,10 @@ export const API_ROUTES = {
   CONFIG: {
     GET: "/customer/config",
   },
+  // Loyalty
+  LOYALTY: {
+    GET_STATUS: "/customer/loyalty/status",
+  },
 } as const;
 
 export const PAGINATION = {

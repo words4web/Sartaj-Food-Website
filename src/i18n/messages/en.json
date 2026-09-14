@@ -530,5 +530,12 @@
     "title": "Celebrate the Bond of Love & Protection",
     "description": "Tie the thread of love this Rakhi. Explore our handcrafted designer Rakhi collection and authentic premium Indian sweets to send to your brother.",
     "btnText": "Explore Rakhi Collection"
+  },
+  "loyaltyBubble": {
+    "vipTitle": "Sartaj Family VIP",
+    "spendNeeded": "{amount} more to unlock VIP",
+    "freeDeliveriesPerYear": "4 free deliveries every year",
+    "viewVipBenefits": "View VIP Benefits",
+    "vipProgress": "VIP Progress · {percentage}%"
   }
 }

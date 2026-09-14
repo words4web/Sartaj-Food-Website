@@ -529,6 +529,13 @@
     "badge": "ラクシャ・バンダン 特集",
     "title": "愛と保護の絆を祝う",
     "description": "今年のラクシャ・バンダンには愛の糸を結びましょう。お兄様や弟様へ送るための、高級デザイナーズ・ラキと本場インドのプレミアムスイーツのコレクションをご覧ください。",
-    "btnText": "ラキ・コレクションを見る"
+    "btnText": "ラクヒコレクションを見る"
+  },
+  "loyaltyBubble": {
+    "vipTitle": "サルタジファミリーVIP",
+    "spendNeeded": "VIP解放まであと {amount}",
+    "freeDeliveriesPerYear": "毎年4回の送料無料特典",
+    "viewVipBenefits": "VIP特典を見る",
+    "vipProgress": "VIP進捗 · {percentage}%"
   }
 }

@@ -14,6 +14,7 @@ import { CartSkeleton } from "@/components/skeletons/CartSkeleton";
 import { useGetDiscountedProducts } from "@/services/product/product.hooks";
 import { ProductCard } from "@/components/common/ProductCard";
 import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
+import { LoyaltyCartProgressBar } from "@/components/loyalty/LoyaltyCartProgressBar";
 
 export default function CartPage() {
   const router = useRouter();
@@ -78,6 +79,8 @@ export default function CartPage() {
               <h2 className="text-xl font-bold text-foreground mb-4 sm:mb-6">
                 {t("checkout.orderSummary")}
               </h2>
+
+              <LoyaltyCartProgressBar className="mb-4" />
 
               <div className="flex justify-between mb-6">
                 <span className="text-base sm:text-lg font-bold text-foreground">

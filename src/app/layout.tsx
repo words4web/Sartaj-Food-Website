@@ -7,6 +7,7 @@ import { QueryProvider } from "@/providers/QueryProvider";
 import { I18nProvider } from "@/providers/I18nProvider";
 import { LoadingOverlay, ThemeProvider, MaintenancePage } from "@/components/common";
 import { NotificationListener } from "@/providers/NotificationListener";
+import { LoyaltyFloatingBubble } from "@/components/loyalty/LoyaltyFloatingBubble";
 import "./globals.css";
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -147,6 +148,7 @@ export default function RootLayout({
                     {children}
                     <LoadingOverlay />
                     <NotificationListener />
+                    <LoyaltyFloatingBubble />
                   </ThemeProvider>
                 </I18nProvider>
 

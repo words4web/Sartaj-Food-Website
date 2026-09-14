@@ -23,6 +23,7 @@ export const ROUTES = {
   NOTIFICATIONS: "/notifications",
   WISHLIST: "/wishlist",
   WALLET: "/wallet",
+  LOYALTY: "/loyalty",
   BLOG: "/blog",
   BLOG_DETAIL: (slug: string) => `/blog/${slug}`,
 };
