@@ -6,6 +6,8 @@ export const useGetCheckoutSummary = (params: {
   addressId?: string;
   couponCode?: string;
   applyWallet?: boolean;
+  applyFreeDelivery?: boolean;
+  applyBirthdayDiscount?: boolean;
 }) => {
   return useQuery({
     queryKey: ["order", "checkout-summary", params],

@@ -209,10 +209,28 @@
   - Wrapped brand carousel items in `ManufacturersGrid.tsx` using `Link` from `next/link` mapping directly to `ROUTES.PRODUCTS_WITH_QUERY("manufacturers=<identifier>")` to instantly filter catalog results on brand click.
 - **About Us Page Layout Refinement**:
   - Replaced legacy shop storefront images with two new assets `/shop/shop_1.png` and `/shop/shop_2.png` rendering side-by-side in a responsive landscape layout (`aspect-[4/3]`) without borders.
-  - Placed descriptive story text full-width at the top, and positioned the images grid at the bottom of the section.
   - Integrated dynamic brand slug resolution using `useGetManufacturers` inside the Sartaj homegrown brand spotlight card, linking the View Products button safely to `/products?manufacturers=${sartajSlug}`.
-
-## Next Steps / Outstanding Bugs
+- **Sartaj Family Loyalty Program (Website UI & Modular Architecture)**:
+  - **Dedicated Skeletons & Shimmer**: Created `LoyaltySkeleton` component in `src/components/skeletons/LoyaltySkeleton.tsx` matching the page layout and updated `Skeleton.tsx` with smooth CSS pulse transitions across mobile and desktop viewports.
+  - **Modular Component Breakdown**: Refactored `src/app/(dashboard)/loyalty/page.tsx` into decoupled subcomponents under `src/components/loyalty/`:
+    - `LoyaltyHeroCard.tsx`: Handles digital VIP membership badge and spent/threshold progress bars.
+    - `LoyaltyActivePerksSummary.tsx`: Displays remaining annual free delivery vouchers and double-points weekend status cards.
+  - **Data Separation**: Extracted all static datasets (`LOYALTY_FAQS` and `LOYALTY_BENEFITS`) to `src/data/loyaltyData.ts`.
+  - **Floating Bubble & Header Badge**: Implemented `LoyaltyFloatingBubble` (`src/components/loyalty/`) with compact dimensions (`w-72`), smooth CSS transitions, tab-session dismissal (`sessionStorage`), and `HeaderLoyaltyBadge` in `src/components/layout/`.
+  - **Constants & Type Alignment**: Configured route constant `ROUTES.LOYALTY` (`/loyalty`) and storage constant `STORAGE_KEYS.LOYALTY_BUBBLE_DISMISSED`.
+  - **FCM Invalidation & i18n**: Integrated automatic React Query invalidations (`LOYALTY_QUERY_KEYS.status`) on FCM delivery push events, with 5-language `loyaltyBubble` i18n support (`en`, `ja`, `hi`, `bn`, `ne`).
+- **Checkout Loyalty Free Delivery Component & Mobile Responsiveness**:
+  - Simplified `CheckoutLoyaltyFreeDelivery.tsx` component to cleanly indicate active VIP voucher status without cluttered UI state descriptions.
+  - Ensured mobile responsiveness across checkout components (`CheckoutLoyaltyFreeDelivery.tsx`).
+  - Integrated 5-language localized translations (`en`, `ja`, `hi`, `ne`, `bn`) for VIP Free Delivery badge and helper texts.
+  - Supports backend price breakdown structure with split negative discount line items (`vip_free_delivery` and `vip_penalty_waiver`).
+- **Retailer Birthday Month Discount Component (`CheckoutBirthdayDiscount.tsx`)**:
+  - Developed `CheckoutBirthdayDiscount.tsx` featuring a clean, compact card design with a 10% OFF badge and toggle switch.
+  - Built a mobile-responsive confirmation modal (`Dialog`) with clear warning text informing users of 1-time annual usage and non-refundability on order cancellation.
+  - Integrated `applyBirthdayDiscount` parameter with order summary queries (`getCheckoutSummary`) and order creation mutations (`createOrder`).
+- **Smart Free Shipping Voucher Auto-Hide**:
+  - Updated `CheckoutLoyaltyFreeDelivery.tsx` and `page.tsx` to evaluate `hasShippingExpense` (`(shippingFee > 0 || penaltyAmount > 0)`).
+  - Automatically hides the free delivery voucher component when standard order shipping fee is already ¥0 (`hasShippingExpense === false`), preventing accidental consumption of VIP free delivery vouchers.
 
 - Validate the cookie auth flow and concurrency queue on staging/production.
 - Ensure that the mobile app is successfully testing the general customer login flow at `/customer/auth/login`.

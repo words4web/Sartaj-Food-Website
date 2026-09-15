@@ -58,15 +58,15 @@ export const LOYALTY_BENEFITS: LoyaltyBenefit[] = [
   {
     icon: Gift,
     badge: "SAMPLES",
-    title: "Free Monthly Product Samples",
-    description: "Receive free new product samples automatically with your monthly grocery orders.",
+    title: "Free Product Samples",
+    description: "Receive 3 free new product samples automatically with your grocery orders.",
   },
   {
     icon: Tag,
     badge: "OCCASIONS",
-    title: "Birthday & Anniversary Perks",
+    title: "We Celebrate You",
     description:
-      "Special discount coupons and wallet rewards issued during your birthday & VIP anniversary.",
+      "Get an exclusive 10% OFF coupon on 1 order during your birthday month (valid for orders between ¥4,000 – ¥10,000).",
   },
   {
     icon: Mail,

@@ -7,6 +7,8 @@ export const orderService = {
     addressId?: string;
     couponCode?: string;
     applyWallet?: boolean;
+    applyFreeDelivery?: boolean;
+    applyBirthdayDiscount?: boolean;
   }): Promise<AxiosResponse<any>> => {
     return axiosInstance.get(API_ROUTES.ORDERS.CHECKOUT_SUMMARY, { params });
   },
@@ -17,9 +19,13 @@ export const orderService = {
       paymentMethod: string;
       couponCode?: string;
       applyWallet?: boolean;
+      applyFreeDelivery?: boolean;
+      applyBirthdayDiscount?: boolean;
       platform?: string;
       deliveryDate: string;
       deliverySlot: string;
+      notes?: string;
+      giftProductId?: string;
     },
     headers?: { "Idempotency-Key": string },
   ): Promise<AxiosResponse<any>> => {

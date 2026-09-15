@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Crown, CreditCard, Truck, ArrowRight } from "lucide-react";
+import { Crown, Truck, ArrowRight } from "lucide-react";
 import { ILoyaltyStatus } from "@/types/loyalty/loyalty.types";
 import { formatYen } from "@/utils/format/format.utils";
 import { Button } from "@/components/ui/button";
+import { VipMembershipCard } from "./VipMembershipCard";
 
 export function LoyaltyHeroCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
   const {
@@ -15,44 +16,7 @@ export function LoyaltyHeroCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
   } = loyalty;
 
   if (isActive) {
-    return (
-      <div className="mt-6 max-w-xl mx-auto bg-gradient-to-r from-amber-500/20 via-primary/20 to-amber-500/20 border border-amber-500/40 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl backdrop-blur-xl space-y-4 relative overflow-hidden text-left">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl sm:rounded-2xl bg-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-300 shrink-0">
-              <Crown className="h-5 w-5 sm:h-6 sm:w-6" />
-            </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-extrabold text-foreground">
-                Welcome, Sartaj Family VIP!
-              </h3>
-              <p className="text-xs text-muted-foreground">
-                Qualified on{" "}
-                {qualifiedAt
-                  ? new Date(qualifiedAt).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })
-                  : "Member"}
-              </p>
-            </div>
-          </div>
-          <span className="self-start sm:self-center px-3 py-1 rounded-full bg-amber-500 text-white text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider shadow-sm shrink-0">
-            VIP Active
-          </span>
-        </div>
-        <div className="pt-3 border-t border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1.5 font-medium">
-            <CreditCard className="h-3.5 w-3.5 text-amber-500 shrink-0" /> Digital VIP Membership
-            Activated
-          </span>
-          <span className="font-bold text-primary font-mono text-[11px] sm:text-xs">
-            SARTAJ-VIP-{qualifiedAt ? new Date(qualifiedAt).getFullYear() : "MEMBER"}
-          </span>
-        </div>
-      </div>
-    );
+    return <VipMembershipCard loyalty={loyalty} />;
   }
 
   return (
