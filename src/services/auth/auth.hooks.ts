@@ -164,3 +164,18 @@ export const useUpdateMobileNumber = () => {
     },
   });
 };
+
+export const useSetDateOfBirth = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (dateOfBirth: string) => authService.setDateOfBirth(dateOfBirth),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      toast.success("Date of birth set successfully");
+    },
+    onError: (error: any) => {
+      const msg = error?.response?.data?.message || error?.message;
+      toast.error(msg || "Failed to set date of birth");
+    },
+  });
+};

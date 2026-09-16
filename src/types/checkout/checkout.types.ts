@@ -1,6 +1,7 @@
 import { IAddress } from "../address/address.types";
 import { ICheckoutSummary } from "../order.types";
 import { ITransformedCoupon } from "../coupon.types";
+import { ILoyaltyStatus } from "../loyalty/loyalty.types";
 
 export interface CheckoutAddressSelectionProps {
   addresses: IAddress[];
@@ -20,6 +21,22 @@ export interface CheckoutWalletSelectionProps {
   onToggleWallet: (apply: boolean) => void;
   walletBalance: number;
   maxWalletApplicable: number;
+  isAddressSelected: boolean;
+}
+
+export interface CheckoutLoyaltyFreeDeliveryProps {
+  applyFreeDelivery: boolean;
+  onToggleFreeDelivery: (apply: boolean) => void;
+  loyaltyStatus?: ILoyaltyStatus | null;
+  isLoading?: boolean;
+  isAddressSelected: boolean;
+  hasShippingExpense?: boolean;
+}
+
+export interface CheckoutBirthdayDiscountProps {
+  applyBirthdayDiscount: boolean;
+  onToggleBirthdayDiscount: (apply: boolean) => void;
+  isEligible: boolean;
   isAddressSelected: boolean;
 }
 

@@ -773,3 +773,21 @@
 .product-rich-description tr:hover {
   background-color: color-mix(in oklch, var(--accent) 50%, transparent);
 }
+
+/* 3D Card Tilt & Holographic Shimmer Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%) rotate(15deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(15deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmerSweep 6s infinite ease-in-out;
+}

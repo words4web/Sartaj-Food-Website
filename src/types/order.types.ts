@@ -69,6 +69,8 @@ export interface ICreateOrderBody {
   paymentMethod: string;
   couponCode?: string;
   applyWallet?: boolean;
+  applyFreeDelivery?: boolean;
+  applyBirthdayDiscount?: boolean;
   platform?: string;
   deliveryDate: string;
   deliverySlot: string;
@@ -101,6 +103,8 @@ export interface ICheckoutSummary {
   otherCharges: number;
   maxWalletApplicable: number;
   walletBalance: number;
+  isBirthdayDiscountEligible?: boolean;
+  birthdayDiscountUsed?: boolean;
 }
 
 export interface OrderDetailPageProps {

@@ -88,6 +88,7 @@ export const API_ROUTES = {
     GET: "/customer/profile",
     UPDATE: "/customer/profile",
     UPDATE_MOBILE_NUMBER: "/customer/profile/mobile-number",
+    SET_DATE_OF_BIRTH: "/customer/profile/date-of-birth",
   },
 
   // Notifications
@@ -130,6 +131,10 @@ export const API_ROUTES = {
   // Config
   CONFIG: {
     GET: "/customer/config",
+  },
+  // Loyalty
+  LOYALTY: {
+    GET_STATUS: "/customer/loyalty/status",
   },
 } as const;
 
