@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { Crown, Sparkles, Wifi, Truck, Zap, RotateCw } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { formatDate } from "@/utils/format/format.utils";
 import { ILoyaltyStatus } from "@/types/loyalty/loyalty.types";
 
 export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
+  const t = useTranslations("loyalty");
   const [isFlipped, setIsFlipped] = useState(false);
   const { qualifiedAt, freeDeliveriesRemaining, isDoublePointsWeekendActive } = loyalty;
 
-  const formattedDate = qualifiedAt ? formatDate(qualifiedAt) : "Active Member";
+  const formattedDate = qualifiedAt ? formatDate(qualifiedAt) : t("activeMemberFallback");
 
   return (
     <div
@@ -37,12 +39,12 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
               <div className="min-w-0">
                 <div className="flex items-center gap-1 sm:gap-1.5">
                   <span className="text-[9px] xs:text-[10px] sm:text-[11px] font-black tracking-wider sm:tracking-widest text-[#5c440a] uppercase truncate">
-                    Sartaj VIP Club
+                    {t("vipClub")}
                   </span>
                   <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#5c440a] animate-pulse shrink-0" />
                 </div>
                 <h2 className="text-xs xs:text-sm sm:text-xl font-extrabold text-[#3d2b03] tracking-tight leading-none truncate drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
-                  Sartaj Family Member
+                  {t("familyMember")}
                 </h2>
               </div>
             </div>
@@ -50,25 +52,24 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               <Wifi className="h-4 w-4 sm:h-5 sm:w-5 text-[#5c440a]/80 rotate-90 hidden sm:block" />
               <span className="px-2 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#3d2b03] text-[#f3e5ab] text-[8.5px] xs:text-[9.5px] sm:text-xs font-black uppercase tracking-wider shadow-md shadow-[#3d2b03]/30 whitespace-nowrap">
-                Active VIP
+                {t("activeVip")}
               </span>
             </div>
           </div>
 
-          {/* PERKS PILLS SECTION */}
           <div className="relative z-10 my-auto py-1 sm:py-2">
             <div className="flex flex-wrap items-center gap-1 xs:gap-1.5 sm:gap-2">
               <span className="inline-flex items-center gap-1 sm:gap-1.5 px-1.5 xs:px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg bg-white/40 border border-[#8c6d17]/30 text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-bold text-[#3d2b03] backdrop-blur-xs shadow-xs">
                 <Truck className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#5c440a] shrink-0" />
-                <span>4 Free Shipping Vouchers</span>
+                <span>{t("fourFreeShippingPill")}</span>
               </span>
               <span className="inline-flex items-center gap-1 sm:gap-1.5 px-1.5 xs:px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg bg-white/40 border border-[#8c6d17]/30 text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-bold text-[#3d2b03] backdrop-blur-xs shadow-xs">
                 <Zap className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#5c440a] shrink-0" />
-                <span>Double Wallet Rewards</span>
+                <span>{t("doubleWalletRewardsPill")}</span>
               </span>
               <span className="inline-flex items-center gap-1 sm:gap-1.5 px-1.5 xs:px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg bg-white/40 border border-[#8c6d17]/30 text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-bold text-[#3d2b03] backdrop-blur-xs shadow-xs">
                 <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-[#5c440a] shrink-0" />
-                <span>Exclusive Festive Perks</span>
+                <span>{t("exclusiveFestivePerksPill")}</span>
               </span>
             </div>
           </div>
@@ -77,17 +78,17 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
           <div className="relative z-10 pt-2.5 sm:pt-4 border-t border-[#8c6d17]/30 flex items-end justify-between gap-2 sm:gap-4">
             <div className="min-w-0">
               <p className="text-[7.5px] xs:text-[8.5px] sm:text-[9px] uppercase tracking-widest text-[#6e530c] font-bold truncate">
-                Member Status
+                {t("memberStatus")}
               </p>
               <p className="text-[10px] xs:text-[11px] sm:text-sm font-extrabold text-[#3d2b03] tracking-wide truncate">
-                Sartaj Family VIP
+                {t("vipBadge")}
               </p>
             </div>
 
             <div className="text-right flex items-center gap-1.5 xs:gap-2 sm:gap-3 shrink-0">
               <div>
                 <p className="text-[7.5px] xs:text-[8.5px] sm:text-[9px] uppercase tracking-widest text-[#6e530c] font-bold">
-                  Qualified Date
+                  {t("qualifiedDate")}
                 </p>
                 <p className="text-[10px] xs:text-[11px] sm:text-sm font-mono font-black text-[#3d2b03]">
                   {formattedDate}
@@ -98,7 +99,7 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
                   className="h-2.5 w-2.5 sm:h-3 sm:w-3 animate-spin shrink-0"
                   style={{ animationDuration: "8s" }}
                 />
-                <span className="hidden xs:inline">Tap card</span>
+                <span className="hidden xs:inline">{t("tapCard")}</span>
               </div>
             </div>
           </div>
@@ -110,11 +111,11 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
             <div className="flex items-center gap-1 sm:gap-2 min-w-0">
               <Crown className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#5c440a] shrink-0" />
               <span className="text-[10px] xs:text-[11px] sm:text-sm font-black text-[#3d2b03] tracking-wider uppercase truncate">
-                Active VIP Perks Status
+                {t("activeVipPerksStatus")}
               </span>
             </div>
             <span className="text-[8.5px] sm:text-[10px] text-[#6e530c] font-mono font-extrabold shrink-0">
-              Tap to Flip
+              {t("tapToFlip")}
             </span>
           </div>
 
@@ -123,16 +124,18 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
               <div className="flex items-center justify-between text-[#5c440a]">
                 <Truck className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#3d2b03] truncate">
-                  Annual Vouchers
+                  {t("annualVouchers")}
                 </span>
               </div>
               <div className="mt-1 sm:mt-2">
                 <div className="text-sm xs:text-base sm:text-2xl font-black text-[#3d2b03]">
                   {freeDeliveriesRemaining}{" "}
-                  <span className="text-[9px] sm:text-xs font-bold text-[#6e530c]">Left</span>
+                  <span className="text-[9px] sm:text-xs font-bold text-[#6e530c]">
+                    {t("vouchersLeft")}
+                  </span>
                 </div>
                 <p className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] text-[#6e530c] font-bold leading-tight">
-                  Free Delivery Vouchers
+                  {t("freeDeliveryVouchersTitle")}
                 </p>
               </div>
             </div>
@@ -143,29 +146,33 @@ export function VipMembershipCard({ loyalty }: { loyalty: ILoyaltyStatus }) {
                   className={`h-3 w-3 sm:h-4 sm:w-4 shrink-0 ${isDoublePointsWeekendActive ? "text-[#5c440a] fill-[#5c440a] animate-bounce" : ""}`}
                 />
                 <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#3d2b03] truncate">
-                  Weekend Bonus
+                  {t("weekendBonus")}
                 </span>
               </div>
               <div className="mt-1 sm:mt-2">
                 <div className="text-xs sm:text-base font-extrabold text-[#3d2b03] flex items-center gap-1">
                   {isDoublePointsWeekendActive ? (
                     <span className="text-[#3d2b03] flex items-center gap-1 font-black text-[10px] sm:text-base">
-                      2X ACTIVE
+                      {t("doublePointsActive")}
                     </span>
                   ) : (
-                    <span className="text-[#6e530c] font-bold text-[9px] sm:text-sm">Standard</span>
+                    <span className="text-[#6e530c] font-bold text-[9px] sm:text-sm">
+                      {t("standardBonus")}
+                    </span>
                   )}
                 </div>
                 <p className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] text-[#6e530c] font-bold leading-tight">
-                  Double Coins Weekend
+                  {t("doubleCoinsWeekend")}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="pt-1.5 sm:pt-2 border-t border-[#8c6d17]/30 flex items-center justify-between text-[7.5px] xs:text-[8.5px] sm:text-[10px] text-[#6e530c] font-bold">
-            <span className="truncate">Sartaj Family Membership</span>
-            <span className="font-mono text-[#3d2b03] font-black shrink-0">ALL PERKS UNLOCKED</span>
+            <span className="truncate">{t("familyMembershipFooter")}</span>
+            <span className="font-mono text-[#3d2b03] font-black shrink-0">
+              {t("allPerksUnlocked")}
+            </span>
           </div>
         </div>
       </div>

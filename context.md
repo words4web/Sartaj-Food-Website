@@ -215,7 +215,7 @@
   - **Modular Component Breakdown**: Refactored `src/app/(dashboard)/loyalty/page.tsx` into decoupled subcomponents under `src/components/loyalty/`:
     - `LoyaltyHeroCard.tsx`: Handles digital VIP membership badge and spent/threshold progress bars.
     - `LoyaltyActivePerksSummary.tsx`: Displays remaining annual free delivery vouchers and double-points weekend status cards.
-  - **Data Separation**: Extracted all static datasets (`LOYALTY_FAQS` and `LOYALTY_BENEFITS`) to `src/data/loyaltyData.ts`.
+  - **Data Separation & 5-Language Translations**: Extracted all static datasets (`LOYALTY_FAQS` and `LOYALTY_BENEFITS`) to `src/data/loyaltyData.ts` with full 5-language translations (`en`, `ja`, `hi`, `ne`, `bn`) for all questions, answers, benefit badges, titles, and descriptions, dynamically rendered via `getLocalizedValue()`.
   - **Floating Bubble & Header Badge**: Implemented `LoyaltyFloatingBubble` (`src/components/loyalty/`) with compact dimensions (`w-72`), smooth CSS transitions, tab-session dismissal (`sessionStorage`), and `HeaderLoyaltyBadge` in `src/components/layout/`.
   - **Constants & Type Alignment**: Configured route constant `ROUTES.LOYALTY` (`/loyalty`) and storage constant `STORAGE_KEYS.LOYALTY_BUBBLE_DISMISSED`.
   - **FCM Invalidation & i18n**: Integrated automatic React Query invalidations (`LOYALTY_QUERY_KEYS.status`) on FCM delivery push events, with 5-language `loyaltyBubble` i18n support (`en`, `ja`, `hi`, `bn`, `ne`).

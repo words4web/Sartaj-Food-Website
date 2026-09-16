@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { Truck, Coins, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ILoyaltyStatus } from "@/types/loyalty/loyalty.types";
 import { Button } from "@/components/ui/button";
 
 export function LoyaltyActivePerksSummary({ loyalty }: { loyalty: ILoyaltyStatus }) {
+  const t = useTranslations("loyalty");
   const { isActive, freeDeliveriesRemaining, isDoublePointsWeekendActive } = loyalty;
 
   if (!isActive) return null;
@@ -18,16 +20,16 @@ export function LoyaltyActivePerksSummary({ loyalty }: { loyalty: ILoyaltyStatus
                 <Truck className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold text-foreground text-sm">Free Delivery Vouchers</h4>
-                <p className="text-xs text-muted-foreground">
-                  Annual allowance reset every Jan 1st
-                </p>
+                <h4 className="font-bold text-foreground text-sm">
+                  {t("freeDeliveryVouchersTitle")}
+                </h4>
+                <p className="text-xs text-muted-foreground">{t("annualAllowanceReset")}</p>
               </div>
             </div>
             <span className="text-2xl font-black text-primary">{freeDeliveriesRemaining} / 4</span>
           </div>
           <Button asChild className="w-full rounded-xl font-bold gap-1" size="sm">
-            <Link href="/products">Use Free Delivery Voucher</Link>
+            <Link href="/products">{t("useFreeDeliveryVoucher")}</Link>
           </Button>
         </div>
 
@@ -38,17 +40,17 @@ export function LoyaltyActivePerksSummary({ loyalty }: { loyalty: ILoyaltyStatus
                 <Coins className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-bold text-foreground text-sm">Double Points Status</h4>
-                <p className="text-xs text-muted-foreground">Weekend Coin Bonus Rate</p>
+                <h4 className="font-bold text-foreground text-sm">{t("doublePointsStatus")}</h4>
+                <p className="text-xs text-muted-foreground">{t("weekendCoinBonusRate")}</p>
               </div>
             </div>
             {isDoublePointsWeekendActive ? (
               <span className="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-extrabold flex items-center gap-1">
-                <Sparkles className="h-3 w-3" /> 2X ACTIVE
+                <Sparkles className="h-3 w-3" /> {t("doublePointsActive")}
               </span>
             ) : (
               <span className="px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs font-semibold">
-                Standard Rate
+                {t("standardRate")}
               </span>
             )}
           </div>

@@ -1,77 +1,251 @@
 import { Truck, Coins, Package, Gift, Tag, Mail, LucideIcon } from "lucide-react";
 
+export interface LocalizedText {
+  en: string;
+  ja: string;
+  hi: string;
+  ne: string;
+  bn: string;
+}
+
 export interface LoyaltyFaq {
-  q: string;
-  a: string;
+  q: LocalizedText | string;
+  a: LocalizedText | string;
 }
 
 export interface LoyaltyBenefit {
   icon: LucideIcon;
-  badge: string;
-  title: string;
-  description: string;
+  badge: LocalizedText | string;
+  title: LocalizedText | string;
+  description: LocalizedText | string;
 }
 
 export const LOYALTY_FAQS: LoyaltyFaq[] = [
   {
-    q: "How do I qualify for the Sartaj Family Loyalty Program?",
-    a: "Qualification is automatic! Once your cumulative delivered orders reach the threshold (e.g., ¥50,000), your account is instantly upgraded to Sartaj Family VIP status.",
+    q: {
+      en: "How do I qualify for the Sartaj Family Loyalty Program?",
+      ja: "Sartajファミリーロイヤリティプログラムの加入条件は何ですか？",
+      hi: "सरताज फैमिली लॉयल्टी प्रोग्राम के लिए मैं कैसे पात्र बन सकता हूं?",
+      ne: "सरताज फ्यामिली लोयल्टी प्रोग्रामको लागि म कसरी योग्य हुन्छु?",
+      bn: "সরতাজ ফ্যামিলি রয়্যালটি প্রোগ্রামের জন্য আমি কীভাবে যোগ্য হব?",
+    },
+    a: {
+      en: "Qualification is automatic! Once your cumulative delivered orders reach the threshold (e.g., ¥50,000), your account is instantly upgraded to Sartaj Family VIP status.",
+      ja: "資格取得は自動で行われます！配達完了注文の累積金額が基準額（例：50,000円）に達すると、アカウントが即座にSartajファミリーVIPステータスにアップグレードされます。",
+      hi: "पात्रता स्वचालित है! जैसे ही आपके डिलीवर किए गए ऑर्डर की कुल राशि सीमा (उदा. ¥50,000) तक पहुंच जाती है, आपका खाता तुरंत सरताज फैमिली वीआईपी स्थिति में अपग्रेड हो जाता है।",
+      ne: "योग्यता स्वचालित छ! तपाईंको डेलिभर गरिएका अर्डरहरूको कुल रकम सीमा (उदा. ¥५०,०००) मा पुग्ने बित्तिकै, तपाईंको खाता तुरुन्तै सरताज फ्यामिली VIP स्थितिमा अपग्रेड हुन्छ।",
+      bn: "যোগ্যতা স্বয়ংক্রিয়! আপনার ডেলিভারিকৃত অর্ডারের মোট পরিমাণ সীমা (যেমন, ¥৫০,০০০) ছুঁলে, আপনার অ্যাকাউন্টটি অবিলম্বে সরতাজ ফ্যামিলি ভিআইপি স্ট্যাটাসে আপগ্রেড করা হয়।",
+    },
   },
   {
-    q: "When does my cumulative order spend update?",
-    a: "Your total progress spend updates automatically as soon as an order status changes to 'DELIVERED'. Cancelled or pending orders do not count toward your loyalty qualification.",
+    q: {
+      en: "When does my cumulative order spend update?",
+      ja: "注文の累積利用額はいつ更新されますか？",
+      hi: "मेरे ऑर्डर का कुल खर्च कब अपडेट होता है?",
+      ne: "मेरो अर्डरको कुल खर्च कहिले अपडेट हुन्छ?",
+      bn: "আমার অর্ডারের মোট খরচ কখন আপডেট হয়?",
+    },
+    a: {
+      en: "Your total progress spend updates automatically as soon as an order status changes to 'DELIVERED'. Cancelled or pending orders do not count toward your loyalty qualification.",
+      ja: "利用実績額は注文ステータスが「DELIVERED（配達完了）」になると自動的に更新されます。キャンセルまたは保留中の注文はロイヤリティ資格にカウントされません。",
+      hi: "ऑर्डर की स्थिति 'DELIVERED' में बदलते ही आपकी कुल प्रगति राशि स्वतः अपडेट हो जाती है। रद्द या लंबित ऑर्डर आपकी लॉयल्टी पात्रता में नहीं गिने जाते।",
+      ne: "अर्डरको स्थिति 'DELIVERED' मा परिवर्तन हुने बित्तिकै तपाईंको कुल रकम स्वतः अपडेट हुन्छ। रद्द गरिएका वा पेन्डिङ अर्डरहरू तपाईंको लोयल्टी योग्यतामा गणना हुँदैनन्।",
+      bn: "অর্ডারের স্ট্যাটাস 'DELIVERED'-এ পরিবর্তিত হওয়ার সাথে সাথেই আপনার মোট অগ্রগতির খরচ স্বয়ংক্রিয়ভাবে আপডেট হয়। বাতিল বা মুলতুবি থাকা অর্ডারগুলি রয়্যালটি যোগ্যতায় গণনা করা হয় না।",
+    },
   },
   {
-    q: "How do the 4 Free Shipping Vouchers work?",
-    a: "As a VIP member, you receive 4 Free Delivery Vouchers every year. During checkout, simply toggle the 'Apply Free Shipping' switch to waive shipping fees on your order.",
+    q: {
+      en: "How do the 4 Free Shipping Vouchers work?",
+      ja: "年間4回の送料無料バウチャーはどのように機能しますか？",
+      hi: "4 मुफ्त डिलीवरी वाउचर कैसे काम करते हैं?",
+      ne: "४ नि:शुल्क डेलिभरी भाउचरहरू कसरी काम गर्छन्?",
+      bn: "৪টি বিনামূল্যে ডেলিভারি ভাউচার কীভাবে কাজ করে?",
+    },
+    a: {
+      en: "As a VIP member, you receive 4 Free Delivery Vouchers every year. During checkout, simply toggle the 'Apply Free Shipping' switch to waive shipping fees on your order.",
+      ja: "VIPメンバーには毎年4回の送料無料バウチャーが進呈されます。チェックアウト時に「送料無料を適用」スイッチをオンにするだけで配送料が無料になります。",
+      hi: "वीआईपी सदस्य के रूप में, आपको हर साल 4 मुफ्त डिलीवरी वाउचर मिलते हैं। चेकआउट के दौरान, अपने ऑर्डर पर शिपिंग शुल्क माफ करने के लिए बस 'मुफ्त डिलीवरी लागू करें' स्विच ऑन करें।",
+      ne: "VIP सदस्यको रूपमा, तपाईंले हरेक वर्ष ४ नि:शुल्क डेलिभरी भाउचरहरू प्राप्त गर्नुहुन्छ। चेकआउटको समयमा, अर्डरमा शिपिङ शुल्क मिनाहा गर्न 'नि:शुल्क डेलिभरी लागू गर्नुहोस्' स्विच अन गर्नुहोस्।",
+      bn: "ভিআইপি সদস্য হিসাবে, আপনি প্রতি বছর ৪টি বিনামূল্যে ডেলিভারি ভাউচার পান। চেকআউটের সময়, আপনার অর্ডারে শিপিং ফি মওকুফ করতে কেবল 'বিনামূল্যে ডেলিভারি প্রয়োগ করুন' स्विच অন করুন।",
+    },
   },
   {
-    q: "When do my Free Delivery Vouchers reset?",
-    a: "Vouchers reset automatically at the start of every calendar year (January 1st) giving you 4 fresh free shipping vouchers for the new year.",
+    q: {
+      en: "When do my Free Delivery Vouchers reset?",
+      ja: "送料無料バウチャーはいつリセットされますか？",
+      hi: "मेरे मुफ्त डिलीवरी वाउचर कब रीसेट होते हैं?",
+      ne: "मेरो नि:शुल्क डेलिभरी भाउचरहरू कहिले रिसेट हुन्छन्?",
+      bn: "আমার বিনামূল্যে ডেলিভারি ভাউচারগুলি কখন রিসেট হয়?",
+    },
+    a: {
+      en: "Vouchers reset automatically at the start of every calendar year (January 1st) giving you 4 fresh free shipping vouchers for the new year.",
+      ja: "バウチャーは毎年1月1日に自動的にリセットされ、新年のために新しい4回の送料無料バウチャーが与えられます。",
+      hi: "वाउचर हर कैलेंडर वर्ष की शुरुआत (1 जनवरी) में स्वतः रीसेट हो जाते हैं और नए साल के लिए आपको 4 नए मुफ्त डिलीवरी वाउचर मिलते हैं।",
+      ne: "भाउचरहरू हरेक क्यालेन्डर वर्षको सुरुमा (जनवरी १) स्वतः रिसेट हुन्छन् जसले तपाईंलाई नयाँ वर्षको लागि ४ वटा नयाँ नि:शुल्क डेलिभरी भाउचरहरू प्रदान गर्दछ।",
+      bn: "ভাউচারগুলি প্রতি ক্যালেন্ডার বছরের শুরুতে (১ জানুয়ারী) স্বয়ংক্রিয়ভাবে রিসেট হয় এবং আপনাকে নতুন বছরের জন্য ৪টি নতুন বিনামূল্যে শিপিং ভাউচার দেয়।",
+    },
   },
   {
-    q: "What is Double Points Weekend?",
-    a: "When Double Points Weekend is active, VIP members earn 2X wallet coin rewards on all delivered orders placed during the weekend promotion.",
+    q: {
+      en: "What is Double Points Weekend?",
+      ja: "ダブルポイントウィークエンドとは何ですか？",
+      hi: "डबल पॉइंट्स वीकेंड क्या है?",
+      ne: "डबल पोइन्ट विकेन्ड के हो?",
+      bn: "ডবল পয়েন্ট উইকএন্ড কি?",
+    },
+    a: {
+      en: "When Double Points Weekend is active, VIP members earn 2X wallet coin rewards on all delivered orders placed during the weekend promotion.",
+      ja: "ダブルポイントウィークエンド開催期間中、VIPメンバーは週末プロモーション中に注文されたすべての配達完了注文で通常の2倍のウォレットコインを獲得できます。",
+      hi: "जब डबल पॉइंट्स वीकेंड सक्रिय होता है, तो वीआईपी सदस्यों को वीकेंड प्रचार के दौरान दिए गए सभी डिलीवर किए गए ऑर्डर पर 2 गुना वॉलेट कॉइन पुरस्कार मिलते हैं।",
+      ne: "जब डबल पोइन्ट विकेन्ड सक्रिय हुन्छ, VIP सदस्यहरूले विकेन्ड प्रमोशनको समयमा राखिएका सबै डेलिभर गरिएका अर्डरहरूमा २ गुणा वालेट सिक्का पुरस्कारहरू प्राप्त गर्छन्।",
+      bn: "ডবল পয়েন্ট উইকএন্ড সক্রিয় থাকলে, ভিআইপি সদস্যরা উইকএন্ড প্রমোশনের সময় দেওয়া সমস্ত ডেলিভারিকৃত অর্ডারে ২ গুণ ওয়ালেট কয়েন রিওয়ার্ড পান।",
+    },
   },
 ];
 
 export const LOYALTY_BENEFITS: LoyaltyBenefit[] = [
   {
     icon: Truck,
-    badge: "SHIPPING",
-    title: "4 Annual Free Shipping Vouchers",
-    description: "Waive standard delivery fees 4 times every calendar year across Japan.",
+    badge: {
+      en: "SHIPPING",
+      ja: "送料無料",
+      hi: "शिपिंग",
+      ne: "शिपिङ",
+      bn: "শিপিং",
+    },
+    title: {
+      en: "4 Annual Free Shipping Vouchers",
+      ja: "年間4回の送料無料バウチャー",
+      hi: "4 वार्षिक मुफ्त शिपिंग वाउचर",
+      ne: "४ वार्षिक नि:शुल्क शिपिङ भाउचरहरू",
+      bn: "৪টি বার্ষিক বিনামূল্যে শিপিং ভাউচার",
+    },
+    description: {
+      en: "Waive standard delivery fees 4 times every calendar year across Japan.",
+      ja: "日本全国どこでも、毎カレンダー年に4回まで標準配送料が無料になります。",
+      hi: "पूरे जापान में हर कैलेंडर वर्ष में 4 बार मानक डिलीवरी शुल्क माफ करें।",
+      ne: "जापानभरि हरेक क्यालेन्डर वर्षमा ४ पटक मानक डेलिभरी शुल्क मिनाहा गर्नुहोस्।",
+      bn: "জাপান জুড়ে প্রতি ক্যালেন্ডার বছরে ৪ বার সাধারণ ডেলিভারি ফি মওকুফ করুন।",
+    },
   },
   {
     icon: Coins,
-    badge: "POINTS",
-    title: "Double Points Weekends",
-    description: "Earn 2X coin rewards on weekend promotional campaigns.",
+    badge: {
+      en: "POINTS",
+      ja: "ポイント",
+      hi: "पॉइंट्स",
+      ne: "पोइन्टहरू",
+      bn: "পয়েন্ট",
+    },
+    title: {
+      en: "Double Points Weekends",
+      ja: "ダブルポイントウィークエンド",
+      hi: "डबल पॉइंट्स वीकेंड",
+      ne: "डबल पोइन्ट विकेन्ड",
+      bn: "ডবল পয়েন্ট উইকএন্ড",
+    },
+    description: {
+      en: "Earn 2X coin rewards on weekend promotional campaigns.",
+      ja: "週末のキャンペーン期間中は通常の2倍のコインを獲得できます。",
+      hi: "वीकेंड प्रचार अभियानों पर 2 गुना कॉइन पुरस्कार अर्जित करें।",
+      ne: "विकेन्ड प्रमोशन अभियानहरूमा २ गुणा सिक्का पुरस्कार प्राप्त गर्नुहोस्।",
+      bn: "উইকএন্ড প্রমোশনাল ক্যাম্পেইনে ২ গুণ কয়েন রিওয়ার্ড পান।",
+    },
   },
   {
     icon: Package,
-    badge: "WELCOME GIFT",
-    title: "VIP Welcome Hamper",
-    description:
-      "One-time gift box of festive snacks included in your first order after qualifying.",
+    badge: {
+      en: "WELCOME GIFT",
+      ja: "ウェルカムギフト",
+      hi: "स्वागत उपहार",
+      ne: "स्वागत उपहार",
+      bn: "স্বাগত উপহার",
+    },
+    title: {
+      en: "VIP Welcome Hamper",
+      ja: "VIPウェルカムハンパー",
+      hi: "वीआईपी स्वागत उपहार बॉक्स",
+      ne: "VIP स्वागत उपहार बाकस",
+      bn: "ভিআইপি স্বাগত গিফট বক্স",
+    },
+    description: {
+      en: "One-time gift box of festive snacks included in your first order after qualifying.",
+      ja: "VIP条件達成後の最初の注文に含まれる特別なお菓子のギフトボックス。",
+      hi: "पात्रता प्राप्त करने के बाद आपके पहले ऑर्डर में शामिल उत्सव के स्नैक्स का एकमुश्त उपहार बॉक्स।",
+      ne: "योग्यता प्राप्त गरेपछि तपाईंको पहिलो अर्डरमा समावेश उत्सवका खाजाको उपहार बाकस।",
+      bn: "যোগ্যতা অর্জনের পরে আপনার প্রথম অর্ডারের সাথে একটি বিশেষ উপহারের বাক্স।",
+    },
   },
   {
     icon: Gift,
-    badge: "SAMPLES",
-    title: "Free Product Samples",
-    description: "Receive 3 free new product samples automatically with your grocery orders.",
+    badge: {
+      en: "SAMPLES",
+      ja: "サンプル",
+      hi: "सैंपल",
+      ne: "नमूनाहरू",
+      bn: "স্যাম্পল",
+    },
+    title: {
+      en: "Free Product Samples",
+      ja: "無料商品サンプル",
+      hi: "मुफ्त उत्पाद सैंपल",
+      ne: "नि:शुल्क उत्पादन नमूनाहरू",
+      bn: "বিনামূল্যে পণ্য স্যাম্পল",
+    },
+    description: {
+      en: "Receive 3 free new product samples automatically with your grocery orders.",
+      ja: "食品のご注文時に新しい商品の無料サンプル3点を自動的にお届けします。",
+      hi: "अपने ग्रॉसरी ऑर्डर के साथ स्वतः 3 मुफ्त नए उत्पाद सैंपल प्राप्त करें।",
+      ne: "तपाईंको किराना अर्डरहरूसँग स्वतः ३ नि:शुल्क नयाँ उत्पादन नमूनाहरू प्राप्त गर्नुहोस्।",
+      bn: "আপনার গ্রোসারি অর্ডারের সাথে স্বযংক্রিয়ভাবে ৩টি বিনামূল্যে নতুন পণ্যের স্যাম্পল পান।",
+    },
   },
   {
     icon: Tag,
-    badge: "OCCASIONS",
-    title: "We Celebrate You",
-    description:
-      "Get an exclusive 10% OFF coupon on 1 order during your birthday month (valid for orders between ¥4,000 – ¥10,000).",
+    badge: {
+      en: "OCCASIONS",
+      ja: "お祝い",
+      hi: "विशेष अवसर",
+      ne: "विशेष अवसर",
+      bn: "বিশেষ উপলক্ষ",
+    },
+    title: {
+      en: "We Celebrate You",
+      ja: "お誕生日のお祝い",
+      hi: "जन्मदिन विशेष उपहार",
+      ne: "जन्मदिन विशेष उपहार",
+      bn: "জন্মদিন विशेष उपहार",
+    },
+    description: {
+      en: "Get an exclusive 10% OFF coupon on 1 order during your birthday month (valid for orders between ¥4,000 – ¥10,000).",
+      ja: "お誕生月に使える10%OFFの特別クーポンを進呈（4,000円〜10,000円のご注文で1回限り有効）。",
+      hi: "अपने जन्मदिन के महीने में 1 ऑर्डर पर विशेष 10% छूट कूपन प्राप्त करें (¥4,000 – ¥10,000 के बीच के ऑर्डर के लिए मान्य)।",
+      ne: "तपाईंको जन्मदिन महिनामा १ अर्डरमा विशेष १०% छुट भाउचर प्राप्त गर्नुहोस् (¥४,००० – ¥१०,००० बीचको अर्डरको लागि मान्य)।",
+      bn: "আপনার জন্মদিন মাসের ১টি অর্ডারে বিশেষ ১০% ছাড়ের কুপন পান (¥৪,০০০ – ¥১০,০০০ এর মধ্যবর্তী অর্ডারের জন্য প্রযোজ্য)।",
+    },
   },
   {
     icon: Mail,
-    badge: "EARLY ACCESS",
-    title: "Flash Sales & Early Bird Deals",
-    description: "Advance notifications for major sale events and exclusive VIP festive discounts.",
+    badge: {
+      en: "EARLY ACCESS",
+      ja: "先行アクセス",
+      hi: "अर्ली एक्सेस",
+      ne: "पहिले पहुँच",
+      bn: "আগে অ্যাক্সেস",
+    },
+    title: {
+      en: "Flash Sales & Early Bird Deals",
+      ja: "タイムセール＆先行割引",
+      hi: "फ्लैश सेल और अर्ली बर्ड डील्स",
+      ne: "फ्लास सेल र अफरहरू",
+      bn: "ফ্ল্যাশ সেল এবং বিশেষ অফার",
+    },
+    description: {
+      en: "Advance notifications for major sale events and exclusive VIP festive discounts.",
+      ja: "大型セールイベントやVIP限定の特別割引への事前通知をお届けします。",
+      hi: "प्रमुख बिक्री कार्यक्रमों और अनन्य वीआईपी उत्सव छूटों के लिए अग्रिम सूचनाएं।",
+      ne: "प्रमुख बिक्री कार्यक्रमहरू र विशेष VIP चाडपर्व छुटहरूको लागि अग्रिम सूचनाहरू।",
+      bn: "প্রধান বিক্রয় ইভেন্ট এবং বিশেষ ভিআইপি উৎসবের ছাড়ের জন্য অগ্রিম বিজ্ঞপ্তি।",
+    },
   },
 ];
