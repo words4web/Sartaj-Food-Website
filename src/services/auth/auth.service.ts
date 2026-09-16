@@ -42,4 +42,10 @@ export const authService = {
   ): Promise<AxiosResponse<{ success: boolean; data: { user: IUser } }>> => {
     return axiosInstance.patch(API_ROUTES.PROFILE.UPDATE_MOBILE_NUMBER, { mobileNumber });
   },
+
+  setDateOfBirth: async (
+    dateOfBirth: string,
+  ): Promise<AxiosResponse<{ success: boolean; data: { user: IUser } }>> => {
+    return axiosInstance.patch(API_ROUTES.PROFILE.SET_DATE_OF_BIRTH, { dateOfBirth });
+  },
 };

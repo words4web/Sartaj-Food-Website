@@ -4,4 +4,5 @@ export const STORAGE_KEYS = {
   FCM_LANG: "sartaj_fcm_lang",
   NOTIFICATIONS_ENABLED: "sartaj_notifications_enabled",
   NOTIF_BANNER_DISMISSED: "sartaj_notif_banner_dismissed",
+  LOYALTY_BUBBLE_DISMISSED: "sartaj_loyalty_bubble_dismissed",
 } as const;

@@ -300,6 +300,22 @@
     "selectDeliverySlotRequired": "অনুগ্রহ করে ডেলিভারি সময় স্লট নির্বাচন করুন",
     "selectAddressFirst": "উপলব্ধ ডেলিভারি সময়সূচী দেখতে অনুগ্রহ করে প্রথমে একটি শিপিং ঠিকানা নির্বাচন করুন।",
     "selectAddressFirstWallet": "প্রথমে ডেলিভারি ঠিকানা নির্বাচন করুন",
+    "vipLoyaltyVoucher": "সরতাজ ভিআইপি ফ্রি ডেলিভারি",
+    "vipActiveBadge": "ভিআইপি সক্রিয়",
+    "freeDeliveryApplied": "ফ্রি ডেলিভারি প্রয়োগ করা হয়েছে",
+    "useFreeDeliveryVoucher": "ফ্রি ডেলিভারি ভাউচার ব্যবহার করুন",
+    "selectAddressFirstVoucher": "প্রথমে ডেলিভারি ঠিকানা নির্বাচন করুন",
+    "vipRequiredVoucher": "ফ্রি শিপিং পেতে সরতাজ ফ্যামিলি ভিআইপি আনলক করুন",
+    "noVouchersLeft": "এই বছরের জন্য ০টি ভাউচার অবশিষ্ট আছে",
+    "voucherAppliedMsg": "¥০ ডেলিভারির জন্য ১টি ভাউচার ব্যবহার করা হবে",
+    "vouchersAvailable": "বার্ষিক ৪টি ভাউচারের মধ্যে {count}টি উপলব্ধ",
+    "confirmVoucherRedemption": "ফ্রি ডেলিভারি ভাউচার ব্যবহার নিশ্চিত করুন",
+    "redeemVoucherTitle": "১টি ফ্রি শিপিং ভাউচার প্রয়োগ করুন",
+    "availableVouchers": "উপলব্ধ ভাউচার",
+    "voucherCost": "ব্যবহৃত ভাউচার",
+    "voucherUsedValue": "-১ ভাউচার",
+    "remainingVouchers": "অর্ডারের পর অবশিষ্ট ভাউচার",
+    "voucherConfirmMsg": "এই অর্ডারের শিপিং ফি মওকুফ হবে। বাতিল হলে ভাউচার ফেরত পাবেন।",
     "confirmDeliveryTitle": "ডেলিভারি পছন্দ নিশ্চিত করুন",
     "confirmDeliveryDescription": "দয়া করে মনে রাখবেন যে নির্বাচিত ডেলিভারি তারিখ এবং সময় স্লটটি শুধুমাত্র একটি পছন্দ এবং এটির কোনো গ্যারান্টি নেই।",
     "chooseFreeGift": "বিনামূল্যে উপহার বেছে নিন",
@@ -530,5 +546,12 @@
     "title": "সুরক্ষা ও ভালোবাসার পবিত্র বন্ধন",
     "description": "এই রক্ষা বন্ধনে ভালোবাসার সুতো বেঁধে দিন। আপনার ভাইয়ের জন্য আমাদের বিশেষ ডিজাইনার রাখি কালেকশন এবং খাঁটি প্রিমিয়াম মিষ্টির কালেকশন অন্বেষণ করুন।",
     "btnText": "রাখি কালেকশন দেখুন"
+  },
+  "loyaltyBubble": {
+    "vipTitle": "সরতাজ ফ্যামিলি ভিআইপি",
+    "spendNeeded": "VIP আনলক করতে আরও {amount}",
+    "freeDeliveriesPerYear": "প্রতি বছর ৪টি ফ্রি ডেলিভারি",
+    "viewVipBenefits": "VIP সুবিধা দেখুন",
+    "vipProgress": "VIP অগ্রগতি · {percentage}%"
   }
 }

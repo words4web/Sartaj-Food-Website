@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { onForegroundMessage } from "@/lib/firebase";
 import { incrementUnreadCount } from "@/lib/store/notificationSlice";
 import { NOTIFICATION_QUERY_KEYS } from "@/services/notification/notification.hooks";
+import { LOYALTY_QUERY_KEYS } from "@/services/loyalty/loyalty.hooks";
 import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { useTranslations } from "next-intl";
@@ -74,6 +75,10 @@ export function NotificationListener() {
         // Invalidate cart queries to sync cart item count/state
         queryClient.invalidateQueries({
           queryKey: ["cart"],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: LOYALTY_QUERY_KEYS.status,
         });
       });
     };

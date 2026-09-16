@@ -300,6 +300,22 @@
     "selectDeliverySlotRequired": "कृपया डेलिभरी समय स्लट चयन गर्नुहोस्",
     "selectAddressFirst": "उपलब्ध डेलिभरी तालिकाहरू हेर्नको लागि कृपया पहिले शिपिंग ठेगाना चयन गर्नुहोस्।",
     "selectAddressFirstWallet": "पहिले डेलिभरी ठेगाना चयन गर्नुहोस्",
+    "vipLoyaltyVoucher": "सरताज भिआइपी निःशुल्क डेलिभरी",
+    "vipActiveBadge": "भिआइपी सक्रिय",
+    "freeDeliveryApplied": "निःशुल्क डेलिभरी लागू भयो",
+    "useFreeDeliveryVoucher": "निःशुल्क डेलिभरी भाउचर प्रयोग गर्नुहोस्",
+    "selectAddressFirstVoucher": "पहिले डेलिभरी ठेगाना चयन गर्नुहोस्",
+    "vipRequiredVoucher": "निःशुल्क डेलिभरी प्राप्त गर्न सरताज फेमिली भिआइपी अनलक गर्नुहोस्",
+    "noVouchersLeft": "यस वर्षका लागि ० भाउचर बाँकी छन्",
+    "voucherAppliedMsg": "¥० डेलिभरीका लागि १ भाउचर प्रयोग हुनेछ",
+    "vouchersAvailable": "४ वार्षिक भाउचर मध्ये {count} उपलब्ध छन्",
+    "confirmVoucherRedemption": "निःशुल्क डेलिभरी भाउचर प्रयोग पुष्टि गर्नुहोस्",
+    "redeemVoucherTitle": "१ निःशुल्क डेलिभरी भाउचर लागू गर्नुहोस्",
+    "availableVouchers": "उपलब्ध भाउचरहरू",
+    "voucherCost": "प्रयोग गरिएको भाउचर",
+    "voucherUsedValue": "-१ भाउचर",
+    "remainingVouchers": "अर्डर पछि बाँकी भाउचरहरू",
+    "voucherConfirmMsg": "यस अर्डरको डेलिभरी शुल्क मिनाहा हुन्छ। रद्द भएमा भाउचर फिर्ता हुनेछ।",
     "confirmDeliveryTitle": "डेलिभरी प्राथमिकता पुष्टि गर्नुहोस्",
     "confirmDeliveryDescription": "कृपया ध्यान दिनुहोस् कि चयन गरिएको डेलिभरी मिति र समय स्लट केवल एक प्राथमिकता हो र ग्यारेन्टी छैन।",
     "chooseFreeGift": "निःशुल्क उपहार छान्नुहोस्",
@@ -530,5 +546,12 @@
     "title": "सुरक्षा र प्रेमको अटूट बन्धन",
     "description": "यस रक्षा बन्धनमा प्रेमको धागो बाँड्नुहोस्। तपाईको भाइका लागि हाम्रा विशेष डिजाइनर राखी संकलन र शुद्ध नेपाली तथा भारतीय मिठाईहरू हेर्नुहोस्।",
     "btnText": "राखी संकलन हेर्नुहोस्"
+  },
+  "loyaltyBubble": {
+    "vipTitle": "सरताज फ्यामिली VIP",
+    "spendNeeded": "VIP अनलक गर्न थप {amount}",
+    "freeDeliveriesPerYear": "प्रत्येक वर्ष ४ नि:शुल्क डेलिभरी",
+    "viewVipBenefits": "VIP फाइदाहरू हेर्नुहोस्",
+    "vipProgress": "VIP प्रगति · {percentage}%"
   }
 }

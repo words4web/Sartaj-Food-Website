@@ -24,6 +24,8 @@ import { themes, applyTheme, themeSwatchColors, type Theme } from "@/lib/themes"
 import { LANGUAGES } from "@/data/languages";
 import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { useChangeLanguage } from "@/hooks/useChangeLanguage";
+import { HeaderLoyaltyBadge } from "@/components/layout/HeaderLoyaltyBadge";
+import { Crown } from "lucide-react";
 
 export function HeaderActions() {
   const t = useTranslations();
@@ -47,7 +49,8 @@ export function HeaderActions() {
 
   return (
     <div className="flex items-center gap-1.5 sm:gap-3 md:gap-4">
-      {/* Order History */}
+      <HeaderLoyaltyBadge />
+
       {isAuthenticated && (
         <Link
           href={ROUTES.ORDERS()}
@@ -145,6 +148,16 @@ export function HeaderActions() {
         >
           {isAuthenticated ? (
             <>
+              <DropdownMenuItem asChild>
+                <Link
+                  href={ROUTES.LOYALTY}
+                  className="flex items-center gap-2 w-full px-2 py-2 text-sm text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 rounded-lg transition-colors cursor-pointer font-semibold"
+                >
+                  <Crown className="h-4 w-4 text-amber-500" />
+                  <span>Sartaj Family Loyalty</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-border my-1" />
               <DropdownMenuItem asChild>
                 <Link
                   href={ROUTES.PROFILE}

@@ -92,7 +92,6 @@ export default function ProfilePage() {
     e.preventDefault();
     setFormError("");
 
-    // Validate using Zod schema
     const validation = addressSchema.safeParse(formData);
     if (!validation.success) {
       setFormError(validation.error.errors[0].message);
@@ -133,19 +132,15 @@ export default function ProfilePage() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-foreground mb-6">{t("profile.profile")}</h1>
 
-        {/* Blocked notifications banner */}
         <BlockedPermissionBanner className="mb-6" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT COLUMN: Profile info + Notification settings */}
           <div className="lg:col-span-1 space-y-6">
             <ProfileCard user={user} />
             <NotificationToggle />
           </div>
 
-          {/* RIGHT COLUMN: Address Manager */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Address List Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-primary" />
@@ -163,7 +158,6 @@ export default function ProfilePage() {
               )}
             </div>
 
-            {/* Edit / Add Form Card */}
             {showForm && (
               <AddressForm
                 formData={formData}
@@ -176,7 +170,6 @@ export default function ProfilePage() {
               />
             )}
 
-            {/* Address Cards Grid */}
             {loadingAddresses ? (
               <CommonLoader fullScreen={false} message={t("common.loading")} />
             ) : errorAddresses ? (

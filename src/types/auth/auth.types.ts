@@ -4,6 +4,7 @@ export interface IUser {
   mobileNumber: string;
   fullName: string;
   superCategory: string;
+  dateOfBirth?: string | Date | null;
   createdAt: string;
   updatedAt: string;
 }

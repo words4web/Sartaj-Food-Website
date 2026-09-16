@@ -18,6 +18,8 @@ import { useGetCart } from "@/services/cart/cart.hooks";
 import { useGetCheckoutSummary, useCreateOrder } from "@/services/order/order.hooks";
 import { useGetPublicCoupons } from "@/services/coupon/coupon.hooks";
 import { useGetGiftProducts } from "@/services/product/product.hooks";
+import { useCustomerLoyaltyStatus } from "@/services/loyalty/loyalty.hooks";
+import { useAuth } from "@/hooks/useAuth";
 import { useOrderTracking } from "@/hooks/useOrderTracking";
 
 import { CheckoutCartItems } from "@/components/checkout/CheckoutCartItems";
@@ -28,6 +30,8 @@ import { CheckoutNotes } from "@/components/checkout/CheckoutNotes";
 import { CheckoutPaymentMethod } from "@/components/checkout/CheckoutPaymentMethod";
 import { CheckoutPriceBreakdown } from "@/components/checkout/CheckoutPriceBreakdown";
 import { CheckoutWalletSelection } from "@/components/checkout/CheckoutWalletSelection";
+import { CheckoutLoyaltyFreeDelivery } from "@/components/checkout/CheckoutLoyaltyFreeDelivery";
+import { CheckoutBirthdayDiscount } from "@/components/checkout/CheckoutBirthdayDiscount";
 import { CheckoutCouponSelection } from "@/components/checkout/CheckoutCouponSelection";
 import { CheckoutStatusOverlay } from "@/components/checkout/CheckoutStatusOverlay";
 import { CheckoutOverlayState, CheckoutStatus } from "@/types/checkout/checkout.types";
@@ -39,6 +43,7 @@ export default function CheckoutPage() {
   const t = useTranslations("checkout");
   const tCommon = useTranslations("common");
   const queryClient = useQueryClient();
+  const { isAuthenticated } = useAuth();
   const { trackPurchase, prepareRedirectPurchase, trackRedirectPurchase, clearRedirectPurchase } =
     useOrderTracking();
 
@@ -49,6 +54,8 @@ export default function CheckoutPage() {
   const [notes, setNotes] = useState<string>("");
   const [appliedCoupon, setAppliedCoupon] = useState<string>("");
   const [applyWallet, setApplyWallet] = useState<boolean>(false);
+  const [applyFreeDelivery, setApplyFreeDelivery] = useState<boolean>(false);
+  const [applyBirthdayDiscount, setApplyBirthdayDiscount] = useState<boolean>(false);
   const [selectedGiftId, setSelectedGiftId] = useState<string>("");
   const [idempotencyKey, setIdempotencyKey] = useState<string>(() => generateIdempotencyKey());
   const [overlayState, setOverlayState] = useState<CheckoutOverlayState>(CheckoutStatus.IDLE);
@@ -134,6 +141,8 @@ export default function CheckoutPage() {
     isLoading: couponsLoading,
     refetch: refetchCoupons,
   } = useGetPublicCoupons();
+  const { data: loyaltyStatus, isLoading: loyaltyLoading } =
+    useCustomerLoyaltyStatus(isAuthenticated);
   const { data: gifts = [], isLoading: giftsLoading, refetch: refetchGifts } = useGetGiftProducts();
 
   const cartItemIds = cart?.items?.map((i: any) => i.productId).join(",") ?? "";
@@ -167,6 +176,8 @@ export default function CheckoutPage() {
     addressId: selectedAddressId || undefined,
     couponCode: appliedCoupon || undefined,
     applyWallet,
+    applyFreeDelivery,
+    applyBirthdayDiscount,
   });
 
   const handleApplyCoupon = (code: string) => {
@@ -223,6 +234,8 @@ export default function CheckoutPage() {
           paymentMethod: selectedPaymentMethod,
           couponCode: appliedCoupon || undefined,
           applyWallet,
+          applyFreeDelivery,
+          applyBirthdayDiscount,
           platform: "web",
           deliveryDate: selectedDeliveryDate,
           deliverySlot: selectedDeliverySlot,
@@ -385,6 +398,22 @@ export default function CheckoutPage() {
               walletBalance={summary?.walletBalance || 0}
               maxWalletApplicable={summary?.maxWalletApplicable || 0}
               isAddressSelected={!!selectedAddressId}
+            />
+            <CheckoutBirthdayDiscount
+              applyBirthdayDiscount={applyBirthdayDiscount}
+              onToggleBirthdayDiscount={setApplyBirthdayDiscount}
+              isEligible={summary?.isBirthdayDiscountEligible || false}
+              isAddressSelected={!!selectedAddressId}
+            />
+            <CheckoutLoyaltyFreeDelivery
+              applyFreeDelivery={applyFreeDelivery}
+              onToggleFreeDelivery={setApplyFreeDelivery}
+              loyaltyStatus={loyaltyStatus}
+              isLoading={loyaltyLoading}
+              isAddressSelected={!!selectedAddressId}
+              hasShippingExpense={
+                (summary?.shippingFee ?? 0) > 0 || (summary?.penaltyAmount ?? 0) > 0
+              }
             />
             <CheckoutCouponSelection
               appliedCoupon={appliedCoupon}
