@@ -24,7 +24,25 @@ export interface AddressFormProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   onSubmit?: (e: React.FormEvent) => void;
   onCancel?: () => void;
+  onAutoFillAddress?: (fields: Partial<IAddress>) => void;
   formError?: string;
   isPending?: boolean;
   isEditing?: boolean;
+}
+
+export interface IZipCloudResult {
+  address1: string;
+  address2: string;
+  address3: string;
+  kana1: string;
+  kana2: string;
+  kana3: string;
+  prefcode: string;
+  zipcode: string;
+}
+
+export interface IAreaSelectionModalState {
+  isOpen: boolean;
+  zipcode: string;
+  results: IZipCloudResult[];
 }
