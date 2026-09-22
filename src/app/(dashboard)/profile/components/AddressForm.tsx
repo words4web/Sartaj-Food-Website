@@ -4,28 +4,51 @@ import { PREFECTURES } from "@/constants/prefectures";
 import { Button } from "@/components/ui/button";
 import { isErrorKey } from "@/utils/auth/auth.utils";
 import { IAddress, AddressFormProps } from "@/types/address/address.types";
+import { usePostalCodeLookup } from "@/hooks/usePostalCodeLookup";
+import { AreaSelectionModal } from "@/components/address/AreaSelectionModal";
+import { Loader2, Search } from "lucide-react";
 
 export function AddressForm({
   formData,
   onChange,
   onSubmit,
   onCancel,
+  onAutoFillAddress,
   formError,
   isPending = false,
   isEditing = false,
 }: AddressFormProps) {
   const t = useTranslations();
 
+  const {
+    isLoading: isSearchingZip,
+    modalState,
+    searchPostalCode,
+    handleSelectArea,
+    closeModal,
+  } = usePostalCodeLookup({
+    onAutoFill: onAutoFillAddress,
+  });
+
+  const handleLookupClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (formData?.postalCode) {
+      searchPostalCode(formData?.postalCode);
+    }
+  };
+
+  const rawZipLength = (formData?.postalCode || "")?.replace(/[^\d]/g, "")?.length;
+
   return (
     <div className="bg-card rounded-2xl border border-border/80 p-6 shadow-md animate-in fade-in slide-in-from-top-4 duration-300">
       <h3 className="text-lg font-bold text-foreground mb-4">
-        {isEditing ? "Edit Address" : "Add New Address"}
+        {isEditing ? t("profile.editAddress") : t("profile.addNewAddress")}
       </h3>
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1">
             <label className="text-xs font-semibold text-muted-foreground uppercase">
-              Full Name
+              {t("profile.fullName")}
             </label>
             <input
               type="text"
@@ -39,7 +62,7 @@ export function AddressForm({
           </div>
           <div className="space-y-1">
             <label className="text-xs font-semibold text-muted-foreground uppercase">
-              Phone Number
+              {t("profile.phoneNumber")}
             </label>
             <div className="relative flex items-center">
               <span className="absolute left-3 text-sm text-muted-foreground font-medium border-r border-border pr-2">
@@ -65,27 +88,49 @@ export function AddressForm({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1">
             <label className="text-xs font-semibold text-muted-foreground uppercase">
-              Postal Code
+              {t("profile.zipCode")}
             </label>
-            <input
-              type="text"
-              name="postalCode"
-              required
-              value={formData?.postalCode || ""}
-              onChange={onChange}
-              placeholder="123-4567"
-              className="w-full px-3 py-2 border border-border rounded-xl bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none"
-            />
+            <div className="relative flex items-center gap-2">
+              <input
+                type="text"
+                name="postalCode"
+                required
+                value={formData?.postalCode || ""}
+                onChange={onChange}
+                placeholder="123-4567"
+                className="w-full px-3 py-2 border border-border rounded-xl bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none"
+              />
+              <Button
+                type="button"
+                size="sm"
+                variant="secondary"
+                disabled={isSearchingZip || rawZipLength !== 7}
+                onClick={handleLookupClick}
+                className="shrink-0 h-9.5 px-3 rounded-xl flex items-center gap-1.5 font-medium text-xs border border-border shadow-xs hover:bg-primary hover:text-primary-foreground transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSearchingZip ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
+                    <span>{t("profile.checking")}</span>
+                  </>
+                ) : (
+                  <>
+                    <Search className="h-3.5 w-3.5" />
+                    <span>{t("profile.check")}</span>
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
           <div className="space-y-1">
             <label className="text-xs font-semibold text-muted-foreground uppercase">
-              Prefecture
+              {t("profile.prefecture")}
             </label>
             <select
               name="prefecture"
               value={formData?.prefecture || "JP-13"}
               onChange={onChange}
-              className="w-full px-3 py-2 border border-border rounded-xl bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none"
+              className="w-full px-3 py-2 border border-border rounded-xl bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none cursor-pointer"
             >
               {PREFECTURES.map((pref) => (
                 <option key={pref.code} value={pref.code}>
@@ -95,7 +140,9 @@ export function AddressForm({
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-muted-foreground uppercase">City</label>
+            <label className="text-xs font-semibold text-muted-foreground uppercase">
+              {t("profile.city")}
+            </label>
             <input
               type="text"
               name="city"
@@ -111,7 +158,7 @@ export function AddressForm({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2 space-y-1">
             <label className="text-xs font-semibold text-muted-foreground uppercase">
-              Street Address
+              {t("profile.streetAddress")}
             </label>
             <input
               type="text"
@@ -125,7 +172,7 @@ export function AddressForm({
           </div>
           <div className="space-y-1">
             <label className="text-xs font-semibold text-muted-foreground uppercase">
-              Building / Apt (Opt)
+              {t("profile.building")}
             </label>
             <input
               type="text"
@@ -154,7 +201,7 @@ export function AddressForm({
               onClick={onCancel}
               className="rounded-xl cursor-pointer"
             >
-              Cancel
+              {t("profile.cancel")}
             </Button>
             <Button
               type="submit"
@@ -162,11 +209,17 @@ export function AddressForm({
               disabled={isPending}
               className="rounded-xl cursor-pointer"
             >
-              {isEditing ? "Update" : "Save"}
+              {isEditing ? t("profile.update") : t("profile.save")}
             </Button>
           </div>
         </div>
       </form>
+
+      <AreaSelectionModal
+        modalState={modalState}
+        onSelectArea={handleSelectArea}
+        onClose={closeModal}
+      />
     </div>
   );
 }

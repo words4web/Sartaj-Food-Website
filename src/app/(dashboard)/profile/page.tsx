@@ -88,6 +88,14 @@ export default function ProfilePage() {
     setFormError("");
   };
 
+  const handleAutoFillAddress = (fields: Partial<IAddress>) => {
+    setFormData((prev) => ({
+      ...prev,
+      ...fields,
+    }));
+    setFormError("");
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
@@ -164,6 +172,7 @@ export default function ProfilePage() {
                 onChange={handleFormChange}
                 onSubmit={handleFormSubmit}
                 onCancel={() => setShowForm(false)}
+                onAutoFillAddress={handleAutoFillAddress}
                 formError={formError}
                 isPending={createAddressMutation.isPending || updateAddressMutation.isPending}
                 isEditing={!!editingAddress}
