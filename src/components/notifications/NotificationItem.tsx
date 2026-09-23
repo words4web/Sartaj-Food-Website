@@ -28,7 +28,9 @@ export function NotificationItem({
     }
 
     const metadata = notification?.metadata || {};
-    if (metadata?.orderId) {
+    if (type === "WALLET_REWARD_CREDITED") {
+      router.push(ROUTES.WALLET);
+    } else if (metadata?.orderId) {
       router.push(ROUTES.ORDERS(metadata?.orderId));
     } else if (metadata?.productId) {
       router.push(ROUTES.PRODUCTS(metadata?.productId));
@@ -47,12 +49,10 @@ export function NotificationItem({
         isLoading && "opacity-60 cursor-not-allowed",
       )}
     >
-      {/* Glow Effect on Hover for Unread */}
       {!notification?.isRead && (
         <span className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       )}
 
-      {/* Icon Area */}
       <div className="shrink-0 relative">
         <div
           className={cn(
@@ -66,7 +66,6 @@ export function NotificationItem({
         </div>
       </div>
 
-      {/* Content Area */}
       <div className="flex-1 min-w-0 space-y-1">
         <div className="flex items-center justify-between gap-2">
           <p
@@ -80,7 +79,6 @@ export function NotificationItem({
             {title}
           </p>
 
-          {/* Type Tag */}
           {type !== "DEFAULT" && (
             <span
               className={cn(
@@ -90,7 +88,7 @@ export function NotificationItem({
                   : "bg-primary/10 text-primary dark:text-primary-foreground/90",
               )}
             >
-              {type.replace("_", " ")}
+              {type?.replaceAll("_", " ")}
             </span>
           )}
         </div>
@@ -99,19 +97,17 @@ export function NotificationItem({
           {body}
         </p>
 
-        {/* Time Stamp */}
         <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground/60 pt-0.5">
           <Clock className="h-3 w-3" />
           <span>{formatDistanceToNow(new Date(notification?.createdAt), { addSuffix: true })}</span>
         </div>
       </div>
 
-      {/* Unread dot */}
       {!notification?.isRead && (
         <span
           className={cn(
             "shrink-0 self-center h-2.5 w-2.5 rounded-full ring-4 ring-background transition-transform duration-300 group-hover:scale-125",
-            config.indicatorClass,
+            config?.indicatorClass,
           )}
         />
       )}

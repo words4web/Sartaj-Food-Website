@@ -39,17 +39,26 @@ export function NotificationListener() {
         const data = payload?.data ?? {};
         const title = notification?.title ?? data?.title ?? t("fallbackTitle");
         const body = notification?.body ?? data?.body ?? t("fallbackBody");
+        const type = data?.type;
         const orderId = data?.orderId;
+
+        let toastAction: { label: string; onClick: () => void } | undefined = undefined;
+        if (type === "WALLET_REWARD_CREDITED") {
+          toastAction = {
+            label: "View Wallet",
+            onClick: () => router.push(ROUTES.WALLET),
+          };
+        } else if (orderId) {
+          toastAction = {
+            label: "View Order",
+            onClick: () => router.push(ROUTES.ORDERS(orderId)),
+          };
+        }
 
         toast(title, {
           description: body,
           duration: 6000,
-          action: orderId
-            ? {
-                label: "View Order",
-                onClick: () => router.push(ROUTES.ORDERS(orderId)),
-              }
-            : undefined,
+          action: toastAction,
         });
 
         // Increment unread badge
@@ -79,6 +88,11 @@ export function NotificationListener() {
 
         queryClient.invalidateQueries({
           queryKey: LOYALTY_QUERY_KEYS.status,
+        });
+
+        // Invalidate wallet balance and transaction queries
+        queryClient.invalidateQueries({
+          queryKey: ["wallet"],
         });
       });
     };

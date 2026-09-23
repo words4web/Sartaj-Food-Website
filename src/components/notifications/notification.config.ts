@@ -7,6 +7,7 @@ import {
   CheckSquare,
   XCircle,
   User,
+  Wallet2,
 } from "lucide-react";
 
 export const typeConfigs: Record<
@@ -78,6 +79,13 @@ export const typeConfigs: Record<
       "bg-emerald-50/10 dark:bg-emerald-950/5 hover:bg-emerald-50/20 dark:hover:bg-emerald-950/10",
     borderClass: "border-l-emerald-500 dark:border-l-emerald-400",
     indicatorClass: "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]",
+  },
+  WALLET_REWARD_CREDITED: {
+    icon: Wallet2,
+    iconClass: "text-amber-600 dark:text-amber-400 bg-amber-500/10 ring-4 ring-amber-500/10",
+    bgClass: "bg-amber-500/5 hover:bg-amber-500/10",
+    borderClass: "border-l-amber-500",
+    indicatorClass: "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]",
   },
   DEFAULT: {
     icon: Bell,
