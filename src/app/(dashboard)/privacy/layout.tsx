@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Sartaj Foods Japan",
+  title: "Privacy & Data Protection | Sartaj Foods Japan",
   description:
-    "Learn how Sartaj Foods Japan protects your personal information, processes secure online transactions, and respects your privacy.",
+    "Sartaj Foods' Japan privacy policy how we collect, use, and protect your personal information during online orders and transactions.",
 };
 
 export default function PrivacyLayout({ children }: { children: React.ReactNode }) {

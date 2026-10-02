@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Buy Indian & South Asian Groceries Online in Japan | Sartaj Foods",
+  title: "Shop Indian Spices, Rice, snacks and Household Essentials",
   description:
-    "Explore Japan's finest selection of authentic Indian spices, premium basmati rice, lentils, frozen foods, and daily staples. Fast delivery across Japan.",
+    "Shop full range products from basmati rice, atta, ghee, spices, snacks, frozen foods & more. Authentic Indian & home essentials delivered fresh across Japan.",
 };
 
 export default function ProductsLayout({ children }: { children: React.ReactNode }) {

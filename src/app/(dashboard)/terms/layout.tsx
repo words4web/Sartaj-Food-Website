@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service & Store Policies | Sartaj Foods Japan",
+  title: "Terms of Service & Policies | Sartaj Foods Japan",
   description:
-    "Read Sartaj Foods Japan's terms and conditions, purchasing guidelines, store policies, and service agreements.",
+    "Sartaj Foods Japan official terms of service purchasing guidelines, store policies, and customer agreements for shopping in Japan.",
 };
 
 export default function TermsLayout({ children }: { children: React.ReactNode }) {
