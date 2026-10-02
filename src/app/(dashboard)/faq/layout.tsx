@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Shipping & Delivery | Sartaj Foods",
+  title: "FAQ | Shipping, Payment & Returns | Sartaj Foods",
   description:
-    "Find answers to common questions about online ordering, delivery slots across Japan, free shipping thresholds, payment methods, and product returns.",
+    "Answers to common questions on ordering, shipping across Japan, free delivery thresholds, payment methods, and returns at Sartaj Foods.",
 };
 
 export default function FaqLayout({ children }: { children: React.ReactNode }) {

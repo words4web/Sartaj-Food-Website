@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Sartaj Foods | Customer Support & Store Locations in Japan",
+  title: "Contact Us | Sartaj Foods Japan",
   description:
-    "Have questions about your order or our products? Get in touch with the Sartaj Foods support team or visit our physical store locations across Japan.",
+    "Need help with an order or want to visit a store? Get in touch with Sartaj Foods customer support and locations across Japan.",
 };
 
 export default function ContactUsLayout({ children }: { children: React.ReactNode }) {
