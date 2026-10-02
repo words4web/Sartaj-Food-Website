@@ -20,9 +20,9 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sartajfoods.jp"),
-  title: "Sartaj Foods - Authentic South Asian Flavors in Japan",
+  title: "Sartaj Foods | Indian Groceries, spices and Daily Essentials in Japan",
   description:
-    "Sartaj Foods Japan trusted source for authentic Indian groceries. Shop premium basmati rice, aromatic spices, snacks & traditional sweets, imported for authentic culinary experience in Japan.",
+    "Sartaj Foods brings Indian groceries, spices ready-to-eat meals and everyday essentials all in one stop and delivers fast and reliable.",
   alternates: {
     canonical: "./",
   },

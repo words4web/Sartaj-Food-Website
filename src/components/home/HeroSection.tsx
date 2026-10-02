@@ -71,9 +71,14 @@ export function HeroSection() {
     <section
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
+      aria-label="Hero Banner"
       className="relative aspect-[16/6] sm:aspect-[21/7] h-auto w-full overflow-hidden bg-gradient-to-br from-primary/8 to-accent/12 lg:transition-all lg:duration-700 lg:ease-in-out border-b border-border/20"
     >
-      {/* ── Full-width background slide image layer ── */}
+      <h1 className="sr-only">
+        {t("home.heroTitle") ||
+          "Sartaj Foods | Indian Groceries, spices and Daily Essentials in Japan"}
+      </h1>
+
       {slides?.map((slide, idx) => {
         const isActive = idx === activeSlide;
         return (
