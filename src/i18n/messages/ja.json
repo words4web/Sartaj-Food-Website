@@ -39,7 +39,8 @@
     "freeDeliveryMsg": "✨ ドライ製品は¥{dryAmount}以上、冷凍製品は{frozenWeight}kg以上のご注文で送料無料！ ✨",
     "freeAllMsg": "✨ 全商品送料無料！ ✨",
     "freeFrozenMsgOnly": "✨ 冷凍製品はすべて送料無料、ドライ製品は¥{dryAmount}以上のご注文で送料無料！ ✨",
-    "freeDryMsgOnly": "✨ ドライ製品はすべて送料無料、冷凍製品は{frozenWeight}kg以上のご注文で送料無料！ ✨"
+    "freeDryMsgOnly": "✨ ドライ製品はすべて送料無料、冷凍製品は{frozenWeight}kg以上のご注文で送料無料！ ✨",
+    "filter": "絞り込み:"
   },
   "auth": {
     "login": "ログイン",
@@ -607,5 +608,26 @@
     "familyMembershipFooter": "サルタジファミリー会員",
     "allPerksUnlocked": "全特典適用中",
     "activeMemberFallback": "アクティブ会員"
+  },
+  "navratri": {
+    "badge": "ナヴラトリ祭 特集",
+    "heroTitle": "清らかさと祈りで祝うナヴラトリ",
+    "heroSubtitle": "断食（ヴラット）必需品、本格的なプージャ（祈祷）サマグリセット、インド伝統のスイーツ、スナック、フルーツジュースを日本全国へお届けします。",
+    "sectionTitle": "ナヴラトリ特集コレクション",
+    "sectionSubtitle": "断食、毎日の祈り、お祝いのごちそうのために厳選された必需品。",
+    "offersCount": "{count}件のアイテム",
+    "noOffersTitle": "現在、対象商品がございません",
+    "noOffersSubtitle": "お祭りに向けた新鮮な在庫を準備中ですので、今しばらくお待ちください。",
+    "filterAll": "すべての商品",
+    "tabVrat": "断食・ヴラット食品",
+    "tabPuja": "プージャ・礼拝用品",
+    "tabSweets": "スイーツ＆スナック",
+    "tabBeverages": "飲料・フルーツジュース",
+    "categoryExploreTitle": "さらにカテゴリから探す",
+    "categoryExploreSubtitle": "お祈りや断食のニーズに合わせた専用コレクションをご覧ください",
+    "categoryCollection": "カテゴリーコレクション",
+    "nonFoodCategory": "プージャ・日用品コレクション",
+    "pulpJuiceCategory": "フルーツ果汁・濃厚ジュース",
+    "shopNow": "商品を見る"
   }
 }
