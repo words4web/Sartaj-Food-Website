@@ -16,7 +16,8 @@ const isPublicPath = (path: string): boolean => {
     path === "/about-us" ||
     path === "/contact-us" ||
     path === "/faq" ||
-    path === "/sale"
+    path === "/sale" ||
+    path === "/navratri"
   ) {
     return true;
   }

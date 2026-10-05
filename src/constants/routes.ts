@@ -9,6 +9,7 @@ export const ROUTES = {
   CONTACT: "/contact-us",
   FAQ: "/faq",
   SALE: "/sale",
+  NAVRATRI: "/navratri",
 
   // Authenticated / Dashboard routes
   HOME: "/",
