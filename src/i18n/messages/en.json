@@ -39,7 +39,8 @@
     "freeDeliveryMsg": "✨ Free shipping on Dry products above ¥{dryAmount} & Frozen products above {frozenWeight}kg! ✨",
     "freeAllMsg": "✨ Free shipping on all products! ✨",
     "freeFrozenMsgOnly": "✨ Free shipping on all Frozen products, and Dry products above ¥{dryAmount}! ✨",
-    "freeDryMsgOnly": "✨ Free shipping on all Dry products, and Frozen products above {frozenWeight}kg! ✨"
+    "freeDryMsgOnly": "✨ Free shipping on all Dry products, and Frozen products above {frozenWeight}kg! ✨",
+    "filter": "Filter:"
   },
   "auth": {
     "login": "Login",
@@ -607,5 +608,26 @@
     "familyMembershipFooter": "Sartaj Family Membership",
     "allPerksUnlocked": "ALL PERKS UNLOCKED",
     "activeMemberFallback": "Active Member"
+  },
+  "navratri": {
+    "badge": "Navratri Mahotsav Special",
+    "heroTitle": "Celebrate Navratri with Purity & Devotion",
+    "heroSubtitle": "Explore authentic Vrat & Fasting essentials, sacred Puja Samagri kits, divine sweets, snacks, and refreshing juices delivered across Japan.",
+    "sectionTitle": "Navratri Festive Collection",
+    "sectionSubtitle": "Hand-picked essentials for your fast, daily puja, and festive feast.",
+    "offersCount": "{count} Items Available",
+    "noOffersTitle": "No Festive Items Available Right Now",
+    "noOffersSubtitle": "Please check back shortly as we prepare fresh stock for the festival.",
+    "filterAll": "All Offers",
+    "tabVrat": "Vrat & Fasting",
+    "tabPuja": "Puja Samagri",
+    "tabSweets": "Sweets & Snacks",
+    "tabBeverages": "Beverages & Juices",
+    "categoryExploreTitle": "Explore More Festive Categories",
+    "categoryExploreSubtitle": "Browse dedicated collections for all your prayer and dietary needs",
+    "categoryCollection": "Category Collection",
+    "nonFoodCategory": "Puja & Non-Food Collection",
+    "pulpJuiceCategory": "Pulp & Pure Fruit Juices",
+    "shopNow": "Shop Collection"
   }
 }
