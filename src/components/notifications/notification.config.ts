@@ -8,6 +8,7 @@ import {
   XCircle,
   User,
   Wallet2,
+  Crown,
 } from "lucide-react";
 
 export const typeConfigs: Record<
@@ -83,6 +84,13 @@ export const typeConfigs: Record<
   WALLET_REWARD_CREDITED: {
     icon: Wallet2,
     iconClass: "text-amber-600 dark:text-amber-400 bg-amber-500/10 ring-4 ring-amber-500/10",
+    bgClass: "bg-amber-500/5 hover:bg-amber-500/10",
+    borderClass: "border-l-amber-500",
+    indicatorClass: "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]",
+  },
+  VIP_MEMBERSHIP_UNLOCKED: {
+    icon: Crown,
+    iconClass: "text-amber-600 dark:text-amber-400 bg-amber-500/15 ring-4 ring-amber-500/15",
     bgClass: "bg-amber-500/5 hover:bg-amber-500/10",
     borderClass: "border-l-amber-500",
     indicatorClass: "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]",

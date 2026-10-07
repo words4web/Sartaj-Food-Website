@@ -490,7 +490,8 @@
     "fallbackBody": "新しい通知があります。",
     "unsupported": "プッシュ通知はこのブラウザではサポートされていません。",
     "enabledDesc": "プッシュ通知を受信します。",
-    "disabledDesc": "有効にして注文の更新情報を受信します。"
+    "disabledDesc": "有効にして注文の更新情報を受信します。",
+    "viewLoyalty": "VIP特典を見る"
   },
   "notFound": {
     "title": "おっと！ページが見つかりません",

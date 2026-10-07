@@ -490,7 +490,8 @@
     "fallbackBody": "You have a new notification.",
     "unsupported": "Push notifications are not supported in this browser.",
     "enabledDesc": "You will receive push notifications.",
-    "disabledDesc": "Enable to receive order updates."
+    "disabledDesc": "Enable to receive order updates.",
+    "viewLoyalty": "Explore VIP Perks"
   },
   "notFound": {
     "title": "Oops! Page Not Found",
