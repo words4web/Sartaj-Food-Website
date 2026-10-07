@@ -1,7 +1,8 @@
 "use client";
 
-import { Clock } from "lucide-react";
+import { Clock, Crown, ArrowRight } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useTranslations } from "next-intl";
 import { cn } from "@/utils/common/common.utils";
 import { NotificationItemProps } from "@/types/notification/notification.types";
 import { typeConfigs } from "./notification.config";
@@ -15,20 +16,25 @@ export function NotificationItem({
   isLoading,
 }: NotificationItemProps) {
   const router = useRouter();
+  const t = useTranslations("notifications");
   const type = notification?.type || "DEFAULT";
   const config = typeConfigs[type] || typeConfigs.DEFAULT;
   const Icon = config.icon;
 
   const title = notification?.title || "";
   const body = notification?.body || "";
+  const isVipNotification =
+    type === "VIP_MEMBERSHIP_UNLOCKED" || notification?.metadata?.path === "/loyalty";
 
-  const handleClick = () => {
+  const handleNavigate = () => {
     if (!notification?.isRead && !isLoading) {
       onMarkRead(notification?._id);
     }
 
     const metadata = notification?.metadata || {};
-    if (type === "WALLET_REWARD_CREDITED") {
+    if (isVipNotification) {
+      router.push(ROUTES.LOYALTY);
+    } else if (type === "WALLET_REWARD_CREDITED") {
       router.push(ROUTES.WALLET);
     } else if (metadata?.orderId) {
       router.push(ROUTES.ORDERS(metadata?.orderId));
@@ -40,10 +46,10 @@ export function NotificationItem({
   };
 
   return (
-    <button
-      onClick={handleClick}
+    <div
+      onClick={handleNavigate}
       className={cn(
-        "w-full flex items-start gap-4 p-4 text-left transition-all duration-300 focus:outline-none rounded-xl relative overflow-hidden group border-b border-border/30 last:border-b-0",
+        "w-full flex items-start gap-4 p-4 text-left transition-all duration-300 focus:outline-none rounded-xl relative overflow-hidden group border-b border-border/30 last:border-b-0 cursor-pointer",
         "border-l-4 border-l-transparent",
         !notification?.isRead ? cn(config.bgClass, config.borderClass) : "hover:bg-accent/40",
         isLoading && "opacity-60 cursor-not-allowed",
@@ -66,7 +72,7 @@ export function NotificationItem({
         </div>
       </div>
 
-      <div className="flex-1 min-w-0 space-y-1">
+      <div className="flex-1 min-w-0 space-y-2">
         <div className="flex items-center justify-between gap-2">
           <p
             className={cn(
@@ -83,12 +89,14 @@ export function NotificationItem({
             <span
               className={cn(
                 "hidden sm:inline-block text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full select-none",
-                notification?.isRead
-                  ? "bg-muted text-muted-foreground/80"
-                  : "bg-primary/10 text-primary dark:text-primary-foreground/90",
+                isVipNotification
+                  ? "bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20"
+                  : notification?.isRead
+                    ? "bg-muted text-muted-foreground/80"
+                    : "bg-primary/10 text-primary dark:text-primary-foreground/90",
               )}
             >
-              {type?.replaceAll("_", " ")}
+              {isVipNotification ? "VIP PERK" : type?.replaceAll("_", " ")}
             </span>
           )}
         </div>
@@ -96,6 +104,23 @@ export function NotificationItem({
         <p className="text-xs text-muted-foreground/90 line-clamp-2 leading-relaxed font-normal">
           {body}
         </p>
+
+        {isVipNotification && (
+          <div className="pt-1">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNavigate();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-xs font-semibold shadow-sm transition-all hover:shadow hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <Crown className="h-3.5 w-3.5" />
+              <span>{t("viewLoyalty")}</span>
+              <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
+        )}
 
         <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground/60 pt-0.5">
           <Clock className="h-3 w-3" />
@@ -111,6 +136,6 @@ export function NotificationItem({
           )}
         />
       )}
-    </button>
+    </div>
   );
 }

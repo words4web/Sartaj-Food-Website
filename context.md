@@ -231,6 +231,13 @@
 - **Smart Free Shipping Voucher Auto-Hide**:
   - Updated `CheckoutLoyaltyFreeDelivery.tsx` and `page.tsx` to evaluate `hasShippingExpense` (`(shippingFee > 0 || penaltyAmount > 0)`).
   - Automatically hides the free delivery voucher component when standard order shipping fee is already ¥0 (`hasShippingExpense === false`), preventing accidental consumption of VIP free delivery vouchers.
+- **Navratri Mahotsav Festive Showcase Page (`/navratri`) & Homepage Banner**:
+  - Created a dedicated festive campaign page at `src/app/(dashboard)/navratri/page.tsx` utilizing `useGetProductsByIds` to query items from `src/data/navratri-sale.json`.
+  - Implemented category filter tabs (`Vrat & Fasting`, `Puja Samagri`, `Sweets & Snacks`, `Beverages & Juices`) and category links for Non-Food and Pulp & Juices.
+  - Features smart stock sorting (in-stock items rendered ahead of out-of-stock items) and smooth skeleton loading states using `ProductGridSkeleton` and `useCachedSkeletonCount`.
+  - Created the hero section with the festive Lottie animation (`/animations/Dandia navratri.json`) and text shimmer styling.
+  - Developed the reusable `NavratriBanner.tsx` on the homepage (`ThemedProductZone.tsx`) with direct navigation to `/navratri`.
+  - Added route configuration `ROUTES.NAVRATRI` in `routes.ts`, public guest route bypass in `layout.tsx`, and complete 5-language localization keys across `en.json`, `ja.json`, `hi.json`, `bn.json`, and `ne.json`.
 
 - Validate the cookie auth flow and concurrency queue on staging/production.
 - Ensure that the mobile app is successfully testing the general customer login flow at `/customer/auth/login`.
