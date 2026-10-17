@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { useAuth } from "@/hooks/useAuth";
@@ -46,7 +47,9 @@ export function Header() {
           </Link>
 
           {/* Search Bar - Unified Mobile & Desktop */}
-          <SearchBar className="col-span-3 md:col-span-1 md:col-start-2 order-last md:order-none w-full max-w-full md:max-w-md md:mx-auto" />
+          <Suspense fallback={null}>
+            <SearchBar className="col-span-3 md:col-span-1 md:col-start-2 order-last md:order-none w-full max-w-full md:max-w-md md:mx-auto" />
+          </Suspense>
 
           {/* Right Actions */}
           <div className="col-start-3 justify-self-end">
