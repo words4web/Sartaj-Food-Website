@@ -19,6 +19,7 @@ export interface BlogPostData {
   author: string;
   date: string;
   headerImage: string;
+  category?: "blog" | "recipe";
   content: BlogContentBlock[];
   faqs: FAQItem[];
   citations?: string[];
