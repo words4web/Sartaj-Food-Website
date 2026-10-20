@@ -115,7 +115,7 @@
     "heroTitle": "Sartaj Foods | Indian Groceries, spices and Daily Essentials in Japan",
     "title": "Taste the Real Origin in Japan",
     "subtitle": "Premium basmati rice, aromatic spices, and traditional sweets imported directly for an uncompromising culinary experience.",
-    "shopEssentials": "Shop Essentials",
+    "shopEssentials": "Shop Now",
     "authenticFlavors": "Authentic Flavors",
     "authentic": "100% Authentic",
     "genuineImports": "Genuine Imports",
@@ -630,5 +630,29 @@
     "nonFoodCategory": "Puja & Non-Food Collection",
     "pulpJuiceCategory": "Pulp & Pure Fruit Juices",
     "shopNow": "Shop Collection"
+  },
+  "diwali": {
+    "badge": "Diwali Dhamaka Special",
+    "discountBadge": "Flat 10% OFF Haldiram's",
+    "heroTitle": "Light Up Your Diwali With Haldiram's Sweets & Snacks",
+    "heroSubtitle": "Celebrate the Festival of Lights in Japan with authentic Haldiram's mithai, namkeens, and festive essentials. Enjoy a flat 10% discount across our entire Haldiram's collection!",
+    "sectionTitle": "Haldiram's Festive Collection",
+    "sectionSubtitle": "Crispy namkeens, divine festive sweets, and savory snacks for family and friends.",
+    "flatDiscountNotice": "✨ Special Festive Treat: Flat 10% OFF applied on all Haldiram's favorites!",
+    "offersCount": "{count} Haldiram's Products Available",
+    "noOffersTitle": "No Haldiram's Products Available",
+    "noOffersSubtitle": "Please check back shortly as we restock fresh Haldiram's goods.",
+    "filterAll": "All Products",
+    "filterSweets": "Sweets & Mithai",
+    "filterNamkeen": "Namkeens & Bhujia",
+    "filterSnacks": "Snacks & Quick Bites",
+    "shopNow": "Shop Diwali Sale",
+    "exploreMoreTitle": "Explore More Diwali Categories",
+    "exploreMoreSubtitle": "Complete your Diwali celebrations with sweets, dry fruits, and puja essentials",
+    "categorySweets": "Traditional Indian Sweets",
+    "categoryPuja": "Diwali Diyas & Puja Needs",
+    "categorySweetsBadge": "Diwali Sweets",
+    "categoryPujaBadge": "Diwali Puja & Decor",
+    "errorMessage": "Could not load Haldiram's products. Please try again."
   }
 }

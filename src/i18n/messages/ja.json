@@ -115,7 +115,7 @@
     "heroTitle": "Sartaj Foods | 日本のインド食材・スパイス・日用必需品",
     "title": "本物の味をお楽しみください",
     "subtitle": "プレミアムバスマティライス、香り高いスパイス、および伝統的なお菓子を直接輸入し、妥協のない料理体験を提供します。",
-    "shopEssentials": "必需品を購入",
+    "shopEssentials": "今すぐ購入",
     "authenticFlavors": "本物の味",
     "authentic": "100％本物",
     "genuineImports": "本物の輸入品",
@@ -630,5 +630,29 @@
     "nonFoodCategory": "プージャ・日用品コレクション",
     "pulpJuiceCategory": "フルーツ果汁・濃厚ジュース",
     "shopNow": "商品を見る"
+  },
+  "diwali": {
+    "badge": "ディワリ特別セール",
+    "discountBadge": "ハルディラム全品10%OFF",
+    "heroTitle": "ハルディラムのお菓子＆スナックでディワリをお祝いしよう",
+    "heroSubtitle": "光の祭典ディワリを日本で本格的なハルディラムのミタイ、ナムキーンでお祝いしましょう。ハルディラム製品がすべて10%割引！",
+    "sectionTitle": "ハルディラム フェスティブコレクション",
+    "sectionSubtitle": "ご家族やお友達と楽しむ本格的なスイーツやナムキーン。",
+    "flatDiscountNotice": "✨ 祝日限定: ハルディラムの人気商品が全品10%オフ！",
+    "offersCount": "{count} 点のハルディラム商品があります",
+    "noOffersTitle": "商品が見つかりませんでした",
+    "noOffersSubtitle": "入荷次第アップデートされますので今しばらくお待ちください。",
+    "filterAll": "すべて",
+    "filterSweets": "お菓子・ミタイ",
+    "filterNamkeen": "ナムキーン・ブジア",
+    "filterSnacks": "スナック",
+    "shopNow": "ディワリセールを見る",
+    "exploreMoreTitle": "他のカテゴリーを見る",
+    "exploreMoreSubtitle": "スイーツやプージャ必需品など、ディワリの準備を整えましょう",
+    "categorySweets": "伝統的なインドのお菓子",
+    "categoryPuja": "ディヤ（灯明）＆プージャ用品",
+    "categorySweetsBadge": "ディワリ スイーツ",
+    "categoryPujaBadge": "ディワリ プージャ＆装飾",
+    "errorMessage": "ハルディラム商品の読み込みに失敗しました。もう一度お試しください。"
   }
 }
