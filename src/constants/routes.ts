@@ -10,6 +10,7 @@ export const ROUTES = {
   FAQ: "/faq",
   SALE: "/sale",
   NAVRATRI: "/navratri",
+  DIWALI: "/diwali",
 
   // Authenticated / Dashboard routes
   HOME: "/",

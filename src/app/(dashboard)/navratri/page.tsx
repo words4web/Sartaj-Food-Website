@@ -12,6 +12,7 @@ import { useIsDesktop } from "@/hooks/useIsDesktop";
 import { IProduct } from "@/types/product/product.types";
 import { ArrowLeft, Sparkles, Filter, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { ROUTES } from "@/constants/routes";
 import navratriData from "@/data/navratri-sale.json";
 
@@ -21,6 +22,9 @@ const DotLottieReact = dynamic(
 );
 
 export default function NavratriPage() {
+  redirect(ROUTES.HOME);
+  return null;
+
   const tCommon = useTranslations("common");
   const tNavratri = useTranslations("navratri");
   const isDesktop = useIsDesktop();

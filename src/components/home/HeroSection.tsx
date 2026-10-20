@@ -20,10 +20,10 @@ export function HeroSection() {
   const CtaButton = () => (
     <Button
       size="default"
-      className="h-6 min-[320px]:h-7 min-[375px]:h-8 min-[480px]:h-9 sm:h-10 md:h-11 px-2.5 min-[375px]:px-4 min-[480px]:px-5 sm:px-5 md:px-6 text-[8px] min-[320px]:text-[9px] min-[375px]:text-[10px] min-[480px]:text-xs sm:text-xs md:text-sm font-bold rounded-lg min-[375px]:rounded-xl sm:rounded-2xl cursor-pointer hover:bg-primary hover:opacity-100 hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-1 min-[375px]:gap-1.5 sm:gap-2"
+      className="h-5 min-[375px]:h-6 min-[480px]:h-7 sm:h-9 md:h-11 px-2 min-[375px]:px-2.5 min-[480px]:px-3.5 sm:px-5 md:px-6 text-[7px] min-[375px]:text-[8px] min-[480px]:text-[10px] sm:text-xs md:text-sm font-semibold sm:font-bold rounded-md min-[375px]:rounded-lg sm:rounded-2xl cursor-pointer hover:bg-primary hover:opacity-100 hover:shadow-xl lg:hover:shadow-primary/25 transition-all group flex items-center gap-0.5 min-[375px]:gap-1 sm:gap-2"
     >
       {t("home.shopEssentials")}
-      <ChevronRight className="h-2.5 w-2.5 min-[320px]:h-3 min-[320px]:w-3 min-[375px]:h-3.5 min-[375px]:w-3.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
+      <ChevronRight className="h-2 w-2 min-[375px]:h-2.5 min-[375px]:w-2.5 sm:h-4 sm:w-4 lg:transition-transform lg:group-hover:translate-x-1" />
     </Button>
   );
 
