@@ -24,6 +24,38 @@
 
 ## Recent Changes & Cleanup
 
+- **Blogs & Recipes System Enhancement (`/blog`)**:
+  - **Categorized Tabs Split (`Blogs` vs `Recipes`)**:
+    - Divided `/blog` into two prominent, styled interactive tabs with live count badges and smooth state transitions.
+    - Updated `BlogPostData` interface in `src/types/blog.types.ts` with optional `category?: "blog" | "recipe"`.
+    - Added an empty/coming-soon card (`Recipes Coming Soon`) for when recipe posts are loading or empty.
+    - Adjusted page container padding to `pt-6 sm:pt-8 pb-16` and enlarged the tab buttons (`px-8 py-3.5`, `text-base`, `w-5 h-5` icons).
+  - **New Blog & Recipe Publications**:
+    - **`tamarindChutneyPost`** (`tamarind-chutney-what-it-is-and-how-to-use-it`): `"Tamarind Chutney: What It Is and How to Use It"`, dated October 05, 2026, category `blog`, with featured and insight images at `/blog/tamarind-chutney/`. Preserved all content and 4 FAQs.
+    - **`whyKheerCurdlesPost`** (`why-kheer-curdles-and-how-to-fix-it`): `"Why Does Kheer Curdle and How to Fix It?"`, dated October 05, 2026, category `recipe`, with featured and insight images at `/recipe/kheer-curdle/`. Preserved all causes, fixes, habits, and 4 FAQs.
+    - **`easyBesanLadooRecipePost`** (`easy-besan-ladoo-recipe-step-by-step`): `"Easy Besan Ladoo Recipe for Beginners: Step by Step"`, dated September 07, 2026, category `recipe`, with featured and insight images at `/recipe/easy-besan-ladoo/`. Preserved all 5 ingredients and 6 tips with bullet styling (`•`), 7 steps, and 4 FAQs.
+    - **`bestIndianSweetsPost`** (`best-indian-sweets-festival-season`): `"Best Indian Sweets Online to Gift This Festival Season"`, dated September 07, 2026, category `blog`, with featured and insight images at `/blog/best-indian-festival/`. Preserved all 8 sweets, links, and 4 FAQs.
+  - **Ordered Aggregation (`src/data/blogs/index.ts`)**:
+    - Arranged `allBlogPosts` chronologically with the latest posts first: `tamarindChutneyPost` -> `bestIndianSweetsPost` -> `whyKheerCurdlesPost` -> `easyBesanLadooRecipePost` -> `garamMasalaPost` -> `bestIndianSnacksPost` -> `indianLentilsPost`.
+
+- **Diwali Campaign Launch & Dedicated `/diwali` Page**:
+  - Replaced the seasonal Navratri campaign with a complete, localized **Diwali Festive Campaign**.
+  - **Diwali Banner (`DiwaliBanner.tsx`)**: Mounted inside `ThemedProductZone.tsx` on the Home page. Features the `/animations/Happy Diwali.json` Lottie animation, warm ambient pulsating glow orbs, gold borders, and super mobile responsiveness (`flex-col-reverse` on mobile with centered animation, responsive typography, and full-width touch-friendly CTA).
+  - **Dedicated Diwali Page (`src/app/(dashboard)/diwali/page.tsx`)**:
+    - Queries all Haldiram's products using `useGetAllProducts({ limit: 100, manufacturers: "6a27c6e3343e0d539bf4620a", page: 1 })`.
+    - Features a festive hero banner with Lottie animation, localized title, badges, and discount notices.
+    - **Premium Quick-Nav Highlights**: Placed directly below the hero and above products for fast access to Diwali Sweets and Diwali Puja & Decor with ambient golden borders and micro-interactions.
+    - **Horizontal-Scroll Filter Tabs**: Smooth swipeable pills (`-mx-3 px-3`) for quick filtering by Sweets, Namkeen, Snacks, and All products.
+    - **Responsive Product Grid**: Uses 2-to-4 column grid with compact mobile gaps (`gap-2.5 sm:gap-6 md:gap-8`) using the common `<ProductCard />`.
+    - Registered route in `ROUTES.DIWALI` (`/diwali`) and included it in public guest routes in `layout.tsx`.
+  - **Navratri Deactivation**: Redirected `/navratri` to `ROUTES.HOME` (`redirect(ROUTES.HOME)`) to smoothly disable without deleting code.
+- **HTML Entity Decoding Utility & ProductCard Entity Display Fix**:
+  - Implemented `decodeHtmlEntities()` in `src/utils/product/product.utils.ts` to decode named and numeric HTML entities (`&#39;`, `&apos;`, `&quot;`, `&amp;`, `&lt;`, `&gt;`, `&nbsp;`, `&#<decimal>;`, `&#x<hex>;`).
+  - Integrated with `getLocalizedValue()`, ensuring product names across all locales are cleanly decoded.
+  - Updated `ProductCard.tsx` to decode product titles, manufacturer brands, and back-face flipped description snippets, preventing raw entity codes like `Haldiram&#39;s` from appearing on cards.
+- **Backend Haldiram's Festive Discount Integration**:
+  - Automated 10% `PERCENTAGE` discount (`timeDiscount`) on all products belonging to Haldiram's manufacturer ID (`6a27c6e3343e0d539bf4620a`) from Oct 20 to Nov 15, 2026.
+  - Product prices and discount percentages are computed dynamically by the backend (`resolveCustomerUnitPrice` in Tokyo timezone) and presented accurately in `ProductCard` with `-10%` badge and crossed-out original prices.
 - **SearchBar Suspense Production Bug Fix**: Fixed an issue where pasting a search URL like `/products?search=gel` into a new browser tab caused search submission to stop working and the Reset button to navigate back to the same search query instead of clearing it. Root cause: `SearchBar` (in [Header.tsx](file:///home/mazahir/projects/work/sartaj_foods/Sartaj-website/src/components/layouts/Header.tsx)) accesses `useSearchParams()` from `next/navigation` directly in the shared layout without an enclosing `<Suspense>` boundary, which in Next.js production builds de-synchronizes layout hydration with query params. Fix: Wrapped `<SearchBar>` in `<Suspense fallback={null}>` in `Header.tsx`. (The bug was invisible in `next dev` because development mode is always dynamically rendered on demand).
 - **Next.js Production Build Validation**: Validated production build (`pnpm build`) with Next.js 16 (Turbopack) across all dynamic and static application routes (`/`, `/products`, `/products/[id]`, `/orders`, `/orders/[id]`, `/cart`, `/checkout`, `/blog`, `/loyalty`, `/wallet`, `/wishlist`, etc.) confirming 0 compile errors.
 - **Backend Admin Orders & Catalog Query Performance Sync**:
