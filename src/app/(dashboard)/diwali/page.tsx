@@ -174,6 +174,57 @@ export default function DiwaliPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-3 sm:px-4 mt-6 sm:mt-10">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1 sm:gap-4 mb-4 sm:mb-6">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Diwali Highlights</span>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-black text-foreground tracking-tight">
+              {tDiwali("exploreMoreTitle") || "Explore More Diwali Categories"}
+            </h3>
+          </div>
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-md">
+            {tDiwali("exploreMoreSubtitle") ||
+              "Complete your Diwali celebrations with sweets, dry fruits, and puja essentials"}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
+          {exploreCategories?.map((category) => (
+            <Link
+              key={category?.href}
+              href={category?.href}
+              className="group relative overflow-hidden rounded-2xl border border-amber-500/25 bg-gradient-to-br from-amber-500/[0.08] via-card to-orange-500/[0.08] hover:from-amber-500/[0.14] hover:to-orange-500/[0.14] p-4 sm:p-6 hover:border-amber-500/60 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 transform active:scale-[0.99] flex items-center justify-between gap-4"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl pointer-events-none group-hover:bg-amber-400/20 transition-all duration-500" />
+
+              <div className="relative z-10 space-y-1.5 sm:space-y-2 flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30">
+                    {category?.badge}
+                  </span>
+                </div>
+
+                <h4 className="text-base sm:text-lg font-black text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors truncate">
+                  {category?.title}
+                </h4>
+
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400 group-hover:underline transition-all">
+                  <span>{tDiwali("shopNow") || "Shop Collection"}</span>
+                  <ChevronRight className="h-3.5 sm:h-4 w-3.5 sm:w-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
+
+              <div className="relative z-10 h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-gradient-to-br from-amber-500/20 via-orange-500/15 to-yellow-500/20 border border-amber-500/30 flex items-center justify-center text-2xl sm:text-3xl shadow-inner shadow-amber-500/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shrink-0">
+                {category.emoji}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 mt-10 sm:mt-16">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-border/40 pb-4 sm:pb-6 mb-6 sm:mb-8 gap-3 sm:gap-4">
           <div>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2">
@@ -252,48 +303,6 @@ export default function DiwaliPage() {
             ))}
           </div>
         )}
-      </div>
-
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 mt-12 sm:mt-20">
-        <div className="border-t border-border/40 pt-8 sm:pt-10">
-          <div className="mb-4 sm:mb-6">
-            <h3 className="text-lg sm:text-2xl font-bold text-foreground">
-              {tDiwali("exploreMoreTitle") || "Explore More Diwali Categories"}
-            </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-              {tDiwali("exploreMoreSubtitle") ||
-                "Complete your Diwali celebrations with sweets, dry fruits, and puja essentials"}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-6">
-            {exploreCategories?.map((category) => (
-              <Link
-                key={category?.href}
-                href={category?.href}
-                className="group relative overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-card via-muted/30 to-background p-4 sm:p-8 hover:border-amber-500/50 hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="space-y-1.5 sm:space-y-2">
-                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-amber-500/20">
-                      {category?.badge}
-                    </span>
-                    <h4 className="text-base sm:text-xl font-bold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                      {category?.title}
-                    </h4>
-                    <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors pt-0.5 sm:pt-1">
-                      {tDiwali("shopNow") || "Shop Collection"}
-                      <ChevronRight className="h-3.5 sm:h-4 w-3.5 sm:w-4 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
-                  <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl bg-amber-500/10 flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform shadow-inner shrink-0">
-                    {category.emoji}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
       </div>
     </main>
   );

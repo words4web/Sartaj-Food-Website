@@ -1,7 +1,33 @@
+export const decodeHtmlEntities = (text: string): string => {
+  if (!text || typeof text !== "string") return "";
+  return text
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, dec) => {
+      try {
+        return String.fromCharCode(parseInt(dec, 10));
+      } catch {
+        return "";
+      }
+    })
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => {
+      try {
+        return String.fromCharCode(parseInt(hex, 16));
+      } catch {
+        return "";
+      }
+    });
+};
+
 export const getLocalizedValue = (val: any, locale: string): string => {
   if (!val) return "";
-  if (typeof val === "string") return val;
-  return val[locale] || val?.en || "";
+  const raw = typeof val === "string" ? val : val[locale] || val?.en || "";
+  return decodeHtmlEntities(raw);
 };
 
 export interface CategorySizeClasses {
