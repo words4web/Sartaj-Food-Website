@@ -1,22 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { ProductCardProps } from "@/types/product/product.types";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { ROUTES } from "@/constants/routes";
 import { CartActions } from "@/components/cart/CartActions";
 import { ThemedImage, WishlistButton } from "@/components/common";
 import { useAuth } from "@/hooks/useAuth";
+import { getLocalizedValue, decodeHtmlEntities } from "@/utils/product/product.utils";
 
 export function ProductCard({ product, badgeOverride }: ProductCardProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const { isAuthenticated } = useAuth();
 
   const id = product?._id || product?.id;
   const identifier = product?.slug || id;
-  const name = typeof product?.name === "object" ? product?.name?.en : product?.name;
-  const brand = product?.brand || (product?.manufacturer as any)?.name || "Sartaj";
+  const name = getLocalizedValue(product?.name, locale);
+  const rawBrand = product?.brand || (product?.manufacturer as any)?.name || "Sartaj";
+  const brand = decodeHtmlEntities(rawBrand);
   const price = product?.unitPrice ?? product?.price ?? 0;
   const originalPrice = product?.originalPrice;
   const isDiscounted = product?.isDiscounted || !!(originalPrice && originalPrice > price);
@@ -162,11 +165,11 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
               <div className="overflow-y-auto no-scrollbar flex-grow min-h-0">
                 <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed font-medium">
                   {(() => {
-                    const desc = product?.description;
-                    if (typeof desc !== "string" || !desc?.trim()) {
+                    const localizedDesc = getLocalizedValue(product?.description, locale);
+                    if (!localizedDesc || !localizedDesc.trim()) {
                       return "Description not available";
                     }
-                    const cleanHtml = desc?.replace(/&nbsp;/g, " ")?.replace(/\u00a0/g, " ");
+                    const cleanHtml = localizedDesc.replace(/&nbsp;/g, " ").replace(/\u00a0/g, " ");
                     const regex =
                       /(<(?:p|h3)[^>]*>(?:<strong>)?\s*(?:Flavour Profile|Product Highlights|Key Ingredients|Added Colours|No Added Colours|How to Use|風味プロファイル|風味|味の特徴|製品ハイライト|商品の特徴|原材料|主な原材料|着色料|着色料不使用|無着色|使用方法|使い方|召し上がり方|お召し上がり方)\s*(?::|：|\?|\？)?\s*(?:<\/strong>)?<\/(?:p|h3)>)/gi;
                     const parts = cleanHtml?.split(regex);
@@ -175,7 +178,8 @@ export function ProductCard({ product, badgeOverride }: ProductCardProps) {
                       ?.replace(/<[^>]*>/g, "")
                       ?.replace(/\s+/g, " ")
                       ?.trim();
-                    return plainIntro || "Description not available";
+                    const decodedIntro = decodeHtmlEntities(plainIntro);
+                    return decodedIntro || "Description not available";
                   })()}
                 </p>
               </div>
