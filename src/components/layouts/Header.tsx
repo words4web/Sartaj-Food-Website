@@ -25,19 +25,20 @@ export function Header() {
 
   return (
     <>
-      <div className="notranslate w-full bg-[#1e293b] text-white py-2 overflow-hidden border-b border-slate-900/60 text-base sm:text-lg font-extrabold select-none relative z-50">
-        <div className="flex animate-marquee-slow gap-8">
+      <div className="notranslate w-full bg-[#1e293b] hover:bg-[#1a2332] text-white py-2 overflow-hidden border-b border-slate-900/60 text-base sm:text-lg font-extrabold select-none relative z-50 transition-colors">
+        <Link
+          href={ROUTES.DIWALI}
+          className="flex animate-marquee-slow gap-8 block hover:text-amber-300 transition-colors"
+        >
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
-        </div>
+        </Link>
       </div>
 
-      {/* Top Header */}
       <header className="notranslate sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
         <div className="relative z-40 max-w-7xl mx-auto pl-1 pr-2 sm:px-4 py-3 grid grid-cols-[auto_1fr_auto] gap-x-2 sm:gap-x-4 gap-y-3 items-center">
-          {/* Logo */}
           <Link href={ROUTES.HOME} className="flex items-center min-w-fit col-start-1">
             <img
               src="/sartaj_logo.svg"
@@ -46,12 +47,10 @@ export function Header() {
             />
           </Link>
 
-          {/* Search Bar - Unified Mobile & Desktop */}
           <Suspense fallback={null}>
             <SearchBar className="col-span-3 md:col-span-1 md:col-start-2 order-last md:order-none w-full max-w-full md:max-w-md md:mx-auto" />
           </Suspense>
 
-          {/* Right Actions */}
           <div className="col-start-3 justify-self-end">
             <HeaderActions />
           </div>
