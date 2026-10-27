@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Header } from "@/components/layouts/Header";
 import { Footer } from "@/components/layouts/Footer";
+import { DiwaliPopup } from "@/components/home/DiwaliPopup";
 import { useAuth } from "@/hooks/useAuth";
 import { ROUTES } from "@/constants/routes";
 import { AuthLoadingOverlay } from "@/components/common/AuthLoadingOverlay";
@@ -47,6 +48,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     <div
       className={`flex flex-col min-h-screen bg-card ${pathname?.startsWith("/blog") ? "" : "notranslate"}`}
     >
+      <DiwaliPopup />
       <Header />
       <main className="flex-1">{children}</main>
       {pathname !== "/products" && <Footer />}

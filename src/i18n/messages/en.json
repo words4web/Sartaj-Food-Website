@@ -675,6 +675,10 @@
     "categoryPuja": "Diwali Diyas & Puja Needs",
     "categorySweetsBadge": "Diwali Sweets",
     "categoryPujaBadge": "Diwali Puja & Decor",
-    "errorMessage": "Could not load Haldiram's products. Please try again."
+    "errorMessage": "Could not load Haldiram's products. Please try again.",
+    "popupHeading": "Yeh Diwali, Sartaj wali",
+    "popupSubtitle": "Celebrate the Festival of Lights with authentic Indian treats & flat 10% OFF Haldiram's collection in Japan!",
+    "popupCta": "Explore Diwali Collection",
+    "popupDismiss": "Maybe Later"
   }
 }
