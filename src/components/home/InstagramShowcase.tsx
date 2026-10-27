@@ -2,16 +2,17 @@
 
 import { useState, useRef, useEffect, ReactNode } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import {
   Instagram,
   ExternalLink,
-  Sparkles,
   Film,
   Grid3X3,
   Flame,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  Play,
 } from "lucide-react";
 import { instagramFeedData, instagramProfileStats } from "@/data/instagram";
 import { InstagramMediaItem } from "@/types/instagram.types";
@@ -24,9 +25,18 @@ const EXTERNAL_LINK_ATTRS = {
   rel: "noopener noreferrer",
 } as const;
 
-const IG_FONT_BASE = {
-  fontFamily: "Arial, sans-serif",
-} as const;
+const GRADIENT_PALETTES = [
+  "from-pink-500 via-rose-500 to-amber-500",
+  "from-purple-600 via-pink-600 to-rose-500",
+  "from-amber-500 via-orange-500 to-rose-600",
+  "from-fuchsia-600 via-purple-600 to-indigo-600",
+  "from-rose-500 via-pink-500 to-purple-600",
+  "from-violet-600 via-purple-500 to-pink-500",
+  "from-pink-600 via-rose-500 to-amber-400",
+  "from-indigo-600 via-purple-600 to-pink-500",
+  "from-amber-600 via-rose-600 to-pink-600",
+  "from-purple-700 via-fuchsia-600 to-rose-500",
+];
 
 function ScrollNavButton({
   onClick,
@@ -52,6 +62,7 @@ function ScrollNavButton({
 }
 
 export function InstagramShowcase() {
+  const t = useTranslations("home.instagram");
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -75,45 +86,6 @@ export function InstagramShowcase() {
     setCanScrollLeft(scrollLeft > 10);
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
   };
-
-  useEffect(() => {
-    let timeoutId1: NodeJS.Timeout;
-    let timeoutId2: NodeJS.Timeout;
-    let timeoutId3: NodeJS.Timeout;
-
-    const processEmbeds = () => {
-      if (typeof window !== "undefined" && (window as any).instgrm?.Embeds) {
-        try {
-          (window as any).instgrm.Embeds.process();
-        } catch {}
-      }
-    };
-
-    if (typeof window !== "undefined") {
-      const existingScript = document.getElementById("instagram-embed-script");
-      if (!existingScript) {
-        const script = document.createElement("script");
-        script.id = "instagram-embed-script";
-        script.src = "https://www.instagram.com/embed.js";
-        script.async = true;
-        script.onload = () => {
-          timeoutId1 = setTimeout(processEmbeds, 150);
-          timeoutId2 = setTimeout(processEmbeds, 600);
-          timeoutId3 = setTimeout(processEmbeds, 1500);
-        };
-        document.body.appendChild(script);
-      } else {
-        timeoutId1 = setTimeout(processEmbeds, 150);
-        timeoutId2 = setTimeout(processEmbeds, 600);
-      }
-    }
-
-    return () => {
-      clearTimeout(timeoutId1);
-      clearTimeout(timeoutId2);
-      clearTimeout(timeoutId3);
-    };
-  }, [activeTab]);
 
   useEffect(() => {
     checkScroll();
@@ -212,24 +184,19 @@ export function InstagramShowcase() {
 
             <div className="space-y-1 w-full sm:w-auto">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
-                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-amber-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20 px-2 sm:px-2.5 py-0.5 rounded-full">
-                  <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                  Social Hub
-                </span>
                 <span className="text-[10px] sm:text-xs font-semibold text-muted-foreground flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-500" />
-                  Official Channel
+                  {t("officialChannel")}
                 </span>
               </div>
               <h2 className="text-lg sm:text-2xl md:text-3xl font-black tracking-tight text-foreground leading-tight">
-                Follow Us on{" "}
+                {t("followUsOn")}{" "}
                 <span className="bg-gradient-to-r from-amber-500 via-rose-500 to-purple-600 bg-clip-text text-transparent">
-                  Instagram
+                  {t("instagram")}
                 </span>
               </h2>
               <p className="text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto sm:mx-0 px-2 sm:px-0">
-                Catch our latest reels, fresh arrivals, recipe inspirations &amp; behind-the-scenes
-                directly from Instagram.
+                {t("subtitle")}
               </p>
             </div>
           </div>
@@ -240,7 +207,9 @@ export function InstagramShowcase() {
             className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 hover:from-pink-500 hover:via-purple-500 hover:to-indigo-500 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 shrink-0"
           >
             <Instagram className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Follow {instagramProfileStats.handle}</span>
+            <span>
+              {t("follow")} {instagramProfileStats.handle}
+            </span>
             <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-80" />
           </a>
         </div>
@@ -256,7 +225,9 @@ export function InstagramShowcase() {
               }`}
             >
               <Grid3X3 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-              <span>All ({instagramFeedData.length})</span>
+              <span>
+                {t("tabAll")} ({instagramFeedData.length})
+              </span>
             </button>
             <button
               onClick={() => setActiveTab("reels")}
@@ -267,7 +238,9 @@ export function InstagramShowcase() {
               }`}
             >
               <Film className="w-3.5 h-3.5" />
-              <span>Reels ({instagramFeedData.filter((i) => i.type === "reel").length})</span>
+              <span>
+                {t("tabReels")} ({instagramFeedData.filter((i) => i.type === "reel").length})
+              </span>
             </button>
             <button
               onClick={() => setActiveTab("posts")}
@@ -278,7 +251,9 @@ export function InstagramShowcase() {
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
-              <span>Posts ({instagramFeedData.filter((i) => i.type === "post").length})</span>
+              <span>
+                {t("tabPosts")} ({instagramFeedData.filter((i) => i.type === "post").length})
+              </span>
             </button>
           </div>
 
@@ -287,14 +262,14 @@ export function InstagramShowcase() {
               <ScrollNavButton
                 onClick={() => scroll("left")}
                 disabled={!canScrollLeft}
-                ariaLabel="Scroll left"
+                ariaLabel={t("scrollLeft")}
               >
                 <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </ScrollNavButton>
               <ScrollNavButton
                 onClick={() => scroll("right")}
                 disabled={!canScrollRight}
-                ariaLabel="Scroll right"
+                ariaLabel={t("scrollRight")}
               >
                 <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </ScrollNavButton>
@@ -305,7 +280,7 @@ export function InstagramShowcase() {
               {...EXTERNAL_LINK_ATTRS}
               className="text-xs font-bold text-pink-600 dark:text-pink-400 hover:underline hidden sm:flex items-center gap-1 ml-2"
             >
-              <span>View profile</span>
+              <span>{t("viewProfile")}</span>
               <span>→</span>
             </a>
           </div>
@@ -329,8 +304,8 @@ export function InstagramShowcase() {
               } as React.CSSProperties
             }
           >
-            {filteredItems.map((item) => (
-              <InstagramEmbedCard key={item.id} item={item} />
+            {filteredItems.map((item, index) => (
+              <InstagramEmbedCard key={item.id} item={item} index={index} />
             ))}
           </div>
         </div>
@@ -338,18 +313,11 @@ export function InstagramShowcase() {
         <div className="mt-6 sm:mt-8 rounded-2xl bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-amber-500/10 border border-pink-500/20 p-3.5 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
           <div className="space-y-1">
             <p className="text-xs sm:text-sm font-bold text-foreground flex items-center justify-center sm:justify-start gap-1 sm:gap-1.5 flex-wrap">
-              <span>Tag</span>
-              <span className="text-pink-600 dark:text-pink-400 font-extrabold">#SartajFoods</span>
-              <span>or</span>
-              <span className="text-purple-600 dark:text-purple-400 font-extrabold">
-                {instagramProfileStats.handle}
+              <span>
+                {t("tagTitle", { tag: "#SartajFoods", handle: instagramProfileStats.handle })}
               </span>
-              <span>to get featured!</span>
             </p>
-            <p className="text-[11px] sm:text-xs text-muted-foreground">
-              Cook your favorite dishes with Sartaj ingredients and share your culinary creations
-              with our community in Japan.
-            </p>
+            <p className="text-[11px] sm:text-xs text-muted-foreground">{t("tagDescription")}</p>
           </div>
 
           <a
@@ -358,7 +326,7 @@ export function InstagramShowcase() {
             className="w-full sm:w-auto justify-center shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-foreground bg-background hover:bg-muted border border-border shadow-xs transition-colors"
           >
             <Instagram className="w-3.5 h-3.5 text-pink-600" />
-            <span>Tag Us Now</span>
+            <span>{t("tagUsNow")}</span>
           </a>
         </div>
       </div>
@@ -366,97 +334,73 @@ export function InstagramShowcase() {
   );
 }
 
-function InstagramEmbedCard({ item }: { item: InstagramMediaItem }) {
+function InstagramEmbedCard({ item, index }: { item: InstagramMediaItem; index: number }) {
+  const t = useTranslations("home.instagram");
   const isReel = item.type === "reel";
-  const embedPermalink = `${item.permalink}?utm_source=ig_embed&utm_campaign=loading`;
+  const gradient = GRADIENT_PALETTES[index % GRADIENT_PALETTES.length];
 
   return (
-    <div className="shrink-0 w-[84vw] max-w-[340px] xs:w-[300px] sm:w-[320px] md:w-[340px] flex flex-col rounded-2xl overflow-hidden bg-card border border-border/70 hover:border-pink-500/40 shadow-sm hover:shadow-lg transition-all duration-300">
-      <div className="flex items-center justify-between px-3.5 py-2.5 bg-muted/30 border-b border-border/50">
+    <div className="group shrink-0 w-[84vw] max-w-[320px] xs:w-[280px] sm:w-[300px] md:w-[320px] flex flex-col rounded-3xl overflow-hidden bg-card border border-border/80 hover:border-pink-500/50 shadow-sm hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+      <div className="flex items-center justify-between px-4 py-3 bg-muted/30 border-b border-border/50">
         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground">
           {isReel ? (
             <Film className="w-3.5 h-3.5 text-pink-600" />
           ) : (
             <Instagram className="w-3.5 h-3.5 text-purple-600" />
           )}
-          <span>{isReel ? "Reel" : "Post"}</span>
+          <span>{isReel ? t("reelBadge") : t("postBadge")}</span>
         </span>
         <a
           href={item.permalink}
           {...EXTERNAL_LINK_ATTRS}
-          className="text-[11px] font-semibold text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
+          className="text-[11px] font-semibold text-muted-foreground group-hover:text-pink-600 flex items-center gap-1 transition-colors"
         >
-          <span>Open on IG</span>
+          <span>{t("openOnIg")}</span>
           <ExternalLink className="w-3 h-3" />
         </a>
       </div>
-      <div className="relative w-full bg-white flex items-center justify-center min-h-[440px] sm:min-h-[480px]">
-        <blockquote
-          className="instagram-media"
-          data-instgrm-permalink={embedPermalink}
-          data-instgrm-version="14"
-          style={{
-            background: "#FFF",
-            border: "0",
-            borderRadius: "3px",
-            boxShadow: "0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)",
-            margin: "1px",
-            maxWidth: "540px",
-            minWidth: "260px",
-            padding: "0",
-            width: "calc(100% - 2px)",
-          }}
-        >
-          <div style={{ padding: "12px" }}>
-            <a
-              href={embedPermalink}
-              {...EXTERNAL_LINK_ATTRS}
-              style={{
-                background: "#FFFFFF",
-                lineHeight: "0",
-                padding: "0 0",
-                textAlign: "center",
-                textDecoration: "none",
-                width: "100%",
-                display: "block",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "24px 16px",
-                  gap: "12px",
-                  minHeight: "360px",
-                }}
-              >
-                <Instagram aria-hidden style={{ width: 32, height: 32 }} />
-                <span
-                  style={{
-                    fontSize: "12px",
-                    ...IG_FONT_BASE,
-                    fontWeight: 550,
-                    color: "#000",
-                  }}
-                >
-                  View {isReel ? "Reel" : "Post"} on Instagram
-                </span>
-                <span
-                  style={{
-                    fontSize: "11px",
-                    ...IG_FONT_BASE,
-                    color: "#737373",
-                  }}
-                >
-                  @sartaj_foods_official
-                </span>
-              </div>
-            </a>
+
+      <a
+        href={item.permalink}
+        {...EXTERNAL_LINK_ATTRS}
+        aria-label={isReel ? t("watchOnInstagram") : t("viewOnInstagram")}
+        className={`relative w-full aspect-[9/14] bg-gradient-to-br ${gradient} flex flex-col items-center justify-between p-6 text-white overflow-hidden select-none cursor-pointer`}
+      >
+        <div className="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-white/15 blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-12 -left-12 w-44 h-44 rounded-full bg-black/20 blur-2xl pointer-events-none" />
+
+        <div className="w-full flex items-center justify-between relative z-10">
+          <div className="flex items-center gap-2 bg-black/35 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15">
+            <Instagram className="w-3.5 h-3.5 text-pink-300" />
+            <span className="text-[11px] font-bold text-white tracking-wide">
+              {instagramProfileStats.handle}
+            </span>
           </div>
-        </blockquote>
-      </div>
+
+          <span className="bg-black/35 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-white/90 border border-white/15">
+            {isReel ? t("reelBadge") : t("postBadge")}
+          </span>
+        </div>
+
+        <div className="relative z-10 flex flex-col items-center gap-3 my-auto text-center">
+          <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-white/20 backdrop-blur-md border-2 border-white/40 shadow-2xl flex items-center justify-center group-hover:scale-110 group-hover:bg-white/30 group-active:scale-95 transition-all duration-300">
+            {isReel ? (
+              <Play className="w-8 h-8 sm:w-9 sm:h-9 text-white fill-white ml-1 drop-shadow-md group-hover:text-white" />
+            ) : (
+              <Instagram className="w-8 h-8 sm:w-9 sm:h-9 text-white drop-shadow-md" />
+            )}
+          </div>
+          <span className="text-xs sm:text-sm font-extrabold tracking-wide text-white drop-shadow-md bg-black/25 backdrop-blur-xs px-3.5 py-1 rounded-full border border-white/10">
+            {isReel ? t("watchOnInstagram") : t("viewOnInstagram")}
+          </span>
+        </div>
+
+        <div className="w-full relative z-10 text-center">
+          <p className="text-[11px] font-medium text-white/80 line-clamp-1 drop-shadow-xs">
+            {t("postSharedBy")}
+          </p>
+        </div>
+      </a>
     </div>
   );
 }

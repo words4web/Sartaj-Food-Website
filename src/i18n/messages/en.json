@@ -158,7 +158,29 @@
     "promoBannerTitle": "Bringing <highlight>Authentic Indian Flavours</highlight> to Every Home.",
     "osakaStoreName": "Sartaj Foods Osaka",
     "mainStoreAndHeadquarters": "Main Store & Headquarters",
-    "getDirections": "Get Directions"
+    "getDirections": "Get Directions",
+    "instagram": {
+      "officialChannel": "Official Channel",
+      "followUsOn": "Follow Us on",
+      "instagram": "Instagram",
+      "subtitle": "Catch our latest reels, fresh arrivals, recipe inspirations & behind-the-scenes directly from Instagram.",
+      "follow": "Follow",
+      "tabAll": "All",
+      "tabReels": "Reels",
+      "tabPosts": "Posts",
+      "viewProfile": "View profile",
+      "scrollLeft": "Scroll left",
+      "scrollRight": "Scroll right",
+      "reelBadge": "Reel",
+      "postBadge": "Post",
+      "openOnIg": "Open on IG",
+      "watchOnInstagram": "Watch on Instagram",
+      "viewOnInstagram": "View on Instagram",
+      "postSharedBy": "A post shared by Sartaj Co. Ltd",
+      "tagTitle": "Tag {tag} or {handle} to get featured!",
+      "tagDescription": "Cook your favorite dishes with Sartaj ingredients and share your culinary creations with our community in Japan.",
+      "tagUsNow": "Tag Us Now"
+    }
   },
   "products": {
     "allProducts": "All Products",

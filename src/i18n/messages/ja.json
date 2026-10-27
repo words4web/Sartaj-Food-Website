@@ -158,7 +158,29 @@
     "promoBannerTitle": "本場インドの<highlight>味</highlight>を、すべてのご家庭へ。",
     "osakaStoreName": "サルタージフーズ 大阪",
     "mainStoreAndHeadquarters": "本店 ＆ 本社",
-    "getDirections": "アクセス・道順"
+    "getDirections": "アクセス・道順",
+    "instagram": {
+      "officialChannel": "公式チャンネル",
+      "followUsOn": "公式インスタグラムを",
+      "instagram": "フォロー",
+      "subtitle": "最新のリール、新着商品、本格スパイスレシピや舞台裏をインスタグラムから直接お届けします。",
+      "follow": "フォローする",
+      "tabAll": "すべて",
+      "tabReels": "リール",
+      "tabPosts": "投稿",
+      "viewProfile": "プロフィールを見る",
+      "scrollLeft": "左へスクロール",
+      "scrollRight": "右へスクロール",
+      "reelBadge": "リール",
+      "postBadge": "投稿",
+      "openOnIg": "インスタで開く",
+      "watchOnInstagram": "Instagramで再生",
+      "viewOnInstagram": "Instagramで見る",
+      "postSharedBy": "サルタージフーズの投稿",
+      "tagTitle": "{tag} または {handle} をタグ付けしてシェア！",
+      "tagDescription": "サルタージの厳選食材を使ったお気に入り料理を投稿して、日本のコミュニティとシェアしましょう。",
+      "tagUsNow": "今すぐタグ付け"
+    }
   },
   "products": {
     "allProducts": "すべての商品",
