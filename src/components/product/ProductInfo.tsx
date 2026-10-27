@@ -86,19 +86,16 @@ export function ProductInfo({
 
   return (
     <div>
-      {/* Manufacturer / Brand */}
       {manufacturerName && (
         <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase mb-2 block">
           {manufacturerName}
         </span>
       )}
 
-      {/* Product Title */}
       <h1 className="text-2xl lg:text-3xl font-extrabold text-foreground leading-snug mb-3">
         {name}
       </h1>
 
-      {/* SKU */}
       {product?.sku && (
         <div className="flex items-center gap-2 mb-4">
           <span className="text-xs text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded font-mono">
@@ -107,7 +104,6 @@ export function ProductInfo({
         </div>
       )}
 
-      {/* Stock Status Badge */}
       <div className="flex items-center gap-3 mb-6">
         {isOutOfStock ? (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400">
@@ -127,10 +123,8 @@ export function ProductInfo({
         )}
       </div>
 
-      {/* Price / Discount block */}
       <div className="border-t border-b border-border py-5 mb-6 bg-muted/10 rounded-2xl px-4 sm:px-5">
         {isDiscounted ? (
-          // Discounted Layout: Premium and highly visible sale tags
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-4xl font-extrabold text-foreground tracking-tight">
@@ -145,7 +139,6 @@ export function ProductInfo({
             </div>
           </div>
         ) : (
-          // Regular Layout: Show '¥Y with tax' in big text on top and '¥X without tax' below
           <div className="flex flex-col gap-1">
             <span className="text-4xl font-extrabold text-foreground tracking-tight flex items-baseline gap-2">
               ¥{(price + taxAmount)?.toLocaleString()}
@@ -164,7 +157,6 @@ export function ProductInfo({
         )}
       </div>
 
-      {/* Age Restriction Alert */}
       {product?.restrictions?.age20Plus && (
         <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4 flex items-center gap-3 mb-6">
           <ShieldAlert className="h-5 w-5 text-destructive shrink-0" />
@@ -175,17 +167,14 @@ export function ProductInfo({
         </div>
       )}
 
-      {/* Description */}
       {description &&
         (() => {
           const cleanHtml = description.replace(/&nbsp;/g, " ").replace(/\u00a0/g, " ");
 
-          // Get subheadings list for current locale and merge with English fallbacks
           const currentLocale = locale || "en";
           const localeHeaders = LOCALIZED_SUBHEADINGS[currentLocale] || LOCALIZED_SUBHEADINGS?.en;
           const allHeaders = Array.from(new Set([...localeHeaders, ...LOCALIZED_SUBHEADINGS.en]));
 
-          // Escape special regex characters in subheadings
           const escapedHeaders = allHeaders
             ?.map((h) => h?.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"))
             ?.join("|");
@@ -211,24 +200,21 @@ export function ProductInfo({
 
           return (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-foreground mb-3">
+              <h3 className="text-sm font-bold text-black dark:text-foreground mb-3">
                 {t("products.description")}
               </h3>
 
-              {/* Always visible intro paragraph */}
               {introHtml && introHtml?.trim() !== "" && (
                 <div
-                  className="product-rich-description mb-4"
+                  className="product-rich-description mb-4 text-black dark:text-foreground"
                   dangerouslySetInnerHTML={{ __html: introHtml }}
                 />
               )}
 
-              {/* Cart Actions */}
               <div className={` ${collapsibleSections?.length === 0 ? "mb-0" : "mb-6"}`}>
                 <CartActions product={product} mode="detail" />
               </div>
 
-              {/* Collapsible sections */}
               {collapsibleSections?.map((sec, idx) => (
                 <CollapsibleSection
                   key={idx}
