@@ -12,6 +12,7 @@ import { DiwaliBanner } from "@/components/home/DiwaliBanner";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { Testimonials } from "@/components/home/Testimonials";
 import { StoreLocation } from "@/components/home/StoreLocation";
+import { InstagramShowcase } from "@/components/home/InstagramShowcase";
 
 export function ThemedProductZone() {
   const currentTheme = useSelector((state: RootState) => state.locale.theme);
@@ -50,6 +51,7 @@ export function ThemedProductZone() {
         <ProductSection title="Featured Products" badge={PRODUCT_BADGES.FEATURED} />
         <ProductSection title="Hot Products" badge={PRODUCT_BADGES.HOT} />
         <ManufacturersGrid />
+        <InstagramShowcase />
         <PromoBanner />
         <CategoriesGrid />
         <TrustSignals />
