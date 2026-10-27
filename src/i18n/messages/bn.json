@@ -158,7 +158,29 @@
     "promoBannerTitle": "প্রতিটি ঘরে আসল ভারতীয় <highlight>স্বাদ</highlight> নিয়ে আসা।",
     "osakaStoreName": "সারতাজ ফুডস ওসাকা",
     "mainStoreAndHeadquarters": "প্রধান শাখা এবং সদর দপ্তর",
-    "getDirections": "দিকনির্দেশ পান"
+    "getDirections": "দিকনির্দেশ পান",
+    "instagram": {
+      "officialChannel": "অফিসিয়াল চ্যানেল",
+      "followUsOn": "আমাদের ফলো করুন",
+      "instagram": "ইনস্টাগ্রামে",
+      "subtitle": "আমাদের সর্বশেষ রিল, নতুন আগমন, রান্নার রেসিপি এবং পেছনের গল্প সরাসরি ইনস্টাগ্রাম থেকে দেখুন।",
+      "follow": "ফলো করুন",
+      "tabAll": "সব",
+      "tabReels": "রিল",
+      "tabPosts": "পোস্ট",
+      "viewProfile": "প্রোফাইল দেখুন",
+      "scrollLeft": "বাম দিকে স্ক্রোল করুন",
+      "scrollRight": "ডান দিকে স্ক্রোল করুন",
+      "reelBadge": "রিল",
+      "postBadge": "পোস্ট",
+      "openOnIg": "ইনস্টাগ্রামে খুলুন",
+      "watchOnInstagram": "ইনস্টাগ্রামে দেখুন",
+      "viewOnInstagram": "ইনস্টাগ্রামে দেখুন",
+      "postSharedBy": "সরতাজ ফুডস দ্বারা শেয়ার করা পোস্ট",
+      "tagTitle": "ফিচার হতে {tag} বা {handle} ট্যাগ করুন!",
+      "tagDescription": "সরতাজের উপাদান দিয়ে আপনার পছন্দের খাবার রান্না করুন এবং জাপানে আমাদের সম্প্রদায়ের সাথে আপনার রান্নার অভিজ্ঞতা ভাগ করুন।",
+      "tagUsNow": "এখনই ট্যাগ করুন"
+    }
   },
   "products": {
     "allProducts": "সব পণ্য",

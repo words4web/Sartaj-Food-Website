@@ -158,7 +158,29 @@
     "promoBannerTitle": "असली भारतीय <highlight>स्वाद</highlight> हर घर के लिए।",
     "osakaStoreName": "सरताज फूड्स ओसाका",
     "mainStoreAndHeadquarters": "मुख्य स्टोर और मुख्यालय",
-    "getDirections": "दिशा-निर्देश प्राप्त करें"
+    "getDirections": "दिशा-निर्देश प्राप्त करें",
+    "instagram": {
+      "officialChannel": "आधिकारिक चैनल",
+      "followUsOn": "हमें फॉलो करें",
+      "instagram": "इंस्टाग्राम पर",
+      "subtitle": "हमारे नवीनतम रील्स, नए आगमन, रेसिपी प्रेरणा और पर्दे के पीछे की झलकियां सीधे इंस्टाग्राम से देखें।",
+      "follow": "फॉलो करें",
+      "tabAll": "सभी",
+      "tabReels": "रील्स",
+      "tabPosts": "पोस्ट",
+      "viewProfile": "प्रोफ़ाइल देखें",
+      "scrollLeft": "बाएं स्क्रॉल करें",
+      "scrollRight": "दाएं स्क्रॉल करें",
+      "reelBadge": "रील",
+      "postBadge": "पोस्ट",
+      "openOnIg": "इंस्टाग्राम पर खोलें",
+      "watchOnInstagram": "इंस्टाग्राम पर देखें",
+      "viewOnInstagram": "इंस्टाग्राम पर देखें",
+      "postSharedBy": "सरताज फूड्स द्वारा साझा की गई पोस्ट",
+      "tagTitle": "फीचर होने के लिए {tag} या {handle} को टैग करें!",
+      "tagDescription": "सरताज की सामग्री से अपने पसंदीदा व्यंजन बनाएं और जापान में हमारे समुदाय के साथ अपनी रचनाएं साझा करें।",
+      "tagUsNow": "अभी टैग करें"
+    }
   },
   "products": {
     "allProducts": "सभी उत्पाद",

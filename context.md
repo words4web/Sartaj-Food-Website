@@ -24,6 +24,15 @@
 
 ## Recent Changes & Cleanup
 
+- **Instagram Feed Showcase Integration (`InstagramShowcase.tsx`)**:
+  - **Homepage Section**: Positioned between `<ManufacturersGrid />` and `<PromoBanner />` inside `ThemedProductZone.tsx`.
+  - **Data Configuration (`src/data/instagram.ts`)**: Configured 10 real feed items (4 reels, 6 posts) from `@sartaj_foods_official`.
+  - **UI / UX & Interactive Cards**:
+    - Replaced external script iframe embeds with fast, lightweight, and responsive preview cards.
+    - Each card displays a vibrant, colorful gradient preview (`aspect-[9/14]`) with ambient glow effects, account badge, Reel/Post tag, and a centered interactive play / view button.
+    - Clicking the card or play button opens the exact reel/post URL on Instagram in a new tab (`target="_blank"`, `rel="noopener noreferrer"`).
+    - Includes responsive filter tabs (All, Reels, Posts) with item counts, drag-to-scroll carousel with smooth navigation buttons, and full mobile optimization.
+
 - **Blogs & Recipes System Enhancement (`/blog`)**:
   - **Categorized Tabs Split (`Blogs` vs `Recipes`)**:
     - Divided `/blog` into two prominent, styled interactive tabs with live count badges and smooth state transitions.
