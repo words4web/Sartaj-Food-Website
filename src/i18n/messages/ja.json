@@ -675,6 +675,10 @@
     "categoryPuja": "ディヤ（灯明）＆プージャ用品",
     "categorySweetsBadge": "ディワリ スイーツ",
     "categoryPujaBadge": "ディワリ プージャ＆装飾",
-    "errorMessage": "ハルディラム商品の読み込みに失敗しました。もう一度お試しください。"
+    "errorMessage": "ハルディラム商品の読み込みに失敗しました。もう一度お試しください。",
+    "popupHeading": "Yeh Diwali, Sartaj wali",
+    "popupSubtitle": "光の祭典ディワリを本場のお菓子や食材でお祝いしましょう！ハルディラム全品10%OFF実施中！",
+    "popupCta": "ディワリ特設ページを見る",
+    "popupDismiss": "後で見る"
   }
 }
