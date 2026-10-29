@@ -11,6 +11,7 @@ import { ROUTES } from "@/constants/routes";
 import { CategorySidebar } from "./_components/CategorySidebar";
 import { FilterControls } from "./_components/FilterControls";
 import { ProductGrid } from "./_components/ProductGrid";
+import { CategorySeoSection } from "./_components/CategorySeoSection";
 
 function ProductsContent() {
   const t = useTranslations();
@@ -243,6 +244,7 @@ function ProductsContent() {
               hasNextPage={hasNextPage}
               bottomLoadRef={bottomLoadRef}
             />
+            <CategorySeoSection categoryId={activeCategoryId} />
           </div>
         </div>
       </div>
