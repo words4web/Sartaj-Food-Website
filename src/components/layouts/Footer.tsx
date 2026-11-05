@@ -261,21 +261,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground/60">
               {t("footer.copyright", { year: new Date()?.getFullYear() })}
             </p>
-            <span className="hidden sm:inline text-muted-foreground/30">|</span>
-            <p className="text-sm text-muted-foreground/60">
-              {t.rich("footer.designedBy", {
-                link: (chunks) => (
-                  <a
-                    href="https://words4web.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium text-foreground hover:text-primary transition-colors hover:underline"
-                  >
-                    {chunks}
-                  </a>
-                ),
-              })}
-            </p>
           </div>
           <LanguageSelector variant="light" align="top" />
         </div>
