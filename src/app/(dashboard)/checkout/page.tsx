@@ -36,6 +36,7 @@ import { CheckoutCouponSelection } from "@/components/checkout/CheckoutCouponSel
 import { CheckoutStatusOverlay } from "@/components/checkout/CheckoutStatusOverlay";
 import { CheckoutOverlayState, CheckoutStatus } from "@/types/checkout/checkout.types";
 import { generateIdempotencyKey } from "@/utils/common/common.utils";
+import { isProductOutOfStock } from "@/constants/product.constants";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -306,15 +307,7 @@ export default function CheckoutPage() {
   const cartItems = cart?.items || [];
   const hasStatusParam = !!searchParams?.get("status");
 
-  const hasInvalidCartItems = cartItems?.some((item: any) => {
-    const p = item?.product;
-    if (!p) return true;
-    return (
-      p?.stockStatus === "OUT_OF_STOCK" ||
-      (p?.stockQuantity !== undefined && p?.stockQuantity <= 0) ||
-      p?.isActive === false
-    );
-  });
+  const hasInvalidCartItems = cartItems?.some((item: any) => isProductOutOfStock(item?.product));
 
   if (hasInvalidCartItems && !hasStatusParam && overlayState === CheckoutStatus.IDLE) {
     router.replace(ROUTES.CART);
