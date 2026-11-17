@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.sartajfoods.jp"),
-  title: "Sartaj Foods | Indian Groceries, spices and Daily Essentials in Japan",
+  title: "Sartaj Foods | Indian Groceries & Spices in Japan",
   description:
     "Sartaj Foods brings Indian groceries, spices ready-to-eat meals and everyday essentials all in one stop and delivers fast and reliable.",
   alternates: {
