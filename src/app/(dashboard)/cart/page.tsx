@@ -15,6 +15,7 @@ import { useGetDiscountedProducts } from "@/services/product/product.hooks";
 import { ProductCard } from "@/components/common/ProductCard";
 import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
 import { LoyaltyCartProgressBar } from "@/components/loyalty/LoyaltyCartProgressBar";
+import { isProductOutOfStock } from "@/constants/product.constants";
 
 export default function CartPage() {
   const router = useRouter();
@@ -28,16 +29,7 @@ export default function CartPage() {
 
   const subtotal = cart?.subtotal || 0;
 
-  const hasInvalidCartItems = cartItems?.some((item) => {
-    const p = item?.product;
-
-    if (!p) return true;
-    return (
-      p?.stockStatus === "OUT_OF_STOCK" ||
-      (p?.stockQuantity !== undefined && p?.stockQuantity <= 0) ||
-      p?.isActive === false
-    );
-  });
+  const hasInvalidCartItems = cartItems?.some((item) => isProductOutOfStock(item?.product));
 
   if (isLoading) {
     return <CartSkeleton />;

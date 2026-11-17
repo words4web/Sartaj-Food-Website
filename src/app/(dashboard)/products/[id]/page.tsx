@@ -11,9 +11,8 @@ import { RelatedProducts } from "@/components/product/RelatedProducts";
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { ProductInfo } from "@/components/product/ProductInfo";
 import { ProductSpecs } from "@/components/product/ProductSpecs";
-import { CartActions } from "@/components/cart/CartActions";
 import { ProductReviews } from "@/components/product/ProductReviews";
-import { STOCK_STATUSES } from "@/constants/product.constants";
+import { isProductOutOfStock } from "@/constants/product.constants";
 import { getLocalizedValue } from "@/utils/product/product.utils";
 
 export default function ProductDetailPage() {
@@ -56,9 +55,7 @@ export default function ProductDetailPage() {
   const originalPrice = product?.originalPrice ?? price;
   const isDiscounted = product?.isDiscounted || originalPrice > price;
   const discountPercent = product?.discountPercent || product?.discountPercentage || 0;
-  const isOutOfStock =
-    product?.stockStatus === STOCK_STATUSES.OUT_OF_STOCK ||
-    (product?.stockQuantity !== undefined && product?.stockQuantity <= 0);
+  const isOutOfStock = isProductOutOfStock(product);
 
   return (
     <main className="relative z-10 min-h-screen bg-muted/30 pb-16">
