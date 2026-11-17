@@ -1,261 +1,147 @@
-"use client";
+import type { Metadata } from "next";
+import ProductsContentClient from "./_components/ProductsContentClient";
 
-import { Suspense, useState, useEffect, useRef, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
-import { useGetCategories } from "@/services/category/category.hooks";
-import { useGetInfiniteProductsByCategory } from "@/services/product/product.hooks";
-import { ICategory } from "@/types/product/product.types";
-import { AuthLoadingOverlay } from "@/components/common/AuthLoadingOverlay";
-import { ROUTES } from "@/constants/routes";
-import { CategorySidebar } from "./_components/CategorySidebar";
-import { FilterControls } from "./_components/FilterControls";
-import { ProductGrid } from "./_components/ProductGrid";
-import { CategorySeoSection } from "./_components/CategorySeoSection";
+const formatLabel = (str: string) => {
+  return str
+    .replace(/[-_]/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+    .trim();
+};
 
-function ProductsContent() {
-  const t = useTranslations();
-  const locale = useLocale();
-  const searchParams = useSearchParams();
-  const activeCategoryId = searchParams.get("category") || "all";
-  const activeSubCategoryId = searchParams.get("subcategory") || "";
-  const searchQuery = searchParams.get("search") || "";
-  const limit = 32;
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    category?: string;
+    subcategory?: string;
+    manufacturers?: string;
+    badge?: string;
+    search?: string;
+  }>;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const { category, subcategory, manufacturers, badge, search } = params;
 
-  const {
-    data: categories = [],
-    isLoading: isCategoriesLoading,
-    error: categoriesError,
-    refetch: refetchCategories,
-  } = useGetCategories();
-
-  const activeManufacturersParam = searchParams?.get("manufacturers") || "";
-  const activeBadgeParam = searchParams?.get("badge") || "";
-
-  const hasActiveFilters = useMemo(() => {
-    return (
-      (activeCategoryId !== "all" && activeCategoryId !== "") ||
-      activeSubCategoryId !== "" ||
-      searchQuery !== "" ||
-      activeManufacturersParam !== "" ||
-      activeBadgeParam !== ""
-    );
-  }, [
-    activeCategoryId,
-    activeSubCategoryId,
-    searchQuery,
-    activeManufacturersParam,
-    activeBadgeParam,
-  ]);
-
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollState, setScrollState] = useState({
-    canScrollLeft: false,
-    canScrollRight: false,
-    canScrollTop: false,
-    canScrollBottom: false,
-  });
-
-  const checkScroll = () => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-
-    const { scrollLeft, scrollWidth, clientWidth, scrollTop, scrollHeight, clientHeight } = el;
-
-    const canScrollLeft = scrollLeft > 3;
-    const canScrollRight = scrollLeft + clientWidth < scrollWidth - 3;
-    const canScrollTop = scrollTop > 3;
-    const canScrollBottom = scrollTop + clientHeight < scrollHeight - 3;
-
-    setScrollState((prev) => {
-      if (
-        prev.canScrollLeft === canScrollLeft &&
-        prev.canScrollRight === canScrollRight &&
-        prev.canScrollTop === canScrollTop &&
-        prev.canScrollBottom === canScrollBottom
-      ) {
-        return prev;
-      }
-      return { canScrollLeft, canScrollRight, canScrollTop, canScrollBottom };
-    });
-  };
-
-  useEffect(() => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-
-    checkScroll();
-
-    const ro = new ResizeObserver(checkScroll);
-    ro.observe(el);
-
-    el.addEventListener("scroll", checkScroll);
-    window.addEventListener("resize", checkScroll);
-
-    return () => {
-      ro.disconnect();
-      el.removeEventListener("scroll", checkScroll);
-      window.removeEventListener("resize", checkScroll);
+  // 1. Search Query: Protect crawl budget by not indexing internal search queries
+  if (search && search.trim().length > 0) {
+    const cleanSearch = search.trim();
+    return {
+      title: `Search results for "${cleanSearch}" | Sartaj Foods Japan`,
+      description: `Browse Indian groceries and products matching "${cleanSearch}" at Sartaj Foods Japan. Fast delivery across Japan.`,
+      robots: { index: false, follow: true },
     };
-  }, [categories]);
+  }
 
-  const queryCategoryId = activeSubCategoryId || activeCategoryId;
+  const isSpecificCategory = category && category !== "all";
+  const hasSubcategory = subcategory && subcategory.trim().length > 0;
+  const hasManufacturer = manufacturers && manufacturers.trim().length > 0;
+  const hasBadge = badge && badge.trim().length > 0;
 
-  const {
-    data,
-    isLoading: isProductsLoading,
-    error: productsError,
-    refetch: refetchProducts,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useGetInfiniteProductsByCategory(queryCategoryId, {
-    limit,
-    search: searchQuery,
-    manufacturers: activeManufacturersParam,
-    badge: activeBadgeParam,
-  });
+  // Count active refinement facets
+  const activeFacetCount = [isSpecificCategory, hasManufacturer, hasBadge].filter(Boolean).length;
 
-  const products = useMemo(() => {
-    return data?.pages?.flatMap((page) => page?.products) || [];
-  }, [data]);
+  // 2. Multi-Filter Combinations (e.g. category + brand, category + badge)
+  // Canonicalize to primary category or main catalog to consolidate Google link equity
+  if (activeFacetCount > 1) {
+    const parts = [
+      hasManufacturer ? formatLabel(manufacturers!) : null,
+      hasSubcategory
+        ? formatLabel(subcategory!)
+        : isSpecificCategory
+          ? formatLabel(category!)
+          : null,
+      hasBadge ? formatLabel(badge!) : null,
+    ].filter(Boolean);
 
-  const bottomLoadRef = useRef<HTMLDivElement>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+    const canonicalUrl = isSpecificCategory
+      ? `https://www.sartajfoods.jp/products?category=${encodeURIComponent(category!)}`
+      : "https://www.sartajfoods.jp/products";
 
-  const fetchNextPageRef = useRef(fetchNextPage);
-  const hasNextPageRef = useRef(hasNextPage);
-  const isFetchingNextPageRef = useRef(isFetchingNextPage);
-  const isProductsLoadingRef = useRef(isProductsLoading);
+    const titlePrefix = parts.join(" - ");
 
-  fetchNextPageRef.current = fetchNextPage;
-  hasNextPageRef.current = hasNextPage;
-  isFetchingNextPageRef.current = isFetchingNextPage;
-  isProductsLoadingRef.current = isProductsLoading;
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        const isAnyIntersecting = entries?.some((entry) => entry?.isIntersecting);
-        if (
-          isAnyIntersecting &&
-          hasNextPageRef.current &&
-          !isFetchingNextPageRef.current &&
-          !isProductsLoadingRef.current
-        ) {
-          fetchNextPageRef.current();
-        }
+    return {
+      title: `${titlePrefix} | Sartaj Foods Japan`,
+      description: `Explore ${parts.join(" ")} at Sartaj Foods Japan. Authentic Indian groceries, spices, snacks, and essentials delivered fresh across Japan.`,
+      alternates: {
+        canonical: canonicalUrl,
       },
-      {
-        rootMargin: "400px",
-        threshold: 0.01,
+      robots: { index: true, follow: true },
+    };
+  }
+
+  // 3. Single Category / Subcategory
+  if (isSpecificCategory || hasSubcategory) {
+    const categoryName = hasSubcategory ? formatLabel(subcategory!) : formatLabel(category!);
+
+    const canonicalCategory = hasSubcategory
+      ? `https://www.sartajfoods.jp/products?category=${encodeURIComponent(category || "")}&subcategory=${encodeURIComponent(subcategory!)}`
+      : `https://www.sartajfoods.jp/products?category=${encodeURIComponent(category!)}`;
+
+    return {
+      title: `${categoryName} | Indian Groceries Online | Sartaj Foods Japan`,
+      description: `Shop authentic ${categoryName} online at Sartaj Foods Japan. Best prices on top Indian brands with fast delivery across Japan.`,
+      alternates: {
+        canonical: canonicalCategory,
       },
-    );
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
-      }
+      openGraph: {
+        title: `${categoryName} | Sartaj Foods Japan`,
+        description: `Shop authentic ${categoryName} online at Sartaj Foods Japan.`,
+        type: "website",
+      },
     };
-  }, []);
+  }
 
-  useEffect(() => {
-    const triggerEl = document.getElementById("infinite-scroll-trigger");
-    const bottomEl = bottomLoadRef.current;
-
-    if (triggerEl && observerRef.current) {
-      observerRef.current.observe(triggerEl);
-    }
-    if (bottomEl && observerRef.current) {
-      observerRef.current.observe(bottomEl);
-    }
-
-    return () => {
-      if (triggerEl && observerRef.current) {
-        observerRef.current.unobserve(triggerEl);
-      }
-      if (bottomEl && observerRef.current) {
-        observerRef.current.unobserve(bottomEl);
-      }
+  // 4. Single Manufacturer / Brand
+  if (hasManufacturer) {
+    const brandName = formatLabel(manufacturers!);
+    return {
+      title: `${brandName} Products & Groceries | Sartaj Foods Japan`,
+      description: `Buy authentic ${brandName} products online in Japan from Sartaj Foods. Wide range of authentic spices, groceries, and ingredients delivered fresh.`,
+      alternates: {
+        canonical: `https://www.sartajfoods.jp/products?manufacturers=${encodeURIComponent(manufacturers!)}`,
+      },
+      openGraph: {
+        title: `${brandName} Products | Sartaj Foods Japan`,
+        description: `Buy authentic ${brandName} products online in Japan from Sartaj Foods.`,
+        type: "website",
+      },
     };
-  }, [products?.length]);
+  }
 
-  const categoriesList = useMemo(() => {
-    const allCategory: ICategory = {
-      id: "all",
-      name: t("products.allProducts") || "All Products",
-      image: "",
-      productCount: 0,
+  // 5. Single Badge (e.g. special-offers, featured)
+  if (hasBadge) {
+    const badgeName = formatLabel(badge!);
+    return {
+      title: `${badgeName} Products & Deals | Sartaj Foods Japan`,
+      description: `Explore ${badgeName} items at Sartaj Foods Japan. Great discounts and special deals on authentic Indian groceries.`,
+      alternates: {
+        canonical: `https://www.sartajfoods.jp/products?badge=${encodeURIComponent(badge!)}`,
+      },
+      openGraph: {
+        title: `${badgeName} Products | Sartaj Foods Japan`,
+        description: `Explore ${badgeName} items at Sartaj Foods Japan.`,
+        type: "website",
+      },
     };
-    return [allCategory, ...categories];
-  }, [categories, t]);
+  }
 
-  // Find active parent category in the categories tree (excluding the virtual "All Products" category)
-  const currentCategory = useMemo(() => {
-    return categories?.find(
-      (c: ICategory) =>
-        c?.slug === activeCategoryId || c?.id === activeCategoryId || c?._id === activeCategoryId,
-    );
-  }, [categories, activeCategoryId]);
-
-  const subCategories = useMemo(() => {
-    return currentCategory?.subCategories || [];
-  }, [currentCategory]);
-
-  const createSubcategoryUrl = (subId?: string) => {
-    const params = new URLSearchParams(searchParams?.toString());
-    params.delete("page");
-    if (subId) {
-      params.set("subcategory", subId);
-    } else {
-      params.delete("subcategory");
-    }
-    return ROUTES.PRODUCTS_WITH_QUERY(params?.toString());
+  // 6. Default All Products Listing
+  return {
+    title: "Shop Indian Spices, Rice, Snacks & Household Essentials | Sartaj Foods Japan",
+    description:
+      "Shop full range products from basmati rice, atta, ghee, spices, snacks, frozen foods & more. Authentic Indian & home essentials delivered fresh across Japan.",
+    alternates: {
+      canonical: "https://www.sartajfoods.jp/products",
+    },
+    openGraph: {
+      title: "Shop Indian Spices, Rice, Snacks & Household Essentials | Sartaj Foods Japan",
+      description:
+        "Shop full range products from basmati rice, atta, ghee, spices, snacks, frozen foods & more. Authentic Indian & home essentials delivered fresh across Japan.",
+      type: "website",
+    },
   };
-
-  return (
-    <main className="relative z-10 min-h-screen bg-muted/40 py-4 sm:py-8">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4">
-        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 items-start">
-          <CategorySidebar
-            scrollContainerRef={scrollContainerRef}
-            scrollState={scrollState}
-            isCategoriesLoading={isCategoriesLoading}
-            categoriesError={categoriesError}
-            refetchCategories={refetchCategories}
-            categoriesList={categoriesList}
-          />
-          <div className="flex-1 w-full min-w-0 space-y-6">
-            <FilterControls
-              subCategories={subCategories}
-              activeSubCategoryId={activeSubCategoryId}
-              createSubcategoryUrl={createSubcategoryUrl}
-              productsLength={products?.length}
-              hasActiveFilters={hasActiveFilters}
-              locale={locale}
-            />
-            <ProductGrid
-              isProductsLoading={isProductsLoading}
-              productsError={productsError}
-              refetchProducts={refetchProducts}
-              products={products}
-              isFetchingNextPage={isFetchingNextPage}
-              hasNextPage={hasNextPage}
-              bottomLoadRef={bottomLoadRef}
-            />
-            <CategorySeoSection categoryId={activeCategoryId} />
-          </div>
-        </div>
-      </div>
-    </main>
-  );
 }
 
 export default function ProductsPage() {
-  return (
-    <Suspense fallback={<AuthLoadingOverlay />}>
-      <ProductsContent />
-    </Suspense>
-  );
+  return <ProductsContentClient />;
 }
