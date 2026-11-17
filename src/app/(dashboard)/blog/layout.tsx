@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Authentic Indian Food, Recipes and Lifestyle Blogs | Sartaj Foods Japan",
+  title: "Indian Recipes & Cooking Tips | Sartaj Foods Japan",
   description:
     "Discover traditional Indian recipes, spice guides and cooking tips, wellness tips from the Sartaj Foods blog made for life in Japan.",
 };
