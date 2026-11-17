@@ -10,7 +10,7 @@ import { addOrUpdateItem, updateItemQuantity, removeItem } from "@/lib/store/car
 import { cartService } from "@/services/cart/cart.service";
 import { IProduct } from "@/types/product/product.types";
 import { debounce } from "@/utils/debounce/debounce.utils";
-import { STOCK_STATUSES } from "@/constants/product.constants";
+import { STOCK_STATUSES, isProductOutOfStock } from "@/constants/product.constants";
 import { debouncedGlobalSync, setPendingSync, abortActiveSync } from "./cartSync";
 
 export function useCartActions(product: IProduct) {
@@ -34,10 +34,7 @@ export function useCartActions(product: IProduct) {
   const quantityInCart = cartItem?.quantity || 0;
   const isInCart = quantityInCart > 0;
 
-  const isOutOfStock =
-    product?.stockStatus === STOCK_STATUSES.OUT_OF_STOCK ||
-    (product?.stockQuantity !== undefined && product?.stockQuantity <= 0) ||
-    product?.isActive === false;
+  const isOutOfStock = isProductOutOfStock(product);
   const maxStock = product?.stockQuantity ?? 99;
 
   const guardedSyncRef = useRef(() => {});
