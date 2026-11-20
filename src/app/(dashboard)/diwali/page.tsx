@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
+import { redirect } from "next/navigation";
 import { useGetAllProducts } from "@/services/product/product.hooks";
 import { ProductCard } from "@/components/common/ProductCard";
 import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
@@ -22,6 +23,9 @@ const DotLottieReact = dynamic(
 const HALDIRAM_PAGE_LIMIT = 100;
 
 export default function DiwaliPage() {
+  redirect(ROUTES.HOME);
+  return null;
+
   const tCommon = useTranslations("common");
   const tDiwali = useTranslations("diwali");
   const isDesktop = useIsDesktop();
