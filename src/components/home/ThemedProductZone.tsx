@@ -8,7 +8,6 @@ import { CategoriesGrid } from "@/components/home/CategoriesGrid";
 import { PromoBanner } from "@/components/home/PromoBanner";
 import { ProductSection } from "@/components/home/ProductSection";
 import { OffersSection } from "@/components/home/OffersSection";
-import { DiwaliBanner } from "@/components/home/DiwaliBanner";
 import { PRODUCT_BADGES } from "@/constants/product.constants";
 import { Testimonials } from "@/components/home/Testimonials";
 import { StoreLocation } from "@/components/home/StoreLocation";
@@ -45,7 +44,6 @@ export function ThemedProductZone() {
       )}
 
       <div className="relative max-w-7xl mx-auto px-2 sm:px-4">
-        <DiwaliBanner />
         <OffersSection />
         <ProductSection title="New Arrivals" badge={PRODUCT_BADGES.NEW_ARRIVAL} />
         <ProductSection title="Featured Products" badge={PRODUCT_BADGES.FEATURED} />
