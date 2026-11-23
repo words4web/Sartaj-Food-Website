@@ -32,7 +32,7 @@ export function CollapsibleSection({ headerHtml, contentHtml }: CollapsibleSecti
       >
         <div className="px-4 pb-4 pt-1">
           <div
-            className="product-rich-description text-black dark:text-foreground"
+            className="product-rich-description text-foreground"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
