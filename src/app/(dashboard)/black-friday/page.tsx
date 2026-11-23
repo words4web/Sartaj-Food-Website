@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useGetAllProducts } from "@/services/product/product.hooks";
+import { useGetAllProducts, useGetDiscountedProducts } from "@/services/product/product.hooks";
 import { ProductCard } from "@/components/common/ProductCard";
 import { ProductGridSkeleton } from "@/components/skeletons/ProductCardSkeleton";
 import { CommonError } from "@/components/ui/common-error";
@@ -22,39 +22,80 @@ export default function BlackFridayPage() {
   const [activeTab, setActiveTab] = useState("all");
 
   const {
+    data: discountedProducts,
+    isLoading: isDiscountLoading,
+    isError: isDiscountError,
+    refetch: refetchDiscounted,
+  } = useGetDiscountedProducts({
+    limit: 100,
+    page: 1,
+  });
+
+  const {
     data: haldiramProducts,
-    isLoading,
-    isError,
-    refetch,
+    isLoading: isHaldiramLoading,
+    isError: isHaldiramError,
+    refetch: refetchHaldirams,
   } = useGetAllProducts({
     limit: HALDIRAM_PAGE_LIMIT,
     manufacturers: "6a27c6e3343e0d539bf4620a",
     page: 1,
   });
 
-  const rawProducts = (haldiramProducts || []) as IProduct[];
+  const isLoading = isDiscountLoading && isHaldiramLoading;
+  const isError = isDiscountError && isHaldiramError;
+  const refetch = () => {
+    refetchDiscounted();
+    refetchHaldirams();
+  };
 
-  const inStockProducts: IProduct[] = [];
-  const outOfStockProducts: IProduct[] = [];
+  const rawDiscounted = (discountedProducts || []) as IProduct[];
+  const rawHaldiram = (haldiramProducts || []) as IProduct[];
+
+  // Prioritize active discounted items first, followed by Haldiram's collection
+  const inStockDiscounted: IProduct[] = [];
+  const outOfStockDiscounted: IProduct[] = [];
+  const inStockHaldiram: IProduct[] = [];
+  const outOfStockHaldiram: IProduct[] = [];
   const seenIds = new Set<string>();
 
-  for (const product of rawProducts) {
+  const isOutOfStock = (p: IProduct) =>
+    p?.stockStatus === "out_of_stock" ||
+    p?.stockStatus === "OUT_OF_STOCK" ||
+    (p?.stockQuantity !== undefined && p?.stockQuantity <= 0);
+
+  // 1. Process active discounted products first (Jabsons 7%, RTC 15%, etc.)
+  for (const product of rawDiscounted) {
     const id = (product?._id || product?.id) as string;
     if (id && !seenIds.has(id)) {
       seenIds.add(id);
-      if (
-        product?.stockStatus === "out_of_stock" ||
-        product?.stockStatus === "OUT_OF_STOCK" ||
-        (product?.stockQuantity !== undefined && product?.stockQuantity <= 0)
-      ) {
-        outOfStockProducts.push(product);
+      if (isOutOfStock(product)) {
+        outOfStockDiscounted.push(product);
       } else {
-        inStockProducts.push(product);
+        inStockDiscounted.push(product);
       }
     }
   }
 
-  const allSortedProducts = [...inStockProducts, ...outOfStockProducts];
+  // 2. Process Haldiram's products next
+  for (const product of rawHaldiram) {
+    const id = (product?._id || product?.id) as string;
+    if (id && !seenIds.has(id)) {
+      seenIds.add(id);
+      if (isOutOfStock(product)) {
+        outOfStockHaldiram.push(product);
+      } else {
+        inStockHaldiram.push(product);
+      }
+    }
+  }
+
+  const allSortedProducts = [
+    ...inStockDiscounted,
+    ...inStockHaldiram,
+    ...outOfStockDiscounted,
+    ...outOfStockHaldiram,
+  ];
 
   const skeletonCount = useCachedSkeletonCount(
     "sartaj_products_count_black_friday_page",
@@ -63,9 +104,9 @@ export default function BlackFridayPage() {
   );
 
   const TAB_KEYWORDS: Record<string, string[]> = {
-    sweets: ["cham cham", "rasgulla", "gulab jamun", "ladoo", "soan papdi"],
-    namkeen: ["bhujia", "mixture", "mix", "dal", "chana", "boondi", "khatta meetha", "all-in-one"],
-    snacks: ["toast", "bhel puri", "murukku", "papad", "kaju", "ghee"],
+    sweets: ["cham cham", "rasgulla", "gulab jamun", "ladoo", "soan papdi", "gajak", "chikki", "sweet"],
+    namkeen: ["bhujia", "mixture", "mix", "chana", "boondi", "khatta meetha", "peanut", "sing", "namkeen"],
+    snacks: ["toast", "bhel puri", "murukku", "papad", "kaju", "snack", "rtc", "curry", "masala", "biryani"],
   };
 
   const filteredProducts = allSortedProducts.filter((product) => {
