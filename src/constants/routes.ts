@@ -11,6 +11,7 @@ export const ROUTES = {
   SALE: "/sale",
   NAVRATRI: "/navratri",
   DIWALI: "/diwali",
+  BLACK_FRIDAY: "/black-friday",
 
   // Authenticated / Dashboard routes
   HOME: "/",
