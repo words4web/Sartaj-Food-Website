@@ -200,13 +200,13 @@ export function ProductInfo({
 
           return (
             <div className="mb-6">
-              <h3 className="text-sm font-bold text-black dark:text-foreground mb-3">
+              <h3 className="text-sm font-bold text-foreground mb-3">
                 {t("products.description")}
               </h3>
 
               {introHtml && introHtml?.trim() !== "" && (
                 <div
-                  className="product-rich-description mb-4 text-black dark:text-foreground"
+                  className="product-rich-description mb-4 text-foreground"
                   dangerouslySetInnerHTML={{ __html: introHtml }}
                 />
               )}
