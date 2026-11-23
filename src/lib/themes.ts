@@ -16,7 +16,8 @@ export type Theme =
   | "terracotta"
   | "peachy"
   | "gurupurnima"
-  | "independence";
+  | "independence"
+  | "blackfriday";
 
 export interface ThemeConfig {
   name: string;
@@ -462,6 +463,30 @@ export const themes: Record<Theme, ThemeConfig> = {
     },
     particles: { enabled: true, type: "independence" },
   },
+
+  blackfriday: {
+    name: "blackfriday",
+    label: "Black Friday",
+    description: "Bold deep charcoal & energetic neon orange sale theme",
+    cssVars: {
+      primary: "#ff6a00", // Vibrant high-energy sale orange
+      primaryForeground: "#ffffff",
+      secondary: "#1f242d", // Rich charcoal slate
+      secondaryForeground: "#f8fafc",
+      accent: "#2a303c", // Dark charcoal highlight
+      accentForeground: "#ff7714",
+      background: "#0d1117", // Deep charcoal/black
+      foreground: "#f3f4f6", // Clean bright text
+      card: "#161b22", // Sleek charcoal card
+      cardForeground: "#f3f4f6",
+      border: "#30363d", // Crisp charcoal border
+      input: "#30363d",
+      ring: "#ff6a00",
+      muted: "#21262d",
+      mutedForeground: "#9ca3af",
+    },
+    particles: { enabled: false, type: "none" },
+  },
 };
 
 /** Colors shown in the theme picker swatches (hex for canvas gradients) */
@@ -484,6 +509,7 @@ export const themeSwatchColors: Record<Theme, [string, string]> = {
   peachy: ["#f97316", "#86efac"],
   gurupurnima: ["#8a1a12", "#f8eed1"],
   independence: ["#FF9933", "#128807"],
+  blackfriday: ["#ff6a00", "#161b22"],
 };
 
 export function applyTheme(theme: Theme) {
