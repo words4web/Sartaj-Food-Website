@@ -5,6 +5,7 @@ web_modules/
 
 # Next.js build and outputs
 .next/
+.next-rtc/
 out/
 build/
 dist/

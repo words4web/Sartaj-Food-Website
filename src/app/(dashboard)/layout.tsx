@@ -18,7 +18,8 @@ const isPublicPath = (path: string): boolean => {
     path === "/faq" ||
     path === "/sale" ||
     path === "/navratri" ||
-    path === "/diwali"
+    path === "/diwali" ||
+    path === "/black-friday"
   ) {
     return true;
   }
