@@ -26,15 +26,12 @@ export function Header() {
   return (
     <>
       <div className="notranslate w-full bg-[#1e293b] hover:bg-[#1a2332] text-white py-2 overflow-hidden border-b border-slate-900/60 text-base sm:text-lg font-extrabold select-none relative z-50 transition-colors">
-        <Link
-          href={ROUTES.DIWALI}
-          className="flex animate-marquee-slow gap-8 block hover:text-amber-300 transition-colors"
-        >
+        <div className="flex animate-marquee-slow gap-8 block">
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
           <span>{tTranslate("common.marqueeRecommendation")}</span>
-        </Link>
+        </div>
       </div>
 
       <header className="notranslate sticky top-0 z-50 w-full bg-background border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
