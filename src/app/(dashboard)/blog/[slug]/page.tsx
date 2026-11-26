@@ -122,9 +122,10 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                   {faq.question}
                   <ChevronDown className="w-5 h-5 text-muted-foreground group-open:rotate-180 transition-transform duration-200" />
                 </summary>
-                <p className="mt-3 text-muted-foreground text-sm sm:text-base leading-relaxed pl-1">
-                  {faq.answer}
-                </p>
+                <p
+                  className="mt-3 text-muted-foreground text-sm sm:text-base leading-relaxed pl-1"
+                  dangerouslySetInnerHTML={{ __html: parseMarkdown(faq.answer) }}
+                />
               </details>
             ))}
           </div>
