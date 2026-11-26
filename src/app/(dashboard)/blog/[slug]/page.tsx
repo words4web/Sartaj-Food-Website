@@ -34,7 +34,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
   }
 
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-10 relative z-10 bg-white">
+    <article className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-10 relative z-10 bg-background">
       <div className="flex items-center justify-between gap-4 notranslate">
         <Link
           href={ROUTES.BLOG}
